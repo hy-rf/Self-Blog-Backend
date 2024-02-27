@@ -1,10 +1,6 @@
-using System;
-using System.Linq;
-using BBS.Data.Migrations;
-using FluentMigrator.Runner;
-using FluentMigrator.Runner.Initialization;
 
-using Microsoft.Extensions.DependencyInjection;
+using BBS.Data.Migrations;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +8,7 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-app.UseHttpsRedirection();
+
 app.UseStaticFiles();
 app.UseRouting();
 app.MapControllerRoute(

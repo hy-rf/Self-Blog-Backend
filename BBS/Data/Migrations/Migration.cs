@@ -59,9 +59,9 @@ namespace BBS.Data.Migrations
                 .AddFluentMigratorCore()
                 .ConfigureRunner(rb => rb
                     // Add SQLite support to FluentMigrator
-                    .AddSQLite()
+                    .AddSqlServer()
                     // Set the connection string
-                    .WithGlobalConnectionString("Data Source=C:\\BBS.db")
+                    .WithGlobalConnectionString("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"C:\\Users\\33779\\AppData\\Local\\Microsoft\\Microsoft SQL Server Local DB\\Instances\\BBS\\master.mdf\";Integrated Security=True;Connect Timeout=30")
                     // Define the assembly containing the migrations
                     .ScanIn(typeof(Initial).Assembly).For.Migrations())
                 // Enable logging to console in the FluentMigrator way
