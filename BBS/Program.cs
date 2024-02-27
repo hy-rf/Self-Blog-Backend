@@ -1,5 +1,4 @@
 
-using BBS.Data.Migrations;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,12 +19,6 @@ app.Run();
 
 
 
-
-
-
-/// <summary>
-/// Update the database
-/// </summary>
 
 //app.MapControllerRoute(
 //    name: "Dashboard",
