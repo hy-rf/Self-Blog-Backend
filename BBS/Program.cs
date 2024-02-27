@@ -8,12 +8,6 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-var test = new Test();
-using (var serviceProvider = test.CreateServices())
-using (var scope = serviceProvider.CreateScope())
-{
-    test.UpdateDatabase(scope.ServiceProvider);
-}
 app.UseStaticFiles();
 app.UseRouting();
 app.MapControllerRoute(
