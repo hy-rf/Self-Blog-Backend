@@ -1,4 +1,5 @@
 ﻿using FluentMigrator;
+using FluentMigrator.Runner;
 
 namespace BBS.Data.Migrations
 {
@@ -12,7 +13,7 @@ namespace BBS.Data.Migrations
                 .WithColumn("Name").AsString().Unique().NotNullable()
                 .WithColumn("Password").AsString().NotNullable()
                 .WithColumn("Email").AsString().Nullable()
-                .WithColumn("CreatedDate").AsDateTime2().WithDefaultValue("datetime()")
+                .WithColumn("CreatedDate").AsDateTime2().WithDefault(SystemMethods.CurrentDateTime)
                 .WithColumn("LastLogin").AsDateTime2();
 
             Create.Table("Post")
@@ -20,7 +21,7 @@ namespace BBS.Data.Migrations
                 .WithColumn("Title").AsString().Unique().NotNullable()
                 .WithColumn("Content").AsString().NotNullable()
                 .WithColumn("UserId").AsInt32().NotNullable()
-                .WithColumn("CreatedDate").AsDateTime2().WithDefaultValue("datetime()")
+                .WithColumn("CreatedDate").AsDateTime2().WithDefault(SystemMethods.CurrentDateTime)
                 .WithColumn("ModifiedDate").AsDateTime2()
                 .WithColumn("Featured").AsBoolean().WithDefaultValue("FALSE")
                 .WithColumn("Visibility").AsBoolean().WithDefaultValue("TRUE")
@@ -31,7 +32,7 @@ namespace BBS.Data.Migrations
                 .WithColumn("Content").AsString().Unique().NotNullable()
                 .WithColumn("UserId").AsInt32().NotNullable()
                 .WithColumn("UserName").AsString().Unique().NotNullable()
-                .WithColumn("CreatedDate").AsDateTime2().WithDefaultValue("datetime()")
+                .WithColumn("CreatedDate").AsDateTime2().WithDefault(SystemMethods.CurrentDateTime)
                 .WithColumn("ModifiedDate").AsDateTime2()
                 .WithColumn("Visibility").AsBoolean().WithDefaultValue("TRUE");
 
@@ -47,6 +48,33 @@ namespace BBS.Data.Migrations
             Delete.Table("Post");
             Delete.Table("Reply");
             Delete.Table("Tag");
+        }
+    }
+    public class Test
+    {
+        public ServiceProvider CreateServices()
+        {
+            return new ServiceCollection()
+                // Add common FluentMigrator services
+                .AddFluentMigratorCore()
+                .ConfigureRunner(rb => rb
+                    // Add SQLite support to FluentMigrator
+                    .AddSQLite()
+                    // Set the connection string
+                    .WithGlobalConnectionString("Data Source=C:\\BBS.db")
+                    // Define the assembly containing the migrations
+                    .ScanIn(typeof(Initial).Assembly).For.Migrations())
+                // Enable logging to console in the FluentMigrator way
+                .AddLogging(lb => lb.AddFluentMigratorConsole())
+                // Build the service provider
+                .BuildServiceProvider(false);
+        }
+        public void UpdateDatabase(IServiceProvider serviceProvider)
+        {
+            // Instantiate the runner
+            var runner = serviceProvider.GetRequiredService<IMigrationRunner>();
+            // Execute the migrations
+            runner.MigrateUp();
         }
     }
 }
