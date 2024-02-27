@@ -8,7 +8,12 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-
+var test = new Test();
+using (var serviceProvider = test.CreateServices())
+using (var scope = serviceProvider.CreateScope())
+{
+    test.UpdateDatabase(scope.ServiceProvider);
+}
 app.UseStaticFiles();
 app.UseRouting();
 app.MapControllerRoute(
@@ -20,14 +25,7 @@ app.Run();
 
 
 
-var test = new Test();
-using (var serviceProvider = test.CreateServices())
-using (var scope = serviceProvider.CreateScope())
-{
-    // Put the database update into a scope to ensure
-    // that all resources will be disposed.
-    test.UpdateDatabase(scope.ServiceProvider);
-}
+
 
 
 
