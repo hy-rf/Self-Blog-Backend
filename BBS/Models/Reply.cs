@@ -10,5 +10,6 @@
         public DateTime CreatedDate { get; set; }
         public DateTime ModifiedDate { get; set; }
         public bool Visibility { get; set; }
+        public string? Likes { get; set; }
     }
 }

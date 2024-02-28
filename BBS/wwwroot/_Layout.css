@@ -1,0 +1,43 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --header-height: 5%;
+    --main-height: 90%;
+    --footer-height: 5%;
+    --home-page-width: 100%;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    height: var(--header-height);
+    width: var(--home-page-width);
+    border-top: 2px dotted black;
+    border-left: 2px dotted black;
+    border-right: 2px dotted black;
+    border-bottom: 2px dotted black;
+}
+
+main {
+    position: fixed;
+    top: var(--header-height);
+    height: var(--main-height);
+    width: var(--home-page-width);
+    border-left: 2px dotted black;
+    border-right: 2px dotted black;
+}
+
+footer {
+    position: fixed;
+    height: var(--footer-height);
+    width: var(--home-page-width);
+    bottom: 0;
+    border-top: 2px dotted black;
+    border-left: 2px dotted black;
+    border-right: 2px dotted black;
+    border-bottom: 2px dotted black;
+}
