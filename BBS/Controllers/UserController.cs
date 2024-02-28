@@ -25,10 +25,11 @@ namespace BBS.Controllers
                 return View("Index");
             }
         }
-        public IActionResult Login(string lusername, string lpassword)
+        public IActionResult Login(string username, string password)
         {
-            if (_userService.Login(lusername, lpassword))
+            if (_userService.Login(username, password))
             {
+                // TODO : Implement add session
                 return View("UserCenter");
             }
             else
