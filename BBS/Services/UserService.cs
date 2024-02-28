@@ -12,6 +12,12 @@ namespace BBS.Services
         {
             Connection = database.SqLiteConnection();
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public bool Signup(string username, string password)
         {
             if (CheckSignup(username))
@@ -45,11 +51,10 @@ namespace BBS.Services
         public bool CheckSignup(string username)
         {
             Connection.Open();
-            System.Diagnostics.Debug.WriteLine(username);
             var command = Connection.CreateCommand();
             command.Connection = Connection;
-            command.CommandText = $"SELECT Name FROM User WHERE Name = @username";
-            command.Parameters.AddWithValue("@username", username);
+            command.CommandText = @"SELECT Name FROM User WHERE Name = $username";
+            command.Parameters.AddWithValue("$username", username);
             using (SqliteDataReader reader = command.ExecuteReader())
             {
                 if (reader.Read())
@@ -63,11 +68,22 @@ namespace BBS.Services
         }
         public bool Login(string username, string password)
         {
-            throw new NotImplementedException();
-        }
-        public bool VerifyPassword(string username)
-        {
-            throw new NotImplementedException();
+            Connection.Open();
+            var command = Connection.CreateCommand();
+            command.Connection = Connection;
+            command.CommandText = @"SELECT Name FROM User WHERE Name = $username AND Password = $password";
+            command.Parameters.AddWithValue("$username", username);
+            command.Parameters.AddWithValue("$password", password);
+            using (SqliteDataReader reader = command.ExecuteReader())
+            {
+                if (reader.Read())
+                {
+                    Connection.Close();
+                    return true;
+                }
+            }
+            Connection.Close();
+            return false;
         }
         public User GetUser(int Id)
         {

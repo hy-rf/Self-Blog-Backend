@@ -18,11 +18,23 @@ namespace BBS.Controllers
         {
             if (_userService.Signup(username, password))
             {
+                return View("UserCenter");
             }
             else
             {
+                return View("Index");
             }
-            return View("UserCenter");
+        }
+        public IActionResult Login(string lusername, string lpassword)
+        {
+            if (_userService.Login(lusername, lpassword))
+            {
+                return View("UserCenter");
+            }
+            else
+            {
+                return View("Index");
+            }
         }
     }
 }
