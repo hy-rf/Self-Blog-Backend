@@ -90,6 +90,12 @@ namespace BBS.Services
                 if (reader.Read())
                 {
                     this.UserId = reader.GetInt32(0);
+                    var updateLastLogin = Connection.CreateCommand();
+                    updateLastLogin.Connection = Connection;
+                    updateLastLogin.CommandText = @"UPDATE User SET LastLogin = $LastLogin WHERE Id = $Id";
+                    updateLastLogin.Parameters.AddWithValue("LastLogin", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+                    updateLastLogin.Parameters.AddWithValue("$Id", this.UserId);
+                    updateLastLogin.ExecuteNonQuery();
                     Connection.Close();
                     return true;
                 }
