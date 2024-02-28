@@ -115,27 +115,21 @@ namespace BBS.Services
             command.Connection = Connection;
             command.CommandText = @"SELECT Id, Name, Password, Email, CreatedDate, LastLogin FROM User WHERE Id = $Id";
             command.Parameters.AddWithValue("$Id", Id);
-            User user;
-            using (SqliteDataReader reader = command.ExecuteReader())
+            using SqliteDataReader reader = command.ExecuteReader();
+            User user = new User();
+            if (reader.Read())
             {
-                if (reader.Read())
+                user = new User
                 {
-                    user = new User
-                    {
-                        Id = reader.GetInt32(0),
-                        Name = reader.GetString(1),
-                        Password = reader.GetString(2),
-                        CreatedDate = reader.GetDateTime(4),
-                        LastLogin = reader.GetDateTime(5)
-                    };
-                    Connection.Close();
-                    return user;
-                }
-                else
-                {
-                    return null;
-                }
+                    Id = reader.GetInt32(0),
+                    Name = reader.GetString(1),
+                    Password = reader.GetString(2),
+                    CreatedDate = reader.GetDateTime(4),
+                    LastLogin = reader.GetDateTime(5)
+                };
+                Connection.Close();
             }
+            return user;
         }
     }
 }

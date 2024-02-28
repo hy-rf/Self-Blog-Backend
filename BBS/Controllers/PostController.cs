@@ -8,5 +8,9 @@ namespace BBS.Controllers
         {
             return View();
         }
+        public ActionResult CreatePost()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -48,9 +48,8 @@
     <header>
         <a asp-controller="Home" asp-action="Index">Home</a>
         <a asp-controller="User" asp-action="Index">UserCenter</a>
-        <a>Post</a>
-        <a>Option</a>
-
+        <a asp-controller="Post" asp-action="Index">Post</a>
+        <a asp-controller="Option" asp-action="Index">Option</a>
     </header>
     <main>
         @RenderBody()
