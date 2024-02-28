@@ -1,5 +1,6 @@
 ﻿using BBS.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 
 namespace BBS.Controllers
 {
@@ -12,30 +13,45 @@ namespace BBS.Controllers
         }
         public IActionResult Index()
         {
+            if (HttpContext.Session.GetInt32("Id") != null)
+            {
+                ViewBag.Id = HttpContext.Session.GetInt32("Id");
+                ViewBag.UserInfo = _userService.GetUser(ViewBag.Id);
+                return View("UserCenter");
+            }
             return View();
         }
         public ActionResult Signup(string username, string password)
         {
-            if (_userService.Signup(username, password))
+            if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
             {
-                return View("UserCenter");
+                if (_userService.Signup(username, password))
+                {
+                    return View("UserCenter");
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
             }
-            else
-            {
-                return View("Index");
-            }
+            return RedirectToAction("Index");
         }
-        public IActionResult Login(string username, string password)
+        public ActionResult Login(string username, string password)
         {
-            if (_userService.Login(username, password))
+            if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
             {
-                // TODO : Implement add session
-                return View("UserCenter");
+                if (_userService.Login(username, password))
+                {
+                    // TODO : Implement add session
+                    HttpContext.Session.SetInt32("Id", _userService.GetUserId());
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
             }
-            else
-            {
-                return View("Index");
-            }
+            return RedirectToAction("Index");
         }
     }
 }

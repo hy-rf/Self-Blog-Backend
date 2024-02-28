@@ -12,7 +12,6 @@ namespace BBS.Controllers
         }
         public IActionResult Index()
         {
-            //System.Diagnostics.Debug.WriteLine(_db.SqLiteConnection().ConnectionString);
             return View();
         }
         

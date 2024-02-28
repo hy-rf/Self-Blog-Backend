@@ -8,9 +8,14 @@ namespace BBS.Services
     public class UserService : IUserService
     {
         private readonly SqliteConnection Connection;
+        public int UserId { get; set; }
         public UserService(IDatabase database)
         {
             Connection = database.SqLiteConnection();
+        }
+        public int GetUserId()
+        {
+            return this.UserId;
         }
         /// <summary>
         /// 
@@ -66,6 +71,12 @@ namespace BBS.Services
             Connection.Close();
             return true;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public bool Login(string username, string password)
         {
             Connection.Open();
@@ -78,7 +89,7 @@ namespace BBS.Services
             {
                 if (reader.Read())
                 {
-                    System.Diagnostics.Debug.WriteLine($"id={reader.GetInt32(0)}");
+                    this.UserId = reader.GetInt32(0);
                     Connection.Close();
                     return true;
                 }
@@ -86,14 +97,39 @@ namespace BBS.Services
             Connection.Close();
             return false;
         }
+        /// <summary>
+        /// Used in UserCenter Page
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
         public User GetUser(int Id)
         {
-            throw new NotImplementedException();
-        }
-
-        Models.User IUserService.GetUser(int Id)
-        {
-            throw new NotImplementedException();
+            Connection.Open();
+            var command = Connection.CreateCommand();
+            command.Connection = Connection;
+            command.CommandText = @"SELECT Id, Name, Password, Email, CreatedDate, LastLogin FROM User WHERE Id = $Id";
+            command.Parameters.AddWithValue("$Id", Id);
+            User user;
+            using (SqliteDataReader reader = command.ExecuteReader())
+            {
+                if (reader.Read())
+                {
+                    user = new User
+                    {
+                        Id = reader.GetInt32(0),
+                        Name = reader.GetString(1),
+                        Password = reader.GetString(2),
+                        CreatedDate = reader.GetDateTime(4),
+                        LastLogin = reader.GetDateTime(5)
+                    };
+                    Connection.Close();
+                    return user;
+                }
+                else
+                {
+                    return null;
+                }
+            }
         }
     }
 }

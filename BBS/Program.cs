@@ -6,12 +6,23 @@ using BBS.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddDistributedMemoryCache();
+
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromDays(10);
+    options.Cookie.IsEssential = true;
+});
+
+
 builder.Services.AddSingleton<IDatabase, Database>();
 builder.Services.AddSingleton<IUserService, UserService>();
 builder.Services.AddSingleton<IPostService, PostService>();
 builder.Services.AddSingleton<IReplyService, ReplyService>();
 
 var app = builder.Build();
+
+app.UseSession();
 
 app.UseStaticFiles();
 app.UseRouting();

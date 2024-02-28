@@ -1,15 +1,59 @@
-﻿@page
-@model BBS.Views.Shared._LayoutModel
-@{
-}
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>BBS</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BBS</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --header-height: 10%;
+            --main-height: 80%;
+            --footer-height: 10%;
+            --home-page-width: 100%;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            height: var(--header-height);
+            width: var(--home-page-width);
+            border: 2px dotted black;
+        }
+
+        main {
+            position: fixed;
+            top: var(--header-height);
+            height: var(--main-height);
+            width: var(--home-page-width);
+            border: 2px dotted black;
+        }
+
+        footer {
+            position: fixed;
+            height: var(--footer-height);
+            width: var(--home-page-width);
+            bottom: 0;
+            border: 2px dotted black;
+        }
+    </style>
 </head>
 
 <body>
-	<a>
+    <header>
+        <a asp-controller="Home" asp-action="Index">Home</a>
+        <a asp-controller="User" asp-action="Index">UserCenter</a>
+        <a>Post</a>
+        <a>Option</a>
+
+    </header>
+    <main>
+        @RenderBody()
+    </main>
+    <footer>example footer</footer>
 </body>
