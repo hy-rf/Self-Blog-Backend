@@ -22,7 +22,7 @@ namespace BBS.Services
             CreatePostCommand.Parameters.AddWithValue("$Content", Content);
             CreatePostCommand.Parameters.AddWithValue("$UserId", UserId);
             CreatePostCommand.Parameters.AddWithValue("$ModifiedDate", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
-            if (string.IsNullOrEmpty(Tags))
+            if (!string.IsNullOrEmpty(Tags))
             {
                 CreatePostCommand.Parameters.AddWithValue("$Tags", Tags);
             }

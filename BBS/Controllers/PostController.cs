@@ -21,7 +21,6 @@ namespace BBS.Controllers
             if(_postService.CreatePost(Title, Content, ViewBag.Id, Tags)){
                 System.Diagnostics.Debug.WriteLine("Post Success");
             }
-            System.Diagnostics.Debug.WriteLine("Post Fail");
             return View("Index");
         }
     }
