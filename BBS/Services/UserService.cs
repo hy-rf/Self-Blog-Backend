@@ -28,7 +28,7 @@ namespace BBS.Services
                 command.CommandText = @"INSERT INTO User (Name, Password, LastLogin) VALUES ($Name, $Password, $LastLogin)";
                 command.Parameters.AddWithValue("$Name", username);
                 command.Parameters.AddWithValue("$Password", password);
-                command.Parameters.AddWithValue("$LastLogin", DateTime.Now);
+                command.Parameters.AddWithValue("$LastLogin", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
                 try
                 {
                     command.ExecuteNonQuery();
@@ -71,13 +71,14 @@ namespace BBS.Services
             Connection.Open();
             var command = Connection.CreateCommand();
             command.Connection = Connection;
-            command.CommandText = @"SELECT Name FROM User WHERE Name = $username AND Password = $password";
+            command.CommandText = @"SELECT Id, Name FROM User WHERE Name = $username AND Password = $password";
             command.Parameters.AddWithValue("$username", username);
             command.Parameters.AddWithValue("$password", password);
             using (SqliteDataReader reader = command.ExecuteReader())
             {
                 if (reader.Read())
                 {
+                    System.Diagnostics.Debug.WriteLine($"id={reader.GetInt32(0)}");
                     Connection.Close();
                     return true;
                 }
