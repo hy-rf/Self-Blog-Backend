@@ -56,10 +56,10 @@ namespace BBS.Services
                 CommandText = @"SELECT Id, Title, Content, UserId, CreatedDate, ModifiedDate, Featured, Visibility, Tags, Likes FROM Post"
             };
             using var reader = GetRecentPostsCommand.ExecuteReader();
-            List<Post> Posts = [];
+            List<Post> Posts = new List<Post>();
             while (reader.Read())
             {
-                Posts.Append(new Post
+                Posts.Add(new Post
                 {
                     Id = Convert.ToInt32(reader["Id"]),
                     Title = reader.GetString(1),
@@ -69,9 +69,9 @@ namespace BBS.Services
                     ModifiedDate = reader.GetDateTime(5),
                     Featured = reader.GetBoolean(6),
                     Visibility = reader.GetBoolean(7),
+                    Tags = reader.IsDBNull(8)?string.Empty:reader.GetString(8),
                     Likes = reader.GetInt32(9)
                 });
-                System.Diagnostics.Debug.WriteLine("success");
             }
             Connection.Close();
             return Posts;

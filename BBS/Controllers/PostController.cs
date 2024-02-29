@@ -19,12 +19,21 @@ namespace BBS.Controllers
         }
         public ActionResult CreatePost(string Title, string Content, string? Tags)
         {
-
-            ViewBag.Id = HttpContext.Session.GetInt32("Id");
-
-            if (_postService.CreatePost(Title, Content, ViewBag.Id, Tags))
+            try
             {
-                System.Diagnostics.Debug.WriteLine("Post Success");
+                ViewBag.Id = HttpContext.Session.GetInt32("Id");
+                if (_postService.CreatePost(Title, Content, ViewBag.Id, Tags))
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+            catch
+            {
+                return RedirectToRoute(new
+                {
+                    controller = "User",
+                    action = "Index"
+                });
             }
             return RedirectToAction("Index");
         }

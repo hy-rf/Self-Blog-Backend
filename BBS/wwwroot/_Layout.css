@@ -29,6 +29,7 @@ main {
     width: var(--home-page-width);
     border-left: 2px dotted black;
     border-right: 2px dotted black;
+    overflow: auto;
 }
 
 footer {
