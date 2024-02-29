@@ -1,4 +1,5 @@
-﻿using BBS.Interfaces;
+﻿using System.Data;
+using BBS.Interfaces;
 using BBS.Models;
 using Microsoft.Data.Sqlite;
 
@@ -38,16 +39,42 @@ namespace BBS.Services
                 return false;
             }
         }
-        public bool ModifyPost(int Id, string Title, string Content, string? Tags){
+        public bool ModifyPost(int Id, string Title, string Content, string? Tags)
+        {
             throw new NotImplementedException();
         }
         public Post GetPost(int id)
         {
             throw new NotImplementedException();
         }
-        public IEnumerable<Post> GetRecentPosts()
+        public List<Post> GetRecentPosts()
         {
-            throw new NotImplementedException();
+            Connection.Open();
+            SqliteCommand GetRecentPostsCommand = new SqliteCommand
+            {
+                Connection = Connection,
+                CommandText = @"SELECT Id, Title, Content, UserId, CreatedDate, ModifiedDate, Featured, Visibility, Tags, Likes FROM Post"
+            };
+            using var reader = GetRecentPostsCommand.ExecuteReader();
+            List<Post> Posts = [];
+            while (reader.Read())
+            {
+                Posts.Append(new Post
+                {
+                    Id = Convert.ToInt32(reader["Id"]),
+                    Title = reader.GetString(1),
+                    Content = reader.GetString(2),
+                    UserId = reader.GetInt32(3),
+                    CreatedDate = reader.GetDateTime(4),
+                    ModifiedDate = reader.GetDateTime(5),
+                    Featured = reader.GetBoolean(6),
+                    Visibility = reader.GetBoolean(7),
+                    Likes = reader.GetInt32(9)
+                });
+                System.Diagnostics.Debug.WriteLine("success");
+            }
+            Connection.Close();
+            return Posts;
         }
         public IEnumerable<Post> GetMostReplyPosts()
         {

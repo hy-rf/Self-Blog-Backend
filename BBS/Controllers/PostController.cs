@@ -1,4 +1,5 @@
 ﻿using BBS.Interfaces;
+using BBS.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BBS.Controllers
@@ -12,16 +13,20 @@ namespace BBS.Controllers
         }
         public IActionResult Index()
         {
+            List<Post> posts = _postService.GetRecentPosts();
+            ViewBag.Posts = posts;
             return View();
         }
         public ActionResult CreatePost(string Title, string Content, string? Tags)
         {
 
             ViewBag.Id = HttpContext.Session.GetInt32("Id");
-            if(_postService.CreatePost(Title, Content, ViewBag.Id, Tags)){
+
+            if (_postService.CreatePost(Title, Content, ViewBag.Id, Tags))
+            {
                 System.Diagnostics.Debug.WriteLine("Post Success");
             }
-            return View("Index");
+            return RedirectToAction("Index");
         }
     }
 }

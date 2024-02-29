@@ -1,4 +1,19 @@
+@using BBS.Models;
+
 <h3>Post</h3>
 <button id="Post">Click to Post</button>
 
+@foreach (var item in ViewBag.Posts){
+    <p>@item.Id</p>
+}
+@* @ViewBag.Posts[0].Id;
+@ViewBag.Posts[0].Title;
+@ViewBag.Posts[0].Content;
+@ViewBag.Posts[0].UserId;
+@ViewBag.Posts[0].CreatedDate;
+@ViewBag.Posts[0].ModifiedDate;
+@ViewBag.Posts[0].Featured;
+@ViewBag.Posts[0].Visibility;
+@ViewBag.Posts[0].Tags;
+@ViewBag.Posts[0].Likes; *@
 <script src="~/Post.js" defer></script>

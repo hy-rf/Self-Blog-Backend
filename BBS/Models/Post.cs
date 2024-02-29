@@ -11,6 +11,6 @@
         public bool Featured { get; set; }
         public bool Visibility { get; set; }
         public string? Tags { get; set; }
-        public string? Likes { get; set; }
+        public int? Likes { get; set; }
     }
 }

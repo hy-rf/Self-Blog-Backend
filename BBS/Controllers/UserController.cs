@@ -26,7 +26,7 @@ namespace BBS.Controllers
             {
                 if (_userService.Signup(username, password))
                 {
-                    return View("UserCenter");
+                    return RedirectToAction("Index");
                 }
                 else
                 {
