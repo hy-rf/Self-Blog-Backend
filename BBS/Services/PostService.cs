@@ -41,11 +41,24 @@ namespace BBS.Services
         }
         public bool EditPost(int Id, string Title, string Content, string? Tags)
         {
-            SqliteCommand EditPostCommand = new SqliteCommand{
+            SqliteCommand EditPostCommand = new SqliteCommand
+            {
                 Connection = Connection,
-                CommandText = string.IsNullOrEmpty(Tags) ? @"INSERT INTO Post (Title, Content, UserId, ModifiedDate) VALUES ($Title, $Content, $UserId, $ModifiedDate)" : @"INSERT INTO Post (Title, Content, UserId, ModifiedDate, Tags) VALUES ($Title, $Content, $UserId, $ModifiedDate, $Tags)"
+                CommandText = string.IsNullOrEmpty(Tags) ? @"UPDATE Post SET Title=$Title, Content=$Content, ModifiedDate=$ModifiedDate WHERE Id=$Id" : @"UPDATE Post SET Title=$Title, Content=$Content, ModifiedDate=$ModifiedDate, Tags=$Tags WHERE Id=$Id"
             };
-            throw new NotImplementedException();
+            EditPostCommand.Parameters.AddWithValue("$Title", Title);
+            EditPostCommand.Parameters.AddWithValue("$Content", Content);
+            EditPostCommand.Parameters.AddWithValue("$ModifiedDate", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+            EditPostCommand.Parameters.AddWithValue("$Id", Id);
+            if (!string.IsNullOrEmpty(Tags))
+            {
+                EditPostCommand.Parameters.AddWithValue("$Tags", Tags);
+            }
+            if (EditPostCommand.ExecuteNonQuery() != -1)
+            {
+                return true;
+            }
+            return false;
         }
         public Post GetPost(int id)
         {
@@ -84,7 +97,8 @@ namespace BBS.Services
         {
             throw new NotImplementedException();
         }
-        public List<Post> GetPostById(int Id){
+        public List<Post> GetPostById(int Id)
+        {
             throw new NotImplementedException();
         }
     }
