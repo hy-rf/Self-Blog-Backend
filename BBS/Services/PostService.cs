@@ -69,19 +69,18 @@ namespace BBS.Services
                     ModifiedDate = reader.GetDateTime(5),
                     Featured = reader.GetBoolean(6),
                     Visibility = reader.GetBoolean(7),
-                    Tags = reader.IsDBNull(8)?string.Empty:reader.GetString(8),
+                    Tags = reader.IsDBNull(8) ? string.Empty : reader.GetString(8),
                     Likes = reader.GetInt32(9)
                 });
             }
             Connection.Close();
             return Posts;
         }
-        public IEnumerable<Post> GetMostReplyPosts()
+        public List<Post> GetPostsByUserId(int Id)
         {
             throw new NotImplementedException();
         }
-        public IEnumerable<Post> GetPosts()
-        {
+        public List<Post> GetPostById(int Id){
             throw new NotImplementedException();
         }
     }

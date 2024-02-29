@@ -8,7 +8,7 @@ namespace BBS.Interfaces
         public bool ModifyPost(int Id, string Title, string Content, string? Tags);
         public Post GetPost(int id);
         public List<Post> GetRecentPosts();
-        public IEnumerable<Post> GetMostReplyPosts();
-        public IEnumerable<Post> GetPosts();
+        public List<Post> GetPostsByUserId(int Id);
+        public List<Post> GetPostById(int Id);
     }
 }
