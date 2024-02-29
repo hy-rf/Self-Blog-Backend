@@ -39,8 +39,12 @@ namespace BBS.Services
                 return false;
             }
         }
-        public bool ModifyPost(int Id, string Title, string Content, string? Tags)
+        public bool EditPost(int Id, string Title, string Content, string? Tags)
         {
+            SqliteCommand EditPostCommand = new SqliteCommand{
+                Connection = Connection,
+                CommandText = string.IsNullOrEmpty(Tags) ? @"INSERT INTO Post (Title, Content, UserId, ModifiedDate) VALUES ($Title, $Content, $UserId, $ModifiedDate)" : @"INSERT INTO Post (Title, Content, UserId, ModifiedDate, Tags) VALUES ($Title, $Content, $UserId, $ModifiedDate, $Tags)"
+            };
             throw new NotImplementedException();
         }
         public Post GetPost(int id)

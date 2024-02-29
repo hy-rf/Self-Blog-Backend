@@ -37,5 +37,11 @@ namespace BBS.Controllers
             }
             return RedirectToAction("Index");
         }
+        [Route("Post/EditPost/{PostId}")]
+        public ActionResult EditPost(string Title, string Content, int PostId){
+            
+            System.Diagnostics.Debug.WriteLine(PostId);
+            return RedirectToAction("Index");
+        }
     }
 }
