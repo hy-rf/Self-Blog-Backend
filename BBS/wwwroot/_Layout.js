@@ -9,7 +9,6 @@ window.onscroll = () => {
         document.querySelector("header").classList.remove("header_show");
         document.querySelector("header").classList.add("header_hide");
     }
-    console.log(curpos);
     prepos = curpos;
     if (curpos==0){
         document.querySelector("header").classList.remove("header_show");

@@ -5,7 +5,12 @@ PostForm.setAttribute("action", "/Post/CreatePost");
 PostForm.innerHTML = `<input name="Title"><input name="Content"><input name="Tags"><button>Post</button>`;
 
 document.getElementById("Post").addEventListener("click", () => {
-    document.querySelector("main").appendChild(PostForm);
+    if (document.getElementById("Post").nextElementSibling.tagName == "FORM"){
+        document.getElementById("Post").nextElementSibling.remove();
+        return;
+    }
+    document.querySelector("main").insertBefore(PostForm, document.getElementById("Post").nextElementSibling);
+    return;
 });
 
 function showEditPostPanel(Id) {
