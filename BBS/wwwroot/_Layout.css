@@ -5,14 +5,27 @@
 }
 
 :root {
-    --header-height: 5%;
+    --header-height: 1.35rem;
     --main-height: 90%;
     --footer-height: 5%;
     --home-page-width: 100%;
+    overflow: auto;
+}
+
+html {
+    overflow: auto;
+    min-height: 100%;
+}
+
+body {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    overflow-y: auto;
 }
 
 header {
-    position: fixed;
+    position: relative;
     top: 0;
     height: var(--header-height);
     width: var(--home-page-width);
@@ -20,21 +33,38 @@ header {
     border-left: 2px dotted black;
     border-right: 2px dotted black;
     border-bottom: 2px dotted black;
+    transition: 0.5s;
+    z-index: 99;
+    background-color: white;
+}
+
+.header_show {
+    position: fixed;
+    top: 0;
+    height: var(--header-height);
+    transition: 0.5s;
+}
+.header_hide{
+    top: calc(var(--header-height)*-1);
+    transition: 0.5s;
 }
 
 main {
-    position: fixed;
-    top: var(--header-height);
-    height: var(--main-height);
+    position: relative;
+    top: 0;
+    height: max-content;
     width: var(--home-page-width);
     border-left: 2px dotted black;
     border-right: 2px dotted black;
-    overflow: auto;
+    overflow: hidden;
+}
+
+script {
+    visibility: hidden;
 }
 
 footer {
-    position: fixed;
-    height: var(--footer-height);
+    position: absolute;
     width: var(--home-page-width);
     bottom: 0;
     border-top: 2px dotted black;
