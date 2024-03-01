@@ -131,5 +131,24 @@ namespace BBS.Services
             }
             return user;
         }
+        public bool EditAvatar(int Id, byte[] avatar)
+        {
+            SqliteCommand EditAvatar = new SqliteCommand
+            {
+                CommandText = @"UPDATE User SET Avatar = $avatar WHERE Id = $Id",
+                Connection = Connection
+            };
+            EditAvatar.Parameters.AddWithValue("$avatar", avatar);
+            EditAvatar.Parameters.AddWithValue("$Id", Id);
+            System.Diagnostics.Debug.WriteLine(Id);
+            Connection.Open();
+            if (EditAvatar.ExecuteNonQuery() != -1)
+            {
+                Connection.Close();
+                return true;
+            }
+            Connection.Close();
+            return false;
+        }
     }
 }

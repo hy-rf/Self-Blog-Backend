@@ -52,5 +52,14 @@ namespace BBS.Controllers
             }
             return RedirectToAction("Index");
         }
+        [Route("User/EditAvatar/{Id}")]
+        public ActionResult EditAvatar(int Id, byte[] avatar){
+            System.Diagnostics.Debug.WriteLine(Id);
+            if (_userService.EditAvatar(Id, avatar))
+            {
+                return RedirectToAction("Index");
+            }
+            return RedirectToAction("Index");
+        }
     }
 }

@@ -39,8 +39,6 @@ namespace BBS.Controllers
         }
         [Route("Post/EditPost/{PostId}")]
         public ActionResult EditPost(int PostId, string Title, string Content, string Tags){
-            
-            System.Diagnostics.Debug.WriteLine(PostId);
             if (_postService.EditPost(PostId, Title, Content, Tags)){
                 System.Diagnostics.Debug.WriteLine("Success");
                 return RedirectToAction("Index");
