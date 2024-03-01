@@ -8,7 +8,7 @@
         public string? Email { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime LastLogin { get; set; }
-        public byte[]? Avatar { get; set; }
+        public string? Avatar { get; set; }
 
     }
 }

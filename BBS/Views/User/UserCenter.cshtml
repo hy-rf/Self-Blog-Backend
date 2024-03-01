@@ -3,10 +3,15 @@
 <p>Name:@ViewBag.UserInfo.Name</p>
 <p>CreatedDate:@ViewBag.UserInfo.CreatedDate</p>
 <p>LastLoginDate:@ViewBag.UserInfo.LastLogin</p>
+<img src="data:image/png;base64, @ViewBag.UserInfo.Avatar" alt="" width="128" height="128">
 @* <img src="data:image;base64,@System.Convert.ToBase64String(ViewBag.UserInfo.Avatar)" width="128" height="128"> *@
 
-<form action="/User/EditAvatar/@ViewBag.UserInfo.Id">
+<form method="POST" action="/User/EditAvatar/@ViewBag.UserInfo.Id"
+    enctype="multipart/form-data" onsubmit="UploadFile(this);return false;">
     <label for="avatar">Select image:</label>
     <input type="file" id="avatar" name="avatar">
+    <output name="result"></output>
     <button type="submit">Update Avatar</button>
 </form>
+
+<script src="~/User.js" defer></script>

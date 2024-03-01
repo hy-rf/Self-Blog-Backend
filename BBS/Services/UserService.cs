@@ -113,7 +113,7 @@ namespace BBS.Services
             Connection.Open();
             var command = Connection.CreateCommand();
             command.Connection = Connection;
-            command.CommandText = @"SELECT Id, Name, Password, Email, CreatedDate, LastLogin FROM User WHERE Id = $Id";
+            command.CommandText = @"SELECT Id, Name, Password, Email, CreatedDate, LastLogin, Avatar FROM User WHERE Id = $Id";
             command.Parameters.AddWithValue("$Id", Id);
             using SqliteDataReader reader = command.ExecuteReader();
             User user = new User();
@@ -124,14 +124,16 @@ namespace BBS.Services
                     Id = reader.GetInt32(0),
                     Name = reader.GetString(1),
                     Password = reader.GetString(2),
+                    Email = reader.IsDBNull(3) ? string.Empty : reader.GetString(3),
                     CreatedDate = reader.GetDateTime(4),
-                    LastLogin = reader.GetDateTime(5)
+                    LastLogin = reader.GetDateTime(5),
+                    Avatar = reader.IsDBNull(6) ? string.Empty : reader.GetString(6)
                 };
                 Connection.Close();
             }
             return user;
         }
-        public bool EditAvatar(int Id, byte[] avatar)
+        public bool EditAvatar(int Id, string avatar)
         {
             SqliteCommand EditAvatar = new SqliteCommand
             {

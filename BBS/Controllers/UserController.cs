@@ -1,5 +1,6 @@
 ﻿using BBS.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.IO;
 
 namespace BBS.Controllers
 {
@@ -53,11 +54,20 @@ namespace BBS.Controllers
             return RedirectToAction("Index");
         }
         [Route("User/EditAvatar/{Id}")]
-        public ActionResult EditAvatar(int Id, byte[] avatar){
+        public ActionResult EditAvatar(int Id, IFormFile avatar)
+        {
             System.Diagnostics.Debug.WriteLine(Id);
-            if (_userService.EditAvatar(Id, avatar))
+            if (avatar.Length > 0)
             {
-                return RedirectToAction("Index");
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    avatar.CopyTo(ms);
+                    string s = Convert.ToBase64String(ms.ToArray());
+                    if (_userService.EditAvatar(Id, s))
+                    {
+                        return RedirectToAction("Index");
+                    }
+                }
             }
             return RedirectToAction("Index");
         }
