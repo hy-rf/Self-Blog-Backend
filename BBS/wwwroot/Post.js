@@ -13,5 +13,5 @@ function showEditPostPanel(Id) {
     EditPostForm.setAttribute("method", "POST");
     EditPostForm.setAttribute("action", `/Post/EditPost/${Id}`);
     EditPostForm.innerHTML = `<input name="Title"><input name="Content"><input name="Tags"><button>EditPost</button>`;
-    document.getElementById("PostUnit").appendChild(EditPostForm);
+    document.getElementById(`PostUnit${Id}`).appendChild(EditPostForm);
 }

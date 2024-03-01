@@ -7,7 +7,7 @@
 
 @foreach (var item in ViewBag.Posts)
 {
-    <div id="PostUnit">
+    <div id="PostUnit@(item.Id)">
         <p>Post Id : @item.Id</p>
         <p>Title : @item.Title</p>
         <p>Content : @item.Content</p>
