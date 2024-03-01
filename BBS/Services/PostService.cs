@@ -50,14 +50,17 @@ namespace BBS.Services
             EditPostCommand.Parameters.AddWithValue("$Content", Content);
             EditPostCommand.Parameters.AddWithValue("$ModifiedDate", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
             EditPostCommand.Parameters.AddWithValue("$Id", Id);
+            Connection.Open();
             if (!string.IsNullOrEmpty(Tags))
             {
                 EditPostCommand.Parameters.AddWithValue("$Tags", Tags);
             }
             if (EditPostCommand.ExecuteNonQuery() != -1)
             {
+                Connection.Close();
                 return true;
             }
+            Connection.Close();
             return false;
         }
         public Post GetPost(int id)

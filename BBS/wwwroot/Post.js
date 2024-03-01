@@ -7,3 +7,11 @@ PostForm.innerHTML = `<input name="Title"><input name="Content"><input name="Tag
 document.getElementById("Post").addEventListener("click", () => {
     document.querySelector("main").appendChild(PostForm);
 });
+
+function showEditPostPanel(Id) {
+    var EditPostForm = document.createElement("form");
+    EditPostForm.setAttribute("method", "POST");
+    EditPostForm.setAttribute("action", `/Post/EditPost/${Id}`);
+    EditPostForm.innerHTML = `<input name="Title"><input name="Content"><input name="Tags"><button>EditPost</button>`;
+    document.getElementById("PostUnit").appendChild(EditPostForm);
+}

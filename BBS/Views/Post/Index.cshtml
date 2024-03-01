@@ -7,7 +7,7 @@
 
 @foreach (var item in ViewBag.Posts)
 {
-    <div>
+    <div id="PostUnit">
         <p>Post Id : @item.Id</p>
         <p>Title : @item.Title</p>
         <p>Content : @item.Content</p>
@@ -20,7 +20,7 @@
         <p>Likes : @item.Likes</p>
         @if (Accessor.HttpContext.Session.GetInt32("Id") != null){
             if (item.UserId == Accessor.HttpContext.Session.GetInt32("Id")){
-                <a asp-controller="Post" asp-action="EditPost" asp-route-id="@item.Id">Edit</a>
+                <a onclick="showEditPostPanel(@item.Id)">Edit</a>
             }
         }
 
