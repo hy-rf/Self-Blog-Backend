@@ -2,6 +2,9 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    transition: 0.5s;
+    font-size: 1.2rem;
+    line-height: 1.2rem;
 }
 
 :root {
@@ -21,12 +24,11 @@ body {
     position: relative;
     width: 100%;
     min-height: 100vh;
-    overflow-y: auto;
     scroll-behavior: smooth;
 }
 
 header {
-    position: relative;
+    position: fixed;
     top: 0;
     height: var(--header-height);
     width: var(--home-page-width);
@@ -45,7 +47,8 @@ header {
     height: var(--header-height);
     transition: 0.5s;
 }
-.header_hide{
+
+.header_hide {
     position: fixed;
     top: calc(var(--header-height)*-1);
     transition: 0.5s;
@@ -53,8 +56,8 @@ header {
 
 main {
     position: relative;
-    top: 0;
-    height: max-content;
+    top: var(--header-height);
+    height: auto;
     width: var(--home-page-width);
     border-left: 2px dotted black;
     border-right: 2px dotted black;
