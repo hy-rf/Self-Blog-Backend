@@ -20,3 +20,5 @@ function showEditPostPanel(Id) {
     EditPostForm.innerHTML = `<input name="Title"><input name="Content"><input name="Tags"><button>EditPost</button>`;
     document.getElementById(`PostUnit${Id}`).appendChild(EditPostForm);
 }
+
+document.querySelector("footer").style.bottom="calc(var(--footer-height)*-1)";
