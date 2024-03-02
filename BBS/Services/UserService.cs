@@ -142,7 +142,6 @@ namespace BBS.Services
             };
             EditAvatar.Parameters.AddWithValue("$avatar", avatar);
             EditAvatar.Parameters.AddWithValue("$Id", Id);
-            System.Diagnostics.Debug.WriteLine(Id);
             Connection.Open();
             if (EditAvatar.ExecuteNonQuery() != -1)
             {

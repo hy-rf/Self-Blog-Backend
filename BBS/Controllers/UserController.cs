@@ -57,7 +57,6 @@ namespace BBS.Controllers
         [Route("User/EditAvatar/{Id}")]
         public ActionResult EditAvatar(int Id, IFormFile avatar)
         {
-            System.Diagnostics.Debug.WriteLine(Id);
             if (avatar.Length > 0)
             {
                 using (MemoryStream ms = new MemoryStream())
