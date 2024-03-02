@@ -1,0 +1,8 @@
+#UserInfo {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+}
+form>*{
+    font-size: 0.6rem;
+}

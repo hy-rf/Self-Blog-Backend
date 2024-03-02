@@ -31,10 +31,10 @@ header {
     top: 0;
     height: var(--header-height);
     width: var(--home-page-width);
-    border-top: 2px dotted black;
-    border-left: 2px dotted black;
-    border-right: 2px dotted black;
-    border-bottom: 2px dotted black;
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
     transition: 0.5s;
     z-index: 99;
     background-color: white;
@@ -58,8 +58,8 @@ main {
     top: var(--header-height);
     height: auto;
     width: var(--home-page-width);
-    border-left: 2px dotted black;
-    border-right: 2px dotted black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
     overflow: hidden;
 }
 
@@ -71,8 +71,8 @@ footer {
     position: absolute;
     width: var(--home-page-width);
     bottom: 0;
-    border-top: 2px dotted black;
-    border-left: 2px dotted black;
-    border-right: 2px dotted black;
-    border-bottom: 2px dotted black;
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
 }
