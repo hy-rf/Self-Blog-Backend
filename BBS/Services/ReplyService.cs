@@ -29,7 +29,7 @@ namespace BBS.Services
             Connection.Close();
             return false;
         }
-        public Reply GetReply(int PostId){
+        public List<Reply> GetReplies(int PostId){
             throw new NotImplementedException();
         }
     }

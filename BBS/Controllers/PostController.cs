@@ -13,7 +13,7 @@ namespace BBS.Controllers
         }
         public IActionResult Index()
         {
-            List<Post> posts = _postService.GetRecentPosts();
+            List<Post> posts = _postService.GetPosts();
             ViewBag.Posts = posts;
             return View();
         }

@@ -89,7 +89,7 @@ namespace BBS.Services
             }
             return post;
         }
-        public List<Post> GetRecentPosts()
+        public List<Post> GetPosts()
         {
             Connection.Open();
             SqliteCommand GetRecentPostsCommand = new SqliteCommand
@@ -119,10 +119,6 @@ namespace BBS.Services
             return Posts;
         }
         public List<Post> GetPostsByUserId(int Id)
-        {
-            throw new NotImplementedException();
-        }
-        public List<Post> GetPostById(int Id)
         {
             throw new NotImplementedException();
         }
