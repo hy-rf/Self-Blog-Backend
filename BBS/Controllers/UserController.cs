@@ -44,6 +44,7 @@ namespace BBS.Controllers
                 {
                     // TODO : Implement add session
                     HttpContext.Session.SetInt32("Id", _userService.GetUserId());
+                    HttpContext.Session.SetString("Name", username);
                     return RedirectToAction("Index");
                 }
                 else
