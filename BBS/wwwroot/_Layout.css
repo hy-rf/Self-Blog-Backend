@@ -16,12 +16,11 @@
 }
 
 html {
-    overflow: hidden;
     min-height: 100%;
 }
 
 body {
-    position: relative;
+    position: absolute;
     width: 100%;
     min-height: 100vh;
     scroll-behavior: smooth;
@@ -55,7 +54,7 @@ header {
 }
 
 main {
-    position: relative;
+    position: static;
     top: var(--header-height);
     height: auto;
     width: var(--home-page-width);

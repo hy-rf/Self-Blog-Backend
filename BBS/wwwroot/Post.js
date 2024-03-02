@@ -22,7 +22,7 @@ function showEditPostPanel(Id) {
     return;
 }
 
-document.querySelector("footer").style.bottom = "calc(var(--footer-height)*-1)";
+// document.querySelector("footer").style.bottom = "calc(var(--footer-height)*-1)";
 
 
 function showReplyPanel(Id) {
