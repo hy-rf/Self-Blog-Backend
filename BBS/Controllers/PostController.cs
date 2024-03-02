@@ -37,7 +37,7 @@ namespace BBS.Controllers
             }
             return RedirectToAction("Index");
         }
-        [Route("Post/{Id}")]
+        [Route("Post/Detail/{Id}")]
         public ActionResult GetPost(int Id)
         {
             ViewBag.Post = _postService.GetPost(Id);

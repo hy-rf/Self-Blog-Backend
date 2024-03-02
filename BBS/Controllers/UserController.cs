@@ -11,6 +11,7 @@ namespace BBS.Controllers
         {
             _userService = userService;
         }
+        [Route("Welcome")]
         public IActionResult Index()
         {
             if (HttpContext.Session.GetInt32("Id") != null)
@@ -20,6 +21,7 @@ namespace BBS.Controllers
             }
             return View();
         }
+        [Route("UserCenter")]
         public IActionResult UserCenter(){
             ViewBag.Id = HttpContext.Session.GetInt32("Id");
             ViewBag.UserInfo = _userService.GetUser(ViewBag.Id);
