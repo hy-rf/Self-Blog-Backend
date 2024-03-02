@@ -37,6 +37,12 @@ namespace BBS.Controllers
             }
             return RedirectToAction("Index");
         }
+        [Route("Post/{Id}")]
+        public ActionResult GetPost(int Id)
+        {
+            ViewBag.Post = _postService.GetPost(Id);
+            return View("Post");
+        }
         [Route("Post/EditPost/{PostId}")]
         public ActionResult EditPost(int PostId, string Title, string Content, string Tags){
             if (_postService.EditPost(PostId, Title, Content, Tags)){

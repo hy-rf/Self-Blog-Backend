@@ -3,9 +3,9 @@
     public class Post
     {
         public int Id { get; set; }
-        public required string Title { get; set; }
-        public required string Content { get; set; }
-        public required int UserId { get; set; }
+        public string Title { get; set; }
+        public string Content { get; set; }
+        public int UserId { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime ModifiedDate { get; set; }
         public bool Featured { get; set; }

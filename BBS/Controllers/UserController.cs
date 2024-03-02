@@ -15,11 +15,15 @@ namespace BBS.Controllers
         {
             if (HttpContext.Session.GetInt32("Id") != null)
             {
-                ViewBag.Id = HttpContext.Session.GetInt32("Id");
-                ViewBag.UserInfo = _userService.GetUser(ViewBag.Id);
-                return View("UserCenter");
+                
+                return RedirectToAction("UserCenter");
             }
             return View();
+        }
+        public IActionResult UserCenter(){
+            ViewBag.Id = HttpContext.Session.GetInt32("Id");
+            ViewBag.UserInfo = _userService.GetUser(ViewBag.Id);
+            return View("UserCenter");
         }
         public ActionResult Signup(string username, string password)
         {

@@ -63,9 +63,31 @@ namespace BBS.Services
             Connection.Close();
             return false;
         }
-        public Post GetPost(int id)
+        public Post GetPost(int Id)
         {
-            throw new NotImplementedException();
+            SqliteCommand getPost = new SqliteCommand
+            {
+                Connection = Connection,
+                CommandText = @"SELECT Id, Title, Content, UserId, CreatedDate, ModifiedDate, Featured, Visibility, Tags, Likes FROM Post WHERE Id = $Id"
+            };
+            getPost.Parameters.AddWithValue("$Id", Id);
+            Connection.Open();
+            Post post = new Post();
+            using SqliteDataReader reader = getPost.ExecuteReader();
+            if (reader.Read())
+            {
+                post.Id = reader.GetInt32(0);
+                post.Title = reader.GetString(1);
+                post.Content = reader.GetString(2);
+                post.UserId = reader.GetInt32(3);
+                post.CreatedDate = reader.GetDateTime(4);
+                post.ModifiedDate = reader.GetDateTime(5);
+                post.Featured = reader.GetBoolean(6);
+                post.Visibility = reader.GetBoolean(7);
+                post.Tags = reader.IsDBNull(8) ? string.Empty : reader.GetString(8);
+                post.Likes = reader.GetInt32(9);
+            }
+            return post;
         }
         public List<Post> GetRecentPosts()
         {

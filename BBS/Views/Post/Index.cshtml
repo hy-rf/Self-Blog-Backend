@@ -1,17 +1,7 @@
 @using BBS.Models;
 @using Microsoft.AspNetCore.Http;
 @inject IHttpContextAccessor Accessor;
-<style>
-    .EditButton {
-        cursor: pointer;
-        border: 1px black solid;
-        border-radius: 3px;
-    }
-
-        .EditButton:hover {
-            color: blue;
-        }
-</style>
+<link rel="stylesheet" href="~/Post.css">
 <h3>Post</h3>
 <button id="Post">Click to Post</button>
 
@@ -19,15 +9,15 @@
 {
     <div id="PostUnit@(item.Id)">
         <p>Post Id : @item.Id</p>
-        <p>Title : @item.Title</p>
+        <a asp-controller="Post" asp-action="GetPost" asp-route-Id="@item.Id">Title : @item.Title</a>
         <p>Content : @item.Content</p>
         <p>UserId : @item.UserId</p>
-        <p>Date Created : @item.CreatedDate</p>
-        <p>Date Modified : @item.ModifiedDate</p>
-        <p>Featured : @item.Featured</p>
-        <p>Visibility : @item.Visibility</p>
-        <p>Tags : @item.Tags</p>
-        <p>Likes : @item.Likes</p>
+        <span>Date Created : @item.CreatedDate</span>
+        <span>Date Modified : @item.ModifiedDate</span>
+        @* <p>Featured : @item.Featured</p>
+    <p>Visibility : @item.Visibility</p>
+    <p>Tags : @item.Tags</p>
+    <p>Likes : @item.Likes</p> *@
         @if (Accessor.HttpContext.Session.GetInt32("Id") != null)
         {
             if (item.UserId == Accessor.HttpContext.Session.GetInt32("Id"))
