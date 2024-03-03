@@ -15,19 +15,6 @@
         <p>UserId : @item.UserId</p>
         <span>Date Created : @item.CreatedDate</span>
         <span>Date Modified : @item.ModifiedDate</span>
-        @* <p>Featured : @item.Featured</p>
-    <p>Visibility : @item.Visibility</p>
-    <p>Tags : @item.Tags</p>
-    <p>Likes : @item.Likes</p> *@
-        @if (Accessor.HttpContext.Session.GetInt32("Id") != null)
-        {
-            if (item.UserId == Accessor.HttpContext.Session.GetInt32("Id"))
-            {
-                <a class="EditButton" onclick="showEditPostPanel(@item.Id)">Edit</a>
-            }
-            <a class="ReplyButton" onclick="showReplyPanel(@item.Id)">Reply</a>
-        }
-
     </div>
     <br>
 }
