@@ -6,3 +6,9 @@
 form>*{
     font-size: 0.6rem;
 }
+
+#UserInfo {
+    top: 30%;
+    height: 40%;
+    border: 1px dotted black;
+}

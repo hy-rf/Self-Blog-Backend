@@ -19,12 +19,14 @@
 }
 
 html {
-    min-height: 100%;
+    /*    min-height: 100%;*/
 }
+
 
 body {
     position: absolute;
-    width: 100%;
+    left: 1rem;
+    right: 1rem;
     min-height: 100vh;
     scroll-behavior: smooth;
     scrollbar-width: 0;
@@ -36,7 +38,9 @@ header {
     position: fixed;
     top: 0;
     height: var(--header-height);
-    width: var(--home-page-width);
+
+    width: calc(100%-2rem);
+
     border-top: 1px solid black;
     border-left: 1px solid black;
     border-right: 1px solid black;
@@ -44,16 +48,6 @@ header {
     transition: 0.5s;
     z-index: 99;
     background-color: white;
-}
-
-#navbar {
-    position: absolute;
-    left: 1rem;
-}
-
-#user {
-    position: absolute;
-    right: 1rem;
 }
 
 .header_show {
@@ -72,12 +66,13 @@ header {
 main {
     position: static;
     top: var(--header-height);
-    height: auto;
+    height: max-content;
     width: var(--home-page-width);
     border-left: 1px solid black;
     border-right: 1px solid black;
     overflow: hidden;
 }
+
 
 script {
     visibility: hidden;
