@@ -71,11 +71,11 @@ namespace BBS.Controllers
                     string s = Convert.ToBase64String(ms.ToArray());
                     if (_userService.EditAvatar(Id, s))
                     {
-                        return RedirectToAction("Index");
+                        return RedirectToAction("UserCenter");
                     }
                 }
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("UserCenter");
         }
     }
 }
