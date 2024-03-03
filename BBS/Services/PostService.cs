@@ -1,5 +1,4 @@
-﻿using System.Data;
-using BBS.Interfaces;
+﻿using BBS.Interfaces;
 using BBS.Models;
 using Microsoft.Data.Sqlite;
 

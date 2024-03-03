@@ -8,8 +8,7 @@ namespace BBS.Data
         private readonly string ConnectionString = configuration.GetConnectionString("LocalDB");
         public SqliteConnection SqLiteConnection()
         {
-            using SqliteConnection connection = new SqliteConnection(ConnectionString);
-            return connection;
+            return new SqliteConnection(ConnectionString);
         }
     }
 }
