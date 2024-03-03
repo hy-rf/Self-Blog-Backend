@@ -20,7 +20,7 @@ namespace BBS.Controllers
         {
             int UserId = (int)HttpContext.Session.GetInt32("Id");
             string UserName = (string)HttpContext.Session.GetString("Name");
-            _replyService.Reply(Content, UserId, UserName, PostId);
+            _replyService.Reply(Content, UserId, PostId);
             return RedirectToRoute(new
             {
                 controller = "Post",

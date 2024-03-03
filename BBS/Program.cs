@@ -32,13 +32,3 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}"
     );
 app.Run();
-
-
-
-
-
-
-//app.MapControllerRoute(
-//    name: "Dashboard",
-//    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
-//    );

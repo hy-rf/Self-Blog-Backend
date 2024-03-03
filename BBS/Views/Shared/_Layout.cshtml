@@ -13,16 +13,20 @@
 
 <body>
     <header>
-        <a asp-controller="Home" asp-action="Index">Home</a>
-        @if (Accessor.HttpContext.Session.GetInt32("Id") != null)
-        {
-            <a asp-controller="User" asp-action="UserCenter">Hello! @(Accessor.HttpContext.Session.GetString("Name"))</a>
-        }
-        else
-        {
-            <a asp-controller="User" asp-action="Index">Login/Signup</a>
-        }
-        <a asp-controller="Post" asp-action="Index">Post</a>
+        <div id="navbar">
+            <a asp-controller="Home" asp-action="Index">Home</a>
+            <a asp-controller="Post" asp-action="Index">Post</a>
+        </div>
+        <div id="user">
+            @if (Accessor.HttpContext.Session.GetInt32("Id") != null)
+            {
+                <a asp-controller="User" asp-action="UserCenter">Hello! @(Accessor.HttpContext.Session.GetString("Name"))</a>
+            }
+            else
+            {
+                <a asp-controller="User" asp-action="Index">Login/Signup</a>
+            }
+        </div>
     </header>
     <main>
         <br>
