@@ -7,9 +7,11 @@ namespace BBS.Services
     public class PostService : IPostService
     {
         private readonly SqliteConnection Connection;
+        private readonly IDatabase _database;
         public PostService(IDatabase database)
         {
             Connection = database.SqLiteConnection();
+            _database = database;
         }
         public bool CreatePost(string Title, string Content, int UserId, string? Tags)
         {
@@ -62,30 +64,33 @@ namespace BBS.Services
             Connection.Close();
             return false;
         }
-        public Post GetPost(int Id)
+        public object GetPost(int Id)
         {
             SqliteCommand getPost = new SqliteCommand
             {
                 Connection = Connection,
-                CommandText = @"SELECT Id, Title, Content, UserId, CreatedDate, ModifiedDate, Featured, Visibility, Tags, Likes FROM Post WHERE Id = $Id"
+                CommandText = @"SELECT Id, Title, UserId, CreatedDate, ModifiedDate, Featured, Visibility, Tags FROM Post WHERE Id = $Id"
             };
             getPost.Parameters.AddWithValue("$Id", Id);
             Connection.Open();
-            Post post = new Post();
-            using SqliteDataReader reader = getPost.ExecuteReader();
-            if (reader.Read())
-            {
-                post.Id = reader.GetInt32(0);
-                post.Title = reader.GetString(1);
-                post.Content = reader.GetString(2);
-                post.UserId = reader.GetInt32(3);
-                post.CreatedDate = reader.GetDateTime(4);
-                post.ModifiedDate = reader.GetDateTime(5);
-                post.Featured = reader.GetBoolean(6);
-                post.Visibility = reader.GetBoolean(7);
-                post.Tags = reader.IsDBNull(8) ? string.Empty : reader.GetString(8);
-                post.Likes = reader.GetInt32(9);
-            }
+
+            object post = new Post();
+            post = _database.Execute(getPost, "GetOne", post);
+            //using SqliteDataReader reader = getPost.ExecuteReader();
+            //if (reader.Read())
+            //{
+            //    post.Id = reader.GetInt32(0);
+            //    post.Title = reader.GetString(1);
+            //    post.Content = reader.GetString(2);
+            //    post.UserId = reader.GetInt32(3);
+            //    post.CreatedDate = reader.GetDateTime(4);
+            //    post.ModifiedDate = reader.GetDateTime(5);
+            //    post.Featured = reader.GetBoolean(6);
+            //    post.Visibility = reader.GetBoolean(7);
+            //    post.Tags = reader.IsDBNull(8) ? string.Empty : reader.GetString(8);
+            //    post.Likes = reader.GetInt32(9);
+            //}
+            Connection.Close();
             return post;
         }
         public List<Post> GetPosts()
@@ -94,7 +99,7 @@ namespace BBS.Services
             SqliteCommand GetRecentPostsCommand = new SqliteCommand
             {
                 Connection = Connection,
-                CommandText = @"SELECT Id, Title, Content, UserId, CreatedDate, ModifiedDate, Featured, Visibility, Tags, Likes FROM Post"
+                CommandText = @"SELECT Id, Title, Content, UserId, CreatedDate, ModifiedDate, Featured, Visibility, Tags FROM Post"
             };
             using var reader = GetRecentPostsCommand.ExecuteReader();
             List<Post> Posts = new List<Post>();
@@ -110,8 +115,7 @@ namespace BBS.Services
                     ModifiedDate = reader.GetDateTime(5),
                     Featured = reader.GetBoolean(6),
                     Visibility = reader.GetBoolean(7),
-                    Tags = reader.IsDBNull(8) ? string.Empty : reader.GetString(8),
-                    Likes = reader.GetInt32(9)
+                    Tags = reader.IsDBNull(8) ? string.Empty : reader.GetString(8)
                 });
             }
             Connection.Close();
