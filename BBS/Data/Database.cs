@@ -34,9 +34,8 @@ namespace BBS.Data
                         o = Convert.ToInt32(o);
                         foreach (PropertyInfo prop in obj.GetType().GetProperties())
                         {
-                            var data = reader.GetValue(o);
-                            System.Diagnostics.Debug.WriteLine(data);
-                            //prop.SetValue(obj, reader.IsDBNull(o) ? null : data);
+                            var data = Convert.ChangeType(reader.GetValue(o), prop.PropertyType);
+                            prop.SetValue(obj, reader.IsDBNull(o) ? null : data);
                             o++;
                         }
 

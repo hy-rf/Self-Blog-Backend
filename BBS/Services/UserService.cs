@@ -8,10 +8,12 @@ namespace BBS.Services
     public class UserService : IUserService
     {
         private readonly SqliteConnection Connection;
+        private readonly IDatabase _database;
         public int UserId { get; set; }
         public UserService(IDatabase database)
         {
             Connection = database.SqLiteConnection();
+            _database = database;
         }
         public int GetUserId()
         {
@@ -108,29 +110,31 @@ namespace BBS.Services
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        public User GetUser(int Id)
+        public object GetUser(int Id)
         {
             Connection.Open();
             var command = Connection.CreateCommand();
             command.Connection = Connection;
             command.CommandText = @"SELECT Id, Name, Password, Email, CreatedDate, LastLogin, Avatar FROM User WHERE Id = $Id";
             command.Parameters.AddWithValue("$Id", Id);
-            using SqliteDataReader reader = command.ExecuteReader();
-            User user = new User();
-            if (reader.Read())
-            {
-                user = new User
-                {
-                    Id = reader.GetInt32(0),
-                    Name = reader.GetString(1),
-                    Password = reader.GetString(2),
-                    Email = reader.IsDBNull(3) ? string.Empty : reader.GetString(3),
-                    CreatedDate = reader.GetDateTime(4),
-                    LastLogin = reader.GetDateTime(5),
-                    Avatar = reader.IsDBNull(6) ? string.Empty : reader.GetString(6)
-                };
-                Connection.Close();
-            }
+            //using SqliteDataReader reader = command.ExecuteReader();
+            object user = new User();
+            user = _database.Execute(command, "GetOne", user);
+            //if (reader.Read())
+            //{
+            //    user = new User
+            //    {
+            //        Id = reader.GetInt32(0),
+            //        Name = reader.GetString(1),
+            //        Password = reader.GetString(2),
+            //        Email = reader.IsDBNull(3) ? string.Empty : reader.GetString(3),
+            //        CreatedDate = reader.GetDateTime(4),
+            //        LastLogin = reader.GetDateTime(5),
+            //        Avatar = reader.IsDBNull(6) ? string.Empty : reader.GetString(6)
+            //    };
+            //    Connection.Close();
+            //}
+            Connection.Close();
             return user;
         }
         public bool EditAvatar(int Id, string avatar)
