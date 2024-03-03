@@ -1,5 +1,6 @@
 ﻿using BBS.Interfaces;
 using BBS.Models;
+using BBS.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BBS.Controllers
@@ -7,9 +8,11 @@ namespace BBS.Controllers
     public class PostController : Controller
     {
         private readonly IPostService _postService;
-        public PostController(IPostService postService)
+        private readonly IReplyService _replyService;
+        public PostController(IPostService postService, IReplyService replyService)
         {
             _postService = postService;
+            _replyService = replyService;
         }
         public IActionResult Index()
         {
@@ -40,6 +43,7 @@ namespace BBS.Controllers
         [Route("Post/Detail/{Id}")]
         public ActionResult GetPost(int Id)
         {
+            ViewBag.Replies = _replyService.GetReplies(Id);
             ViewBag.Post = _postService.GetPost(Id);
             return View("Post");
         }

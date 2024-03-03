@@ -1,4 +1,8 @@
 ﻿@using BBS.Models;
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor Accessor;
+
+
 <link rel="stylesheet" href="~/Post.css">
 <div id="PostUnit@(ViewBag.Post.Id)">
     <p>Post Id : @ViewBag.Post.Id</p>
@@ -8,3 +12,20 @@
     <span>Date Created : @ViewBag.Post.CreatedDate</span>
     <span>Date Modified : @ViewBag.Post.ModifiedDate</span>
     </div>
+@if (Accessor.HttpContext.Session.GetInt32("Id") != null)
+{
+    if (ViewBag.Post.UserId == Accessor.HttpContext.Session.GetInt32("Id"))
+    {
+        <a class="EditButton" onclick="showEditPostPanel(@ViewBag.Post.Id)">Edit</a>
+    }
+    <a class="ReplyButton" onclick="showReplyPanel(@ViewBag.Post.Id)">Reply</a>
+}
+
+@foreach (var item in ViewBag.Replies)
+{
+    <p>@item.Content</p>
+    <p>@item.UserId</p>
+    <p>@item.UserName</p>
+    <span>@item.CreatedDate</span>
+    <span>@item.ModifiedDate</span>
+}

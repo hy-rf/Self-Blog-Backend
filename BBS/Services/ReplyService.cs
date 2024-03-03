@@ -30,7 +30,29 @@ namespace BBS.Services
             return false;
         }
         public List<Reply> GetReplies(int PostId){
-            throw new NotImplementedException();
+            SqliteCommand RepliesCommand = new SqliteCommand
+            {
+                CommandText = @"SELECT Content, UserId, UserName, CreatedDate, ModifiedDate FROM Reply WHERE PostId = $PostId",
+                Connection = Connection
+            };
+            RepliesCommand.Parameters.AddWithValue("$PostId", PostId);
+            Connection.Open();
+            List<Reply> Replies = new List<Reply>();
+            using (var reader = RepliesCommand.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    Replies.Add(new Reply
+                    {
+                        Content = reader.GetString(0),
+                        UserId = reader.GetInt32(1),
+                        UserName = reader.GetString(2),
+                        CreatedDate = reader.GetDateTime(3),
+                        ModifiedDate = reader.GetDateTime(4)
+                    });
+                }
+            }
+            return Replies;
         }
     }
 }
