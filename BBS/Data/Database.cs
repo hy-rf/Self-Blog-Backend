@@ -1,6 +1,7 @@
 ﻿using BBS.Interfaces;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Data.Sqlite;
+using System.Data;
 using System.Reflection;
 
 namespace BBS.Data
@@ -34,8 +35,8 @@ namespace BBS.Data
                         o = Convert.ToInt32(o);
                         foreach (PropertyInfo prop in obj.GetType().GetProperties())
                         {
-                            var data = Convert.ChangeType(reader.GetValue(o), prop.PropertyType);
-                            prop.SetValue(obj, reader.IsDBNull(o) ? null : data);
+                            var data = Convert.ChangeType(reader.GetValue(prop.Name), prop.PropertyType);
+                            prop.SetValue(obj, data);
                             o++;
                         }
 
