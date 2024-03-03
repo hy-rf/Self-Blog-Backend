@@ -50,9 +50,9 @@ namespace BBS.Controllers
         [Route("Post/EditPost/{PostId}")]
         public ActionResult EditPost(int PostId, string Title, string Content, string Tags){
             if (_postService.EditPost(PostId, Title, Content, Tags)){
-                return RedirectToAction("Index");
+                return RedirectToAction("GetPost", new {Id = PostId });
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("GetPost", new { Id = PostId });
         }
     }
 }

@@ -24,7 +24,8 @@ namespace BBS.Controllers
             return RedirectToRoute(new
             {
                 controller = "Post",
-                action = "Index"
+                action = "GetPost",
+                Id = PostId
             });
         }
     }

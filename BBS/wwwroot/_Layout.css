@@ -10,7 +10,7 @@
     --header-height: 1.35rem;
     --main-height: 90%;
     --footer-height: 5%;
-    --home-page-width: 100%;
+    --home-page-width: 95%;
     overflow: auto;
 }
 
@@ -24,9 +24,11 @@ html {
 
 
 body {
+    display: flex;
+    flex-direction: column;
     position: absolute;
-    left: 1rem;
-    right: 1rem;
+    left: 2.5%;
+    width: var(--home-page-width);
     min-height: 100vh;
     scroll-behavior: smooth;
     scrollbar-width: 0;
@@ -38,9 +40,8 @@ header {
     position: fixed;
     top: 0;
     height: var(--header-height);
-
-    width: calc(100%-2rem);
-
+    width: var(--home-page-width);
+    align-self: center;
     border-top: 1px solid black;
     border-left: 1px solid black;
     border-right: 1px solid black;
@@ -50,12 +51,6 @@ header {
     background-color: white;
 }
 
-.header_show {
-    position: fixed;
-    top: 0;
-    height: var(--header-height);
-    transition: 0.5s;
-}
 
 .header_hide {
     position: fixed;
@@ -67,7 +62,7 @@ main {
     position: static;
     top: var(--header-height);
     height: max-content;
-    width: var(--home-page-width);
+    width: 100%;
     border-left: 1px solid black;
     border-right: 1px solid black;
     overflow: hidden;
@@ -80,7 +75,7 @@ script {
 
 footer {
     position: absolute;
-    width: var(--home-page-width);
+    width: 100%;
     bottom: 0;
     border-top: 1px solid black;
     border-left: 1px solid black;
