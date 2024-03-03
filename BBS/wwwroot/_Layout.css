@@ -51,6 +51,14 @@ header {
     background-color: white;
 }
 
+#navbar{
+    position:absolute;
+    left:1rem;
+}
+#user{
+    position:absolute;
+    right:1rem;
+}
 
 .header_hide {
     position: fixed;
