@@ -117,8 +117,9 @@ namespace BBS.Services
             command.Connection = Connection;
             command.CommandText = @"SELECT Id, Name, Password, Email, CreatedDate, LastLogin, Avatar FROM User WHERE Id = $Id";
             command.Parameters.AddWithValue("$Id", Id);
-            //using SqliteDataReader reader = command.ExecuteReader();
             object user = new User();
+            //using SqliteDataReader reader = command.ExecuteReader();
+
             user = _database.GetRow(command, "GetOne", user);
             //if (reader.Read())
             //{
