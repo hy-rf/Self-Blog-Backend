@@ -119,7 +119,7 @@ namespace BBS.Services
             command.Parameters.AddWithValue("$Id", Id);
             //using SqliteDataReader reader = command.ExecuteReader();
             object user = new User();
-            user = _database.Execute(command, "GetOne", user);
+            user = _database.GetRow(command, "GetOne", user);
             //if (reader.Read())
             //{
             //    user = new User

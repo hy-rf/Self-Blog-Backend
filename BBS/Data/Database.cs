@@ -17,7 +17,11 @@ namespace BBS.Data
         {
             throw new NotImplementedException();
         }
-        public object Execute(SqliteCommand sqliteCommand, string type, object obj)
+        public bool Execute(SqliteCommand sqliteCommand)
+        {
+            throw new NotImplementedException();
+        }
+        public object GetRow(SqliteCommand sqliteCommand, string type, object obj)
         {
             switch (type)
             {
@@ -31,30 +35,32 @@ namespace BBS.Data
                     var reader = sqliteCommand.ExecuteReader();
                     if (reader.Read())
                     {
-                        int o = 0;
-                        o = Convert.ToInt32(o);
                         foreach (PropertyInfo prop in obj.GetType().GetProperties())
                         {
                             var data = Convert.ChangeType(reader.GetValue(prop.Name), prop.PropertyType);
                             prop.SetValue(obj, data);
-                            o++;
                         }
-
                     }
                     return obj;
-                //case "GetList":
-                //    var reader = sqliteCommand.ExecuteReader();
-                //    while (reader.Read())
-                //    {
-                //        foreach (PropertyInfo prop in obj.GetType().GetProperties())
-                //        {
-                //            prop.SetValue(obj, prop.GetValue(reader, null));
-                //        }
-                //        return obj;
-                //    }
                 default: throw new NotImplementedException();
-
             }
+        }
+        public List<object> GetRows(SqliteCommand sqliteCommand, List<object> list)
+        {
+            Type objElementType = list.GetType();
+            var reader = sqliteCommand.ExecuteReader();
+            while (reader.Read())
+            {
+                foreach (PropertyInfo prop in objElementType.GetType().GetProperties())
+                {
+                    var data = Convert.ChangeType(reader.GetValue(prop.Name), prop.PropertyType);
+                    prop.SetValue(objElementType, data);
+                }
+
+                list.Add(objElementType);
+            }
+            return list;
+
         }
     }
 }
