@@ -110,7 +110,7 @@ namespace BBS.Services
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        public object GetUser(int Id)
+        public User GetUser(int Id)
         {
             var command = Connection.CreateCommand();
             command.Connection = Connection;
