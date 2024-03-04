@@ -112,29 +112,29 @@ namespace BBS.Services
         /// <returns></returns>
         public object GetUser(int Id)
         {
-            Connection.Open();
             var command = Connection.CreateCommand();
             command.Connection = Connection;
             command.CommandText = @"SELECT Id, Name, Password, Email, CreatedDate, LastLogin, Avatar FROM User WHERE Id = $Id";
             command.Parameters.AddWithValue("$Id", Id);
-            object user = new User();
-            //using SqliteDataReader reader = command.ExecuteReader();
-
-            user = _database.GetRow(command, "GetOne", user);
-            //if (reader.Read())
-            //{
-            //    user = new User
-            //    {
-            //        Id = reader.GetInt32(0),
-            //        Name = reader.GetString(1),
-            //        Password = reader.GetString(2),
-            //        Email = reader.IsDBNull(3) ? string.Empty : reader.GetString(3),
-            //        CreatedDate = reader.GetDateTime(4),
-            //        LastLogin = reader.GetDateTime(5),
-            //        Avatar = reader.IsDBNull(6) ? string.Empty : reader.GetString(6)
-            //    };
-            //    Connection.Close();
-            //}
+            Connection.Open();
+            User user = new User();
+            using SqliteDataReader reader = command.ExecuteReader();
+            
+            //user = _database.GetRow(command, "GetOne", user);
+            if (reader.Read())
+            {
+                user = new User
+                {
+                    Id = reader.GetInt32(0),
+                    Name = reader.GetString(1),
+                    Password = reader.GetString(2),
+                    Email = reader.IsDBNull(3) ? string.Empty : reader.GetString(3),
+                    CreatedDate = reader.GetDateTime(4),
+                    LastLogin = reader.GetDateTime(5),
+                    Avatar = reader.IsDBNull(6) ? string.Empty : reader.GetString(6)
+                };
+                Connection.Close();
+            }
             Connection.Close();
             return user;
         }

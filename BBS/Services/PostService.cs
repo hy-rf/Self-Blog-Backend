@@ -73,22 +73,21 @@ namespace BBS.Services
             };
             getPost.Parameters.AddWithValue("$Id", Id);
             Connection.Open();
-            object post = new Post();
-            //using SqliteDataReader reader = getPost.ExecuteReader();
-            //if (reader.Read())
-            //{
-            //    post.Id = reader.GetInt32(0);
-            //    post.Title = reader.GetString(1);
-            //    post.Content = reader.GetString(2);
-            //    post.UserId = reader.GetInt32(3);
-            //    post.CreatedDate = reader.GetDateTime(4);
-            //    post.ModifiedDate = reader.GetDateTime(5);
-            //    post.Featured = reader.GetBoolean(6);
-            //    post.Visibility = reader.GetBoolean(7);
-            //    post.Tags = reader.IsDBNull(8) ? string.Empty : reader.GetString(8);
-            //    post.Likes = reader.GetInt32(9);
-            //}
-            post = _database.GetRow(getPost, "GetOne", post);
+            Post post = new Post();
+            using SqliteDataReader reader = getPost.ExecuteReader();
+            if (reader.Read())
+            {
+                post.Id = reader.GetInt32(0);
+                post.Title = reader.GetString(1);
+                post.Content = reader.GetString(2);
+                post.UserId = reader.GetInt32(3);
+                post.CreatedDate = reader.GetDateTime(4);
+                post.ModifiedDate = reader.GetDateTime(5);
+                post.Featured = reader.GetBoolean(6);
+                post.Visibility = reader.GetBoolean(7);
+                post.Tags = reader.IsDBNull(8) ? string.Empty : reader.GetString(8);
+            }
+            //post = _database.GetRow(getPost, "GetOne", post);
             Connection.Close();
             return post;
         }
