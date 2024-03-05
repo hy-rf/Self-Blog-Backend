@@ -13,13 +13,14 @@ namespace BBS.Services
         }
         public bool Reply(string Content, int UserId, int PostId){
             SqliteCommand ReplyCommand = new SqliteCommand{
-                CommandText = @"INSERT INTO Reply (Content, UserId, ModifiedDate, PostId) VALUES ($Content, $UserId, $ModifiedDate, $PostId)",
+                CommandText = @"INSERT INTO Reply (Content, UserId, PostId, Created, Modified) VALUES ($Content, $UserId, $PostId, $Created, $Modified)",
                 Connection = Connection
             };
             ReplyCommand.Parameters.AddWithValue("$Content", Content);
             ReplyCommand.Parameters.AddWithValue("$UserId", UserId);
-            ReplyCommand.Parameters.AddWithValue("$ModifiedDate", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
             ReplyCommand.Parameters.AddWithValue("$PostId", PostId);
+            ReplyCommand.Parameters.AddWithValue("$Created", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+            ReplyCommand.Parameters.AddWithValue("$Modified", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
             Connection.Open();
             if (ReplyCommand.ExecuteNonQuery()!=-1){
                 Connection.Close();
@@ -31,7 +32,7 @@ namespace BBS.Services
         public List<Reply> GetReplies(int PostId){
             SqliteCommand RepliesCommand = new SqliteCommand
             {
-                CommandText = @"SELECT Content, UserId, CreatedDate, ModifiedDate FROM Reply WHERE PostId = $PostId",
+                CommandText = @"SELECT Content, UserId, Created, Modified FROM Reply WHERE PostId = $PostId",
                 Connection = Connection
             };
             RepliesCommand.Parameters.AddWithValue("$PostId", PostId);
@@ -45,8 +46,8 @@ namespace BBS.Services
                     {
                         Content = reader.GetString(0),
                         UserId = reader.GetInt32(1),
-                        CreatedDate = reader.GetDateTime(2),
-                        ModifiedDate = reader.GetDateTime(3)
+                        Created = reader.GetDateTime(2),
+                        Modified = reader.GetDateTime(3)
                     });
                 }
             }

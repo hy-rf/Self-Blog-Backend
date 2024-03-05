@@ -13,25 +13,23 @@ namespace BBS.Services
             Connection = database.SqLiteConnection();
             _database = database;
         }
-        public bool CreatePost(string Title, string Content, int UserId, string? Tags)
+        public bool CreatePost(string Title, string Content, int UserId)
         {
             SqliteCommand CreatePostCommand = new SqliteCommand
             {
                 Connection = Connection,
-                CommandText = string.IsNullOrEmpty(Tags) ? @"INSERT INTO Post (Title, Content, UserId, ModifiedDate) VALUES ($Title, $Content, $UserId, $ModifiedDate)" : @"INSERT INTO Post (Title, Content, UserId, ModifiedDate, Tags) VALUES ($Title, $Content, $UserId, $ModifiedDate, $Tags)"
+                CommandText = @"INSERT INTO Post (Title, Content, UserId, Created, Modified) VALUES ($Title, $Content, $UserId, $Created, $Modified)"
             };
             CreatePostCommand.Parameters.AddWithValue("$Title", Title);
             CreatePostCommand.Parameters.AddWithValue("$Content", Content);
             CreatePostCommand.Parameters.AddWithValue("$UserId", UserId);
-            CreatePostCommand.Parameters.AddWithValue("$ModifiedDate", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
-            if (!string.IsNullOrEmpty(Tags))
-            {
-                CreatePostCommand.Parameters.AddWithValue("$Tags", Tags);
-            }
+            CreatePostCommand.Parameters.AddWithValue("$Created", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+            CreatePostCommand.Parameters.AddWithValue("$Modified", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
             Connection.Open();
             try
             {
                 CreatePostCommand.ExecuteNonQuery();
+                Connection.Close();
                 return true;
             }
             catch
@@ -40,22 +38,18 @@ namespace BBS.Services
                 return false;
             }
         }
-        public bool EditPost(int Id, string Title, string Content, string? Tags)
+        public bool EditPost(int Id, string Title, string Content)
         {
             SqliteCommand EditPostCommand = new SqliteCommand
             {
                 Connection = Connection,
-                CommandText = string.IsNullOrEmpty(Tags) ? @"UPDATE Post SET Title=$Title, Content=$Content, ModifiedDate=$ModifiedDate WHERE Id=$Id" : @"UPDATE Post SET Title=$Title, Content=$Content, ModifiedDate=$ModifiedDate, Tags=$Tags WHERE Id=$Id"
+                CommandText = @"UPDATE Post SET Title=$Title, Content=$Content, Modified = $Modified WHERE Id=$Id"
             };
             EditPostCommand.Parameters.AddWithValue("$Title", Title);
             EditPostCommand.Parameters.AddWithValue("$Content", Content);
-            EditPostCommand.Parameters.AddWithValue("$ModifiedDate", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+            EditPostCommand.Parameters.AddWithValue("$Modified", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
             EditPostCommand.Parameters.AddWithValue("$Id", Id);
             Connection.Open();
-            if (!string.IsNullOrEmpty(Tags))
-            {
-                EditPostCommand.Parameters.AddWithValue("$Tags", Tags);
-            }
             if (EditPostCommand.ExecuteNonQuery() != -1)
             {
                 Connection.Close();
@@ -69,7 +63,7 @@ namespace BBS.Services
             SqliteCommand getPost = new SqliteCommand
             {
                 Connection = Connection,
-                CommandText = @"SELECT Id, Title, Content, UserId, CreatedDate, ModifiedDate, Featured, Visibility, Tags FROM Post WHERE Id = $Id"
+                CommandText = @"SELECT Id, Title, Content, UserId, Created, Modified FROM Post WHERE Id = $Id"
             };
             getPost.Parameters.AddWithValue("$Id", Id);
             Connection.Open();
@@ -81,13 +75,9 @@ namespace BBS.Services
                 post.Title = reader.GetString(1);
                 post.Content = reader.GetString(2);
                 post.UserId = reader.GetInt32(3);
-                post.CreatedDate = reader.GetDateTime(4);
-                post.ModifiedDate = reader.GetDateTime(5);
-                post.Featured = reader.GetBoolean(6);
-                post.Visibility = reader.GetBoolean(7);
-                post.Tags = reader.IsDBNull(8) ? string.Empty : reader.GetString(8);
+                post.Created = reader.GetDateTime(4);
+                post.Modified = reader.GetDateTime(5);
             }
-            //post = _database.GetRow(getPost, "GetOne", post);
             Connection.Close();
             return post;
         }
@@ -97,7 +87,7 @@ namespace BBS.Services
             SqliteCommand GetRecentPostsCommand = new SqliteCommand
             {
                 Connection = Connection,
-                CommandText = @"SELECT Id, Title, Content, UserId, CreatedDate, ModifiedDate, Featured, Visibility, Tags FROM Post"
+                CommandText = @"SELECT Id, Title, Content, UserId, Created, Modified FROM Post"
             };
             using var reader = GetRecentPostsCommand.ExecuteReader();
             List<Post> Posts = new List<Post>();
@@ -109,11 +99,8 @@ namespace BBS.Services
                     Title = reader.GetString(1),
                     Content = reader.GetString(2),
                     UserId = reader.GetInt32(3),
-                    CreatedDate = reader.GetDateTime(4),
-                    ModifiedDate = reader.GetDateTime(5),
-                    Featured = reader.GetBoolean(6),
-                    Visibility = reader.GetBoolean(7),
-                    Tags = reader.IsDBNull(8) ? string.Empty : reader.GetString(8)
+                    Created = reader.GetDateTime(4),
+                    Modified = reader.GetDateTime(5),
                 });
             }
             Connection.Close();

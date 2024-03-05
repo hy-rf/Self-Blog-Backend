@@ -16,16 +16,15 @@ namespace BBS.Controllers
         }
         public IActionResult Index()
         {
-            List<Post> posts = _postService.GetPosts();
-            ViewBag.Posts = posts;
+            ViewBag.Posts = _postService.GetPosts();
             return View();
         }
-        public ActionResult CreatePost(string Title, string Content, string? Tags)
+        public ActionResult CreatePost(string Title, string Content)
         {
             try
             {
                 ViewBag.Id = HttpContext.Session.GetInt32("Id");
-                if (_postService.CreatePost(Title, Content, ViewBag.Id, Tags))
+                if (_postService.CreatePost(Title, Content, ViewBag.Id))
                 {
                     return RedirectToAction("Index");
                 }
@@ -48,8 +47,8 @@ namespace BBS.Controllers
             return View("Post");
         }
         [Route("Post/EditPost/{PostId}")]
-        public ActionResult EditPost(int PostId, string Title, string Content, string Tags){
-            if (_postService.EditPost(PostId, Title, Content, Tags)){
+        public ActionResult EditPost(int PostId, string Title, string Content){
+            if (_postService.EditPost(PostId, Title, Content)){
                 return RedirectToAction("GetPost", new {Id = PostId });
             }
             return RedirectToAction("GetPost", new { Id = PostId });

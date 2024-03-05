@@ -29,13 +29,15 @@ namespace BBS.Services
         {
             if (CheckSignup(username))
             {
-                Connection.Open();
                 var command = Connection.CreateCommand();
                 command.Connection = Connection;
-                command.CommandText = @"INSERT INTO User (Name, Password, LastLogin) VALUES ($Name, $Password, $LastLogin)";
+                command.CommandText = @"INSERT INTO User (Name, Pwd, Created, LastLogin, Avatar) VALUES ($Name, $Password, $Created, $LastLogin, $Avatar)";
                 command.Parameters.AddWithValue("$Name", username);
                 command.Parameters.AddWithValue("$Password", password);
+                command.Parameters.AddWithValue("$Created", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
                 command.Parameters.AddWithValue("$LastLogin", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+                command.Parameters.AddWithValue("$Avatar", "");
+                Connection.Open();
                 try
                 {
                     command.ExecuteNonQuery();
@@ -81,12 +83,12 @@ namespace BBS.Services
         /// <returns></returns>
         public bool Login(string username, string password)
         {
-            Connection.Open();
             var command = Connection.CreateCommand();
             command.Connection = Connection;
-            command.CommandText = @"SELECT Id, Name FROM User WHERE Name = $username AND Password = $password";
+            command.CommandText = @"SELECT Id, Name FROM User WHERE Name = $username AND Pwd = $password";
             command.Parameters.AddWithValue("$username", username);
             command.Parameters.AddWithValue("$password", password);
+            Connection.Open();
             using (SqliteDataReader reader = command.ExecuteReader())
             {
                 if (reader.Read())
@@ -114,38 +116,33 @@ namespace BBS.Services
         {
             var command = Connection.CreateCommand();
             command.Connection = Connection;
-            command.CommandText = @"SELECT Id, Name, Password, Email, CreatedDate, LastLogin, Avatar FROM User WHERE Id = $Id";
+            command.CommandText = @"SELECT Id, Name, Created, LastLogin, Avatar FROM User WHERE Id = $Id";
             command.Parameters.AddWithValue("$Id", Id);
-            Connection.Open();
             User user = new User();
+            Connection.Open();
             using SqliteDataReader reader = command.ExecuteReader();
-            
-            //user = _database.GetRow(command, "GetOne", user);
             if (reader.Read())
             {
                 user = new User
                 {
                     Id = reader.GetInt32(0),
                     Name = reader.GetString(1),
-                    Password = reader.GetString(2),
-                    Email = reader.IsDBNull(3) ? string.Empty : reader.GetString(3),
-                    CreatedDate = reader.GetDateTime(4),
-                    LastLogin = reader.GetDateTime(5),
-                    Avatar = reader.IsDBNull(6) ? string.Empty : reader.GetString(6)
+                    Created = reader.GetDateTime(2),
+                    LastLogin = reader.GetDateTime(3),
+                    Avatar = reader.GetString(4)
                 };
-                Connection.Close();
             }
             Connection.Close();
             return user;
         }
-        public bool EditAvatar(int Id, string avatar)
+        public bool EditAvatar(int Id, string Avatar)
         {
             SqliteCommand EditAvatar = new SqliteCommand
             {
-                CommandText = @"UPDATE User SET Avatar = $avatar WHERE Id = $Id",
+                CommandText = @"UPDATE User SET Avatar = $Avatar WHERE Id = $Id",
                 Connection = Connection
             };
-            EditAvatar.Parameters.AddWithValue("$avatar", avatar);
+            EditAvatar.Parameters.AddWithValue("$Avatar", Avatar);
             EditAvatar.Parameters.AddWithValue("$Id", Id);
             Connection.Open();
             if (EditAvatar.ExecuteNonQuery() != -1)
