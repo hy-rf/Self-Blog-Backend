@@ -53,5 +53,9 @@ namespace BBS.Services
             }
             return Replies;
         }
+        public bool EditReply(int Id, string Content)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
