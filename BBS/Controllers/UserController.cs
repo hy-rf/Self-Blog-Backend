@@ -77,5 +77,10 @@ namespace BBS.Controllers
             }
             return RedirectToAction("UserCenter");
         }
+        public ActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index");
+        }
     }
 }
