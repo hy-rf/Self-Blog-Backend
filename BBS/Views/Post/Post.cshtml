@@ -9,8 +9,8 @@
     <p>Title : @ViewBag.Post.Title</p>
     <p>Content : @ViewBag.Post.Content</p>
     <p>UserId : @ViewBag.Post.UserId</p>
-    <span>Date Created : @ViewBag.Post.CreatedDate</span>
-    <span>Date Modified : @ViewBag.Post.ModifiedDate</span>
+    <span>Date Created : @ViewBag.Post.Created</span>
+    <span>Date Modified : @ViewBag.Post.Modified</span>
     </div>
 @if (Accessor.HttpContext.Session.GetInt32("Id") != null)
 {
@@ -25,8 +25,7 @@
 {
     <p>@item.Content</p>
     <p>@item.UserId</p>
-    <p>@item.UserName</p>
-    <span>@item.CreatedDate</span>
-    <span>@item.ModifiedDate</span>
+    <span>@item.Created</span>
+    <span>@item.Modified</span>
 }
 <script src="~/Post.js" defer></script>
