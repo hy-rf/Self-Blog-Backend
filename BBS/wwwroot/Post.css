@@ -1,14 +1,19 @@
-.EditButton {
+.EditButton,
+.ReplyButton {
     cursor: pointer;
     border: 1px black solid;
     border-radius: 3px;
 }
 
-.EditButton:hover {
-    color: blue;
-}
+    .EditButton:hover {
+        color: blue;
+    }
 
-span{
+    .ReplyButton:hover {
+        color: blue;
+    }
+
+span {
     color: grey;
     font-size: 0.8rem;
 }

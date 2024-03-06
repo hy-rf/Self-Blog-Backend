@@ -8,7 +8,7 @@
 
 @foreach (var item in ViewBag.Posts)
 {
-    <div id="PostUnit@(item.Id)">
+    <div>
         <p>Post Id : @item.Id</p>
         <a asp-controller="Post" asp-action="GetPost" asp-route-Id="@item.Id">Title : @item.Title</a>
         <p>Content : @item.Content</p>
