@@ -51,13 +51,34 @@ header {
     background-color: white;
 }
 
-#navbar{
-    position:absolute;
-    left:1rem;
+#navbar {
+    position: absolute;
+    left: 1rem;
 }
-#user{
-    position:absolute;
-    right:1rem;
+
+#user {
+    position: absolute;
+    right: 1rem;
+    background-color: antiquewhite;
+    border-radius:5px;
+}
+    #user > * {
+        background-color: antiquewhite;
+        border-radius: 5px;
+    }
+
+
+
+#UserMenu {
+    display: none;
+    position: absolute;
+    width:100%;
+    z-index: 99;
+/*    background-color:antiquewhite;*/
+}
+
+.usermenu_show {
+    display: block;
 }
 
 .header_hide {
@@ -90,5 +111,3 @@ footer {
     border-right: 1px solid black;
     border-bottom: 1px solid black;
 }
-
-
