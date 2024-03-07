@@ -153,5 +153,15 @@ namespace BBS.Services
             Connection.Close();
             return false;
         }
+        public bool EditName(int Id, string Name)
+        {
+            SqliteCommand EditName = new SqliteCommand
+            {
+                CommandText = @"UPDATE User SET Name = $Name WHERE Id = $Id",
+                Connection = Connection
+            };
+            EditName.Parameters.AddWithValue("$Name", Name);
+            EditName.Parameters.AddWithValue("$Id", Id);
+
     }
 }
