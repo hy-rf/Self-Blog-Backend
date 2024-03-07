@@ -23,5 +23,6 @@ document.querySelector("#avatar").addEventListener("change", () => {
 });
 
 document.querySelector('#name').addEventListener('click', () => {
-    document.querySelector('#name').tagName = "input";
+    var ele = document.querySelector('#name');
+    ele.outerHTML = `<input value="${ele.innerHTML}"></input>`;
 });
