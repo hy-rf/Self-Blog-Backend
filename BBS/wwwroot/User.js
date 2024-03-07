@@ -21,3 +21,7 @@ document.querySelector("#avatar").addEventListener("change", () => {
     }
     document.querySelector("form>button").removeAttribute("disabled");
 });
+
+document.querySelector('#name').addEventListener('click', () => {
+    document.querySelector('#name').tagName = "input";
+});
