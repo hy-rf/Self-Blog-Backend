@@ -8,9 +8,16 @@ async function UploadFile(FormEle) {
             method: 'POST',
             body: formData
         });
-        resultElement.value = 'Result: ' + response.status + ' ' +
-            response.statusText;
+        location.reload();
     } catch (error) {
         console.error('Error:', error);
     }
 }
+
+document.querySelector("#avatar").addEventListener("change", () => {
+    const [file] = document.querySelector("#avatar").files;
+    if (file) {
+        document.querySelector('#Preview').src = URL.createObjectURL(file);
+    }
+    document.querySelector("form>button").removeAttribute("disabled");
+});

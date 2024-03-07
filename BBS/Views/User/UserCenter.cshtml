@@ -13,13 +13,16 @@
         <p>LastLoginDate:@ViewBag.UserInfo.LastLogin</p>
     </div>
     <div id="Avatar">
-        <img src="data:image/png;base64, @ViewBag.UserInfo.Avatar" alt="" width="128" height="128">
-        <form method="POST" action="/User/EditAvatar/@ViewBag.UserInfo.Id" enctype="multipart/form-data"
-            onsubmit="UploadFile(this);return false;">
-            <label for="avatar">Select image:</label>
-            <input type="file" id="avatar" name="avatar">
-            <output name="result"></output>
-            <button type="submit">Update Avatar</button>
+        
+        <form method="POST" action="/User/EditAvatar/@ViewBag.UserInfo.Id" enctype="multipart/form-data" onsubmit="UploadFile(this);return false;">
+            <div style="display:flex;flex-direction:row;">
+                <img src="data:image/png;base64, @ViewBag.UserInfo.Avatar" width="128" height="128">
+                <img id="Preview" width="128" height="128">
+            </div>
+            
+            <input type="file" id="avatar" name="avatar" value="Choose Photo">
+            
+            <button type="submit" disabled>Update Avatar</button>
         </form>
     </div>
 </div>

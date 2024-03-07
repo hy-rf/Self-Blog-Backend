@@ -75,6 +75,10 @@ namespace BBS.Controllers
                     }
                 }
             }
+            else
+            {
+                return RedirectToAction("UserCenter");
+            }
             return RedirectToAction("UserCenter");
         }
         public ActionResult Logout()
