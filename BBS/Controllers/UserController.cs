@@ -91,6 +91,7 @@ namespace BBS.Controllers
             string name = json.GetProperty("Name").ToString();
             if (_userService.EditName(Id, name))
             {
+                HttpContext.Session.SetString("Name", name);
                 Response.StatusCode = 200;
             }
             Response.StatusCode = 404;
