@@ -84,7 +84,7 @@ namespace BBS.Controllers
             return RedirectToAction("UserCenter");
         }
         [HttpPost]
-        [Produces(MediaTypeNames.Application.Json)]
+        //[Produces(MediaTypeNames.Application.Json)]
         [Route("User/EditName/{Id}")]
         public void EditName(int Id, [FromBody] JsonElement json)
         {

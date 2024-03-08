@@ -168,6 +168,7 @@ namespace BBS.Services
                 Connection.Close();
                 return true;
             }
+            Connection.Close();
             return false;
         }
     }
