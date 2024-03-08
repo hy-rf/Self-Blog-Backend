@@ -1,4 +1,5 @@
 ﻿using BBS.Models;
+using System.Diagnostics.Eventing.Reader;
 
 namespace BBS.Interfaces
 {
@@ -9,5 +10,6 @@ namespace BBS.Interfaces
         public bool Login(string username, string password);
         public User GetUser(int Id);
         public bool EditAvatar(int Id, string avatar);
+        public bool EditName(int Id, string name);
     }
 }

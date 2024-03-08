@@ -22,11 +22,14 @@ document.querySelector("#avatar").addEventListener("change", () => {
     document.querySelector("form>button").removeAttribute("disabled");
 });
 
-document.querySelector('#name').addEventListener('click', () => {
-    var ele = document.querySelector('#name');
-    ele.outerHTML = `<input id="inputName" value="${ele.innerHTML}"></input><button id="changeNameButton">Update Name</button>`;
-    document.getElementById("changeNameButton").addEventListener("click", () => { EditName(document.querySelector('#Id').innerText.split(':')[1]) });
-});
+BindEditNameEvent = () => {
+    document.querySelector('#name').addEventListener('click', () => {
+        var ele = document.querySelector('#name');
+        ele.outerHTML = `<input id="inputName" value="${ele.innerHTML}"></input><button id="changeNameButton">Update Name</button>`;
+        document.getElementById("changeNameButton").addEventListener("click", () => { EditName(document.querySelector('#Id').innerText.split(':')[1]) });
+    });
+}
+BindEditNameEvent();
 
 
 
@@ -41,7 +44,13 @@ EditName = (Id) => {
         body: JSON.stringify({
             Name: newName
         }),
-    }).then();
-    console.log(Id);
-    }
+    }).then(response => {
+        return;
+    });
+    var ele = document.querySelector('#inputName');
+    ele.outerHTML = `<span id="name">${ele.value}</span>`;
+    document.getElementById("changeNameButton").remove();
+    BindEditNameEvent();
+    document.getElementById('Title').innerText = `${ele.value}'s Info:`;
+}
 

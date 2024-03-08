@@ -162,7 +162,13 @@ namespace BBS.Services
             };
             EditName.Parameters.AddWithValue("$Name", Name);
             EditName.Parameters.AddWithValue("$Id", Id);
-            throw new NotImplementedException();
+            Connection.Open();
+            if (EditName.ExecuteNonQuery() != -1)
+            {
+                Connection.Close();
+                return true;
+            }
+            return false;
         }
     }
 }

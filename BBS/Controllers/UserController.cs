@@ -1,6 +1,8 @@
 ﻿using BBS.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
+using System.Net.Mime;
+using System.Text.Json;
 
 namespace BBS.Controllers
 {
@@ -80,6 +82,18 @@ namespace BBS.Controllers
                 return RedirectToAction("UserCenter");
             }
             return RedirectToAction("UserCenter");
+        }
+        [HttpPost]
+        [Produces(MediaTypeNames.Application.Json)]
+        [Route("User/EditName/{Id}")]
+        public void EditName(int Id, [FromBody] JsonElement json)
+        {
+            string name = json.GetProperty("Name").ToString();
+            if (_userService.EditName(Id, name))
+            {
+                Response.StatusCode = 200;
+            }
+            Response.StatusCode = 404;
         }
         public ActionResult Logout()
         {
