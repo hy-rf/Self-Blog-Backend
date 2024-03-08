@@ -93,8 +93,10 @@ namespace BBS.Controllers
             {
                 HttpContext.Session.SetString("Name", name);
                 Response.StatusCode = 200;
+                return;
             }
             Response.StatusCode = 404;
+            return;
         }
         public ActionResult Logout()
         {
