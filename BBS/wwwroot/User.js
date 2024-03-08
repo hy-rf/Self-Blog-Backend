@@ -52,5 +52,6 @@ EditName = (Id) => {
     document.getElementById("changeNameButton").remove();
     BindEditNameEvent();
     document.getElementById('Title').innerText = `${ele.value}'s Info:`;
+    document.getElementById('userlink').innerText = `Hello! ${ele.value}`;
 }
 
