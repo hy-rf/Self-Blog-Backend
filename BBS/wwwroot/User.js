@@ -24,5 +24,24 @@ document.querySelector("#avatar").addEventListener("change", () => {
 
 document.querySelector('#name').addEventListener('click', () => {
     var ele = document.querySelector('#name');
-    ele.outerHTML = `<input value="${ele.innerHTML}"></input>`;
+    ele.outerHTML = `<input id="inputName" value="${ele.innerHTML}"></input><button id="changeNameButton">Update Name</button>`;
+    document.getElementById("changeNameButton").addEventListener("click", () => { EditName(document.querySelector('#Id').innerText.split(':')[1]) });
 });
+
+
+
+EditName = (Id) => {
+    var newName = document.getElementById('inputName').value;
+    fetch(`/User/EditName/${Id}`, {
+        method: "POST",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            Name: newName
+        }),
+    }).then();
+    console.log(Id);
+    }
+

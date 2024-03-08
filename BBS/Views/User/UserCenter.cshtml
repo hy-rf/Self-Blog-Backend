@@ -7,21 +7,21 @@
 <div id="UserInfo">
     <div id="Detail">
         <h3>@ViewBag.UserInfo.Name's Info:</h3>
-        <p>Id:@ViewBag.UserInfo.Id</p>
+        <p id="Id">Id:@ViewBag.UserInfo.Id</p>
         <span>Name:</span><span id="name">@ViewBag.UserInfo.Name</span>
         <p>CreatedDate:@ViewBag.UserInfo.Created</p>
         <p>LastLoginDate:@ViewBag.UserInfo.LastLogin</p>
     </div>
     <div id="Avatar">
-        
+
         <form method="POST" action="/User/EditAvatar/@ViewBag.UserInfo.Id" enctype="multipart/form-data" onsubmit="UploadFile(this);return false;">
             <div style="display:flex;flex-direction:row;">
                 <img src="data:image/png;base64, @ViewBag.UserInfo.Avatar" width="128" height="128">
                 <img id="Preview" width="128" height="128">
             </div>
-            
+
             <input type="file" id="avatar" name="avatar" value="Choose Photo">
-            
+
             <button type="submit" disabled>Update Avatar</button>
         </form>
     </div>
@@ -30,3 +30,8 @@
 
 
 <script src="~/User.js" defer></script>
+<script>
+    window.onload = () => {
+        
+    }
+</script>
