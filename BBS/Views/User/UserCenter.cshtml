@@ -3,9 +3,9 @@
 
 
 <link rel="stylesheet" href="~/UserCenter.css">
-<a asp-controller="User" asp-action="Logout">Logout</a>
+
 <div id="UserInfo">
-    <div>
+    <div id="Detail">
         <h3>@ViewBag.UserInfo.Name's Info:</h3>
         <p>Id:@ViewBag.UserInfo.Id</p>
         <span>Name:</span><span id="name">@ViewBag.UserInfo.Name</span>

@@ -2,13 +2,28 @@
     display: flex;
     position: relative;
     flex-direction: row;
+    height: max-content;
+    width: calc(100%-4rem);
+    justify-content: space-between;
+    margin: 1rem 2rem 1rem 2rem;
+    line-height: 1.5rem;
 }
-form>*{
+
+form > * {
     font-size: 0.6rem;
 }
 
-#UserInfo {
-    top: 30%;
-    height: 40%;
-    border: 1px dotted black;
+#Detail {
+    position: relative;
+    left: 0;
+}
+
+#Avatar {
+    position: relative;
+    right: 0;
+    align-self: flex-end;
+}
+
+input {
+    height: 1.5rem;
 }

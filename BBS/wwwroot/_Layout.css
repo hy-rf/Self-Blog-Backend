@@ -24,8 +24,6 @@ html {
 
 
 body {
-    display: flex;
-    flex-direction: column;
     position: absolute;
     left: 2.5%;
     width: var(--home-page-width);
@@ -89,8 +87,7 @@ header {
 
 main {
     position: static;
-    top: var(--header-height);
-    height: max-content;
+    height: 100%;
     width: 100%;
     border-left: 1px solid black;
     border-right: 1px solid black;
