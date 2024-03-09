@@ -11,7 +11,7 @@ builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromDays(10);
+    options.IdleTimeout = TimeSpan.FromHours(1);
     options.Cookie.IsEssential = true;
 });
 
