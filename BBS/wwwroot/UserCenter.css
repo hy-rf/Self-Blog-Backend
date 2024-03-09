@@ -16,13 +16,36 @@ form > * {
 #Detail {
     position: relative;
     left: 0;
+    width:50%;
+    border: 1px solid black;
+    border-radius: 2px;
+    box-shadow: 3px 2px 2px black;
 }
+
+    #Detail:hover {
+        box-shadow: inset 3px 2px 2px black;
+    }
+
+    #Detail > * {
+        margin: 4px 4px 4px 4px;
+    }
 
 #Avatar {
     position: relative;
     right: 0;
-    align-self: flex-end;
+    width: 50%;
+    border: 1px solid black;
+    border-radius: 2px;
+    box-shadow: 3px 2px 2px black;
 }
+
+    #Avatar:hover {
+        box-shadow: inset 3px 2px 2px black;
+    }
+
+    #Avatar > * {
+        margin: 4px 4px 4px 4px;
+    }
 
 input {
     height: 1.5rem;
