@@ -40,14 +40,18 @@ header {
     height: var(--header-height);
     width: var(--home-page-width);
     align-self: center;
-    border-top: 1px solid black;
+    border-radius: 92px;
     border-left: 1px solid black;
     border-right: 1px solid black;
     border-bottom: 1px solid black;
     transition: 0.5s;
     z-index: 99;
-    background-color: white;
+    background-color: lightslategrey;
 }
+/*    header:hover {
+        background-color:lightslategrey;
+    }*/
+
 
 #navbar {
     position: absolute;
@@ -57,7 +61,7 @@ header {
 #user {
     position: absolute;
     right: 1rem;
-    background-color: antiquewhite;
+/*    background-color: antiquewhite;*/
     border-radius:5px;
 }
     #user > * {

@@ -11,7 +11,7 @@
     <p>UserId : @ViewBag.Post.UserId</p>
     <span>Date Created : @ViewBag.Post.Created</span>
     <span>Date Modified : @ViewBag.Post.Modified</span>
-    </div>
+</div>
 @if (Accessor.HttpContext.Session.GetInt32("Id") != null)
 {
     if (ViewBag.Post.UserId == Accessor.HttpContext.Session.GetInt32("Id"))
@@ -21,11 +21,17 @@
     <a class="ReplyButton" onclick="showReplyPanel(@ViewBag.Post.Id)">Reply</a>
 }
 
-@foreach (var item in ViewBag.Replies)
-{
-    <p>@item.Content</p>
-    <p>@item.UserId</p>
-    <span>@item.Created</span>
-    <span>@item.Modified</span>
-}
+<div id="Replies">Replies
+    @foreach (var item in ViewBag.Replies)
+    {
+        <div class="ReplyUnit">
+            <p>@item.Content</p>
+            <p>@item.UserId</p>
+            <p class="timeIndicator">
+                <span>@item.Created</span>
+                <span>@item.Modified</span>
+            </p>
+        </div>
+    }
+</div>
 <script src="~/Post.js" defer></script>
