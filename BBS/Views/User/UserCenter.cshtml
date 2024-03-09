@@ -9,13 +9,13 @@
         <h3 id="Title">@ViewBag.UserInfo.Name's Info:</h3>
         <p id="Id">Id:@ViewBag.UserInfo.Id</p>
         <span>Name:</span><span id="name">@ViewBag.UserInfo.Name</span>
-        <p>CreatedDate:@ViewBag.UserInfo.Created</p>
-        <p>LastLoginDate:@ViewBag.UserInfo.LastLogin</p>
+        <p>Created:@ViewBag.UserInfo.Created</p>
+        <p>Last Login:@ViewBag.UserInfo.LastLogin</p>
     </div>
     <div id="Avatar">
 
         <form method="POST" action="/User/EditAvatar/@ViewBag.UserInfo.Id" enctype="multipart/form-data" onsubmit="UploadFile(this);return false;">
-            <div style="display:flex;flex-direction:row;">
+            <div id="Avatars">
                 <img src="data:image/png;base64, @ViewBag.UserInfo.Avatar" width="128" height="128">
                 <img id="Preview" width="128" height="128">
             </div>

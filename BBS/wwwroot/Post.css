@@ -17,3 +17,16 @@ span {
     color: grey;
     font-size: 0.8rem;
 }
+
+.PostUnit {
+    position:relative;
+    border: 1px solid black;
+    border-radius: 2px;
+    box-shadow: 3px 2px 2px black;
+    margin:1px 4px 2px 2px;
+}
+    .PostUnit:hover {
+        box-shadow: inset 3px 2px 2px black;
+        top: 2px;
+        left: 2px;
+    }
