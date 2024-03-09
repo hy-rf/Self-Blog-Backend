@@ -1,7 +1,5 @@
 ﻿
 
-
-
 <link rel="stylesheet" href="~/UserCenter.css">
 
 <div id="UserInfo">
@@ -13,7 +11,6 @@
         <p>Last Login:@ViewBag.UserInfo.LastLogin</p>
     </div>
     <div id="Avatar">
-
         <form method="POST" action="/User/EditAvatar/@ViewBag.UserInfo.Id" enctype="multipart/form-data" onsubmit="UploadFile(this);return false;">
             <div id="Avatars">
                 <img src="data:image/png;base64, @ViewBag.UserInfo.Avatar" width="128" height="128">
