@@ -16,7 +16,7 @@ form > * {
 #Detail {
     position: relative;
     left: 0;
-    width:50%;
+    width:49%;
     border: 1px solid black;
     border-radius: 2px;
     box-shadow: 3px 2px 2px black;
@@ -24,6 +24,8 @@ form > * {
 
     #Detail:hover {
         box-shadow: inset 3px 2px 2px black;
+        top: 2px;
+        left: 2px;
     }
 
     #Detail > * {
@@ -33,7 +35,7 @@ form > * {
 #Avatar {
     position: relative;
     right: 0;
-    width: 50%;
+    width: 49%;
     border: 1px solid black;
     border-radius: 2px;
     box-shadow: 3px 2px 2px black;
@@ -41,6 +43,8 @@ form > * {
 
     #Avatar:hover {
         box-shadow: inset 3px 2px 2px black;
+        top: 2px;
+        right: -2px;
     }
 
     #Avatar > * {
