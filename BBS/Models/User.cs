@@ -8,8 +8,8 @@
         public DateTime Created { get; set; }
         public DateTime LastLogin { get; set; }
         public string? Avatar { get; set; }
-        public IEnumerable<Post>? Posts { get; set; }
-        public IEnumerable<Reply>? Replies { get; set; }
+        public ICollection<Post>? Posts { get; set; }
+        public ICollection<Reply>? Replies { get; set; }
 
     }
 }

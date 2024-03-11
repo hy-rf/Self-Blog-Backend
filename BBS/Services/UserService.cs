@@ -2,6 +2,7 @@
 using BBS.Interfaces;
 using BBS.Models;
 using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
 using System.Data.SqlTypes;
 
 namespace BBS.Services
@@ -59,15 +60,8 @@ namespace BBS.Services
         }
         public User GetUser(int Id)
         {
-            var User = ctx.User.Where(u => u.Id == Id).Select(u => new User
-            {
-                Id = u.Id,
-                Name = u.Name,
-                Created = u.Created,
-                LastLogin = u.LastLogin,
-                Avatar = u.Avatar
-            }).ToList();
-            return User[0];
+            var User = ctx.User.Include(u => u.Posts).Include(u => u.Replies).FirstOrDefault(u => u.Id == Id);
+            return User;
         }
         public bool EditAvatar(int Id, string Avatar)
         {
