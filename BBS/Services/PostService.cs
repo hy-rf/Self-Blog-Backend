@@ -5,13 +5,8 @@ using Microsoft.Data.Sqlite;
 
 namespace BBS.Services
 {
-    public class PostService : IPostService
+    public class PostService(AppDbContext ctx) : IPostService
     {
-        private readonly AppDbContext ctx;
-        public PostService(AppDbContext appDbContext)
-        {
-            ctx = appDbContext;
-        }
         public bool CreatePost(string Title, string Content, int UserId)
         {
             var newPost = new Post

@@ -6,14 +6,8 @@ using System.Data.SqlTypes;
 
 namespace BBS.Services
 {
-    public class UserService : IUserService
+    public class UserService(AppDbContext ctx) : IUserService
     {
-        private readonly AppDbContext ctx;
-        public int UserId { get; set; }
-        public UserService(AppDbContext appDbContext)
-        {
-            ctx = appDbContext;
-        }
         public bool Signup(string Name, string Pwd)
         {
             if (CheckSignup(Name))

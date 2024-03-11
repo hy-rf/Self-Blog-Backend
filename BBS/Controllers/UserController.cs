@@ -1,7 +1,5 @@
 ﻿using BBS.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using System.IO;
-using System.Net.Mime;
 using System.Text.Json;
 
 namespace BBS.Controllers

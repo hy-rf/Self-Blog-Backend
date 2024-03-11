@@ -1,5 +1,4 @@
 ﻿using BBS.Models;
-using System.Diagnostics.Eventing.Reader;
 
 namespace BBS.Interfaces
 {

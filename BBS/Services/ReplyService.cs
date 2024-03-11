@@ -5,13 +5,8 @@ using Microsoft.Data.Sqlite;
 
 namespace BBS.Services
 {
-    public class ReplyService : IReplyService
+    public class ReplyService(AppDbContext ctx) : IReplyService
     {
-        private readonly AppDbContext ctx;
-        public ReplyService(AppDbContext appDbContext)
-        {
-            ctx = appDbContext;
-        }
         public bool Reply(string Content, int UserId, int PostId)
         {
             var newReply = new Reply{
