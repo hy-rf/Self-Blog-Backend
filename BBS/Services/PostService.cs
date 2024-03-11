@@ -8,12 +8,8 @@ namespace BBS.Services
     public class PostService : IPostService
     {
         private readonly AppDbContext _appDbContext;
-        private readonly SqliteConnection Connection;
-        private readonly IDatabase _database;
-        public PostService(IDatabase database, AppDbContext appDbContext)
+        public PostService(AppDbContext appDbContext)
         {
-            Connection = database.SqLiteConnection();
-            _database = database;
             _appDbContext = appDbContext;
         }
         public bool CreatePost(string Title, string Content, int UserId)

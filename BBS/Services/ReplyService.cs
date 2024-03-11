@@ -8,11 +8,9 @@ namespace BBS.Services
     public class ReplyService : IReplyService
     {
         private readonly AppDbContext _appDbContext;
-        private readonly SqliteConnection Connection;
-        public ReplyService(IDatabase database, AppDbContext appDbContext)
+        public ReplyService(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
-            Connection = database.SqLiteConnection();
         }
         public bool Reply(string Content, int UserId, int PostId)
         {

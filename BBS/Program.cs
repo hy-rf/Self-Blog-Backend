@@ -21,7 +21,6 @@ builder.Services.AddSession(options =>
 });
 
 
-builder.Services.AddScoped<IDatabase, Database>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddScoped<IReplyService, ReplyService>();
