@@ -14,10 +14,6 @@ namespace BBS.Services
         {
             ctx = appDbContext;
         }
-        public int GetUserId()
-        {
-            return this.UserId;
-        }
         public bool Signup(string Name, string Pwd)
         {
             if (CheckSignup(Name))
@@ -45,16 +41,16 @@ namespace BBS.Services
             }
             return true;
         }
-        public void Login(string Name, string Pwd)
+        public int Login(string Name, string Pwd)
         {
             var Matched = ctx.User.Where(u => u.Name == Name && u.Pwd == Pwd).Select(u => new { u.Id, u.Name }).ToList();
             if (Matched.Count != 0)
             {
-                this.UserId = Matched[0].Id;
                 var updateLastLogin = ctx.User.Single(u => u.Id == Matched[0].Id);
                 updateLastLogin.LastLogin = DateTime.Now;
                 ctx.SaveChangesAsync();
             }
+            return Matched[0].Id;
         }
         public User GetUser(int Id)
         {

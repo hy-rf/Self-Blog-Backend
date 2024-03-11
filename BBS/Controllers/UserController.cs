@@ -49,8 +49,8 @@ namespace BBS.Controllers
         {
             if (!string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Pwd))
             {
-                _userService.Login(Name, Pwd);
-                HttpContext.Session.SetInt32("Id", _userService.GetUserId());
+                int Id = _userService.Login(Name, Pwd);
+                HttpContext.Session.SetInt32("Id", Id);
                 HttpContext.Session.SetString("Name", Name);
                 return RedirectToAction("Index");
             }
