@@ -1,4 +1,5 @@
-﻿using BBS.Interfaces;
+﻿using BBS.Data;
+using BBS.Interfaces;
 using BBS.Models;
 using Microsoft.Data.Sqlite;
 
@@ -6,105 +7,47 @@ namespace BBS.Services
 {
     public class PostService : IPostService
     {
+        private readonly AppDbContext _appDbContext;
         private readonly SqliteConnection Connection;
         private readonly IDatabase _database;
-        public PostService(IDatabase database)
+        public PostService(IDatabase database, AppDbContext appDbContext)
         {
             Connection = database.SqLiteConnection();
             _database = database;
+            _appDbContext = appDbContext;
         }
         public bool CreatePost(string Title, string Content, int UserId)
         {
-            SqliteCommand CreatePostCommand = new SqliteCommand
+            var newPost = new Post
             {
-                Connection = Connection,
-                CommandText = @"INSERT INTO Post (Title, Content, UserId, Created, Modified) VALUES ($Title, $Content, $UserId, $Created, $Modified)"
+                UserId = UserId,
+                Title = Title,
+                Content = Content,
+                Created = DateTime.Now,
+                Modified = DateTime.Now
             };
-            CreatePostCommand.Parameters.AddWithValue("$Title", Title);
-            CreatePostCommand.Parameters.AddWithValue("$Content", Content);
-            CreatePostCommand.Parameters.AddWithValue("$UserId", UserId);
-            CreatePostCommand.Parameters.AddWithValue("$Created", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
-            CreatePostCommand.Parameters.AddWithValue("$Modified", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
-            Connection.Open();
-            try
-            {
-                CreatePostCommand.ExecuteNonQuery();
-                Connection.Close();
-                return true;
-            }
-            catch
-            {
-                Connection.Close();
-                return false;
-            }
+            _appDbContext.Post.Add(newPost);
+            _appDbContext.SaveChanges();
+            return true;
         }
         public bool EditPost(int Id, string Title, string Content)
         {
-            SqliteCommand EditPostCommand = new SqliteCommand
-            {
-                Connection = Connection,
-                CommandText = @"UPDATE Post SET Title=$Title, Content=$Content, Modified = $Modified WHERE Id=$Id"
-            };
-            EditPostCommand.Parameters.AddWithValue("$Title", Title);
-            EditPostCommand.Parameters.AddWithValue("$Content", Content);
-            EditPostCommand.Parameters.AddWithValue("$Modified", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
-            EditPostCommand.Parameters.AddWithValue("$Id", Id);
-            Connection.Open();
-            if (EditPostCommand.ExecuteNonQuery() != -1)
-            {
-                Connection.Close();
-                return true;
-            }
-            Connection.Close();
-            return false;
+            var EditPost = _appDbContext.Post.Single(p => p.Id == Id);
+            EditPost.Title = Title;
+            EditPost.Content = Content;
+            EditPost.Modified = DateTime.Now;
+            _appDbContext.SaveChanges();
+            return true;
         }
         public object GetPost(int Id)
         {
-            SqliteCommand getPost = new SqliteCommand
-            {
-                Connection = Connection,
-                CommandText = @"SELECT Id, Title, Content, UserId, Created, Modified FROM Post WHERE Id = $Id"
-            };
-            getPost.Parameters.AddWithValue("$Id", Id);
-            Connection.Open();
-            Post post = new Post();
-            using SqliteDataReader reader = getPost.ExecuteReader();
-            if (reader.Read())
-            {
-                post.Id = reader.GetInt32(0);
-                post.Title = reader.GetString(1);
-                post.Content = reader.GetString(2);
-                post.UserId = reader.GetInt32(3);
-                post.Created = reader.GetDateTime(4);
-                post.Modified = reader.GetDateTime(5);
-            }
-            Connection.Close();
-            return post;
+            var GetPost = _appDbContext.Post.Where(p => p.Id == Id).ToList();
+            return GetPost[0];
         }
         public List<Post> GetPosts()
         {
-            Connection.Open();
-            SqliteCommand GetRecentPostsCommand = new SqliteCommand
-            {
-                Connection = Connection,
-                CommandText = @"SELECT Id, Title, Content, UserId, Created, Modified FROM Post"
-            };
-            using var reader = GetRecentPostsCommand.ExecuteReader();
-            List<Post> Posts = new List<Post>();
-            while (reader.Read())
-            {
-                Posts.Add(new Post
-                {
-                    Id = Convert.ToInt32(reader["Id"]),
-                    Title = reader.GetString(1),
-                    Content = reader.GetString(2),
-                    UserId = reader.GetInt32(3),
-                    Created = reader.GetDateTime(4),
-                    Modified = reader.GetDateTime(5),
-                });
-            }
-            Connection.Close();
-            return Posts;
+            var GetPosts = _appDbContext.Post.ToList();
+            return GetPosts;
         }
         public List<Post> GetPostsByUserId(int Id)
         {

@@ -10,7 +10,7 @@ namespace BBS.Services
     {
         private readonly AppDbContext _appDbContext;
         public int UserId { get; set; }
-        public UserService(IDatabase database, AppDbContext appDbContext)
+        public UserService(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
         }
