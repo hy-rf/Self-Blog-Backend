@@ -41,16 +41,27 @@ namespace BBS.Services
             }
             return true;
         }
-        public int Login(string Name, string Pwd)
+        public bool Login(string Name, string Pwd, out int id)
         {
-            var Matched = ctx.User.Where(u => u.Name == Name && u.Pwd == Pwd).Select(u => new { u.Id, u.Name }).ToList();
-            if (Matched.Count != 0)
+            try
             {
-                var updateLastLogin = ctx.User.Single(u => u.Id == Matched[0].Id);
-                updateLastLogin.LastLogin = DateTime.Now;
-                ctx.SaveChangesAsync();
+                var Matched = ctx.User.First(u => u.Name == Name && u.Pwd == Pwd);
+                if (Matched != null)
+                {
+                    var updateLastLogin = ctx.User.Single(u => u.Id == Matched.Id);
+                    updateLastLogin.LastLogin = DateTime.Now;
+                    id = Matched.Id;
+                    ctx.SaveChanges();
+                    return true;
+                }
             }
-            return Matched[0].Id;
+            catch
+            {
+                id = -1;
+                return false;
+            }
+            id = -1;
+            return false;
         }
         public User GetUser(int Id)
         {

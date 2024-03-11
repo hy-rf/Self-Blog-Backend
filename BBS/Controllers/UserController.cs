@@ -49,9 +49,12 @@ namespace BBS.Controllers
         {
             if (!string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Pwd))
             {
-                int Id = _userService.Login(Name, Pwd);
-                HttpContext.Session.SetInt32("Id", Id);
-                HttpContext.Session.SetString("Name", Name);
+                if (_userService.Login(Name, Pwd, out int Id))
+                {
+                    HttpContext.Session.SetInt32("Id", Id);
+                    HttpContext.Session.SetString("Name", Name);
+                    return RedirectToAction("Index");
+                }
                 return RedirectToAction("Index");
             }
             return RedirectToAction("Index");
@@ -61,14 +64,12 @@ namespace BBS.Controllers
         {
             if (Avatar.Length > 0)
             {
-                using (MemoryStream ms = new MemoryStream())
+                using MemoryStream ms = new MemoryStream();
+                Avatar.CopyTo(ms);
+                string s = Convert.ToBase64String(ms.ToArray());
+                if (_userService.EditAvatar(Id, s))
                 {
-                    Avatar.CopyTo(ms);
-                    string s = Convert.ToBase64String(ms.ToArray());
-                    if (_userService.EditAvatar(Id, s))
-                    {
-                        return RedirectToAction("UserCenter");
-                    }
+                    return RedirectToAction("UserCenter");
                 }
             }
             else
