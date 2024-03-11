@@ -7,10 +7,10 @@ namespace BBS.Services
 {
     public class ReplyService : IReplyService
     {
-        private readonly AppDbContext _appDbContext;
+        private readonly AppDbContext ctx;
         public ReplyService(AppDbContext appDbContext)
         {
-            _appDbContext = appDbContext;
+            ctx = appDbContext;
         }
         public bool Reply(string Content, int UserId, int PostId)
         {
@@ -21,13 +21,13 @@ namespace BBS.Services
                 Created = DateTime.Now,
                 Modified = DateTime.Now,
             };
-            _appDbContext.Reply.Add(newReply);
-            _appDbContext.SaveChanges();
+            ctx.Reply.Add(newReply);
+            ctx.SaveChanges();
             return true;
         }
         public List<Reply> GetReplies(int PostId)
         {
-            var Replies = _appDbContext.Reply.Where(r => r.PostId == PostId).ToList();
+            var Replies = ctx.Reply.Where(r => r.PostId == PostId).ToList();
             return Replies;
         }
         public bool EditReply(int Id, string Content)

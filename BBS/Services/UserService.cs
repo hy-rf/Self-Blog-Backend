@@ -8,11 +8,11 @@ namespace BBS.Services
 {
     public class UserService : IUserService
     {
-        private readonly AppDbContext _appDbContext;
+        private readonly AppDbContext ctx;
         public int UserId { get; set; }
         public UserService(AppDbContext appDbContext)
         {
-            _appDbContext = appDbContext;
+            ctx = appDbContext;
         }
         public int GetUserId()
         {
@@ -30,15 +30,15 @@ namespace BBS.Services
                     LastLogin = DateTime.Now,
                     Avatar = ""
                 };
-                _appDbContext.User.Add(newUser);
-                _appDbContext.SaveChanges();
+                ctx.User.Add(newUser);
+                ctx.SaveChanges();
                 return true;
             }
             return false;
         }
         public bool CheckSignup(string username)
         {
-            var Used = _appDbContext.User.Any(u => u.Name == username);
+            var Used = ctx.User.Any(u => u.Name == username);
             if (Used)
             {
                 return false;
@@ -47,20 +47,20 @@ namespace BBS.Services
         }
         public bool Login(string username, string password)
         {
-            var Matched = _appDbContext.User.Where(u => u.Name == username && u.Pwd == password).Select(u => new { u.Id, u.Name }).ToList();
+            var Matched = ctx.User.Where(u => u.Name == username && u.Pwd == password).Select(u => new { u.Id, u.Name }).ToList();
             if (Matched.Count != 0)
             {
                 this.UserId = Matched[0].Id;
-                var updateLastLogin = _appDbContext.User.Single(u => u.Id == Matched[0].Id);
+                var updateLastLogin = ctx.User.Single(u => u.Id == Matched[0].Id);
                 updateLastLogin.LastLogin = DateTime.Now;
-                _appDbContext.SaveChanges();
+                ctx.SaveChanges();
                 return true;
             }
             return false;
         }
         public User GetUser(int Id)
         {
-            var User = _appDbContext.User.Where(u => u.Id == Id).Select(u => new User
+            var User = ctx.User.Where(u => u.Id == Id).Select(u => new User
             {
                 Id = u.Id,
                 Name = u.Name,
@@ -72,16 +72,16 @@ namespace BBS.Services
         }
         public bool EditAvatar(int Id, string Avatar)
         {
-            var EditAvatar = _appDbContext.User.Single(u => u.Id == Id);
+            var EditAvatar = ctx.User.Single(u => u.Id == Id);
             EditAvatar.Avatar = Avatar;
-            _appDbContext.SaveChanges();
+            ctx.SaveChanges();
             return true;
         }
         public bool EditName(int Id, string Name)
         {
-            var EditName = _appDbContext.User.Single(u => u.Id == Id);
+            var EditName = ctx.User.Single(u => u.Id == Id);
             EditName.Name = Name;
-            _appDbContext.SaveChanges();
+            ctx.SaveChanges();
             return true;
         }
     }

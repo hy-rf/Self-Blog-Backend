@@ -7,10 +7,10 @@ namespace BBS.Services
 {
     public class PostService : IPostService
     {
-        private readonly AppDbContext _appDbContext;
+        private readonly AppDbContext ctx;
         public PostService(AppDbContext appDbContext)
         {
-            _appDbContext = appDbContext;
+            ctx = appDbContext;
         }
         public bool CreatePost(string Title, string Content, int UserId)
         {
@@ -22,27 +22,27 @@ namespace BBS.Services
                 Created = DateTime.Now,
                 Modified = DateTime.Now
             };
-            _appDbContext.Post.Add(newPost);
-            _appDbContext.SaveChanges();
+            ctx.Post.Add(newPost);
+            ctx.SaveChanges();
             return true;
         }
         public bool EditPost(int Id, string Title, string Content)
         {
-            var EditPost = _appDbContext.Post.Single(p => p.Id == Id);
+            var EditPost = ctx.Post.Single(p => p.Id == Id);
             EditPost.Title = Title;
             EditPost.Content = Content;
             EditPost.Modified = DateTime.Now;
-            _appDbContext.SaveChanges();
+            ctx.SaveChanges();
             return true;
         }
         public object GetPost(int Id)
         {
-            var GetPost = _appDbContext.Post.Where(p => p.Id == Id).ToList();
+            var GetPost = ctx.Post.Where(p => p.Id == Id).ToList();
             return GetPost[0];
         }
         public List<Post> GetPosts()
         {
-            var GetPosts = _appDbContext.Post.ToList();
+            var GetPosts = ctx.Post.ToList();
             return GetPosts;
         }
         public List<Post> GetPostsByUserId(int Id)

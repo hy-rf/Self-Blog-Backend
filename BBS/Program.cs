@@ -10,7 +10,10 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddHttpContextAccessor();
 
-builder.Services.AddDbContext<AppDbContext>();
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
+    options.UseSqlite(builder.Configuration.GetConnectionString("LocalDB"));
+});
 
 
 
