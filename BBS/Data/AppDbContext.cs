@@ -6,12 +6,17 @@ namespace BBS.Data;
 
 public class AppDbContext : DbContext
 {
-    public AppDbContext(){
-        
+    private readonly string ConnectionString;
+    public AppDbContext(IConfiguration configuration){
+        ConnectionString = configuration.GetConnectionString("LocalDB");
     }
-    public DbSet<User> Users { get; set; }
-    public DbSet<Post> Posts { get; set; }
-    public DbSet<Reply> Replies { get; set; }
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        base.OnConfiguring(optionsBuilder.UseSqlite(ConnectionString));
+    }
+    public DbSet<User> User { get; set; }
+    public DbSet<Post> Post { get; set; }
+    public DbSet<Reply> Reply { get; set; }
 
 
 }

@@ -1,4 +1,5 @@
-﻿using BBS.Interfaces;
+﻿using BBS.Data;
+using BBS.Interfaces;
 using BBS.Models;
 using Microsoft.Data.Sqlite;
 using System.Data.SqlTypes;
@@ -9,11 +10,13 @@ namespace BBS.Services
     {
         private readonly SqliteConnection Connection;
         private readonly IDatabase _database;
+        private readonly AppDbContext _appDbContext;
         public int UserId { get; set; }
-        public UserService(IDatabase database)
+        public UserService(IDatabase database, AppDbContext appDbContext)
         {
             Connection = database.SqLiteConnection();
             _database = database;
+            _appDbContext = appDbContext;
         }
         public int GetUserId()
         {
@@ -59,20 +62,10 @@ namespace BBS.Services
         /// <returns></returns>
         public bool CheckSignup(string username)
         {
-            Connection.Open();
-            var command = Connection.CreateCommand();
-            command.Connection = Connection;
-            command.CommandText = @"SELECT Name FROM User WHERE Name = $username";
-            command.Parameters.AddWithValue("$username", username);
-            using (SqliteDataReader reader = command.ExecuteReader())
-            {
-                if (reader.Read())
-                {
-                    Connection.Close();
-                    return false;
-                }
+            var Used = _appDbContext.User.Any(u => u.Name == username);
+            if (Used){
+                return false;
             }
-            Connection.Close();
             return true;
         }
         /// <summary>

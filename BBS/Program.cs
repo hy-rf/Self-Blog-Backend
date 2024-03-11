@@ -1,6 +1,7 @@
 using BBS.Interfaces;
 using BBS.Data;
 using BBS.Services;
+using Microsoft.EntityFrameworkCore;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,10 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddHttpContextAccessor();
 
+builder.Services.AddDbContext<AppDbContext>();
+
+
+
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromHours(1);
@@ -16,10 +21,10 @@ builder.Services.AddSession(options =>
 });
 
 
-builder.Services.AddSingleton<IDatabase, Database>();
-builder.Services.AddSingleton<IUserService, UserService>();
-builder.Services.AddSingleton<IPostService, PostService>();
-builder.Services.AddSingleton<IReplyService, ReplyService>();
+builder.Services.AddScoped<IDatabase, Database>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IPostService, PostService>();
+builder.Services.AddScoped<IReplyService, ReplyService>();
 
 var app = builder.Build();
 
