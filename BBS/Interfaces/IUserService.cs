@@ -6,10 +6,10 @@ namespace BBS.Interfaces
     public interface IUserService
     {
         public int GetUserId();
-        public bool Signup(string username, string password);
-        public bool Login(string username, string password);
+        public bool Signup(string Name, string Pwd);
+        public void Login(string Name, string Pwd);
         public User GetUser(int Id);
-        public bool EditAvatar(int Id, string avatar);
-        public bool EditName(int Id, string name);
+        public bool EditAvatar(int Id, string Avatar);
+        public bool EditName(int Id, string Name);
     }
 }

@@ -18,14 +18,14 @@ namespace BBS.Services
         {
             return this.UserId;
         }
-        public bool Signup(string username, string password)
+        public bool Signup(string Name, string Pwd)
         {
-            if (CheckSignup(username))
+            if (CheckSignup(Name))
             {
                 var newUser = new User
                 {
-                    Name = username,
-                    Pwd = password,
+                    Name = Name,
+                    Pwd = Pwd,
                     Created = DateTime.Now,
                     LastLogin = DateTime.Now,
                     Avatar = ""
@@ -36,27 +36,25 @@ namespace BBS.Services
             }
             return false;
         }
-        public bool CheckSignup(string username)
+        public bool CheckSignup(string Name)
         {
-            var Used = ctx.User.Any(u => u.Name == username);
+            var Used = ctx.User.Any(u => u.Name == Name);
             if (Used)
             {
                 return false;
             }
             return true;
         }
-        public bool Login(string username, string password)
+        public void Login(string Name, string Pwd)
         {
-            var Matched = ctx.User.Where(u => u.Name == username && u.Pwd == password).Select(u => new { u.Id, u.Name }).ToList();
+            var Matched = ctx.User.Where(u => u.Name == Name && u.Pwd == Pwd).Select(u => new { u.Id, u.Name }).ToList();
             if (Matched.Count != 0)
             {
                 this.UserId = Matched[0].Id;
                 var updateLastLogin = ctx.User.Single(u => u.Id == Matched[0].Id);
                 updateLastLogin.LastLogin = DateTime.Now;
-                ctx.SaveChanges();
-                return true;
+                ctx.SaveChangesAsync();
             }
-            return false;
         }
         public User GetUser(int Id)
         {

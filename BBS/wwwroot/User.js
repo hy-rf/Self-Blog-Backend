@@ -14,8 +14,8 @@ async function UploadFile(FormEle) {
     }
 }
 
-document.querySelector("#avatar").addEventListener("change", () => {
-    const [file] = document.querySelector("#avatar").files;
+document.querySelector("#Avatar").addEventListener("change", () => {
+    const [file] = document.querySelector("#Avatar").files;
     if (file) {
         document.querySelector('#Preview').src = URL.createObjectURL(file);
     }
