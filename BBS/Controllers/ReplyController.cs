@@ -19,7 +19,6 @@ namespace BBS.Controllers
         public ActionResult Reply(string Content, int PostId)
         {
             int UserId = (int)HttpContext.Session.GetInt32("Id");
-            string UserName = (string)HttpContext.Session.GetString("Name");
             _replyService.Reply(Content, UserId, PostId);
             return RedirectToRoute(new
             {
