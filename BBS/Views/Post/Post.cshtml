@@ -16,9 +16,12 @@
 {
     if (ViewBag.Post.UserId == Accessor.HttpContext.Session.GetInt32("Id"))
     {
-        <a class="EditButton" onclick="showEditPostPanel(@ViewBag.Post.Id)">Edit</a>
+        <form asp-action="EditPost" asp-controller="Post" asp-route-PostId="@ViewBag.Post.Id">
+        <input name="Title" placeholder="Title">
+        <input name="Content" placeholder="Content">
+        <button type="submit">Edit</button>
+    </form>
     }
-    <a class="ReplyButton" onclick="showReplyPanel(@ViewBag.Post.Id)">Reply</a>
 }
 
 <div id="Replies">Replies
@@ -34,4 +37,12 @@
         </div>
     }
 </div>
+@if (Accessor.HttpContext.Session.GetInt32("Id") != null)
+{
+    <form asp-action="Reply" asp-controller="Reply" asp-route-PostId="@ViewBag.Post.Id">
+        <input name="Content" placeholder="Content">
+        <button  type="submit">Reply</button>
+    </form>
+}
+
 <script src="~/Post.js" defer></script>
