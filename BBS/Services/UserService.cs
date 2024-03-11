@@ -63,7 +63,8 @@ namespace BBS.Services
         public bool CheckSignup(string username)
         {
             var Used = _appDbContext.User.Any(u => u.Name == username);
-            if (Used){
+            if (Used)
+            {
                 return false;
             }
             return true;
@@ -76,29 +77,39 @@ namespace BBS.Services
         /// <returns></returns>
         public bool Login(string username, string password)
         {
-            var command = Connection.CreateCommand();
-            command.Connection = Connection;
-            command.CommandText = @"SELECT Id, Name FROM User WHERE Name = $username AND Pwd = $password";
-            command.Parameters.AddWithValue("$username", username);
-            command.Parameters.AddWithValue("$password", password);
-            Connection.Open();
-            using (SqliteDataReader reader = command.ExecuteReader())
+            var Matched = _appDbContext.User.Where(u => u.Name == username && u.Pwd == password).Select(u => new {u.Id, u.Name}).ToList();
+            if (Matched.Count != 0)
             {
-                if (reader.Read())
-                {
-                    this.UserId = reader.GetInt32(0);
-                    var updateLastLogin = Connection.CreateCommand();
-                    updateLastLogin.Connection = Connection;
-                    updateLastLogin.CommandText = @"UPDATE User SET LastLogin = $LastLogin WHERE Id = $Id";
-                    updateLastLogin.Parameters.AddWithValue("LastLogin", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
-                    updateLastLogin.Parameters.AddWithValue("$Id", this.UserId);
-                    updateLastLogin.ExecuteNonQuery();
-                    Connection.Close();
-                    return true;
-                }
+                this.UserId = Matched[0].Id;
+                var updateLastLogin = _appDbContext.User.Single(u => u.Id == Matched[0].Id);
+                updateLastLogin.LastLogin = DateTime.Now;
+                _appDbContext.SaveChanges();
+                return true;
             }
-            Connection.Close();
             return false;
+            // var command = Connection.CreateCommand();
+            // command.Connection = Connection;
+            // command.CommandText = @"SELECT Id, Name FROM User WHERE Name = $username AND Pwd = $password";
+            // command.Parameters.AddWithValue("$username", username);
+            // command.Parameters.AddWithValue("$password", password);
+            // Connection.Open();
+            // using (SqliteDataReader reader = command.ExecuteReader())
+            // {
+            //     if (reader.Read())
+            //     {
+            //         this.UserId = reader.GetInt32(0);
+            //         var updateLastLogin = Connection.CreateCommand();
+            //         updateLastLogin.Connection = Connection;
+            //         updateLastLogin.CommandText = @"UPDATE User SET LastLogin = $LastLogin WHERE Id = $Id";
+            //         updateLastLogin.Parameters.AddWithValue("LastLogin", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+            //         updateLastLogin.Parameters.AddWithValue("$Id", this.UserId);
+            //         updateLastLogin.ExecuteNonQuery();
+            //         Connection.Close();
+            //         return true;
+            //     }
+            // }
+            // Connection.Close();
+            // return false;
         }
         /// <summary>
         /// Used in UserCenter Page
