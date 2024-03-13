@@ -26,10 +26,18 @@ namespace BBS.Controllers
         [Route("UserCenter")]
         public IActionResult UserCenter()
         {
-            ViewBag.Id = HttpContext.Session.GetInt32("Id");
-            ViewBag.UserInfo = _userService.GetUser(ViewBag.Id);
-            //ViewBag.Posts = _postService.GetPostsByUserId(ViewBag.Id);
-            return View("UserCenter");
+            try
+            {
+                ViewBag.Id = HttpContext.Session.GetInt32("Id");
+                ViewBag.UserInfo = _userService.GetUser(ViewBag.Id);
+                return View("UserCenter");
+            }
+            catch
+            {
+                return Unauthorized();
+            }
+
+
         }
         public ActionResult Signup(string Name, string Pwd)
         {
