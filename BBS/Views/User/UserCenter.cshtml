@@ -5,7 +5,7 @@
 
 <link rel="stylesheet" href="~/UserCenter.css">
 
-<div id="UserInfo">
+<div id="User">
     <div id="Detail">
         <h3 id="Title">@ViewBag.UserInfo.Name's Info:</h3>
         <p id="Id">Id:@ViewBag.UserInfo.Id</p>
@@ -27,17 +27,14 @@
             <button type="submit" disabled>Update Avatar</button>
         </form>
     </div>
-</div>
-
-<div id="Activity">
-    <div id="UserPosts">
+    <div id="Posts">
         @foreach (var item in ViewBag.UserInfo.Posts)
         {
             <p>@item.Id</p>
             <a href="Post/Detail/@item.Id">@item.Title</a>
         }
     </div>
-    <div id="UserReplies">
+    <div id="Replies">
         @foreach (var item in ViewBag.UserInfo.Replies)
         {
             <p>@item.Id</p>
