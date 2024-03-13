@@ -1,4 +1,7 @@
 ﻿using BBS.Interfaces;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -28,11 +31,14 @@ namespace BBS.Controllers
             return View();
         }
         [Route("UserCenter")]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public IActionResult UserCenter()
         {
             try
             {
-                ViewBag.Id = HttpContext.Session.GetInt32("Id");
+                string Id = User.FindFirst(ClaimTypes.Sid)?.Value;
+                ViewBag.Id = User.FindFirst(ClaimTypes.Sid)?.Value;
+                //ViewBag.Id = HttpContext.Session.GetInt32("Id");
                 ViewBag.UserInfo = _userService.GetUser(ViewBag.Id);
                 return View("UserCenter");
             }
@@ -58,7 +64,7 @@ namespace BBS.Controllers
             }
             return RedirectToAction("Index");
         }
-        public ActionResult Login(string Name, string Pwd)
+        public as ActionResult Login(string Name, string Pwd)
         {
             if (!string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Pwd))
             {
@@ -69,11 +75,17 @@ namespace BBS.Controllers
                     var tokenOptions = new JwtSecurityToken(
                     issuer: "BBS",
                     audience: "https://localhost:7064",
-                    claims: new List<Claim>(),
+                    claims: new List<Claim>
+                    {
+                         new Claim(ClaimTypes.Sid, Convert.ToString(Id)),
+                         new Claim(ClaimTypes.Name, Name),
+                    },
                     expires: DateTime.Now.AddHours(5),
                     signingCredentials: loginCredentials
                 );
                     var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
+                    
+                    HttpContext.Response.Cookies.Append("Token", tokenString);
                     HttpContext.Session.SetInt32("Id", Id);
                     HttpContext.Session.SetString("Name", Name);
                     return Ok(tokenString);
