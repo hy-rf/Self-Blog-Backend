@@ -8,6 +8,5 @@ namespace BBS.Interfaces
         public bool EditPost(int Id, string Title, string Content);
         public object GetPost(int id);
         public List<Post> GetPosts();
-        public List<Post> GetPostsByUserId(int Id);
     }
 }

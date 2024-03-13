@@ -40,10 +40,5 @@ namespace BBS.Services
             var GetPosts = ctx.Post.ToList();
             return GetPosts;
         }
-        public List<Post> GetPostsByUserId(int Id)
-        {
-            var Posts = ctx.Post.Where(p => p.UserId == Id).ToList();
-            return Posts;
-        }
     }
 }
