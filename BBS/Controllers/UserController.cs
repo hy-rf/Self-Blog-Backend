@@ -1,5 +1,9 @@
 ﻿using BBS.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 using System.Text.Json;
 
 namespace BBS.Controllers
@@ -60,9 +64,19 @@ namespace BBS.Controllers
             {
                 if (_userService.Login(Name, Pwd, out int Id))
                 {
+                    var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("secretkeyBBStetKsekBSreteySecret"));
+                    var loginCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+                    var tokenOptions = new JwtSecurityToken(
+                    issuer: "BBS",
+                    audience: "https://localhost:7064",
+                    claims: new List<Claim>(),
+                    expires: DateTime.Now.AddHours(5),
+                    signingCredentials: loginCredentials
+                );
+                    var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
                     HttpContext.Session.SetInt32("Id", Id);
                     HttpContext.Session.SetString("Name", Name);
-                    return RedirectToAction("Index");
+                    return Ok(tokenString);
                 }
                 return RedirectToAction("Index");
             }
