@@ -1,11 +1,10 @@
 #User {
     display: grid;
     grid-template-areas: "A B" "C D";
-    gap:1rem;
+    gap: 2rem;
     position: relative;
     height: max-content;
     width: calc(100%-4rem);
-    justify-content: space-between;
     margin: 1rem 2rem 1rem 2rem;
     line-height: 1.5rem;
 }
@@ -43,8 +42,8 @@
     }
 
 
-@media (max-width:800px){
-    #User{
-        grid-template-areas:"A" "B" "C" "D";
+@media (max-width:800px) {
+    #User {
+        grid-template-areas: "A" "B" "C" "D";
     }
 }
