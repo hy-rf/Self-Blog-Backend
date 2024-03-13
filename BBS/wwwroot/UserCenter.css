@@ -43,3 +43,8 @@
     }
 
 
+@media (max-width:800px){
+    #User{
+        grid-template-areas:"A" "B" "C" "D";
+    }
+}
