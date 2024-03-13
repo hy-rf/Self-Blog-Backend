@@ -24,7 +24,16 @@ builder.Services.AddAuthentication(opt =>
         {
             ValidateIssuer = false,
             ValidateAudience = false,
+            ValidateIssuerSigningKey =true,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("secretkeyBBStetKsekBSreteySecret"))
+        };
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = ctx =>
+            {
+                ctx.Token = ctx.Request.Cookies["Token"];
+                return Task.CompletedTask;
+            }
         };
     });
 

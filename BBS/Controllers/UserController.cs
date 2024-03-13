@@ -31,14 +31,12 @@ namespace BBS.Controllers
             return View();
         }
         [Route("UserCenter")]
-        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public IActionResult UserCenter()
+        public IActionResult UserCenter(ClaimsPrincipal claimsPrincipal)
         {
             try
             {
                 string Id = User.FindFirst(ClaimTypes.Sid)?.Value;
-                ViewBag.Id = User.FindFirst(ClaimTypes.Sid)?.Value;
-                //ViewBag.Id = HttpContext.Session.GetInt32("Id");
+                ViewBag.Id = Convert.ToInt32(Id);
                 ViewBag.UserInfo = _userService.GetUser(ViewBag.Id);
                 return View("UserCenter");
             }
@@ -64,31 +62,31 @@ namespace BBS.Controllers
             }
             return RedirectToAction("Index");
         }
-        public as ActionResult Login(string Name, string Pwd)
+        public ActionResult Login(string Name, string Pwd)
         {
             if (!string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Pwd))
             {
                 if (_userService.Login(Name, Pwd, out int Id))
                 {
+                    var tokenHandler = new JwtSecurityTokenHandler();
                     var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("secretkeyBBStetKsekBSreteySecret"));
-                    var loginCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
-                    var tokenOptions = new JwtSecurityToken(
-                    issuer: "BBS",
-                    audience: "https://localhost:7064",
-                    claims: new List<Claim>
+                    var tokenDescriptor = new SecurityTokenDescriptor
                     {
-                         new Claim(ClaimTypes.Sid, Convert.ToString(Id)),
-                         new Claim(ClaimTypes.Name, Name),
-                    },
-                    expires: DateTime.Now.AddHours(5),
-                    signingCredentials: loginCredentials
-                );
-                    var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
-                    
+                        Subject = new ClaimsIdentity(new[]
+                        {
+                                new Claim(ClaimTypes.Sid, Convert.ToString(Id)),
+                                new Claim(ClaimTypes.Name, Name),
+                        // Add other claims as needed
+                       }),
+                        Expires = DateTime.Now.AddHours(5),
+                        SigningCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256)
+                    };
+                    var tokenString = tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor));
+
                     HttpContext.Response.Cookies.Append("Token", tokenString);
                     HttpContext.Session.SetInt32("Id", Id);
                     HttpContext.Session.SetString("Name", Name);
-                    return Ok(tokenString);
+                    return RedirectToAction("UserCenter");
                 }
                 return RedirectToAction("Index");
             }
