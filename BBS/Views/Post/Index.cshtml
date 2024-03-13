@@ -4,7 +4,11 @@
 
 <link rel="stylesheet" href="~/Post.css">
 <h3>Post</h3>
-<button id="Post">Click to Post</button>
+@if (Accessor.HttpContext.Session.GetInt32("Id") != null)
+{
+    <button id="Post">Click to Post</button>
+}
+
 
 @foreach (var item in ViewBag.Posts)
 {
