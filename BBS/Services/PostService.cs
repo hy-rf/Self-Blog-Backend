@@ -42,7 +42,8 @@ namespace BBS.Services
         }
         public List<Post> GetPostsByUserId(int Id)
         {
-            throw new NotImplementedException();
+            var Posts = ctx.Post.Where(p => p.UserId == Id).ToList();
+            return Posts;
         }
     }
 }

@@ -7,9 +7,11 @@ namespace BBS.Controllers
     public class UserController : Controller
     {
         private readonly IUserService _userService;
-        public UserController(IUserService userService)
+        private readonly IPostService _postService;
+        public UserController(IUserService userService, IPostService postService)
         {
             _userService = userService;
+            _postService = postService;
         }
         [Route("Welcome")]
         public IActionResult Index()
@@ -26,6 +28,7 @@ namespace BBS.Controllers
         {
             ViewBag.Id = HttpContext.Session.GetInt32("Id");
             ViewBag.UserInfo = _userService.GetUser(ViewBag.Id);
+            //ViewBag.Posts = _postService.GetPostsByUserId(ViewBag.Id);
             return View("UserCenter");
         }
         public ActionResult Signup(string Name, string Pwd)

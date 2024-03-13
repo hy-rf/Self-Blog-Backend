@@ -13,7 +13,7 @@ form > * {
     font-size: 0.6rem;
 }
 
-#Detail {
+#Detail,#UserPosts {
     position: relative;
     left: 0;
     width: 49%;
@@ -32,7 +32,7 @@ form > * {
         margin: 4px 4px 4px 4px;
     }
 
-#Avatar {
+#Avatar,#UserReplies {
     position: relative;
     right: 0;
     width: 49%;
@@ -61,6 +61,23 @@ input {
     height: 1.5rem;
 }
 
+#Activity {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    top: 4rem;
+    height: max-content;
+    width: calc(100%-4rem);
+    justify-content: space-between;
+    margin: 1rem 2rem 1rem 2rem;
+    line-height: 1.5rem;
+}
+#Activity>*{
+    position:relative;
+    height:10rem;
+    overflow-y:auto;
+}
+
 @media (max-width:640px) {
     #UserInfo {
         flex-direction: column;
@@ -75,4 +92,6 @@ input {
         width: 100%;
     }
 }
+
+
 
