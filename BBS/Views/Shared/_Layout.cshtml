@@ -1,0 +1,44 @@
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor Accessor;
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BBS</title>
+    <link rel="stylesheet" href="~/_Layout.css">
+</head>
+
+<body>
+    <header>
+        <div id="navbar">
+            <a asp-controller="Home" asp-action="Index">Home</a>
+            <a asp-controller="Post" asp-action="Index">Post</a>
+        </div>
+        <div id="user">
+            @if (Accessor.HttpContext.Session.GetInt32("Id") != null)
+            {
+                <a id="userlink" asp-controller="User" asp-action="UserCenter">Hello! @(Accessor.HttpContext.Session.GetString("Name"))</a>
+                <div id="UserMenu">
+                    <a asp-controller="User" asp-action="Logout">Logout</a>
+                </div>
+            }
+            else
+            {
+                <a asp-controller="User" asp-action="Index">Login/Signup</a>
+            }
+        </div>
+    </header>
+    <main>
+        <br>
+        @RenderBody()
+        <br>
+        <br>
+    </main>
+    <footer>example footer</footer>
+    <script src="~/_Layout.js"></script>
+</body>
+
+</html>

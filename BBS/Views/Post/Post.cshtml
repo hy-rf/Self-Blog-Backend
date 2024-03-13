@@ -1,0 +1,48 @@
+﻿@using BBS.Models;
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor Accessor;
+
+
+<link rel="stylesheet" href="~/Post.css">
+<div id="PostUnit(@ViewBag.Post.Id)">
+    <p>Post Id : @ViewBag.Post.Id</p>
+    <p>Title : @ViewBag.Post.Title</p>
+    <p>Content : @ViewBag.Post.Content</p>
+    <p>UserId : @ViewBag.Post.UserId</p>
+    <span>Date Created : @ViewBag.Post.Created</span>
+    <span>Date Modified : @ViewBag.Post.Modified</span>
+</div>
+@if (Accessor.HttpContext.Session.GetInt32("Id") != null)
+{
+    if (ViewBag.Post.UserId == Accessor.HttpContext.Session.GetInt32("Id"))
+    {
+        <form asp-action="EditPost" asp-controller="Post" asp-route-PostId="@ViewBag.Post.Id">
+        <input name="Title" placeholder="Title">
+        <input name="Content" placeholder="Content">
+        <button type="submit">Edit</button>
+    </form>
+    }
+}
+
+<div id="Replies">Replies
+    @foreach (var item in ViewBag.Replies)
+    {
+        <div class="ReplyUnit">
+            <p>@item.Content</p>
+            <p>@item.UserId</p>
+            <p class="timeIndicator">
+                <span>@item.Created</span>
+                <span>@item.Modified</span>
+            </p>
+        </div>
+    }
+</div>
+@if (Accessor.HttpContext.Session.GetInt32("Id") != null)
+{
+    <form asp-action="Reply" asp-controller="Reply" asp-route-PostId="@ViewBag.Post.Id">
+        <input name="Content" placeholder="Content">
+        <button  type="submit">Reply</button>
+    </form>
+}
+
+<script src="~/Post.js" defer></script>

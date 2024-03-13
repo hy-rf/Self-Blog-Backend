@@ -1,0 +1,48 @@
+﻿@{
+    int i = 0;
+    int j = 0;
+}
+
+<link rel="stylesheet" href="~/UserCenter.css">
+
+<div id="User">
+    <div id="Detail">
+        <h3 id="Title">@ViewBag.UserInfo.Name's Info:</h3>
+        <p id="Id">Id:@ViewBag.UserInfo.Id</p>
+        <span>Name:</span><span id="name">@ViewBag.UserInfo.Name</span>
+        <p>Created:@ViewBag.UserInfo.Created</p>
+        <p>Last Login:@ViewBag.UserInfo.LastLogin</p>
+        <p>Number of Posts:@foreach (var item in ViewBag.UserInfo.Posts) { i++; }@i</p>
+        <p>Number of Replies:@foreach (var item in ViewBag.UserInfo.Replies) { j++; }@j</p>
+    </div>
+    <div id="Avatar">
+        <form method="POST" action="/User/EditAvatar/@ViewBag.UserInfo.Id" enctype="multipart/form-data" onsubmit="UploadFile(this);return false;">
+            <div id="Avatars">
+                <img src="data:image/png;base64, @ViewBag.UserInfo.Avatar" width="128" height="128">
+                <img id="Preview" width="128" height="128">
+            </div>
+
+            <input type="file" id="avatar" name="avatar" value="Choose Photo">
+
+            <button type="submit" disabled>Update Avatar</button>
+        </form>
+    </div>
+    <div id="Posts">
+        @foreach (var item in ViewBag.UserInfo.Posts)
+        {
+            <p>@item.Id</p>
+            <a href="Post/Detail/@item.Id">@item.Title</a>
+        }
+    </div>
+    <div id="Replies">
+        @foreach (var item in ViewBag.UserInfo.Replies)
+        {
+            <p>@item.Id</p>
+            <a href="Post/Detail/@item.PostId">@item.Content</a>
+        }
+    </div>
+</div>
+
+
+
+<script src="~/User.js" defer></script>
