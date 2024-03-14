@@ -1,6 +1,4 @@
-﻿@using Microsoft.AspNetCore.Http;
-@inject IHttpContextAccessor Accessor;
-@using System.Security.Claims;
+﻿@using System.Security.Claims;
 @{
     int Id = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value);
     string Name = User.FindFirst(ClaimTypes.Name)?.Value;

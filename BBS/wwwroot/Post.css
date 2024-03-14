@@ -13,6 +13,11 @@
         color: blue;
     }
 
+#PostFormWrapper {
+    position: relative;
+    margin: 1rem 2rem 1rem 2rem;
+}
+
 .timeIndicator {
     position: absolute;
     right: 0;
