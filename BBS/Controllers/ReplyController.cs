@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BBS.Interfaces;
 using BBS.Models;
+using System.Security.Claims;
 
 namespace BBS.Controllers
 {
@@ -18,7 +19,7 @@ namespace BBS.Controllers
         [Route("Reply/Reply/{PostId}")]
         public ActionResult Reply(string Content, int PostId)
         {
-            int UserId = (int)HttpContext.Session.GetInt32("Id");
+            int UserId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value);
             _replyService.Reply(Content, UserId, PostId);
             return RedirectToRoute(new
             {

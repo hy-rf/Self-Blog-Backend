@@ -1,5 +1,12 @@
 ﻿using BBS.Interfaces;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 using System.Text.Json;
 
 namespace BBS.Controllers
@@ -16,7 +23,7 @@ namespace BBS.Controllers
         [Route("Welcome")]
         public IActionResult Index()
         {
-            if (HttpContext.Session.GetInt32("Id") != null)
+            if (User.Identity.IsAuthenticated)
             {
 
                 return RedirectToAction("UserCenter");
@@ -24,12 +31,21 @@ namespace BBS.Controllers
             return View();
         }
         [Route("UserCenter")]
-        public IActionResult UserCenter()
+        public IActionResult UserCenter(ClaimsPrincipal claimsPrincipal)
         {
-            ViewBag.Id = HttpContext.Session.GetInt32("Id");
-            ViewBag.UserInfo = _userService.GetUser(ViewBag.Id);
-            //ViewBag.Posts = _postService.GetPostsByUserId(ViewBag.Id);
-            return View("UserCenter");
+            try
+            {
+                string Id = User.FindFirst(ClaimTypes.Sid)?.Value;
+                ViewBag.Id = Convert.ToInt32(Id);
+                ViewBag.UserInfo = _userService.GetUser(ViewBag.Id);
+                return View("UserCenter");
+            }
+            catch
+            {
+                return Unauthorized();
+            }
+
+
         }
         public ActionResult Signup(string Name, string Pwd)
         {
@@ -52,9 +68,22 @@ namespace BBS.Controllers
             {
                 if (_userService.Login(Name, Pwd, out int Id))
                 {
-                    HttpContext.Session.SetInt32("Id", Id);
-                    HttpContext.Session.SetString("Name", Name);
-                    return RedirectToAction("Index");
+                    var tokenHandler = new JwtSecurityTokenHandler();
+                    var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("secretkeyBBStetKsekBSreteySecret"));
+                    var tokenDescriptor = new SecurityTokenDescriptor
+                    {
+                        Subject = new ClaimsIdentity(new[]
+                        {
+                                new Claim(ClaimTypes.Sid, Convert.ToString(Id)),
+                                new Claim(ClaimTypes.Name, Name),
+                        // Add other claims as needed
+                       }),
+                        Expires = DateTime.Now.AddHours(5),
+                        SigningCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256)
+                    };
+                    var tokenString = tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor));
+                    HttpContext.Response.Cookies.Append("Token", tokenString);
+                    return RedirectToAction("UserCenter");
                 }
                 return RedirectToAction("Index");
             }
@@ -86,7 +115,6 @@ namespace BBS.Controllers
             string name = json.GetProperty("Name").ToString();
             if (_userService.EditName(Id, name))
             {
-                HttpContext.Session.SetString("Name", name);
                 Response.StatusCode = 200;
                 return;
             }
@@ -95,7 +123,7 @@ namespace BBS.Controllers
         }
         public ActionResult Logout()
         {
-            HttpContext.Session.Clear();
+            HttpContext.Response.Cookies.Delete("Token");
             return RedirectToAction("Index");
         }
     }

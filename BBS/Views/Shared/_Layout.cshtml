@@ -1,6 +1,10 @@
 ﻿@using Microsoft.AspNetCore.Http;
 @inject IHttpContextAccessor Accessor;
-
+@using System.Security.Claims;
+@{
+    int Id = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value);
+    string Name = User.FindFirst(ClaimTypes.Name)?.Value;
+}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,6 +13,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BBS</title>
     <link rel="stylesheet" href="~/_Layout.css">
+    <link rel="stylesheet" href="~/richtexteditor/rte_theme_default.css" />
+    <script type="text/javascript" src="~/richtexteditor/rte.js"></script>
+    <script type="text/javascript" src="~/richtexteditor/plugins/all_plugins.js"></script>
 </head>
 
 <body>
@@ -18,12 +25,10 @@
             <a asp-controller="Post" asp-action="Index">Post</a>
         </div>
         <div id="user">
-            @if (Accessor.HttpContext.Session.GetInt32("Id") != null)
+            @if (User.Identity.IsAuthenticated)
             {
-                <a id="userlink" asp-controller="User" asp-action="UserCenter">Hello! @(Accessor.HttpContext.Session.GetString("Name"))</a>
-                <div id="UserMenu">
-                    <a asp-controller="User" asp-action="Logout">Logout</a>
-                </div>
+                <a id="userlink" asp-controller="User" asp-action="UserCenter">Hello! @(Name)</a>
+                <a asp-controller="User" asp-action="Logout">Logout</a>
             }
             else
             {

@@ -1,13 +1,14 @@
 ﻿@{
     int i = 0;
     int j = 0;
+    string Name = @ViewBag.UserInfo.Name;
 }
 
 <link rel="stylesheet" href="~/UserCenter.css">
 
 <div id="User">
     <div id="Detail">
-        <h3 id="Title">@ViewBag.UserInfo.Name's Info:</h3>
+        <h3 id="Title">@Name's Info:</h3>
         <p id="Id">Id:@ViewBag.UserInfo.Id</p>
         <span>Name:</span><span id="name">@ViewBag.UserInfo.Name</span>
         <p>Created:@ViewBag.UserInfo.Created</p>
@@ -16,6 +17,7 @@
         <p>Number of Replies:@foreach (var item in ViewBag.UserInfo.Replies) { j++; }@j</p>
     </div>
     <div id="Avatar">
+        <h3>@Name's Avatar</h3>
         <form method="POST" action="/User/EditAvatar/@ViewBag.UserInfo.Id" enctype="multipart/form-data" onsubmit="UploadFile(this);return false;">
             <div id="Avatars">
                 <img src="data:image/png;base64, @ViewBag.UserInfo.Avatar" width="128" height="128">
@@ -28,6 +30,7 @@
         </form>
     </div>
     <div id="Posts">
+        <h3>@Name's Posts</h3>
         @foreach (var item in ViewBag.UserInfo.Posts)
         {
             <p>@item.Id</p>
@@ -35,6 +38,7 @@
         }
     </div>
     <div id="Replies">
+        <h3>@Name's Replies</h3>
         @foreach (var item in ViewBag.UserInfo.Replies)
         {
             <p>@item.Id</p>

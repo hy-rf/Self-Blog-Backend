@@ -4,7 +4,15 @@
 
 <link rel="stylesheet" href="~/Post.css">
 <h3>Post</h3>
-<button id="Post">Click to Post</button>
+@if (User.Identity.IsAuthenticated)
+{
+    <br />
+    <p>Title</p>
+    <input id="Title" />
+    <div id="CreatePostForm"></div>
+    <button id="submitPost">Submit</button>
+}
+
 
 @foreach (var item in ViewBag.Posts)
 {
