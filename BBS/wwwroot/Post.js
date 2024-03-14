@@ -49,6 +49,7 @@ window.onload = () => {
                 Content: PostEditor.getHTMLCode()
             }),
         }).then(response => {
+            location.reload();
             return;
         });
     });
