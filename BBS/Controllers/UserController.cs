@@ -23,7 +23,7 @@ namespace BBS.Controllers
         [Route("Welcome")]
         public IActionResult Index()
         {
-            if (HttpContext.Session.GetInt32("Id") != null)
+            if (User.Identity.IsAuthenticated)
             {
 
                 return RedirectToAction("UserCenter");
@@ -82,10 +82,7 @@ namespace BBS.Controllers
                         SigningCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256)
                     };
                     var tokenString = tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor));
-
                     HttpContext.Response.Cookies.Append("Token", tokenString);
-                    HttpContext.Session.SetInt32("Id", Id);
-                    HttpContext.Session.SetString("Name", Name);
                     return RedirectToAction("UserCenter");
                 }
                 return RedirectToAction("Index");
@@ -118,7 +115,6 @@ namespace BBS.Controllers
             string name = json.GetProperty("Name").ToString();
             if (_userService.EditName(Id, name))
             {
-                HttpContext.Session.SetString("Name", name);
                 Response.StatusCode = 200;
                 return;
             }
@@ -127,7 +123,7 @@ namespace BBS.Controllers
         }
         public ActionResult Logout()
         {
-            HttpContext.Session.Clear();
+            HttpContext.Response.Cookies.Delete("Token");
             return RedirectToAction("Index");
         }
     }

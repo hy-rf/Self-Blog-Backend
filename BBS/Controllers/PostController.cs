@@ -2,6 +2,7 @@
 using BBS.Models;
 using BBS.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace BBS.Controllers
 {
@@ -23,7 +24,7 @@ namespace BBS.Controllers
         {
             try
             {
-                ViewBag.Id = HttpContext.Session.GetInt32("Id");
+                ViewBag.Id = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value);
                 if (_postService.CreatePost(Title, Content, ViewBag.Id))
                 {
                     return RedirectToAction("Index");

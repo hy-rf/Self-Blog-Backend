@@ -4,7 +4,7 @@
 
 <link rel="stylesheet" href="~/Post.css">
 <h3>Post</h3>
-@if (Accessor.HttpContext.Session.GetInt32("Id") != null)
+@if (User.Identity.IsAuthenticated)
 {
     <button id="Post">Click to Post</button>
 }

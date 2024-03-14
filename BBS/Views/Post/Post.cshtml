@@ -1,5 +1,6 @@
 ﻿@using BBS.Models;
 @using Microsoft.AspNetCore.Http;
+@using System.Security.Claims;
 @inject IHttpContextAccessor Accessor;
 
 
@@ -12,9 +13,9 @@
     <span>Date Created : @ViewBag.Post.Created</span>
     <span>Date Modified : @ViewBag.Post.Modified</span>
 </div>
-@if (Accessor.HttpContext.Session.GetInt32("Id") != null)
+@if (User.Identity.IsAuthenticated)
 {
-    if (ViewBag.Post.UserId == Accessor.HttpContext.Session.GetInt32("Id"))
+    if (ViewBag.Post.UserId == Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value))
     {
         <form asp-action="EditPost" asp-controller="Post" asp-route-PostId="@ViewBag.Post.Id">
         <input name="Title" placeholder="Title">
@@ -37,7 +38,7 @@
         </div>
     }
 </div>
-@if (Accessor.HttpContext.Session.GetInt32("Id") != null)
+@if (User.Identity.IsAuthenticated)
 {
     <form asp-action="Reply" asp-controller="Reply" asp-route-PostId="@ViewBag.Post.Id">
         <input name="Content" placeholder="Content">

@@ -47,12 +47,6 @@ builder.Services.AddDbContextPool<AppDbContext>(options =>
 
 
 
-builder.Services.AddSession(options =>
-{
-    options.IdleTimeout = TimeSpan.FromHours(1);
-    options.Cookie.IsEssential = true;
-});
-
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPostService, PostService>();
@@ -60,7 +54,6 @@ builder.Services.AddScoped<IReplyService, ReplyService>();
 
 var app = builder.Build();
 
-app.UseSession();
 
 app.UseStaticFiles();
 app.UseRouting();
