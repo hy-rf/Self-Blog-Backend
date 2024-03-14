@@ -1,14 +1,15 @@
 
 var CreatePostForm = document.createElement("form");
-CreatePostForm.setAttribute("method", "POST");
-CreatePostForm.setAttribute("action", "/Post/CreatePost");
-CreatePostForm.innerHTML = `<input name="Title"><input name="Content"><button>Post</button>`;
+//CreatePostForm.setAttribute("method", "POST");
+//CreatePostForm.setAttribute("action", "/Post/CreatePost");
+CreatePostForm.setAttribute("id", "CreatePostForm");
+//CreatePostForm.innerHTML = `<input name="Title"><textarea name="Content" placeholder="Content"></textarea><button>Post</button>`;
 
 EditPostForm = (Id) => {
     var EditPostForm = document.createElement("form");
     EditPostForm.setAttribute("method", "POST");
     EditPostForm.setAttribute("action", `/Post/EditPost/${Id}`);
-    EditPostForm.innerHTML = `<input name="Title" placeholder="Title"><input name="Content" placeholder="Content"><button>Post</button>`;
+    EditPostForm.innerHTML = `<input name="Title" placeholder="Title"><textarea name="Content" placeholder="Content"></textarea><button>Post</button>`;
     return EditPostForm;
 }
 
@@ -21,33 +22,34 @@ ReplyForm = (Id) => {
 }
 
 
-document.getElementById("Post").addEventListener("click", () => {
-    if (document.getElementById("Post").nextElementSibling.tagName == "FORM") {
-        document.getElementById("Post").nextElementSibling.remove();
-        return;
-    }
-    document.querySelector("main").insertBefore(CreatePostForm, document.getElementById("Post").nextElementSibling);
-    return;
-});
-
-function showEditPostPanel(Id) {
-    console.log(this)
-    if (document.getElementById(`PostUnit${Id}`).nextElementSibling.tagName == "FORM") {
-        document.getElementById(`PostUnit${Id}`).nextElementSibling.remove();
-        return;
-    }
-    document.querySelector("main").insertBefore(EditPostForm(Id), document.getElementById(`PostUnit${Id}`).nextElementSibling);
-    return;
-}
-
-// document.querySelector("footer").style.bottom = "calc(var(--footer-height)*-1)";
+//document.getElementById("Post").addEventListener("click", () => {
+//    if (document.getElementById("Post").nextElementSibling.tagName == "FORM") {
+//        document.getElementById("Post").nextElementSibling.remove();
+//        return;
+//    }
+//    document.querySelector("main").insertBefore(CreatePostForm, document.getElementById("Post").nextElementSibling);
+//    return;
+//});
 
 
-function showReplyPanel(Id) {
-    if (document.getElementById(`PostUnit${Id}`).nextElementSibling.tagName == "FORM") {
-        document.getElementById(`PostUnit${Id}`).nextElementSibling.remove();
-        return;
-    }
-    document.querySelector("main").insertBefore(ReplyForm(Id), document.getElementById(`PostUnit${Id}`).nextElementSibling);
-    return;
+
+window.onload = () => {
+    var PostEditorConfig = {};
+    PostEditorConfig.toolbar = "basic";
+    var PostEditor = new RichTextEditor("#CreatePostForm", PostEditorConfig);
+    document.getElementById("submitPost").addEventListener("click", (e) => {
+        fetch(`Post/CreatePost`, {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                Title: document.getElementById("Title").value,
+                Content: PostEditor.getHTMLCode()
+            }),
+        }).then(response => {
+            return;
+        });
+    });
 }

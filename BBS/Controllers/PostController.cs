@@ -3,6 +3,7 @@ using BBS.Models;
 using BBS.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using System.Text.Json;
 
 namespace BBS.Controllers
 {
@@ -20,12 +21,14 @@ namespace BBS.Controllers
             ViewBag.Posts = _postService.GetPosts();
             return View();
         }
-        public ActionResult CreatePost(string Title, string Content)
+        [HttpPost]
+        [Route("Post/CreatePost")]
+        public ActionResult CreatePost([FromBody] JsonElement json)
         {
             try
             {
                 ViewBag.Id = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value);
-                if (_postService.CreatePost(Title, Content, ViewBag.Id))
+                if (_postService.CreatePost(json.GetProperty("Title").ToString(), json.GetProperty("Content").ToString(), ViewBag.Id))
                 {
                     return RedirectToAction("Index");
                 }

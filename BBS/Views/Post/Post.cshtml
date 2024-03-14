@@ -8,7 +8,7 @@
 <div id="PostUnit(@ViewBag.Post.Id)">
     <p>Post Id : @ViewBag.Post.Id</p>
     <p>Title : @ViewBag.Post.Title</p>
-    <p>Content : @ViewBag.Post.Content</p>
+    <p>Content : @Html.Raw(ViewBag.Post.Content)</p>
     <p>UserId : @ViewBag.Post.UserId</p>
     <span>Date Created : @ViewBag.Post.Created</span>
     <span>Date Modified : @ViewBag.Post.Modified</span>
