@@ -53,4 +53,7 @@ window.onload = () => {
             return;
         });
     });
+    document.getElementById("toggleCreatePostBtn").addEventListener("click", () => {
+        document.getElementById("PostFormWrapper").classList.toggle("showCreatePost");
+    });
 }

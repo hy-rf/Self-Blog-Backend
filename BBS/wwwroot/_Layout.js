@@ -9,12 +9,3 @@ window.onscroll = () => {
     }
     prepos = curpos;
 }
-
-window.onload = () => {
-    document.querySelector('#user').addEventListener('mouseenter', () => {
-        document.querySelector('#UserMenu').style.display = "block";
-    });
-    document.querySelector('#user').addEventListener('mouseleave', () => {
-        document.querySelector('#UserMenu').style.display = "none";
-    });
-}

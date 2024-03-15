@@ -4,6 +4,7 @@
 <h3>Post</h3>
 @if (User.Identity.IsAuthenticated)
 {
+    <button id="toggleCreatePostBtn">Create Post</button>
     <div id="PostFormWrapper">
         <br />
         <p>Title</p>
@@ -19,7 +20,6 @@
     <div class="PostUnit">
         <!--<p>Post Id : @item.Id</p>-->
         <a asp-controller="Post" asp-action="GetPost" asp-route-Id="@item.Id">Title : @item.Title</a>
-        <p>Content : @item.Content</p>
         <p>UserId : @item.UserId</p>
         <p class="timeIndicator">
             <span>Date Created : @item.Created</span>
