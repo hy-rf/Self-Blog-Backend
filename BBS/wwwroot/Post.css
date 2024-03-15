@@ -13,6 +13,11 @@
         color: blue;
     }
 
+#PostFormWrapper {
+    position: relative;
+    margin: 1rem 2rem 1rem 2rem;
+}
+
 .timeIndicator {
     position: absolute;
     right: 0;
@@ -37,6 +42,7 @@ span {
         top: 2px;
         left: 2px;
     }
+
 .ReplyUnit {
     position: relative;
     border: 1px solid black;
@@ -50,3 +56,11 @@ span {
         top: 2px;
         left: 2px;
     }
+
+.hideEditPost {
+    display: block !important;
+}
+
+#PostFormWrapper {
+    display: none;
+}

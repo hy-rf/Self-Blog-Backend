@@ -50,10 +50,20 @@ namespace BBS.Controllers
             ViewBag.Post = _postService.GetPost(Id);
             return View("Post");
         }
-        [Route("Post/EditPost/{PostId}")]
-        public ActionResult EditPost(int PostId, string Title, string Content){
-            if (_postService.EditPost(PostId, Title, Content)){
-                return RedirectToAction("GetPost", new {Id = PostId });
+        [HttpPost]
+        [Route("/Post/Detail/Post/EditPost")]
+        public ActionResult EditPost([FromBody] JsonElement json)
+        {
+            int PostId = json.GetProperty("PostId").GetInt32();
+            string Title = json.GetProperty("Title").ToString();
+            string Content = json.GetProperty("Content").ToString();
+            if (_postService.GetPost(PostId).UserId != Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value))
+            {
+                return RedirectToAction("GetPost", new { Id = PostId });
+            }
+            if (_postService.EditPost(PostId, Title, Content))
+            {
+                return RedirectToAction("GetPost", new { Id = PostId });
             }
             return RedirectToAction("GetPost", new { Id = PostId });
         }

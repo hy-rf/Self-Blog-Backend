@@ -1,31 +1,33 @@
 ﻿@using BBS.Models;
-@using Microsoft.AspNetCore.Http;
 @using System.Security.Claims;
-@inject IHttpContextAccessor Accessor;
-
+@{
+    string content = $"{Html.Raw(ViewBag.Post.Content)}";
+}
 
 <link rel="stylesheet" href="~/Post.css">
+<script src="~/PostDetail.js"></script>
+@if (User.Identity.IsAuthenticated && ViewBag.Post.UserId == Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value))
+{
+    <button id="toggleEditPostBtn">edit</button>
+    <div id="PostFormWrapper">
+        <br />
+        <p>Title</p>
+        <input id="Title" />
+        <div id="EditPostForm"></div>
+        <button id="submitEditPost">Submit</button>
+    </div>
+}
 <div id="PostUnit(@ViewBag.Post.Id)">
     <p>Post Id : @ViewBag.Post.Id</p>
     <p>Title : @ViewBag.Post.Title</p>
-    <p>Content : @Html.Raw(ViewBag.Post.Content)</p>
+    <p id="Content">Content : @Html.Raw(ViewBag.Post.Content)</p>
     <p>UserId : @ViewBag.Post.UserId</p>
     <span>Date Created : @ViewBag.Post.Created</span>
     <span>Date Modified : @ViewBag.Post.Modified</span>
 </div>
-@if (User.Identity.IsAuthenticated)
-{
-    if (ViewBag.Post.UserId == Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value))
-    {
-        <form asp-action="EditPost" asp-controller="Post" asp-route-PostId="@ViewBag.Post.Id">
-        <input name="Title" placeholder="Title">
-        <input name="Content" placeholder="Content">
-        <button type="submit">Edit</button>
-    </form>
-    }
-}
 
-<div id="Replies">Replies
+<div id="Replies">
+    Replies
     @foreach (var item in ViewBag.Replies)
     {
         <div class="ReplyUnit">
@@ -42,8 +44,15 @@
 {
     <form asp-action="Reply" asp-controller="Reply" asp-route-PostId="@ViewBag.Post.Id">
         <input name="Content" placeholder="Content">
-        <button  type="submit">Reply</button>
+        <button type="submit">Reply</button>
     </form>
 }
 
-<script src="~/Post.js" defer></script>
+<script type="text/javascript" defer>
+    //
+    PostContentOnEditor(@ViewBag.Post.Id, `@Html.Raw(ViewBag.Post.Content)`);
+    document.getElementById("Title").value = "@ViewBag.Post.Title";
+    document.getElementById("toggleEditPostBtn").addEventListener("click", () => {
+        document.getElementById("PostFormWrapper").classList.toggle("hideEditPost");
+    })
+</script>

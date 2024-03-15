@@ -38,7 +38,6 @@ builder.Services.AddAuthentication(opt =>
     });
 
 
-builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddDbContextPool<AppDbContext>(options =>
 {
