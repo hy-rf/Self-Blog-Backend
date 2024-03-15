@@ -6,7 +6,7 @@ namespace BBS.Interfaces
     {
         public bool CreatePost(string Title, string Content, int UserId);
         public bool EditPost(int Id, string Title, string Content);
-        public object GetPost(int id);
+        public Post GetPost(int id);
         public List<Post> GetPosts();
     }
 }

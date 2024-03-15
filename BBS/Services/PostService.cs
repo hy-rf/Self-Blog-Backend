@@ -30,10 +30,10 @@ namespace BBS.Services
             ctx.SaveChanges();
             return true;
         }
-        public object GetPost(int Id)
+        public Post GetPost(int Id)
         {
-            var GetPost = ctx.Post.Where(p => p.Id == Id).ToList();
-            return GetPost[0];
+            var GetPost = ctx.Post.Single(p => p.Id == Id);
+            return GetPost;
         }
         public List<Post> GetPosts()
         {
