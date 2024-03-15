@@ -5,8 +5,10 @@
 }
 
 <link rel="stylesheet" href="~/Post.css">
+<script src="~/PostDetail.js"></script>
 @if (User.Identity.IsAuthenticated && ViewBag.Post.UserId == Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value))
 {
+    <button id="toggleEditPostBtn">edit</button>
     <div id="PostFormWrapper">
         <br />
         <p>Title</p>
@@ -46,7 +48,11 @@
     </form>
 }
 
-<script src="~/PostDetail.js" defer></script>
-<script defer>
-    test(@);
+<script type="text/javascript" defer>
+    //
+    PostContentOnEditor(@ViewBag.Post.Id, `@Html.Raw(ViewBag.Post.Content)`);
+    document.getElementById("Title").value = "@ViewBag.Post.Title";
+    document.getElementById("toggleEditPostBtn").addEventListener("click", () => {
+        document.getElementById("PostFormWrapper").classList.toggle("hideEditPost");
+    })
 </script>

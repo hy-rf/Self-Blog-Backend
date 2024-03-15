@@ -42,6 +42,7 @@ span {
         top: 2px;
         left: 2px;
     }
+
 .ReplyUnit {
     position: relative;
     border: 1px solid black;
@@ -55,3 +56,11 @@ span {
         top: 2px;
         left: 2px;
     }
+
+.hideEditPost {
+    display: block !important;
+}
+
+#PostFormWrapper {
+    display: none;
+}
