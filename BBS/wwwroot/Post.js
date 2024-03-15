@@ -1,17 +1,17 @@
 
-var CreatePostForm = document.createElement("form");
-//CreatePostForm.setAttribute("method", "POST");
-//CreatePostForm.setAttribute("action", "/Post/CreatePost");
-CreatePostForm.setAttribute("id", "CreatePostForm");
-//CreatePostForm.innerHTML = `<input name="Title"><textarea name="Content" placeholder="Content"></textarea><button>Post</button>`;
+//var CreatePostForm = document.createElement("form");
+////CreatePostForm.setAttribute("method", "POST");
+////CreatePostForm.setAttribute("action", "/Post/CreatePost");
+//CreatePostForm.setAttribute("id", "CreatePostForm");
+////CreatePostForm.innerHTML = `<input name="Title"><textarea name="Content" placeholder="Content"></textarea><button>Post</button>`;
 
-EditPostForm = (Id) => {
-    var EditPostForm = document.createElement("form");
-    EditPostForm.setAttribute("method", "POST");
-    EditPostForm.setAttribute("action", `/Post/EditPost/${Id}`);
-    EditPostForm.innerHTML = `<input name="Title" placeholder="Title"><textarea name="Content" placeholder="Content"></textarea><button>Post</button>`;
-    return EditPostForm;
-}
+//EditPostForm = (Id) => {
+//    var EditPostForm = document.createElement("form");
+//    EditPostForm.setAttribute("method", "POST");
+//    EditPostForm.setAttribute("action", `/Post/EditPost/${Id}`);
+//    EditPostForm.innerHTML = `<input name="Title" placeholder="Title"><textarea name="Content" placeholder="Content"></textarea><button>Post</button>`;
+//    return EditPostForm;
+//}
 
 ReplyForm = (Id) => {
     var ReplyForm = document.createElement("form");
