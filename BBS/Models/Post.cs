@@ -10,6 +10,7 @@
         public DateTime Modified { get; set; }
         public List<Reply>? Replies { get; set; }
         public List<Tag>? Tags { get; set; }
+        public User? User { get; set; }
         //public List<PostTag>? PostTags { get; set; }
     }
 }

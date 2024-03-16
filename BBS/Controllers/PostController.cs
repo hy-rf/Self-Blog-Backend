@@ -28,7 +28,7 @@ namespace BBS.Controllers
             try
             {
                 ViewBag.Id = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value);
-                if (_postService.CreatePost(json.GetProperty("Title").ToString(), json.GetProperty("Content").ToString(), ViewBag.Id))
+                if (_postService.CreatePost(json.GetProperty("Title").ToString(), json.GetProperty("Content").ToString(), json.GetProperty("Tag").ToString(), ViewBag.Id))
                 {
                     return RedirectToAction("Index");
                 }
@@ -61,7 +61,7 @@ namespace BBS.Controllers
             {
                 return RedirectToAction("GetPost", new { Id = PostId });
             }
-            if (_postService.EditPost(PostId, Title, Content))
+            if (_postService.EditPost(PostId, Title, Content, json.GetProperty("Tag").ToString()))
             {
                 return RedirectToAction("GetPost", new { Id = PostId });
             }

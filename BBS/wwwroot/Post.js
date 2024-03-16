@@ -46,6 +46,7 @@ window.onload = () => {
             },
             body: JSON.stringify({
                 Title: document.getElementById("Title").value,
+                Tag: document.getElementById("Tag").value,
                 Content: PostEditor.getHTMLCode()
             }),
         }).then(response => {
@@ -56,4 +57,5 @@ window.onload = () => {
     document.getElementById("toggleCreatePostBtn").addEventListener("click", () => {
         document.getElementById("PostFormWrapper").classList.toggle("showCreatePost");
     });
+    
 }

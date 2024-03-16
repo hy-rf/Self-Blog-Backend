@@ -13,6 +13,7 @@ PostContentOnEditor = async (PostId, html) => {
             body: JSON.stringify({
                 PostId: parseInt(parseInt(PostId)),
                 Title: document.getElementById("Title").value,
+                Tag: document.getElementById("Tag").value,
                 Content: PostEditor.getHTMLCode()
             }),
         }).then(response => {
@@ -22,3 +23,6 @@ PostContentOnEditor = async (PostId, html) => {
     });
 }
 
+window.onload = () => {
+    document.getElementById("Tag").value = document.getElementById("Tags").innerText.split(" ").join("");
+}
