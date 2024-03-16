@@ -3,7 +3,7 @@ var PostEditorConfig = {};
 PostEditorConfig.toolbar = "basic";
 var PostEditor = new RichTextEditor("#CreatePostForm", PostEditorConfig);
 document.getElementById("submitPost").addEventListener("click", (e) => {
-    fetch(`Post/CreatePost`, {
+    fetch(`/Post/CreatePost`, {
         method: "POST",
         headers: {
             'Accept': 'application/json',

@@ -5,7 +5,7 @@ PostContentOnEditor = async (PostId, html) => {
     var PostEditor = await new RichTextEditor("#EditPostForm", PostEditorConfig);
     PostEditor.setHTMLCode(html);
     document.getElementById("submitEditPost").addEventListener("click", (e) => {
-        fetch(`Post/EditPost`, {
+        fetch(`/Post/EditPost`, {
             method: "POST",
             headers: {
                 'Accept': 'application/json',

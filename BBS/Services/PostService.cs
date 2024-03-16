@@ -41,9 +41,13 @@ namespace BBS.Services
             {
                 if (t != "")
                 {
-                    var tag = new Tag { Name = t, PostId = Id };
-                    ctx.Tag.Add(tag);
-                    ctx.SaveChanges();
+                    if (!ctx.Tag.Any(tag => tag.Name == t))
+                    {
+                        var tag = new Tag { Name = t, PostId = Id };
+                        ctx.Tag.Add(tag);
+                        ctx.SaveChanges();
+                    }
+
                 }
             });
             ctx.SaveChanges();

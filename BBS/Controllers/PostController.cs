@@ -51,7 +51,7 @@ namespace BBS.Controllers
             return View("Post");
         }
         [HttpPost]
-        [Route("/Post/Detail/Post/EditPost")]
+        [Route("Post/EditPost")]
         public ActionResult EditPost([FromBody] JsonElement json)
         {
             int PostId = json.GetProperty("PostId").GetInt32();
