@@ -11,15 +11,8 @@ using System.Text.Json;
 
 namespace BBS.Controllers
 {
-    public class UserController : Controller
+    public class UserController(IUserService _userService, IPostService _postService) : Controller
     {
-        private readonly IUserService _userService;
-        private readonly IPostService _postService;
-        public UserController(IUserService userService, IPostService postService)
-        {
-            _userService = userService;
-            _postService = postService;
-        }
         [Route("Welcome")]
         public IActionResult Index()
         {

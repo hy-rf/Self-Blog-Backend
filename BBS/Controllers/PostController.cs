@@ -7,15 +7,8 @@ using System.Text.Json;
 
 namespace BBS.Controllers
 {
-    public class PostController : Controller
+    public class PostController(IPostService _postService, IReplyService _replyService) : Controller
     {
-        private readonly IPostService _postService;
-        private readonly IReplyService _replyService;
-        public PostController(IPostService postService, IReplyService replyService)
-        {
-            _postService = postService;
-            _replyService = replyService;
-        }
         public IActionResult Index()
         {
             ViewBag.Posts = _postService.GetPosts();
