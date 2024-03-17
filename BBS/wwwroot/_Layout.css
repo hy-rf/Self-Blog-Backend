@@ -2,7 +2,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-/*    transition: 0.5s;*/
+    /*    transition: 0.5s;*/
     font-size: 1.1rem;
 }
 
@@ -58,12 +58,23 @@ header {
     left: 1rem;
 }
 
+#search {
+    position: absolute;
+    right: 11rem;
+}
+
+    #search > * {
+        font-size: 0.8rem;
+        height: 1.1rem;
+    }
+
 #user {
     position: absolute;
     right: 1rem;
-/*    background-color: antiquewhite;*/
-    border-radius:5px;
+    /*    background-color: antiquewhite;*/
+    border-radius: 5px;
 }
+
     #user > * {
         background-color: antiquewhite;
         border-radius: 5px;
@@ -74,9 +85,9 @@ header {
 #UserMenu {
     display: none;
     position: absolute;
-    width:100%;
+    width: 100%;
     z-index: 99;
-/*    background-color:antiquewhite;*/
+    /*    background-color:antiquewhite;*/
 }
 
 .usermenu_show {

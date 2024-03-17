@@ -22,6 +22,16 @@
             <a asp-controller="Home" asp-action="Index">Home</a>
             <a asp-controller="Post" asp-action="Index">Post</a>
         </div>
+        <div id="search">
+            <input type="text" id="searchbox" placeholder="Search">
+            <select>
+                <option value="title">Title</option>
+                <option value="content">Content</option>
+                <option value="author">Author</option>
+                <option value="tag">Tag</option>
+            </select>
+            <button id="searchBtn">Search</button>
+        </div>
         <div id="user">
             @if (User.Identity!.IsAuthenticated)
             {
