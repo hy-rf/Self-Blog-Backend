@@ -30,8 +30,8 @@ namespace BBS.Controllers
             {
                 string Id = User.FindFirst(ClaimTypes.Sid)?.Value;
                 ViewBag.Id = Convert.ToInt32(Id);
-                ViewBag.UserInfo = _userService.GetUser(ViewBag.Id);
-                return View("UserCenter");
+                var model = _userService.GetUser(ViewBag.Id);
+                return View(model);
             }
             catch
             {
