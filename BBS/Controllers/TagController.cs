@@ -2,7 +2,7 @@
 
 namespace BBS.Controllers
 {
-    public class Tag : Controller
+    public class TagController : Controller
     {
         public IActionResult Index()
         {
