@@ -37,7 +37,16 @@ namespace BBS.Services
             EditPost.Title = Title;
             EditPost.Content = Content;
             EditPost.Modified = DateTime.Now;
-            Tag.Split("#").ToList().ForEach(t =>
+            var oldtags = ctx.Tag.Where(t => t.PostId == Id);
+            var newtags = Tag.Split("#").ToList();
+            foreach (var t in oldtags)
+            {
+                if (!newtags.Contains(t.Name))
+                {
+                    ctx.Tag.Remove(t);
+                }
+            }
+            foreach (var t in newtags)
             {
                 if (t != "")
                 {
@@ -48,7 +57,8 @@ namespace BBS.Services
                         ctx.SaveChanges();
                     }
                 }
-            });
+            }
+                
             ctx.SaveChanges();
             return true;
         }
