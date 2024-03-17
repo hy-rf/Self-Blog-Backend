@@ -14,8 +14,8 @@
         <span>Name:</span><span id="name">@Model.Name</span>
         <p>Created:@Model.Created</p>
         <p>Last Login:@Model.LastLogin</p>
-        <p>Number of Posts:@foreach (var item in Model.Posts) { i++; }@i</p>
-        <p>Number of Replies:@foreach (var item in Model.Replies) { j++; }@j</p>
+        <p>Number of Posts:@foreach (var item in Model.Posts!) { i++; }@i</p>
+        <p>Number of Replies:@foreach (var item in Model.Replies!) { j++; }@j</p>
     </div>
     <div id="Avatar">
         <h3>@Name's Avatar</h3>
