@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace BBS.Controllers
 {
-    public class UserController(IUserService _userService, IPostService _postService) : Controller
+    public class UserController(IUserService _userService) : Controller
     {
         [Route("Welcome")]
         public IActionResult Index()
