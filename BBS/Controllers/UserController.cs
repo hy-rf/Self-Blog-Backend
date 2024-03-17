@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace BBS.Controllers
 {
-    public class UserController(IUserService _userService) : Controller
+    public class UserController(IUserService _userService, IConfiguration configuration) : Controller
     {
         [Route("Welcome")]
         public IActionResult Index()
@@ -62,7 +62,7 @@ namespace BBS.Controllers
                 if (_userService.Login(Name, Pwd, out int Id))
                 {
                     var tokenHandler = new JwtSecurityTokenHandler();
-                    var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("secretkeyBBStetKsekBSreteySecret"));
+                    var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetValue<string>("JWT")));
                     var tokenDescriptor = new SecurityTokenDescriptor
                     {
                         Subject = new ClaimsIdentity(new[]
