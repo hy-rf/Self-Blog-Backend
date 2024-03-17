@@ -22,9 +22,12 @@ namespace BBS.Services
             {
                 if (t != "")
                 {
-                    var tag = new Tag { Name = t, PostId = ctx.Post.Count() + 1 };
-                    ctx.Tag.Add(tag);
-                    ctx.SaveChanges();
+                    if (!ctx.Tag.Any(tag => tag.Name == t))
+                    {
+                        var tag = new Tag { Name = t, PostId = ctx.Post.Count() + 1 };
+                        ctx.Tag.Add(tag);
+                        ctx.SaveChanges();
+                    }
                 }
             });
             ctx.Post.Add(newPost);
@@ -47,7 +50,6 @@ namespace BBS.Services
                         ctx.Tag.Add(tag);
                         ctx.SaveChanges();
                     }
-
                 }
             });
             ctx.SaveChanges();

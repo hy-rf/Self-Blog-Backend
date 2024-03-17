@@ -20,7 +20,7 @@
 }
 <div id="PostUnit(@ViewBag.Post.Id)">
     <p>Post Id : @ViewBag.Post.Id</p>
-    <p>Title : @ViewBag.Post.Title</p>
+    <p class="Title">@ViewBag.Post.Title</p>
     <div id="PostContent">
         @Html.Raw(ViewBag.Post.Content)
     </div>
@@ -64,7 +64,7 @@
 <script defer>
     //
     PostContentOnEditor(@ViewBag.Post.Id, `@Html.Raw(ViewBag.Post.Content)`);
-    document.getElementById("Title").value = "@ViewBag.Post.Title";
+    document.getElementById("Title").value = document.getElementsByClassName("Title")[0].innerText;
     document.getElementById("Tag").value = document.getElementById("Tags").value;
     document.getElementById("toggleEditPostBtn").addEventListener("click", () => {
         document.getElementById("PostFormWrapper").classList.toggle("hideEditPost");
