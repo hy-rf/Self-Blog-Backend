@@ -16,7 +16,7 @@ namespace BBS.Controllers
         [Route("Welcome")]
         public IActionResult Index()
         {
-            if (User.Identity.IsAuthenticated)
+            if (User.Identity!.IsAuthenticated)
             {
 
                 return RedirectToAction("UserCenter");
