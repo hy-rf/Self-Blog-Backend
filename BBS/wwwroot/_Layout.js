@@ -24,3 +24,7 @@ readJson = (object) => {
         console.log(err);
     });
 }
+
+document.getElementById("searchOptions").addEventListener("change", (e) => {
+    document.getElementById("searchbox").setAttribute("placeholder", e.target.value);
+});

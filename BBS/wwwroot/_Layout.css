@@ -68,6 +68,11 @@ header {
         height: 1.1rem;
     }
 
+#searchOptions > * {
+    font-size: 0.8rem;
+    height: 1.1rem;
+}
+
 #user {
     position: absolute;
     right: 1rem;

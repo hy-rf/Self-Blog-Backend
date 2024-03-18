@@ -1,15 +1,35 @@
 ﻿#welcomeWrapper {
     position: relative;
     margin: 1rem 5rem 1rem 5rem;
+    border: 1px solid grey;
 }
 
-#toggleBtns > * {
-    background-color: white;
-    border: 1px grey solid;
-    transition: 0.3s;
+#toggleBtns {
+    position: relative;
+    border: 1px solid grey;
+    width: max-content;
+    margin: 0 auto;
 }
 
-    #toggleBtns > *:hover {
-        background-color: lightgrey;
+    #toggleBtns > * {
+        background-color: white;
+        border: 1px grey solid;
         transition: 0.3s;
+    }
+
+        #toggleBtns > *:hover {
+            background-color: lightgrey;
+            transition: 0.3s;
+        }
+
+#togglePanel {
+    position: relative;
+    border: 1px solid grey;
+    width: min-content;
+    height: 100%;
+    margin: 1rem auto;
+}
+
+    #togglePanel > * {
+        margin: 1rem;
     }
