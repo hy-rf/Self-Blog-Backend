@@ -101,7 +101,7 @@ header {
 }
 
 main {
-    position: static;
+    position: relative;
     height: 100%;
     width: 100%;
     border-left: 1px solid black;
