@@ -5,13 +5,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-
+using Microsoft.AspNetCore.SignalR;
+using BBS.Hubs;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddSignalR();
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication(opt =>
 {
@@ -64,4 +65,5 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}"
     );
+app.MapHub<ChatRoom>("/chat");
 app.Run();
