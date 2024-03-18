@@ -32,7 +32,7 @@
         <p id="Tags">
         @foreach (var item in ViewBag.Post.Tags)
         {
-            @:#@item.Name
+                <a asp-action="Index" asp-controller="Tag" asp-route-tag="@item.Name">#@item.Name</a>
         }
         </p>
     }

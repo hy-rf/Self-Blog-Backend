@@ -1,1 +1,9 @@
-﻿
+﻿@using BBS.Models
+@model List<Post>
+
+@foreach(var item in Model)
+{
+    <p>@item.Id</p>
+    <a asp-controller="Post" asp-action="GetPost" asp-route-Id="@item.Id">@item.Title</a>
+
+}
