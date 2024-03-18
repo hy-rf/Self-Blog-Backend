@@ -1,8 +1,30 @@
 
+//document.getElementById("loginBtn").addEventListener("click", () => {
+//    document.getElementById("togglePanel").innerHTML =
+//        `<form method="POST" action="/User/Login">
+//            <label for="Name">Name</label>
+//            <input id="Name" name="Name" required />
+//            <label for="Pwd">Pwd</label>
+//            <input id="Pwd" name="Pwd" type="password" required />
+//            <button type="submit">login</button>
+//         </form>`;
+//});
+
+//document.getElementById("signupBtn").addEventListener("click", () => {
+//    document.getElementById("togglePanel").innerHTML =
+//        `<form method="POST" action="/User/Signup">
+//            <label for="Name">Name</label>
+//            <input id="Name" name="Name" required />
+//            <label for="Pwd">Pwd</label>
+//            <input id="Pwd" name="Pwd" type="password" required />
+//            <button type="submit">sign up</button>
+//         </form>`;
+//});
+
 document.getElementById("loginBtn").addEventListener("click", () => {
-    document.getElementById("togglePanel").innerHTML = `<form method="POST" action="/User/Login"><input name="Name" /><input name="Pwd" type="password" /><button type="submit">login</button></form>`;
+    document.getElementById("togglePanel").innerHTML = document.getElementsByTagName("template")[0].innerHTML;
 });
 
 document.getElementById("signupBtn").addEventListener("click", () => {
-    document.getElementById("togglePanel").innerHTML = `<form method="POST" action="/User/Signup"><input name="Name" /><input name="Pwd" type="password" /><button type="submit">sign up</button></form>`;
+    document.getElementById("togglePanel").innerHTML = document.getElementsByTagName("template")[1].innerHTML;
 });

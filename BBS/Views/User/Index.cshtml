@@ -8,11 +8,31 @@
     </div>
     <div id="togglePanel">
         <form method="POST" action="/User/Login">
-            <input name="Name" />
-            <input name="Pwd" type="password" />
+            <label for="Name">Name</label>
+            <input id="Name" name="Name" required />
+            <label for="Pwd">Pwd</label>
+            <input id="Pwd" name="Pwd" type="password" required />
             <button type="submit">login</button>
         </form>
     </div>
 </div>
 
+<template>
+    <form method="POST" action="/User/Login">
+        <label for="Name">Name</label>
+        <input id="Name" name="Name" required />
+        <label for="Pwd">Pwd</label>
+        <input id="Pwd" name="Pwd" type="password" required />
+        <button type="submit">login</button>
+    </form>
+</template>
+<template>
+    <form method="POST" action="/User/Signup">
+        <label for="Name">Name</label>
+        <input id="Name" name="Name" required />
+        <label for="Pwd">Pwd</label>
+        <input id="Pwd" name="Pwd" type="password" required />
+        <button type="submit">sign up</button>
+    </form>
+</template>
 <script src="~/Welcome.js"></script>

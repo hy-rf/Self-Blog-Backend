@@ -7,11 +7,14 @@
 #toggleBtns {
     position: relative;
     border: 1px solid grey;
+    display: flex;
+    flex-direction: row;
     width: max-content;
     margin: 0 auto;
 }
 
     #toggleBtns > * {
+        width: 4rem;
         background-color: white;
         border: 1px grey solid;
         transition: 0.3s;
@@ -33,3 +36,15 @@
     #togglePanel > * {
         margin: 1rem;
     }
+
+    #togglePanel > form {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+        #togglePanel > form > button {
+            position: relative;
+            width: 4rem;
+            left: 70%;
+        }
