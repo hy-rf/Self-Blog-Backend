@@ -27,7 +27,26 @@ namespace BBS.Controllers
             }
             return View("Index");
         }
-
+        [HttpGet]
+        [Route("search/{Option}/{SearchTerm}")]
+        public List<string> SearchRecommendations(string Option, string SearchTerm)
+        {
+            HttpContext.Response.StatusCode = 200;
+            switch (Option)
+            {
+                case "title":
+                    List<string> ret = ctx.Post.Where(p => p.Title!.Contains(SearchTerm)).Select(p => p.Title).ToList();
+                    return ret;
+                case "content":
+                    List<string> ret2 = ctx.Post.Where(p => p.Content!.Contains(SearchTerm)).Select(p => p.Content).ToList();
+                    return ret2;
+                case "reply":
+                    List<string> ret3 = ctx.Reply.Where(r => r.Content!.Contains(SearchTerm)).Select(r => r.Content).ToList();
+                    return ret3;
+            }
+            HttpContext.Response.StatusCode = 404;
+            return null!;
+        }
     }
 
 }
