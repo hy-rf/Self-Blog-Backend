@@ -19,7 +19,6 @@
 @foreach (var item in Model)
 {
     <div class="PostUnit">
-        <!--<p>Post Id : @item.Id</p>-->
         <a asp-controller="Post" asp-action="GetPost" asp-route-Id="@item.Id">Title : @item.Title</a>
         <p>UserId : @item.UserId</p>
         <p>UserName : @item.User.Name</p>

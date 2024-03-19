@@ -10,7 +10,7 @@ namespace BBS.Controllers
     {
         public IActionResult Index(int Id, string tag)
         {
-            var posts = ctx.PostTag.Include(pt => pt.Post).Where(pt => pt.TagId == Id).ToList();
+            var posts = ctx.PostTag.Include(pt => pt.Post).ThenInclude(p => p.User).Where(pt => pt.TagId == Id).ToList();
             return View(posts);
         }
     }
