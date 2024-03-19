@@ -10,7 +10,8 @@
     --main-height: 90%;
     --footer-height: 5%;
     --home-page-width: 95%;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 ::-webkit-scrollbar {

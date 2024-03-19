@@ -23,6 +23,7 @@
         <a asp-controller="Post" asp-action="GetPost" asp-route-Id="@item.Id">Title : @item.Title</a>
         <p>UserId : @item.UserId</p>
         <p>UserName : @item.User.Name</p>
+        <img src="data:image/png;base64, @item.User.Avatar" width="64" height="64">
         <p class="timeIndicator">
             <span>Date Created : @item.Created.ToString("hh:mm yy/MM/dd")</span>
             <span>Date Modified : @item.Modified.ToString("hh:mm yy/MM/dd")</span>
