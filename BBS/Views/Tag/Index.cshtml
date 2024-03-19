@@ -1,14 +1,13 @@
-﻿@model List<BBS.Models.Post>
+﻿@using BBS.Models;
 
 @foreach(var item in Model)
 {
     <div class="PostUnit">
-        <!--<p>Post Id : @item.Id</p>-->
-        <a asp-controller="Post" asp-action="GetPost" asp-route-Id="@item.Id">Title : @item.Title</a>
-        <p>UserId : @item.UserId</p>
+        <a asp-controller="Post" asp-action="GetPost" asp-route-Id="@item.Post.Id">Title : @item.Post.Title</a>
+        <p>UserId : @item.Post.UserId</p>
         <p class="timeIndicator">
-            <span>Date Created : @item.Created.ToString("hh:mm yy/MM/dd")</span>
-            <span>Date Modified : @item.Modified.ToString("hh:mm yy/MM/dd")</span>
+            <span>Date Created : @item.Post.Created.ToString("hh:mm yy/MM/dd")</span>
+            <span>Date Modified : @item.Post.Modified.ToString("hh:mm yy/MM/dd")</span>
         </p>
     </div>
     <br>

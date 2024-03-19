@@ -29,6 +29,7 @@ namespace BBS.Services
                             Name = tag
                         };
                         ctx.Tag.Add(newtag);
+                        ctx.SaveChanges();
                     }
                     var posttag = new PostTag { TagId = ctx.Tag.Count() + 1, PostId = ctx.Post.Count() + 1 };
                     ctx.PostTag.Add(posttag);
@@ -67,6 +68,7 @@ namespace BBS.Services
                             Name = tag
                         };
                         ctx.Tag.Add(newtag);
+                        ctx.SaveChanges();
                     }
                     var posttag = new PostTag { TagId = ctx.Tag.Single(t => t.Name == tag).Id, PostId = Id };
                     ctx.PostTag.Add(posttag);
@@ -79,7 +81,7 @@ namespace BBS.Services
         }
         public Post GetPost(int Id)
         {
-            var GetPost = ctx.Post.Single(p => p.Id == Id);
+            var GetPost = ctx.Post.Include(p => p.PostTags).ThenInclude(pt => pt.Tag).Single(p => p.Id == Id);
             return GetPost;
         }
         public List<Post> GetPosts()
