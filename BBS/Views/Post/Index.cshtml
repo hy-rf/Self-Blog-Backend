@@ -1,4 +1,4 @@
-@using BBS.Models;
+@model List<BBS.Models.Post>;
 
 <link rel="stylesheet" href="~/Post.css">
 <h3>Post</h3>
@@ -16,15 +16,16 @@
 }
 
 
-@foreach (var item in ViewBag.Posts)
+@foreach (var item in Model)
 {
     <div class="PostUnit">
         <!--<p>Post Id : @item.Id</p>-->
         <a asp-controller="Post" asp-action="GetPost" asp-route-Id="@item.Id">Title : @item.Title</a>
         <p>UserId : @item.UserId</p>
+        <p>UserName : @item.User.Name</p>
         <p class="timeIndicator">
-            <span>Date Created : @item.Created</span>
-            <span>Date Modified : @item.Modified</span>
+            <span>Date Created : @item.Created.ToString("hh:mm yy/MM/dd")</span>
+            <span>Date Modified : @item.Modified.ToString("hh:mm yy/MM/dd")</span>
         </p>
     </div>
     <br>

@@ -11,8 +11,8 @@ namespace BBS.Controllers
     {
         public IActionResult Index()
         {
-            ViewBag.Posts = _postService.GetPosts();
-            return View();
+            var model = _postService.GetPosts();
+            return View(model);
         }
         [HttpPost]
         [Route("Post/CreatePost")]

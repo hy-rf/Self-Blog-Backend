@@ -2,7 +2,6 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    /*    transition: 0.5s;*/
     font-size: 1.1rem;
 }
 
@@ -30,6 +29,7 @@ body {
     min-height: 100vh;
     scroll-behavior: smooth;
     scrollbar-width: 0;
+    background-color: wheat;
 }
 
 header {
@@ -40,13 +40,15 @@ header {
     height: var(--header-height);
     width: var(--home-page-width);
     align-self: center;
-    border-radius: 92px;
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
     border-left: 1px solid black;
     border-right: 1px solid black;
     border-bottom: 1px solid black;
     transition: 0.5s;
     z-index: 99;
-    background-color: lightslategrey;
+    background-color: lightgrey;
+    backdrop-filter: blur(5px);
 }
 /*    header:hover {
         background-color:lightslategrey;
@@ -81,7 +83,7 @@ header {
 }
 
     #user > * {
-        background-color: antiquewhite;
+        background-color: ghostwhite;
         border-radius: 5px;
     }
 

@@ -69,7 +69,7 @@ namespace BBS.Services
         }
         public List<Post> GetPosts()
         {
-            var GetPosts = ctx.Post.ToList();
+            var GetPosts = ctx.Post.Include(p => p.User).ToList();
             return GetPosts;
         }
     }
