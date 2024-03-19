@@ -1,7 +1,8 @@
-﻿@{
+﻿@model BBS.Models.User
+@{
     int i = 0;
     int j = 0;
-    string Name = @ViewBag.UserInfo.Name;
+    string Name = Model.Name!;
 }
 
 <link rel="stylesheet" href="~/UserCenter.css">
@@ -9,18 +10,18 @@
 <div id="User">
     <div id="Detail">
         <h3 id="Title">@Name's Info:</h3>
-        <p id="Id">Id:@ViewBag.UserInfo.Id</p>
-        <span>Name:</span><span id="name">@ViewBag.UserInfo.Name</span>
-        <p>Created:@ViewBag.UserInfo.Created</p>
-        <p>Last Login:@ViewBag.UserInfo.LastLogin</p>
-        <p>Number of Posts:@foreach (var item in ViewBag.UserInfo.Posts) { i++; }@i</p>
-        <p>Number of Replies:@foreach (var item in ViewBag.UserInfo.Replies) { j++; }@j</p>
+        <p id="Id">Id:@Model.Id</p>
+        <span>Name:</span><span id="name">@Model.Name</span>
+        <p>Created:@Model.Created</p>
+        <p>Last Login:@Model.LastLogin</p>
+        <p>Number of Posts:@foreach (var item in Model.Posts!) { i++; }@i</p>
+        <p>Number of Replies:@foreach (var item in Model.Replies!) { j++; }@j</p>
     </div>
     <div id="Avatar">
         <h3>@Name's Avatar</h3>
-        <form method="POST" action="/User/EditAvatar/@ViewBag.UserInfo.Id" enctype="multipart/form-data" onsubmit="UploadFile(this);return false;">
+        <form method="POST" action="/User/EditAvatar/@Model.Id" enctype="multipart/form-data" onsubmit="UploadFile(this);return false;">
             <div id="Avatars">
-                <img src="data:image/png;base64, @ViewBag.UserInfo.Avatar" width="128" height="128">
+                <img src="data:image/png;base64, @Model.Avatar" width="128" height="128">
                 <img id="Preview" width="128" height="128">
             </div>
 
@@ -31,7 +32,7 @@
     </div>
     <div id="Posts">
         <h3>@Name's Posts</h3>
-        @foreach (var item in ViewBag.UserInfo.Posts)
+        @foreach (var item in Model.Posts)
         {
             <p>@item.Id</p>
             <a href="Post/Detail/@item.Id">@item.Title</a>
@@ -39,7 +40,7 @@
     </div>
     <div id="Replies">
         <h3>@Name's Replies</h3>
-        @foreach (var item in ViewBag.UserInfo.Replies)
+        @foreach (var item in Model.Replies)
         {
             <p>@item.Id</p>
             <a href="Post/Detail/@item.PostId">@item.Content</a>

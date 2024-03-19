@@ -1,17 +1,38 @@
 ﻿
+<link rel="stylesheet" href="~/Welcome.css">
 
+<div id="welcomeWrapper">
+    <div id="toggleBtns">
+        <button id="loginBtn">Login</button>
+        <button id="signupBtn">Singup</button>
+    </div>
+    <div id="togglePanel">
+        <form method="POST" action="/User/Login">
+            <label for="Name">Name</label>
+            <input id="Name" name="Name" required />
+            <label for="Pwd">Pwd</label>
+            <input id="Pwd" name="Pwd" type="password" required />
+            <button type="submit">login</button>
+        </form>
+    </div>
+</div>
 
-
-<div id="UserInfo">
-    <form method="POST" action="/User/Signup">
-        <input name="Name" />
-        <input name="Pwd" />
-        <button type="submit">sign up</button>
-    </form>
-
+<!--<template>
     <form method="POST" action="/User/Login">
-        <input name="Name" />
-        <input name="Pwd" />
+        <label for="Name">Name</label>
+        <input id="Name" name="Name" required />
+        <label for="Pwd">Pwd</label>
+        <input id="Pwd" name="Pwd" type="password" required />
         <button type="submit">login</button>
     </form>
-</div>
+</template>
+<template>
+    <form method="POST" action="/User/Signup">
+        <label for="Name">Name</label>
+        <input id="Name" name="Name" required />
+        <label for="Pwd">Pwd</label>
+        <input id="Pwd" name="Pwd" type="password" required />
+        <button type="submit">sign up</button>
+    </form>
+</template>-->
+<script src="~/Welcome.js"></script>

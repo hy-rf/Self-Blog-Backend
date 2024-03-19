@@ -11,19 +11,12 @@ using System.Text.Json;
 
 namespace BBS.Controllers
 {
-    public class UserController : Controller
+    public class UserController(IUserService _userService, IConfiguration configuration) : Controller
     {
-        private readonly IUserService _userService;
-        private readonly IPostService _postService;
-        public UserController(IUserService userService, IPostService postService)
-        {
-            _userService = userService;
-            _postService = postService;
-        }
         [Route("Welcome")]
         public IActionResult Index()
         {
-            if (User.Identity.IsAuthenticated)
+            if (User.Identity!.IsAuthenticated)
             {
 
                 return RedirectToAction("UserCenter");
@@ -37,8 +30,8 @@ namespace BBS.Controllers
             {
                 string Id = User.FindFirst(ClaimTypes.Sid)?.Value;
                 ViewBag.Id = Convert.ToInt32(Id);
-                ViewBag.UserInfo = _userService.GetUser(ViewBag.Id);
-                return View("UserCenter");
+                var model = _userService.GetUser(ViewBag.Id);
+                return View(model);
             }
             catch
             {
@@ -69,7 +62,7 @@ namespace BBS.Controllers
                 if (_userService.Login(Name, Pwd, out int Id))
                 {
                     var tokenHandler = new JwtSecurityTokenHandler();
-                    var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("secretkeyBBStetKsekBSreteySecret"));
+                    var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetValue<string>("JWT")));
                     var tokenDescriptor = new SecurityTokenDescriptor
                     {
                         Subject = new ClaimsIdentity(new[]

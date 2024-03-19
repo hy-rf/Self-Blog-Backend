@@ -1,4 +1,6 @@
-﻿namespace BBS.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace BBS.Models
 {
     public class Post
     {
@@ -10,6 +12,8 @@
         public DateTime Modified { get; set; }
         public List<Reply>? Replies { get; set; }
         public List<Tag>? Tags { get; set; }
+        [ForeignKey("UserId")]
+        public User User { get; set; }
         //public List<PostTag>? PostTags { get; set; }
     }
 }

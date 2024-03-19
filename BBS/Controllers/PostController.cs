@@ -7,19 +7,12 @@ using System.Text.Json;
 
 namespace BBS.Controllers
 {
-    public class PostController : Controller
+    public class PostController(IPostService _postService, IReplyService _replyService) : Controller
     {
-        private readonly IPostService _postService;
-        private readonly IReplyService _replyService;
-        public PostController(IPostService postService, IReplyService replyService)
-        {
-            _postService = postService;
-            _replyService = replyService;
-        }
         public IActionResult Index()
         {
-            ViewBag.Posts = _postService.GetPosts();
-            return View();
+            var model = _postService.GetPosts();
+            return View(model);
         }
         [HttpPost]
         [Route("Post/CreatePost")]
@@ -28,7 +21,7 @@ namespace BBS.Controllers
             try
             {
                 ViewBag.Id = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value);
-                if (_postService.CreatePost(json.GetProperty("Title").ToString(), json.GetProperty("Content").ToString(), ViewBag.Id))
+                if (_postService.CreatePost(json.GetProperty("Title").ToString(), json.GetProperty("Content").ToString(), json.GetProperty("Tag").ToString(), ViewBag.Id))
                 {
                     return RedirectToAction("Index");
                 }
@@ -51,7 +44,7 @@ namespace BBS.Controllers
             return View("Post");
         }
         [HttpPost]
-        [Route("/Post/Detail/Post/EditPost")]
+        [Route("Post/EditPost")]
         public ActionResult EditPost([FromBody] JsonElement json)
         {
             int PostId = json.GetProperty("PostId").GetInt32();
@@ -61,7 +54,7 @@ namespace BBS.Controllers
             {
                 return RedirectToAction("GetPost", new { Id = PostId });
             }
-            if (_postService.EditPost(PostId, Title, Content))
+            if (_postService.EditPost(PostId, Title, Content, json.GetProperty("Tag").ToString()))
             {
                 return RedirectToAction("GetPost", new { Id = PostId });
             }

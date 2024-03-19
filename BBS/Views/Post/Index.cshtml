@@ -1,4 +1,4 @@
-@using BBS.Models;
+@model List<BBS.Models.Post>
 
 <link rel="stylesheet" href="~/Post.css">
 <h3>Post</h3>
@@ -10,20 +10,23 @@
         <p>Title</p>
         <input id="Title" />
         <div id="CreatePostForm"></div>
+        <input id="Tag" />
         <button id="submitPost">Submit</button>
     </div>
 }
 
 
-@foreach (var item in ViewBag.Posts)
+@foreach (var item in Model)
 {
     <div class="PostUnit">
         <!--<p>Post Id : @item.Id</p>-->
         <a asp-controller="Post" asp-action="GetPost" asp-route-Id="@item.Id">Title : @item.Title</a>
         <p>UserId : @item.UserId</p>
+        <p>UserName : @item.User.Name</p>
+        <img src="data:image/png;base64, @item.User.Avatar" width="64" height="64">
         <p class="timeIndicator">
-            <span>Date Created : @item.Created</span>
-            <span>Date Modified : @item.Modified</span>
+            <span>Date Created : @item.Created.ToString("hh:mm yy/MM/dd")</span>
+            <span>Date Modified : @item.Modified.ToString("hh:mm yy/MM/dd")</span>
         </p>
     </div>
     <br>

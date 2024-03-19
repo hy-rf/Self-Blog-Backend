@@ -1,10 +1,11 @@
+
 PostContentOnEditor = async (PostId, html) => {
     var PostEditorConfig = {};
     PostEditorConfig.toolbar = "basic";
     var PostEditor = await new RichTextEditor("#EditPostForm", PostEditorConfig);
     PostEditor.setHTMLCode(html);
     document.getElementById("submitEditPost").addEventListener("click", (e) => {
-        fetch(`Post/EditPost`, {
+        fetch(`/Post/EditPost`, {
             method: "POST",
             headers: {
                 'Accept': 'application/json',
@@ -13,6 +14,7 @@ PostContentOnEditor = async (PostId, html) => {
             body: JSON.stringify({
                 PostId: parseInt(parseInt(PostId)),
                 Title: document.getElementById("Title").value,
+                Tag: document.getElementById("Tag").value,
                 Content: PostEditor.getHTMLCode()
             }),
         }).then(response => {
@@ -22,3 +24,6 @@ PostContentOnEditor = async (PostId, html) => {
     });
 }
 
+window.onload = () => {
+    document.getElementById("Tag").value = document.getElementById("Tags").innerText.split(" ").join("");
+}

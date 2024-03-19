@@ -5,13 +5,8 @@ using System.Security.Claims;
 
 namespace BBS.Controllers
 {
-    public class ReplyController : Controller
+    public class ReplyController(IReplyService _replyService) : Controller
     {
-        private readonly IReplyService _replyService;
-        public ReplyController(IReplyService replyService)
-        {
-            _replyService = replyService;
-        }
         public IActionResult Index()
         {
             return View();

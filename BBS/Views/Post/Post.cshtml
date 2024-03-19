@@ -6,7 +6,7 @@
 
 <link rel="stylesheet" href="~/Post.css">
 <script src="~/PostDetail.js"></script>
-@if (User.Identity.IsAuthenticated && ViewBag.Post.UserId == Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value))
+@if (User.Identity!.IsAuthenticated && ViewBag.Post.UserId == Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value))
 {
     <button id="toggleEditPostBtn">edit</button>
     <div id="PostFormWrapper">
@@ -14,18 +14,29 @@
         <p>Title</p>
         <input id="Title" />
         <div id="EditPostForm"></div>
+        <input id="Tag" />
         <button id="submitEditPost">Submit</button>
     </div>
 }
 <div id="PostUnit(@ViewBag.Post.Id)">
     <p>Post Id : @ViewBag.Post.Id</p>
-    <p>Title : @ViewBag.Post.Title</p>
+    <p class="Title">@ViewBag.Post.Title</p>
     <div id="PostContent">
         @Html.Raw(ViewBag.Post.Content)
     </div>
     <p>UserId : @ViewBag.Post.UserId</p>
     <span>Date Created : @ViewBag.Post.Created</span>
     <span>Date Modified : @ViewBag.Post.Modified</span>
+    @if (ViewBag.Post.Tags != null)
+    {
+        <p id="Tags">
+        @foreach (var item in ViewBag.Post.Tags)
+        {
+                <a asp-action="Index" asp-controller="Tag" asp-route-tag="@item.Name">#@item.Name</a>
+        }
+        </p>
+    }
+
 </div>
 
 <div id="Replies">
@@ -53,7 +64,8 @@
 <script defer>
     //
     PostContentOnEditor(@ViewBag.Post.Id, `@Html.Raw(ViewBag.Post.Content)`);
-    document.getElementById("Title").value = "@ViewBag.Post.Title";
+    document.getElementById("Title").value = document.getElementsByClassName("Title")[0].innerText;
+    document.getElementById("Tag").value = document.getElementById("Tags").value;
     document.getElementById("toggleEditPostBtn").addEventListener("click", () => {
         document.getElementById("PostFormWrapper").classList.toggle("hideEditPost");
     })
