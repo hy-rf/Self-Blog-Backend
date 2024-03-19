@@ -1,6 +1,8 @@
 ﻿using BBS.Data;
 using BBS.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace BBS.Controllers
 {
@@ -46,6 +48,31 @@ namespace BBS.Controllers
             }
             HttpContext.Response.StatusCode = 404;
             return null!;
+        }
+        [HttpPost]
+        [Route("Friend/{Id}")]
+        public void SendFriendRequest(int Id)
+        {
+            ctx.FriendRequest.Add(new FriendRequest
+            {
+                SendUserId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value),
+                ReceiveUserId = Id
+            });
+            ctx.SaveChanges();
+        }
+        [HttpGet]
+        [Route("FriendRequests")]
+        public ActionResult FriendRequestReceived()
+        {
+            var ret = ctx.FriendRequest.Where(fr => fr.ReceiveUserId == Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)!.Value)).Include(fr => fr.SendUser).ToList();
+            return View("FriendRequests", ret);
+        }
+        [HttpGet]
+        [Route("FriendRequestsSent")]
+        public ActionResult FriendRequestSent()
+        {
+            var ret = ctx.FriendRequest.Where(fr => fr.SendUserId == Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)!.Value)).Include(fr => fr.ReceiveUser).ToList();
+            return View("FriendRequests", ret);
         }
     }
 
