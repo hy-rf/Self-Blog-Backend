@@ -15,6 +15,8 @@ namespace BBS.Controllers
             {
                 posts.Add(ctx.Post.Single(p => p.Id == id.PostId));
             }
+            //select posts where id = postids.PostId
+
             return View(posts);
         }
     }
