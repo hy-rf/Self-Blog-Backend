@@ -13,6 +13,7 @@ public class AppDbContext : DbContext
     public DbSet<Post> Post { get; set; }
     public DbSet<Reply> Reply { get; set; }
     public DbSet<Tag> Tag { get; set; }
+    public DbSet<PostTag> PostTag { get; set; }
 
 
 }

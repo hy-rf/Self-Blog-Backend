@@ -18,12 +18,21 @@ namespace BBS.Services
                 Created = DateTime.Now,
                 Modified = DateTime.Now
             };
-            Tag.Split("#").ToList().ForEach(t =>
+            Tag.Split("#").ToList().ForEach(tag =>
             {
-                if (t != "")
+                if (tag != "")
                 {
-                    var tag = new Tag { Name = t, PostId = ctx.Post.Count() + 1 };
-                    ctx.Tag.Add(tag);
+                    if (!ctx.Tag.Any(t => t.Name == tag))
+                    {
+                        var newtag = new Tag
+                        {
+                            Name = tag
+                        };
+                        ctx.Tag.Add(newtag);
+                        ctx.SaveChanges();
+                    }
+                    var posttag = new PostTag { TagId = ctx.Tag.Count() + 1, PostId = ctx.Post.Count() + 1 };
+                    ctx.PostTag.Add(posttag);
                     ctx.SaveChanges();
                 }
             });
@@ -37,34 +46,45 @@ namespace BBS.Services
             EditPost.Title = Title;
             EditPost.Content = Content;
             EditPost.Modified = DateTime.Now;
-            var oldtags = ctx.Tag.Where(t => t.PostId == Id);
+            //Compare between old posttags and new posttags then remove old posttag thats not in new posttags
+            var oldtags = ctx.PostTag.Where(t => t.PostId == Id).Include(t => t.Tag);
             var newtags = Tag.Split("#").ToList();
             foreach (var t in oldtags)
             {
-                if (!newtags.Contains(t.Name))
+                if (!newtags.Contains(t.Tag.Name))
                 {
-                    ctx.Tag.Remove(t);
+                    ctx.PostTag.Remove(t);
                 }
             }
-            foreach (var t in newtags)
+            //Compare between old posttags and new posttags then remove old posttag thats not in new posttags end
+            foreach (var tag in newtags)
             {
-                if (t != "")
+                if (tag != "")
                 {
-                    if (!(ctx.Tag.Any(tag => tag.Name == t) && ctx.Tag.Any(tag => tag.PostId == Id)))
+                    if (!ctx.Tag.Any(t => t.Name == tag))
                     {
-                        var tag = new Tag { Name = t, PostId = Id };
-                        ctx.Tag.Add(tag);
+                        var newtag = new Tag
+                        {
+                            Name = tag
+                        };
+                        ctx.Tag.Add(newtag);
                         ctx.SaveChanges();
                     }
+                    if (!ctx.PostTag.Any(pt => pt.TagId == ctx.Tag.Single(t => t.Name == tag).Id))
+                    {
+                        var posttag = new PostTag { TagId = ctx.Tag.Single(t => t.Name == tag).Id, PostId = Id };
+                        ctx.PostTag.Add(posttag);
+                    }
+                    ctx.SaveChanges();
                 }
             }
-                
+
             ctx.SaveChanges();
             return true;
         }
         public Post GetPost(int Id)
         {
-            var GetPost = ctx.Post.Include(p => p.Tags).Single(p => p.Id == Id);
+            var GetPost = ctx.Post.Include(p => p.PostTags).ThenInclude(pt => pt.Tag).Single(p => p.Id == Id);
             return GetPost;
         }
         public List<Post> GetPosts()

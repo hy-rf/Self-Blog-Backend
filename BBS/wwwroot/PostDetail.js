@@ -25,5 +25,5 @@ PostContentOnEditor = async (PostId, html) => {
 }
 
 window.onload = () => {
-    document.getElementById("Tag").value = document.getElementById("Tags").innerText.split(" ").join("");
+    document.getElementById("Tag").value = (document.getElementById("Tags")!=null)?document.getElementById("Tags").innerText.split(" ").join(""):"";
 }
