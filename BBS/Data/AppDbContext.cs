@@ -14,6 +14,8 @@ public class AppDbContext : DbContext
     public DbSet<Reply> Reply { get; set; }
     public DbSet<Tag> Tag { get; set; }
     public DbSet<PostTag> PostTag { get; set; }
+    public DbSet<Friend> Friend { get; set; }
+    public DbSet<FriendRequest> FriendRequest { get; set; }
 
 
 }
