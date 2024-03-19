@@ -70,8 +70,11 @@ namespace BBS.Services
                         ctx.Tag.Add(newtag);
                         ctx.SaveChanges();
                     }
-                    var posttag = new PostTag { TagId = ctx.Tag.Single(t => t.Name == tag).Id, PostId = Id };
-                    ctx.PostTag.Add(posttag);
+                    if (!ctx.PostTag.Any(pt => pt.TagId == ctx.Tag.Single(t => t.Name == tag).Id))
+                    {
+                        var posttag = new PostTag { TagId = ctx.Tag.Single(t => t.Name == tag).Id, PostId = Id };
+                        ctx.PostTag.Add(posttag);
+                    }
                     ctx.SaveChanges();
                 }
             }
