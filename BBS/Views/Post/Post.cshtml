@@ -27,12 +27,12 @@
     <p>UserId : @ViewBag.Post.UserId</p>
     <span>Date Created : @ViewBag.Post.Created</span>
     <span>Date Modified : @ViewBag.Post.Modified</span>
-    @if (ViewBag.Post.Tags != null)
+    @if (ViewBag.Post.PostTags != null)
     {
         <p id="Tags">
-        @foreach (var item in ViewBag.Post.Tags)
+        @foreach (var item in ViewBag.Post.PostTags)
         {
-                <a asp-action="Index" asp-controller="Tag" asp-route-tag="@item.Name">#@item.Name</a>
+                <a asp-action="Index" asp-controller="Tag" asp-route-tag="@item.Id">#@item.Id</a>
         }
         </p>
     }
