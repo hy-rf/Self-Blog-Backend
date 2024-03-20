@@ -48,8 +48,8 @@ namespace BBS.Controllers
         public IActionResult UserPage(int Id)
         {
             string id = User.FindFirst(ClaimTypes.Sid)?.Value!;
-            var fl = ctx.Friend.Where(f => f.UserId == Convert.ToInt32(id)).ToList();
-            ViewBag.Friends = fl;
+            var isFriend = ctx.Friend.Any(f => f.UserId == Convert.ToInt32(id) && f.FriendUserId == Id);
+            ViewBag.isFriend = isFriend;
             var model = _userService.GetUser(Id);
             return View(model);
         }
