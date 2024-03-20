@@ -56,3 +56,10 @@ document.querySelector("main").addEventListener("mousedown", async (e) => {
 
     }
 });
+
+document.querySelector("#friendRequestsReceived").addEventListener("click", (e) => {
+    if (e.target.tagName == "BUTTON") {
+        alert(e.target.parentNode.firstElementChild.innerText);
+        //send approve request and add friend to database
+    }
+});

@@ -62,7 +62,7 @@ namespace BBS.Controllers
         }
         [HttpGet]
         [Route("FriendRequests")]
-        public ActionResult FriendRequestReceived()
+        public ActionResult FriendRequests()
         {
             var ret = ctx.FriendRequest.Where(fr => fr.ReceiveUserId == Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)!.Value)).Include(fr => fr.SendUser).ToList();
             return View("FriendRequests", ret);
@@ -72,6 +72,7 @@ namespace BBS.Controllers
         public ActionResult FriendRequestSent()
         {
             var ret = ctx.FriendRequest.Where(fr => fr.SendUserId == Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)!.Value)).Include(fr => fr.ReceiveUser).ToList();
+            var test = ret.GetType();
             return View("FriendRequests", ret);
         }
     }

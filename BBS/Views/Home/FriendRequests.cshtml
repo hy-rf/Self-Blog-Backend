@@ -1,1 +1,34 @@
-﻿@using BBS.Models;
+﻿@model List<BBS.Models.FriendRequest>
+
+<!--List of friend requests received-->
+<div id="friendRequestsReceived">
+    @foreach (var item in Model)
+    {
+        if (item.SendUser != null)
+        {
+            <div id="@item.SendUser.Id">
+                <p>@item.SendUser.Id</p>
+                <p>@item.SendUser.Name</p>
+                <button>Approve</button>
+                <img src="data:image/png;base64, @item.SendUser.Avatar" width="128" height="128">
+                <a href="/User/UserPage/@item.SendUser.Id">go to its page</a>
+            </div>
+        }
+    }
+</div>
+
+<!--List of friend requests sent-->
+<div id="friendRequestSent">
+    @foreach (var item in Model)
+    {
+        if (item.ReceiveUser != null)
+        {
+            <div id="@item.ReceiveUser.Id">
+                <p>@item.ReceiveUser.Id</p>
+                <p>@item.ReceiveUser.Name</p>
+                <img src="data:image/png;base64, @item.ReceiveUser.Avatar" width="128" height="128">
+                <a href="/User/UserPage/@item.ReceiveUser.Id">go to its page</a>
+            </div>
+        }
+    }
+</div>
