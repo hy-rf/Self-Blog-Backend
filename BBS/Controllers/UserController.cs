@@ -40,16 +40,16 @@ namespace BBS.Controllers
                 return Unauthorized();
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
         public IActionResult UserPage(int Id)
         {
-            //string id = User.FindFirst(ClaimTypes.Sid)?.Value!;
-            //var fl = ctx.User.Where(u => u.Id == Convert.ToInt32(id)).Include(u => u.Friends).Single();
-            //int[] fla = new int[fl.Friends.Count()==null?0: fl.Friends.Count()];
-            //foreach(var item in fl.Friends)
-            //{
-            //    fla.Append(item.FriendUserId);
-            //}
-            //ViewBag.FriendIds = fla;
+            string id = User.FindFirst(ClaimTypes.Sid)?.Value!;
+            var fl = ctx.Friend.Where(f => f.UserId == Convert.ToInt32(id)).ToList();
+            ViewBag.Friends = fl;
             var model = _userService.GetUser(Id);
             return View(model);
         }

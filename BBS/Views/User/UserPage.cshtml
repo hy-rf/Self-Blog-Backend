@@ -10,6 +10,15 @@
     int i = 0;
     int j = 0;
     string Name = Model.Name!;
+    bool isFriend = false;
+    foreach (var item in ViewBag.Friends)
+    {
+        if (item.FriendUserId == Model.Id)
+        {
+            isFriend = true;
+            break;
+        }
+    }
 }
 
 <link rel="stylesheet" href="~/UserCenter.css">
@@ -17,7 +26,7 @@
 <div id="User">
     <div id="Detail">
         <h3 id="Title">@Name's Info:</h3>
-        @if (User.Identity!.IsAuthenticated && Model.Id != Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value) && !Model.Friends.Any(f => f.FriendUserId == Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value)))
+        @if (User.Identity!.IsAuthenticated && Model.Id != Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value) && !isFriend)
         {
             <a id="sendFriendRequest">send friend request</a>
         }

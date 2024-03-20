@@ -12,8 +12,8 @@ namespace BBS.Models
         public string? Avatar { get; set; }
         public ICollection<Post>? Posts { get; set; }
         public ICollection<Reply>? Replies { get; set; }
-        [NotMapped]
-        public ICollection<Friend>? Friends { get; set; }
+        //[NotMapped]
+        //public ICollection<Friend>? Friends { get; set; }
 
     }
 }

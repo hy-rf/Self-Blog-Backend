@@ -60,7 +60,7 @@ namespace BBS.Services
         }
         public User GetUser(int Id)
         {
-            var User = ctx.User.Include(u => u.Posts).Include(u => u.Replies).Include(u => u.Friends).FirstOrDefault(u => u.Id == Id);
+            var User = ctx.User.Include(u => u.Posts).Include(u => u.Replies).FirstOrDefault(u => u.Id == Id);
             return User;
         }
         public bool EditAvatar(int Id, string Avatar)
