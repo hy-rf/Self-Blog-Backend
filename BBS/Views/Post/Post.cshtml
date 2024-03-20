@@ -19,15 +19,17 @@
         <button id="submitEditPost">Submit</button>
     </div>
 }
-<div id="PostUnit(@Model.Id)">
+<div class="PostUnit">
     <p>Post Id : @Model.Id</p>
     <p class="Title">@Model.Title</p>
     <div id="PostContent">
         @Html.Raw(Model.Content)
     </div>
-    <p>UserId : @Model.UserId</p>
-    <p>UserName : @Model.User.Name</p>
-    <img src="data:image/png;base64, @Model.User.Avatar" width="64" height="64">
+    <div class="UserInfo">
+        <p>@Model.UserId</p>
+        <p>UserName : @Model.User.Name</p>
+        <img src="data:image/png;base64, @Model.User.Avatar" width="64" height="64">
+    </div>
     <span>Date Created : @Model.Created</span>
     <span>Date Modified : @Model.Modified</span>
     <p id="Tags">
@@ -49,9 +51,12 @@
     {
         <div class="ReplyUnit">
             <p>@item.Content</p>
-            <p>@item.User.Id</p>
-            <p>UserName : @item.User.Name</p>
-            <img src="data:image/png;base64, @item.User.Avatar" width="64" height="64">
+            <div class="UserInfo">
+                <p>@item.User.Id</p>
+                <p>UserName : @item.User.Name</p>
+                <img src="data:image/png;base64, @item.User.Avatar" width="64" height="64">
+            </div>
+            
             <p class="timeIndicator">
                 <span>@item.Created</span>
                 <span>@item.Modified</span>

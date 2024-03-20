@@ -4,9 +4,12 @@
 {
     <div class="PostUnit">
         <a asp-controller="Post" asp-action="GetPost" asp-route-Id="@item.Post.Id">Title : @item.Post.Title</a>
-        <p>UserId : @item.Post.UserId</p>
-        <p>UserName : @item.Post.User.Name</p>
-        <img src="data:image/png;base64, @item.Post.User.Avatar" width="64" height="64">
+        <div class="UserInfo">
+            <p>@item.Post.UserId</p>
+            <p>UserName : @item.Post.User.Name</p>
+            <img src="data:image/png;base64, @item.Post.User.Avatar" width="64" height="64">
+        </div>
+        
         <p class="timeIndicator">
             <span>Date Created : @item.Post.Created.ToString("hh:mm yy/MM/dd")</span>
             <span>Date Modified : @item.Post.Modified.ToString("hh:mm yy/MM/dd")</span>

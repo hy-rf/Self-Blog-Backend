@@ -119,5 +119,13 @@ namespace BBS.Controllers
             HttpContext.Response.Cookies.Delete("Token");
             return RedirectToAction("Index");
         }
+        [HttpGet]
+        [Route("User/{Id}")]
+        public JsonResult UserJson(int Id)
+        {
+            //HttpContext.Response.Headers.Append("Access-Control-Allow-Origin", "*");
+            var ret = _userService.GetUserLight(Id);
+            return Json(ret);
+        }
     }
 }
