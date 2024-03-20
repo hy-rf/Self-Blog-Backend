@@ -1,8 +1,10 @@
-﻿using BBS.Interfaces;
+﻿using BBS.Data;
+using BBS.Interfaces;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -11,7 +13,7 @@ using System.Text.Json;
 
 namespace BBS.Controllers
 {
-    public class UserController(IUserService _userService, IConfiguration configuration) : Controller
+    public class UserController(IUserService _userService, IConfiguration configuration, AppDbContext ctx) : Controller
     {
         [Route("Welcome")]
         public IActionResult Index()
@@ -40,6 +42,14 @@ namespace BBS.Controllers
         }
         public IActionResult UserPage(int Id)
         {
+            //string id = User.FindFirst(ClaimTypes.Sid)?.Value!;
+            //var fl = ctx.User.Where(u => u.Id == Convert.ToInt32(id)).Include(u => u.Friends).Single();
+            //int[] fla = new int[fl.Friends.Count()==null?0: fl.Friends.Count()];
+            //foreach(var item in fl.Friends)
+            //{
+            //    fla.Append(item.FriendUserId);
+            //}
+            //ViewBag.FriendIds = fla;
             var model = _userService.GetUser(Id);
             return View(model);
         }
