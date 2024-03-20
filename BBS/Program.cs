@@ -67,5 +67,4 @@ app.MapControllerRoute(
     );
 app.MapHub<ChatRoom>("/chat");
 
-app.MapGet("Usesr/{Id}", () => Results.Json(new { Message = "Hello World" }));
 app.Run();
