@@ -47,7 +47,7 @@ document.querySelector("main").addEventListener("mousedown", async (e) => {
         }
         response().then(res => {
             var ele = document.createElement("div");
-            ele.innerHTML = `<p>${res["id"]}</p><p>${res["name"]}</p><img src="data:image/png;base64, ${res["avatar"]}" width="64" height="64"><button>close</button>`;
+            ele.innerHTML = `<p>${res["id"]}</p><p>${res["name"]}</p><a href="/User/UserPage/${res["id"]}">go to its page</a><img src="data:image/png;base64, ${res["avatar"]}" width="64" height="64"><button>close</button>`;
             e.target.appendChild(ele);
             ele.lastChild.addEventListener("click", () => {
                 ele.remove();

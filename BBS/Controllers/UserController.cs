@@ -37,8 +37,11 @@ namespace BBS.Controllers
             {
                 return Unauthorized();
             }
-
-
+        }
+        public IActionResult UserPage(int Id)
+        {
+            var model = _userService.GetUser(Id);
+            return View(model);
         }
         public ActionResult Signup(string Name, string Pwd)
         {
