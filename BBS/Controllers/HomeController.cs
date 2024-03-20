@@ -3,6 +3,7 @@ using BBS.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using System.Text.Json;
 
 namespace BBS.Controllers
 {
@@ -74,6 +75,27 @@ namespace BBS.Controllers
             var ret = ctx.FriendRequest.Where(fr => fr.SendUserId == Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)!.Value)).Include(fr => fr.ReceiveUser).ToList();
             var test = ret.GetType();
             return View("FriendRequests", ret);
+        }
+        [HttpPost]
+        [Route("Friend")]
+        public void FriendRequestApprove([FromBody] JsonElement json)
+        {
+            int Id = json.GetProperty("Id").GetInt32();
+            var newfriend = new Friend
+            {
+                UserId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)!.Value),
+                FriendUserId = Id,
+            };
+            ctx.Friend.Add(newfriend);
+            var newfriendopposite = new Friend
+            {
+                FriendUserId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)!.Value),
+                UserId = Id,
+            };
+            var reqtorm = ctx.FriendRequest.Where(fr => fr.ReceiveUserId == Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)!.Value) && fr.SendUserId == Id).Single();
+            ctx.FriendRequest.Remove(reqtorm);
+            ctx.Friend.Add(newfriendopposite);
+            ctx.SaveChanges();
         }
     }
 
