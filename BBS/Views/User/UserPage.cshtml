@@ -17,7 +17,7 @@
 <div id="User">
     <div id="Detail">
         <h3 id="Title">@Name's Info:</h3>
-        @if (User.Identity!.IsAuthenticated && Model.Id != Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value) && !ViewBag.isFriend)
+        @if (User.Identity!.IsAuthenticated && Model.Id != Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value) && !ViewBag.isFriend && !ViewBag.isFriendRequestSent)
         {
             <a id="sendFriendRequest">send friend request</a>
         }

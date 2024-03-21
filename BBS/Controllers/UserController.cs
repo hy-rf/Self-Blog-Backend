@@ -49,7 +49,9 @@ namespace BBS.Controllers
         {
             string id = User.FindFirst(ClaimTypes.Sid)?.Value!;
             var isFriend = ctx.Friend.Any(f => f.UserId == Convert.ToInt32(id) && f.FriendUserId == Id);
+            var isFriendRequestSent = ctx.FriendRequest.Any(fq => fq.SendUserId == Convert.ToInt32(id) && fq.ReceiveUserId == Id);
             ViewBag.isFriend = isFriend;
+            ViewBag.isFriendRequestSent = isFriendRequestSent;
             var model = _userService.GetUser(Id);
             return View(model);
         }
