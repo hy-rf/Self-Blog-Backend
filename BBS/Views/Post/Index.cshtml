@@ -2,7 +2,7 @@
 
 <link rel="stylesheet" href="~/Post.css">
 <h3>Post</h3>
-@if (User.Identity.IsAuthenticated)
+@if (User.Identity!.IsAuthenticated)
 {
     <button id="toggleCreatePostBtn">Create Post</button>
     <div id="PostFormWrapper">
