@@ -1,4 +1,7 @@
-﻿<div>
+﻿@ViewBag.ChatRoomId
+@ViewBag.Id
+@ViewBag.Name
+<div>
     <div>
         <div>Message</div>
         <div><input type="text" id="messageInput" /></div>
@@ -22,6 +25,11 @@
 <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
 <script>
     "use strict";
+    //todo get chat messages in same chat room
+
+
+
+
 
     var connection = new signalR.HubConnectionBuilder().withUrl("/chat").build();
 

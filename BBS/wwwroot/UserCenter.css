@@ -1,6 +1,6 @@
 #User {
     display: grid;
-    grid-template-areas: "A B" "C D" "F F";
+    grid-template-areas: "A B" "C D" "E E";
     gap: 2rem;
     position: relative;
     height: max-content;

@@ -55,6 +55,7 @@ EditName = (Id) => {
     document.getElementById('userlink').innerText = `Hello! ${ele.value}`;
 }
 
+
 getFriendList = () => {
     return fetch(`/FriendList/${document.getElementById("Id").innerText.split(":")[1].toString()}`).then(response => {
         return response.json();
@@ -62,13 +63,24 @@ getFriendList = () => {
         console.log(error);
     });
 }
+
+getChatRoomList = () => {
+    return fetch(`/ChatRoomList/${document.getElementById("Id").innerText.split(":")[1].toString()}`).then(response => {
+        return response.json();
+    }).catch(error => {
+        console.log(error);
+    });
+}
+
+
 window.onload = async () => {
+    // Grid E
     var ret = await getFriendList();
     console.log(ret[0]);
     var friendlist = "";
     var ele = document.createElement("div");
     ele.setAttribute("id", "friends");
-    ele.setAttribute("style", "position:relative;bottom:0;grid-area:F;")
+    ele.setAttribute("style", "grid-area:E;")
     for (i = 0; i < ret.length; i++) {
         friendlist += `<p>${ret[i].name}</p>
         <p>${ret[i].created}</p>
@@ -77,4 +89,12 @@ window.onload = async () => {
     }
     ele.innerHTML = friendlist;
     document.querySelector("#User").appendChild(ele);
+
+
+    // Grid F
+    var ret2 = await getChatRoomList();
+    var chatroomlist = "";
+    var ele2 = document.createElement("div");
+    ele2.setAttribute("id", "chatrooms");
+    ele2.setAttribute("style", "position:relativel;grid-area:F;");
 }
