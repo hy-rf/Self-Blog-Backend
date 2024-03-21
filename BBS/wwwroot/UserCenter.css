@@ -26,6 +26,7 @@
 }
 
 #User > * {
+    position:relative;
     border: 1px solid black;
     border-radius: 2px;
     box-shadow: 3px 2px 2px black;
