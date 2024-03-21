@@ -21,7 +21,7 @@ namespace BBS.Controllers
                 ViewBag.ChatRoomId = Id;
                 ViewBag.Id = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value);
                 ViewBag.Name = User.FindFirst(ClaimTypes.Name)?.Value!.ToString();
-                return View();
+                return View(chatService.GetChatMessages(Id));
             }
             return Redirect("/");
         }

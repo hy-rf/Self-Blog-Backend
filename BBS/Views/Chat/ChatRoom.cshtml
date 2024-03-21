@@ -1,6 +1,7 @@
 ﻿@ViewBag.ChatRoomId
 @ViewBag.Id
 @ViewBag.Name
+@model List<BBS.Models.ChatRoomMessage>
 <div>
     <div>
         <div>Message</div>
@@ -18,7 +19,12 @@
     </div>
     <div>
         <div>
-            <ul id="messagesList"></ul>
+            <ul id="messagesList">
+                @foreach (var item in Model)
+                {
+                    <li>@item.UserId says @item.Message<span>@item.Created</span></li>
+                }
+            </ul>
         </div>
     </div>
 </div>
