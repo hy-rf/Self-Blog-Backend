@@ -16,6 +16,10 @@ public class AppDbContext : DbContext
     public DbSet<PostTag> PostTag { get; set; }
     public DbSet<Friend> Friend { get; set; }
     public DbSet<FriendRequest> FriendRequest { get; set; }
+    public DbSet<ChatRoom> ChatRoom { get; set; }
+    public DbSet<ChatRoomMember> ChatRoomMember { get; set; }
+    public DbSet<ChatRoomMessage> ChatRoomMessage { get; set; }
+
 
 
 }

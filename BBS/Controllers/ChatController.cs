@@ -15,5 +15,9 @@ namespace BBS.Controllers
             ViewBag.Name = User.FindFirst(ClaimTypes.Name)?.Value!.ToString();
             return View();
         }
+        public void CreateChatRoom()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
