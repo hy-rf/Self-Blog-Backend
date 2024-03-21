@@ -55,3 +55,14 @@ EditName = (Id) => {
     document.getElementById('userlink').innerText = `Hello! ${ele.value}`;
 }
 
+getFriendList = () => {
+    return fetch(`/FriendList/${document.getElementById("Id").innerText.split(":")[1].toString()}`).then(response => {
+        return response.json();
+    }).catch(error => {
+        console.log(error);
+    });
+}
+window.onload = async () => {
+    var ret = await getFriendList();
+    console.log(ret[0]);
+}
