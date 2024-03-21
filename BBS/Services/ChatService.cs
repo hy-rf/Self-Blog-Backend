@@ -7,6 +7,14 @@ namespace BBS.Services
 {
     public class ChatService(AppDbContext ctx) : IChatService
     {
+        public bool isInChatRoom(ChatRoomMember chatRoomMember)
+        {
+            if (ctx.ChatRoomMember.Any(crm => crm.UserId == chatRoomMember.UserId && crm.ChatRoomId == chatRoomMember.ChatRoomId))
+            {
+                return true;
+            }
+            return false;
+        }
         public void CreateChatMessage(ChatRoomMessage message)
         {
             throw new NotImplementedException();
