@@ -1,1 +1,12 @@
-﻿
+﻿@model List<BBS.Models.ChatRoom>
+
+@foreach(var chatRoom in Model)
+{
+    <p>@chatRoom.Id</p>
+    <a href="/ChatRoom/@chatRoom.Id">@chatRoom.Name</a>
+}
+
+<form action="/Chat/CreateChatRoom" method="post">
+    <input type="text" name="Name" />
+    <button type="submit">Create Chat Room</button>
+</form>

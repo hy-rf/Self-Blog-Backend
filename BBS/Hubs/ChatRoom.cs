@@ -9,16 +9,16 @@ namespace BBS.Hubs
     public class ChatRoom(IChatService chatService) : Hub
     {
         [Authorize]
-        public async Task sendMessage(int RoomId, int UserId, string Name, string Message)
+        public async Task SendMessage(string RoomId, string UserId, string Name, string Message)
         {
             chatService.CreateChatMessage(new ChatRoomMessage
             {
-                UserId = UserId,
+                UserId = Convert.ToInt32(UserId),
                 Message = Message,
                 Created = DateTime.Now,
-                ChatRoomId = RoomId,
+                ChatRoomId = Convert.ToInt32(RoomId),
             });
-            await Clients.All.SendAsync("ReceiveMessage", Name, Message);
+            await Clients.All.SendAsync("ReceiveMessage", RoomId, UserId, Name, Message);
         }
     }
 }

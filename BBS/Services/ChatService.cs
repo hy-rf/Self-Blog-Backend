@@ -2,6 +2,8 @@
 using BBS.Interfaces;
 using BBS.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BBS.Services
 {
@@ -44,10 +46,16 @@ namespace BBS.Services
             ctx.ChatRoomMember.Remove(chatRoomMember);
             ctx.SaveChanges();
         }
-        public List<ChatRoomMessage> GetChatMessages(int ChatRoomId)
+        public List<ChatRoomMessage> GetChatMessages(int UserId, int ChatRoomId)
         {
-            var messages = ctx.ChatRoomMessage.Where(crm => crm.ChatRoomId == ChatRoomId).ToList();
+            var messages = ctx.ChatRoomMessage.Where(crm => crm.ChatRoomId == ChatRoomId).Include(crm => crm.User).ToList();
             return messages;
+        }
+
+        public List<ChatRoom> GetChatRooms(int UserId)
+        {
+            var rooms = ctx.ChatRoom.Include(cr => cr.ChatRoomMembers.Where(crm => crm.UserId == UserId)).ToList();
+            return rooms;
         }
     }
 }

@@ -22,7 +22,7 @@
             <ul id="messagesList">
                 @foreach (var item in Model)
                 {
-                    <li>@item.UserId says @item.Message<span>@item.Created</span></li>
+                    <li>@item.User.Name says @item.Message</li>
                 }
             </ul>
         </div>
@@ -31,18 +31,12 @@
 <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
 <script>
     "use strict";
-    //todo get chat messages in same chat room
-
-
-
-
-
     var connection = new signalR.HubConnectionBuilder().withUrl("/chat").build();
 
     //Disable the send button until connection is established.
     document.getElementById("sendButton").disabled = true;
 
-    connection.on("ReceiveMessage", function (user, message) {
+    connection.on("ReceiveMessage", function (roomid, userid, user, message) {
         var li = document.createElement("li");
         document.getElementById("messagesList").appendChild(li);
         // We can assign user-supplied strings to an element's textContent because it
@@ -58,9 +52,11 @@
     });
 
     document.getElementById("sendButton").addEventListener("click", function (event) {
+        var roomid = "@ViewBag.ChatRoomId";
+        var userid = "@ViewBag.Id";
         var user = "@ViewBag.Name";
         var message = document.getElementById("messageInput").value;
-        connection.invoke("SendMessage", user, message).catch(function (err) {
+        connection.invoke("SendMessage", roomid, userid, user, message).catch(function (err) {
             return console.error(err.toString());
         });
         event.preventDefault();
