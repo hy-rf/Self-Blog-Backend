@@ -65,4 +65,16 @@ getFriendList = () => {
 window.onload = async () => {
     var ret = await getFriendList();
     console.log(ret[0]);
+    var friendlist = "";
+    var ele = document.createElement("div");
+    ele.setAttribute("id", "friends");
+    ele.setAttribute("style", "position:relative;bottom:0;grid-area:F;")
+    for (i = 0; i < ret.length; i++) {
+        friendlist += `<p>${ret[i].name}</p>
+        <p>${ret[i].created}</p>
+        <img src="data:image/png;base64, ${ret[i].avatar}" width="64" height="64">
+        <button id="">chat with ${ret[i].name} </button>`;
+    }
+    ele.innerHTML = friendlist;
+    document.querySelector("#User").appendChild(ele);
 }
