@@ -9,7 +9,7 @@ namespace BBS.Controllers
     {
         [Authorize]
         [Route("Chat/{Id}")]
-        public IActionResult Index(int Id)
+        public IActionResult ChatRoom(int Id)
         {
             if (chatService.isInChatRoom(new Models.ChatRoomMember
             {
