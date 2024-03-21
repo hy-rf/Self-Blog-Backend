@@ -13,7 +13,7 @@ namespace BBS.Hubs
         {
             chatService.CreateChatMessage(new ChatRoomMessage
             {
-                UserId = Convert.ToInt32(UserId),
+                UserId = Convert.ToInt32(Context.User!.FindFirst(ClaimTypes.Sid)?.Value),
                 Message = Message,
                 Created = DateTime.Now,
                 ChatRoomId = Convert.ToInt32(RoomId),
