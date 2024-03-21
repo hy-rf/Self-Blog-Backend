@@ -97,6 +97,25 @@ namespace BBS.Controllers
             ctx.Friend.Add(newfriendopposite);
             ctx.SaveChanges();
         }
+        [HttpGet]
+        [Route("FriendList/{Id}")]
+        public JsonResult GetFriendList(int Id)
+        {
+            var friends = ctx.Friend.Where(f => f.UserId == Id);
+            var users = ctx.User;
+            var ret = from f in ctx.Friend.Where(f => f.UserId == Id)
+                      join user in ctx.User on f.FriendUserId equals user.Id
+                      select new
+                      {
+                          f.FriendUserId,
+                          user.Id,
+                          user.Name,
+                          user.Created,
+                          user.LastLogin,
+                          user.Avatar
+                      };
+            return Json(ret.ToList());
+        }
     }
 
 }

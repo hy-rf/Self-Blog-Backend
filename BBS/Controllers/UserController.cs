@@ -140,5 +140,6 @@ namespace BBS.Controllers
             var ret = _userService.GetUserLight(Id);
             return Json(ret);
         }
+        
     }
 }
