@@ -7,7 +7,7 @@ namespace BBS.Interfaces
         public bool isInChatRoom(ChatRoomMember chatRoomMember);
         public List<ChatRoom> GetJoinedChatRooms(int UserId);
         public void CreateChatRoom(ChatRoom chatRoom);
-        public void InviteMember();
+        public void AddMember(ChatRoomMember chatRoomMember);
         public void CreateChatMessage(ChatRoomMessage message);
         public void KickMember(ChatRoomMember chatRoomMember);
     }

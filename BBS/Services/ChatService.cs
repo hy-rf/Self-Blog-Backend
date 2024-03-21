@@ -17,7 +17,8 @@ namespace BBS.Services
         }
         public void CreateChatMessage(ChatRoomMessage message)
         {
-            throw new NotImplementedException();
+            ctx.ChatRoomMessage.Add(message);
+            ctx.SaveChanges();
         }
 
         public void CreateChatRoom(ChatRoom chatRoom)
@@ -32,14 +33,16 @@ namespace BBS.Services
             return roomlist;
         }
 
-        public void InviteMember()
+        public void AddMember(ChatRoomMember chatRoomMember)
         {
-            throw new NotImplementedException();
+            ctx.ChatRoomMember.Add(chatRoomMember);
+            ctx.SaveChanges();
         }
 
         public void KickMember(ChatRoomMember chatRoomMember)
         {
-            throw new NotImplementedException();
+            ctx.ChatRoomMember.Remove(chatRoomMember);
+            ctx.SaveChanges();
         }
     }
 }
