@@ -1,15 +1,22 @@
-﻿
-@model List<BBS.Models.ChatRoomMessage>
+﻿@model List<BBS.Models.ChatRoomMessage>
 @using BBS.Models;
+@using System.Security.Claims
 
 <link rel="stylesheet" href="~/ChatRoom.css">
-@foreach(var item in Model[0].ChatRoom.ChatRoomMembers)
-{
-    <p>@item.User.Id</p>
-    <p>@item.User.Name</p>
-    <img src="data:image/png;base64, @item.User.Avatar" width="32" height="32">
-}
-
+<div id="chatroomMemberList">
+    @foreach (var item in Model[0].ChatRoom.ChatRoomMembers)
+    {
+        <div class="UserUnit">
+            <p>@item.User.Id</p>
+            <p>@item.User.Name</p>
+            <img src="data:image/png;base64, @item.User.Avatar" width="32" height="32">
+            @if (item.User.Id != Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value))
+            {
+                <button>kick</button>
+            }
+        </div>
+    }
+</div>
 <div id="addUsertoChatRoom">
     <p>User Id</p>
     <input id="UserId" />

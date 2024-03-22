@@ -51,7 +51,8 @@ namespace BBS.Services
 
         public void KickMember(ChatRoomMember chatRoomMember)
         {
-            ctx.ChatRoomMember.Remove(chatRoomMember);
+            var torm = ctx.ChatRoomMember.Where(crm => crm.UserId == chatRoomMember.UserId && crm.ChatRoomId == chatRoomMember.ChatRoomId).Single();
+            ctx.ChatRoomMember.Remove(torm);
             ctx.SaveChanges();
         }
         public List<ChatRoomMessage> GetChatMessages(int ChatRoomId)

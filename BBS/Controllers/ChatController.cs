@@ -69,5 +69,17 @@ namespace BBS.Controllers
                 ChatRoomId = ChatRoomId
             });
         }
+        [HttpDelete]
+        [Route("Chat/KickChatRoomMember")]
+        public void KickChatRoomMember([FromBody] JsonElement json)
+        {
+            int UserId = Convert.ToInt32(json.GetProperty("UserId").GetString());
+            int ChatRoomId = Convert.ToInt32(json.GetProperty("ChatRoomId").GetString());
+            chatService.KickMember(new Models.ChatRoomMember
+            {
+                UserId = UserId,
+                ChatRoomId = ChatRoomId
+            });
+        }
     }
 }
