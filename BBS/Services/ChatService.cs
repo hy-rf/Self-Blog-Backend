@@ -31,8 +31,16 @@ namespace BBS.Services
 
         public List<ChatRoom> GetJoinedChatRooms(int UserId)
         {
-            var roomlist = ctx.ChatRoom.Include(cr => cr.ChatRoomMembers.Where(crm => crm.UserId == UserId)).ToList();
-            return roomlist;
+            var roomlist = ctx.ChatRoom;
+            var memberlist = ctx.ChatRoomMember.Where(crm => crm.UserId == UserId);
+            var ret = from rl in roomlist
+                      join ml in memberlist on rl.Id equals ml.ChatRoomId
+                      select new ChatRoom
+                      {
+                          Id = rl.Id,
+                          Name = rl.Name
+                      };
+            return ret.ToList();
         }
 
         public void AddMember(ChatRoomMember chatRoomMember)

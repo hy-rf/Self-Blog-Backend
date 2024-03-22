@@ -52,7 +52,7 @@ namespace BBS.Controllers
         public JsonResult GetChatRooms([FromBody] JsonElement json)
         {
             int UserId = Convert.ToInt32(json.GetProperty("Id").GetString());
-            var ret = chatService.GetChatRooms(UserId);
+            var ret = chatService.GetJoinedChatRooms(UserId);
             return Json(ret.Select(cr => new {cr.Id, cr.Name}));
         }
     }
