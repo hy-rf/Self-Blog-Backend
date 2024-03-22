@@ -1,5 +1,6 @@
 ﻿using BBS.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using System.Text.Json;
@@ -54,6 +55,19 @@ namespace BBS.Controllers
             int UserId = Convert.ToInt32(json.GetProperty("Id").GetString());
             var ret = chatService.GetJoinedChatRooms(UserId);
             return Json(ret.Select(cr => new {cr.Id, cr.Name}));
+        }
+
+
+        [HttpPost]
+        public void AddChatRoomMember([FromBody] JsonElement json)
+        {
+            int UserId = Convert.ToInt32(json.GetProperty("UserId").GetString());
+            int ChatRoomId = Convert.ToInt32(json.GetProperty("ChatRoomId").GetString());
+            chatService.AddMember(new Models.ChatRoomMember
+            {
+                UserId = UserId,
+                ChatRoomId = ChatRoomId
+            });
         }
     }
 }
