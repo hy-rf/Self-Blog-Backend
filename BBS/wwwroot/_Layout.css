@@ -3,6 +3,7 @@
     margin: 0;
     padding: 0;
     font-size: 1.1rem;
+    font-family: sans-serif;
 }
 
 :root {
@@ -130,4 +131,14 @@ footer {
     border-left: 1px solid black;
     border-right: 1px solid black;
     border-bottom: 1px solid black;
+}
+
+
+.PostUnit > * {
+    margin: 0.5rem;
+}
+
+
+#User > * > * {
+    margin: 0.5rem;
 }

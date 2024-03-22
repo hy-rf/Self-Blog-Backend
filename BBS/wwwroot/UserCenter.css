@@ -45,10 +45,6 @@
         left: 2px;
     }
 
-    #User > * > * {
-        margin: 4px 4px 4px 4px;
-    }
-
 
 @media (max-width:800px) {
     #User {

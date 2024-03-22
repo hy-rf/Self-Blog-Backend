@@ -129,10 +129,11 @@ namespace BBS.Controllers
             Response.StatusCode = 404;
             return;
         }
+        [Route("Logout")]
         public ActionResult Logout()
         {
             HttpContext.Response.Cookies.Delete("Token");
-            return RedirectToAction("Index");
+            return Redirect("/");
         }
         [HttpGet]
         [Route("User/{Id}")]
