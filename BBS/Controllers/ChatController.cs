@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using System.Text.Json;
 
 namespace BBS.Controllers
 {
@@ -29,7 +30,7 @@ namespace BBS.Controllers
                 ViewBag.ChatRoomId = Id;
                 ViewBag.Id = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value);
                 ViewBag.Name = User.FindFirst(ClaimTypes.Name)?.Value!.ToString();
-                return View(chatService.GetChatMessages(ViewBag.Id, Id));
+                return View(chatService.GetChatMessages(Id));
             }
             return Redirect("/");
         }
@@ -46,6 +47,13 @@ namespace BBS.Controllers
                 ChatRoomId = newchatroom.Id,
                 UserId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value)
             });
+        }
+        [HttpPost]
+        public JsonResult GetChatRooms([FromBody] JsonElement json)
+        {
+            int UserId = Convert.ToInt32(json.GetProperty("Id").GetString());
+            var ret = chatService.GetChatRooms(UserId);
+            return Json(ret.Select(cr => new {cr.Id, cr.Name}));
         }
     }
 }

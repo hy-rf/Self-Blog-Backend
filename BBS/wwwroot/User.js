@@ -65,7 +65,16 @@ getFriendList = () => {
 }
 
 getChatRoomList = () => {
-    return fetch(`/ChatRoomList/${document.getElementById("Id").innerText.split(":")[1].toString()}`).then(response => {
+    return fetch(`/Chat/GetChatRooms`, {
+        method: "POST",
+        headers: {
+            "Accept":"applicatoin/json",
+            "Content-Type":"application/json"
+        },
+        body: JSON.stringify({
+            Id: document.getElementById("Id").innerText.split(":")[1].toString()
+        })
+    }).then(response => {
         return response.json();
     }).catch(error => {
         console.log(error);
@@ -83,7 +92,7 @@ window.onload = async () => {
     ele.setAttribute("style", "grid-area:E;")
     for (i = 0; i < ret.length; i++) {
         friendlist += `<p>${ret[i].name}</p>
-        <p>${ret[i].created}</p>
+        <p>${ret[i].created}</p><a href="/User/UserPage/${ret[i].id}">go to its page</a>
         <img src="data:image/png;base64, ${ret[i].avatar}" width="64" height="64">
         <button id="">chat with ${ret[i].name} </button>`;
     }
@@ -93,8 +102,14 @@ window.onload = async () => {
 
     // Grid F
     var ret2 = await getChatRoomList();
+    console.log(ret2[0]);
     var chatroomlist = "";
     var ele2 = document.createElement("div");
     ele2.setAttribute("id", "chatrooms");
     ele2.setAttribute("style", "position:relativel;grid-area:F;");
+    for (i = 0; i < ret2.length; i++) {
+        chatroomlist += `<a href="/ChatRoom/${ret2[i].id}">go to ${ret2[i].name}</a>`;
+    }
+    ele2.innerHTML = chatroomlist;
+    document.querySelector("#User").appendChild(ele2);
 }

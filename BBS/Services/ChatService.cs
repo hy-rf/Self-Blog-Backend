@@ -46,7 +46,7 @@ namespace BBS.Services
             ctx.ChatRoomMember.Remove(chatRoomMember);
             ctx.SaveChanges();
         }
-        public List<ChatRoomMessage> GetChatMessages(int UserId, int ChatRoomId)
+        public List<ChatRoomMessage> GetChatMessages(int ChatRoomId)
         {
             var messages = ctx.ChatRoomMessage.Where(crm => crm.ChatRoomId == ChatRoomId).Include(crm => crm.User).ToList();
             return messages;

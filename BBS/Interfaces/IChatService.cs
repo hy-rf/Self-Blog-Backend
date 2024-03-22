@@ -10,7 +10,7 @@ namespace BBS.Interfaces
         public void AddMember(ChatRoomMember chatRoomMember);
         public void CreateChatMessage(ChatRoomMessage message);
         public void KickMember(ChatRoomMember chatRoomMember);
-        public List<ChatRoomMessage> GetChatMessages(int UserId, int ChatRoomId);
+        public List<ChatRoomMessage> GetChatMessages(int ChatRoomId);
         public List<ChatRoom> GetChatRooms(int UserId);
     }
 }
