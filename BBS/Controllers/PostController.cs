@@ -9,6 +9,7 @@ namespace BBS.Controllers
 {
     public class PostController(IPostService _postService, IReplyService _replyService) : Controller
     {
+        [Route("")]
         public IActionResult Index()
         {
             var model = _postService.GetPosts();
