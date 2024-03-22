@@ -102,7 +102,6 @@ namespace BBS.Controllers
         public JsonResult GetFriendList(int Id)
         {
             var friends = ctx.Friend.Where(f => f.UserId == Id);
-            var users = ctx.User;
             var ret = from f in ctx.Friend.Where(f => f.UserId == Id)
                       join user in ctx.User on f.FriendUserId equals user.Id
                       select new
