@@ -21,9 +21,8 @@
         <div id="navbar">
             <a asp-controller="Home" asp-action="Index">Home</a>
             <a asp-controller="Post" asp-action="Index">Post</a>
-            <a href="Chat/Index">Chat</a>
         </div>
-        <div id="search">
+        <!--<div id="search">
             <input type="text" id="searchbox" placeholder="title">
             <select id="searchOptions">
                 <option value="title">Title</option>
@@ -32,11 +31,14 @@
                 <option value="tag">Tag</option>
             </select>
             <button id="searchBtn">Search</button>
-        </div>
+        </div>-->
         <div id="user">
             @if (User.Identity!.IsAuthenticated)
             {
                 <a id="userlink" asp-controller="User" asp-action="UserCenter">Hello! @(Name)</a>
+                <a href="/FriendRequests">Friend Requests</a>
+                <a href="/FriendRequestsSent">Friend Requests Sent</a>
+                <a href="Chat/Index">Chat</a>
                 <a href="Logout">Logout</a>
             }
             else
