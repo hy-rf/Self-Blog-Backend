@@ -1,7 +1,7 @@
 
 document.getElementById("loginBtn").addEventListener("click", () => {
     document.getElementById("togglePanel").innerHTML =
-        `<form method="POST" action="/User/Login">
+        `<form method="POST" action="/Login">
             <label for="Name">Name</label>
             <input id="Name" name="Name" required />
             <label for="Pwd">Pwd</label>
@@ -12,7 +12,7 @@ document.getElementById("loginBtn").addEventListener("click", () => {
 
 document.getElementById("signupBtn").addEventListener("click", () => {
     document.getElementById("togglePanel").innerHTML =
-        `<form method="POST" action="/User/Signup">
+        `<form method="POST" action="/Signup">
             <label for="Name">Name</label>
             <input id="Name" name="Name" required />
             <label for="Pwd">Pwd</label>

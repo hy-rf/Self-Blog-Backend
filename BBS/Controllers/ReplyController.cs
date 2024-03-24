@@ -5,7 +5,7 @@ using System.Security.Claims;
 
 namespace BBS.Controllers
 {
-    public class ReplyController(IReplyService _replyService) : Controller
+    public class ReplyController(IReplyService replyService) : Controller
     {
         public IActionResult Index()
         {
@@ -15,7 +15,7 @@ namespace BBS.Controllers
         public ActionResult Reply(string Content, int PostId)
         {
             int UserId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value);
-            _replyService.Reply(Content, UserId, PostId);
+            replyService.Reply(Content, UserId, PostId);
             return RedirectToRoute(new
             {
                 controller = "Post",

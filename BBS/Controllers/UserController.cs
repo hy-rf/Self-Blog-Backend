@@ -13,7 +13,7 @@ using System.Text.Json;
 
 namespace BBS.Controllers
 {
-    public class UserController(IUserService _userService, IConfiguration configuration, AppDbContext ctx) : Controller
+    public class UserController(IUserService userService, IConfiguration configuration, AppDbContext ctx) : Controller
     {
         [Route("Welcome")]
         public IActionResult Index()
@@ -32,7 +32,7 @@ namespace BBS.Controllers
             {
                 string Id = User.FindFirst(ClaimTypes.Sid)?.Value;
                 ViewBag.Id = Convert.ToInt32(Id);
-                var model = _userService.GetUser(ViewBag.Id);
+                var model = userService.GetUser(ViewBag.Id);
                 return View(model);
             }
             catch
@@ -54,14 +54,15 @@ namespace BBS.Controllers
             var isFriendRequestSent = ctx.FriendRequest.Any(fq => fq.SendUserId == Convert.ToInt32(id) && fq.ReceiveUserId == Id);
             ViewBag.isFriend = isFriend;
             ViewBag.isFriendRequestSent = isFriendRequestSent;
-            var model = _userService.GetUser(Id);
+            var model = userService.GetUser(Id);
             return View("UserPage",model);
         }
+        [Route("Signup")]
         public ActionResult Signup(string Name, string Pwd)
         {
             if (!string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Pwd))
             {
-                if (_userService.Signup(Name, Pwd))
+                if (userService.Signup(Name, Pwd))
                 {
                     return RedirectToAction("Index");
                 }
@@ -72,11 +73,12 @@ namespace BBS.Controllers
             }
             return RedirectToAction("Index");
         }
+        [Route("Login")]
         public ActionResult Login(string Name, string Pwd)
         {
             if (!string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Pwd))
             {
-                if (_userService.Login(Name, Pwd, out int Id))
+                if (userService.Login(Name, Pwd, out int Id))
                 {
                     var tokenHandler = new JwtSecurityTokenHandler();
                     var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetValue<string>("JWT")));
@@ -95,9 +97,9 @@ namespace BBS.Controllers
                     HttpContext.Response.Cookies.Append("Token", tokenString);
                     return RedirectToAction("UserCenter");
                 }
-                return RedirectToAction("Index");
+                return RedirectToAction("UserCenter");
             }
-            return RedirectToAction("Index");
+            return Redirect("/");
         }
         [Route("User/EditAvatar/{Id}")]
         public ActionResult EditAvatar(int Id, IFormFile Avatar)
@@ -107,7 +109,7 @@ namespace BBS.Controllers
                 using MemoryStream ms = new MemoryStream();
                 Avatar.CopyTo(ms);
                 string s = Convert.ToBase64String(ms.ToArray());
-                if (_userService.EditAvatar(Id, s))
+                if (userService.EditAvatar(Id, s))
                 {
                     return RedirectToAction("UserCenter");
                 }
@@ -123,7 +125,7 @@ namespace BBS.Controllers
         public void EditName(int Id, [FromBody] JsonElement json)
         {
             string name = json.GetProperty("Name").ToString();
-            if (_userService.EditName(Id, name))
+            if (userService.EditName(Id, name))
             {
                 Response.StatusCode = 200;
                 return;
@@ -142,7 +144,7 @@ namespace BBS.Controllers
         public JsonResult UserJson(int Id)
         {
             //HttpContext.Response.Headers.Append("Access-Control-Allow-Origin", "*");
-            var ret = _userService.GetUserLight(Id);
+            var ret = userService.GetUserLight(Id);
             return Json(ret);
         }
         

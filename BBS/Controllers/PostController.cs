@@ -7,12 +7,12 @@ using System.Text.Json;
 
 namespace BBS.Controllers
 {
-    public class PostController(IPostService _postService, IReplyService _replyService) : Controller
+    public class PostController(IPostService postService, IReplyService _replyService) : Controller
     {
         [Route("")]
         public IActionResult Index()
         {
-            var model = _postService.GetPosts();
+            var model = postService.GetPosts();
             return View(model);
         }
         [HttpPost]
@@ -22,7 +22,7 @@ namespace BBS.Controllers
             try
             {
                 ViewBag.Id = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value);
-                if (_postService.CreatePost(json.GetProperty("Title").ToString(), json.GetProperty("Content").ToString(), json.GetProperty("Tag").ToString(), ViewBag.Id))
+                if (postService.CreatePost(json.GetProperty("Title").ToString(), json.GetProperty("Content").ToString(), json.GetProperty("Tag").ToString(), ViewBag.Id))
                 {
                     return RedirectToAction("Index");
                 }
@@ -40,9 +40,7 @@ namespace BBS.Controllers
         [Route("Post/Detail/{Id}")]
         public ActionResult GetPost(int Id)
         {
-            //ViewBag.Replies = _replyService.GetReplies(Id);
-            //ViewBag.Post = _postService.GetPost(Id);
-            return View("Post", _postService.GetPost(Id));
+            return View("Post", postService.GetPost(Id));
         }
         [HttpPost]
         [Route("Post/EditPost")]
@@ -51,11 +49,11 @@ namespace BBS.Controllers
             int PostId = json.GetProperty("PostId").GetInt32();
             string Title = json.GetProperty("Title").ToString();
             string Content = json.GetProperty("Content").ToString();
-            if (_postService.GetPost(PostId).UserId != Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value))
+            if (postService.GetPost(PostId).UserId != Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value))
             {
                 return RedirectToAction("GetPost", new { Id = PostId });
             }
-            if (_postService.EditPost(PostId, Title, Content, json.GetProperty("Tag").ToString()))
+            if (postService.EditPost(PostId, Title, Content, json.GetProperty("Tag").ToString()))
             {
                 return RedirectToAction("GetPost", new { Id = PostId });
             }
