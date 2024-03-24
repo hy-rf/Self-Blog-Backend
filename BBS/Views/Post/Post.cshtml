@@ -27,7 +27,7 @@
     </div>
     <div class="UserInfo">
         <p>@Model.UserId</p>
-        <p>UserName : @Model.User.Name</p>
+        <a href="/User/@Model.UserId">@Model.User.Name</a>
         <img src="data:image/png;base64, @Model.User.Avatar" width="64" height="64">
     </div>
     <span>Date Created : @Model.Created</span>
@@ -53,7 +53,7 @@
             <p>@item.Content</p>
             <div class="UserInfo">
                 <p>@item.User.Id</p>
-                <p>UserName : @item.User.Name</p>
+                <a href="/User/@item.User.Id">@item.User.Name</a>
                 <img src="data:image/png;base64, @item.User.Avatar" width="64" height="64">
             </div>
             

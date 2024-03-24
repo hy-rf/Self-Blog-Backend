@@ -91,10 +91,9 @@ window.onload = async () => {
     ele.setAttribute("id", "friends");
     ele.setAttribute("style", "grid-area:E;")
     for (i = 0; i < ret.length; i++) {
-        friendlist += `<p>${ret[i].name}</p>
-        <p>${ret[i].created}</p><a href="/User/UserPage/${ret[i].id}">go to its page</a>
-        <img src="data:image/png;base64, ${ret[i].avatar}" width="64" height="64">
-        <button id="">chat with ${ret[i].name} </button>`;
+        friendlist += `<a href="/User/${ret[i].id}">${ret[i].name}</a>
+        <p>${ret[i].created}</p>
+        <img src="data:image/png;base64, ${ret[i].avatar}" width="64" height="64">`;
     }
     ele.innerHTML = friendlist;
     document.querySelector("#User").appendChild(ele);

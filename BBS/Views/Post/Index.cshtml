@@ -22,7 +22,7 @@
         <a asp-controller="Post" asp-action="GetPost" asp-route-Id="@item.Id">Title : @item.Title</a>
         <div class="UserInfo">
             <p>@item.UserId</p>
-            <p>UserName : @item.User.Name</p>
+            <a href="/User/@item.UserId">@item.User.Name</a>
             <img src="data:image/png;base64, @item.User.Avatar" width="64" height="64">
         </div>
         

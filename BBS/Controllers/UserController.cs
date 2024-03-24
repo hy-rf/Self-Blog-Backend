@@ -45,6 +45,8 @@ namespace BBS.Controllers
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
+        /// 
+        [Route("User/{Id}")]
         public IActionResult UserPage(int Id)
         {
             string id = User.FindFirst(ClaimTypes.Sid)?.Value!;
@@ -53,7 +55,7 @@ namespace BBS.Controllers
             ViewBag.isFriend = isFriend;
             ViewBag.isFriendRequestSent = isFriendRequestSent;
             var model = _userService.GetUser(Id);
-            return View(model);
+            return View("UserPage",model);
         }
         public ActionResult Signup(string Name, string Pwd)
         {
@@ -136,7 +138,7 @@ namespace BBS.Controllers
             return Redirect("/");
         }
         [HttpGet]
-        [Route("User/{Id}")]
+        [Route("api/User/{Id}")]
         public JsonResult UserJson(int Id)
         {
             //HttpContext.Response.Headers.Append("Access-Control-Allow-Origin", "*");
