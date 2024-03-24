@@ -1,4 +1,11 @@
-﻿@model BBS.Models.User
+﻿@using System.Security.Claims
+
+<!--TODO-->
+<!--get friend list of current login user to determine which user has sendable friend req-->
+
+
+
+@model BBS.Models.User
 @{
     int i = 0;
     int j = 0;
@@ -9,26 +16,24 @@
 
 <div id="User">
     <div id="Detail">
-        <h3 id="Title">@Model.Name's Info:</h3>
-        <p id="Id">Id:@Model.Id</p>
+        <h3 id="Title">@Name's Info:</h3>
+        @if (User.Identity!.IsAuthenticated && Model.Id != Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value) && !ViewBag.isFriend && !ViewBag.isFriendRequestSent)
+        {
+            <a id="sendFriendRequest">send friend request</a>
+        }
+        <p id="Id">@Model.Id</p>
         <span>Name:</span><span id="name">@Model.Name</span>
         <p>Created:@Model.Created</p>
         <p>Last Login:@Model.LastLogin</p>
         <p>Number of Posts:@foreach (var item in Model.Posts!) { i++; }@i</p>
         <p>Number of Replies:@foreach (var item in Model.Replies!) { j++; }@j</p>
-        <a href="/FriendRequests">Friend Requests</a>
     </div>
     <div id="Avatar">
         <h3>@Name's Avatar</h3>
-        <form method="POST" action="/User/EditAvatar/@Model.Id" enctype="multipart/form-data" onsubmit="UploadFile(this);return false;">
+        <form>
             <div id="Avatars">
                 <img src="data:image/png;base64, @Model.Avatar" width="128" height="128">
-                <img id="Preview" width="128" height="128">
             </div>
-
-            <input type="file" id="avatar" name="avatar" value="Choose Photo">
-
-            <button type="submit" disabled>Update Avatar</button>
         </form>
     </div>
     <div id="Posts">
@@ -49,6 +54,17 @@
     </div>
 </div>
 
+<script defer>
+    document.getElementById("sendFriendRequest").addEventListener("click", (e) => {
+        e.preventDefault();
+        fetch(`/Friend/@Model.Id`, {
+            method: "POST"
+        }).then(response => {
+            e.target.innerText = "success"
+        }).catch(response => {
+            e.target.innerText = "fail"
+        });
+    });
+</script>
 
-
-<script src="~/User.js" defer></script>
+<script src="~/UserPage.js" defer></script>

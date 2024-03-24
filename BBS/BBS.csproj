@@ -18,14 +18,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\UserPage.js" />
     <Content Remove="wwwroot\Welcome.js" />
   </ItemGroup>
 
   <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\UserPage.js" />
     <_ContentIncludedByDefault Remove="wwwroot\Welcome.js" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\UserPage.js" />
     <None Include="wwwroot\Welcome.js" />
   </ItemGroup>
 

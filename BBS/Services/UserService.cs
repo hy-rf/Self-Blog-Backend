@@ -77,5 +77,10 @@ namespace BBS.Services
             ctx.SaveChanges();
             return true;
         }
+        public User GetUserLight(int Id)
+        {
+            var User = ctx.User.FirstOrDefault(u => u.Id == Id);
+            return User;
+        }
     }
 }

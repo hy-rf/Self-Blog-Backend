@@ -55,3 +55,60 @@ EditName = (Id) => {
     document.getElementById('userlink').innerText = `Hello! ${ele.value}`;
 }
 
+
+getFriendList = () => {
+    return fetch(`/FriendList/${document.getElementById("Id").innerText.split(":")[1].toString()}`).then(response => {
+        return response.json();
+    }).catch(error => {
+        console.log(error);
+    });
+}
+
+getChatRoomList = () => {
+    return fetch(`/Chat/GetChatRooms`, {
+        method: "POST",
+        headers: {
+            "Accept":"applicatoin/json",
+            "Content-Type":"application/json"
+        },
+        body: JSON.stringify({
+            Id: document.getElementById("Id").innerText.split(":")[1].toString()
+        })
+    }).then(response => {
+        return response.json();
+    }).catch(error => {
+        console.log(error);
+    });
+}
+
+
+window.onload = async () => {
+    // Grid E
+    var ret = await getFriendList();
+    console.log(ret[0]);
+    var friendlist = "";
+    var ele = document.createElement("div");
+    ele.setAttribute("id", "friends");
+    ele.setAttribute("style", "grid-area:E;")
+    for (i = 0; i < ret.length; i++) {
+        friendlist += `<a href="/User/${ret[i].id}">${ret[i].name}</a>
+        <p>${ret[i].created}</p>
+        <img src="data:image/png;base64, ${ret[i].avatar}" width="64" height="64">`;
+    }
+    ele.innerHTML = friendlist;
+    document.querySelector("#User").appendChild(ele);
+
+
+    // Grid F
+    var ret2 = await getChatRoomList();
+    console.log(ret2[0]);
+    var chatroomlist = "";
+    var ele2 = document.createElement("div");
+    ele2.setAttribute("id", "chatrooms");
+    ele2.setAttribute("style", "position:relativel;grid-area:F;");
+    for (i = 0; i < ret2.length; i++) {
+        chatroomlist += `<a href="/ChatRoom/${ret2[i].id}">go to ${ret2[i].name}</a>`;
+    }
+    ele2.innerHTML = chatroomlist;
+    document.querySelector("#User").appendChild(ele2);
+}

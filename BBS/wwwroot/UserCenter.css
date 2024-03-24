@@ -1,6 +1,6 @@
 #User {
     display: grid;
-    grid-template-areas: "A B" "C D";
+    grid-template-areas: "A B" "C D" "E F";
     gap: 2rem;
     position: relative;
     height: max-content;
@@ -18,14 +18,21 @@
 }
 
 #Posts {
+    position: relative;
+    height: 8em;
+    overflow-y: auto;
     grid-area: C;
 }
 
 #Replies {
+    position: relative;
+    height: 8em;
+    overflow-y: auto;
     grid-area: D;
 }
 
 #User > * {
+    position: relative;
     border: 1px solid black;
     border-radius: 2px;
     box-shadow: 3px 2px 2px black;
@@ -38,13 +45,9 @@
         left: 2px;
     }
 
-    #User > * > * {
-        margin: 4px 4px 4px 4px;
-    }
-
 
 @media (max-width:800px) {
     #User {
-        grid-template-areas: "A" "B" "C" "D";
+        grid-template-areas: "A" "B" "C" "D" "E" "F";
     }
 }
