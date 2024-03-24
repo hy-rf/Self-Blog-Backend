@@ -8,10 +8,9 @@
         {
             <div id="@item.SendUser.Id">
                 <p>@item.SendUser.Id</p>
-                <p>@item.SendUser.Name</p>
+                <a href="/User/@item.SendUser.Id">@item.SendUser.Name</a>
                 <button>Approve</button>
                 <img src="data:image/png;base64, @item.SendUser.Avatar" width="128" height="128">
-                <a href="/User/UserPage/@item.SendUser.Id">go to its page</a>
             </div>
         }
     }
@@ -25,9 +24,8 @@
         {
             <div id="@item.ReceiveUser.Id">
                 <p>@item.ReceiveUser.Id</p>
-                <p>@item.ReceiveUser.Name</p>
+                <a href="/User/@item.ReceiveUser.Id">@item.ReceiveUser.Name</a>
                 <img src="data:image/png;base64, @item.ReceiveUser.Avatar" width="128" height="128">
-                <a href="/User/UserPage/@item.ReceiveUser.Id">go to its page</a>
             </div>
         }
     }

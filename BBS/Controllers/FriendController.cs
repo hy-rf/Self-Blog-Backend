@@ -10,10 +10,6 @@ namespace BBS.Controllers
 {
     public class FriendController(AppDbContext ctx, IFriendService friendService) : Controller
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
         [HttpPost]
         [Route("Friend/{Id}")]
         public void SendFriendRequest(int Id)
