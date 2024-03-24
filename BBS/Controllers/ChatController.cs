@@ -10,6 +10,7 @@ namespace BBS.Controllers
     public class ChatController(IChatService chatService) : Controller
     {
         [Authorize]
+        [Route("Chat/Index")]
         public IActionResult Index()
         {
             ViewBag.Id = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value);
