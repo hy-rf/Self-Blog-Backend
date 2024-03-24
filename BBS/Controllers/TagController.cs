@@ -8,6 +8,7 @@ namespace BBS.Controllers
 {
     public class TagController(AppDbContext ctx) : Controller
     {
+        [Route("Tag/Index/{Id}")]
         public IActionResult Index(int Id, string tag)
         {
             var posts = ctx.PostTag.Include(pt => pt.Post).ThenInclude(p => p.User).Where(pt => pt.TagId == Id).ToList();

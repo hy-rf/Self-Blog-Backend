@@ -7,10 +7,6 @@ namespace BBS.Controllers
 {
     public class ReplyController(IReplyService replyService) : Controller
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
         [Route("Reply/Reply/{PostId}")]
         public ActionResult Reply(string Content, int PostId)
         {

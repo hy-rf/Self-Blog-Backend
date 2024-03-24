@@ -36,6 +36,7 @@ namespace BBS.Controllers
             return Redirect("/");
         }
         [HttpPost]
+        [Route("Chat/CreateChatRoom")]
         public void CreateChatRoom(string Name)
         {
             var newchatroom = new Models.ChatRoom
@@ -50,6 +51,7 @@ namespace BBS.Controllers
             });
         }
         [HttpPost]
+        [Route("Chat/GetChatRooms")]
         public JsonResult GetChatRooms([FromBody] JsonElement json)
         {
             int UserId = Convert.ToInt32(json.GetProperty("Id").GetString());
@@ -59,6 +61,7 @@ namespace BBS.Controllers
 
 
         [HttpPost]
+        [Route("Chat/AddChatRoomMember")]
         public void AddChatRoomMember([FromBody] JsonElement json)
         {
             int UserId = Convert.ToInt32(json.GetProperty("UserId").GetString());
