@@ -88,6 +88,7 @@ namespace BBS.Controllers
                         {
                                 new Claim(ClaimTypes.Sid, Convert.ToString(Id)),
                                 new Claim(ClaimTypes.Name, Name),
+                                new Claim(ClaimTypes.Role, "User"),
                         // Add other claims as needed
                        }),
                         Expires = DateTime.Now.AddHours(5),
