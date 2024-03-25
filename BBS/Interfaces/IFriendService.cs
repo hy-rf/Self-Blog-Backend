@@ -12,7 +12,8 @@ namespace BBS.Interfaces
         public void AddFriend(Friend friend, Friend friendOpposite);
         public void RemoveFriend(Friend friend, Friend friendOpposite);
         public IEnumerable<object> Friends(int UserId);
-
+        public bool isFriend(int UserId, int FriendUserId);
+        public bool isFriendRequestSent(int UserId, int FriendUserId);
 
     }
 }

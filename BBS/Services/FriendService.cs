@@ -50,6 +50,16 @@ namespace BBS.Services
             return ret.ToList();
         }
 
+        public bool isFriend(int UserId, int FriendUserId)
+        {
+            return ctx.Friend.Any(f => f.UserId == UserId && f.FriendUserId == FriendUserId);
+        }
+
+        public bool isFriendRequestSent(int UserId, int FriendUserId)
+        {
+            return ctx.FriendRequest.Any(fq => fq.SendUserId == UserId && fq.ReceiveUserId == FriendUserId);
+        }
+
         public void RemoveFriend(Friend friend, Friend friendOpposite)
         {
             ctx.Friend.Remove(friend);

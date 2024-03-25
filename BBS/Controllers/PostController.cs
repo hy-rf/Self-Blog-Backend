@@ -7,7 +7,7 @@ using System.Text.Json;
 
 namespace BBS.Controllers
 {
-    public class PostController(IPostService postService, IReplyService _replyService) : Controller
+    public class PostController(IPostService postService) : Controller
     {
         [Route("/")]
         public IActionResult Index()

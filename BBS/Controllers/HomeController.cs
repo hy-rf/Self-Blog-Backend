@@ -7,7 +7,7 @@ using System.Text.Json;
 
 namespace BBS.Controllers
 {
-    public class HomeController(AppDbContext ctx) : Controller
+    public class HomeController() : Controller
     {
         //public IActionResult Index()
         //{

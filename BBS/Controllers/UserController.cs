@@ -1,5 +1,6 @@
 ﻿using BBS.Data;
 using BBS.Interfaces;
+using BBS.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -13,7 +14,7 @@ using System.Text.Json;
 
 namespace BBS.Controllers
 {
-    public class UserController(IUserService userService, IConfiguration configuration, AppDbContext ctx) : Controller
+    public class UserController(IUserService userService, IConfiguration configuration, IFriendService friendService) : Controller
     {
         [Route("Welcome")]
         public IActionResult Index()
@@ -40,20 +41,12 @@ namespace BBS.Controllers
                 return Unauthorized();
             }
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Id"></param>
-        /// <returns></returns>
-        /// 
         [Route("User/{Id}")]
         public IActionResult UserPage(int Id)
         {
-            string id = User.FindFirst(ClaimTypes.Sid)?.Value!;
-            var isFriend = ctx.Friend.Any(f => f.UserId == Convert.ToInt32(id) && f.FriendUserId == Id);
-            var isFriendRequestSent = ctx.FriendRequest.Any(fq => fq.SendUserId == Convert.ToInt32(id) && fq.ReceiveUserId == Id);
-            ViewBag.isFriend = isFriend;
-            ViewBag.isFriendRequestSent = isFriendRequestSent;
+            int id = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value!);
+            ViewBag.isFriend = friendService.isFriend(id, Id);
+            ViewBag.isFriendRequestSent = friendService.isFriendRequestSent(id, Id);
             var model = userService.GetUser(Id);
             return View("UserPage",model);
         }

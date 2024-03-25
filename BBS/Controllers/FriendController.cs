@@ -6,10 +6,11 @@ using System.Security.Claims;
 using System.Text.Json;
 using BBS.Interfaces;
 using System.Runtime.Versioning;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BBS.Controllers
 {
-    public class FriendController(AppDbContext ctx, IFriendService friendService) : Controller
+    public class FriendController(IFriendService friendService) : Controller
     {
         [HttpPost]
         [Route("Friend/{Id}")]
@@ -22,6 +23,7 @@ namespace BBS.Controllers
             });
         }
         [HttpGet]
+        [Authorize]
         [Route("FriendRequests")]
         public ActionResult FriendRequests()
         {
@@ -30,6 +32,7 @@ namespace BBS.Controllers
             return View("FriendRequests", ret);
         }
         [HttpGet]
+        [Authorize]
         [Route("FriendRequestsSent")]
         public ActionResult FriendRequestSent()
         {
