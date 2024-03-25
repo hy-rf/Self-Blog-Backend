@@ -51,7 +51,7 @@ namespace BBS.Controllers
             string Content = json.GetProperty("Content").ToString();
             if (postService.GetPost(PostId).UserId != Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value))
             {
-                return RedirectToAction("GetPost", new { Id = PostId });
+                return BadRequest();
             }
             if (postService.EditPost(PostId, Title, Content, json.GetProperty("Tag").ToString()))
             {
