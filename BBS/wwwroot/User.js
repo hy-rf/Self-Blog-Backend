@@ -35,7 +35,7 @@ BindEditNameEvent();
 
 EditName = (Id) => {
     var newName = document.getElementById('inputName').value;
-    fetch(`/User/EditName/${Id}`, {
+    fetch(`/User/EditName`, {
         method: "POST",
         headers: {
             'Accept': 'application/json',

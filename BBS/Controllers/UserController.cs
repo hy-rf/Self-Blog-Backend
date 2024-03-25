@@ -102,9 +102,10 @@ namespace BBS.Controllers
             }
             return Redirect("/");
         }
-        [Route("User/EditAvatar/{Id}")]
-        public ActionResult EditAvatar(int Id, IFormFile Avatar)
+        [Route("User/EditAvatar")]
+        public ActionResult EditAvatar(IFormFile Avatar)
         {
+            int Id = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value!);
             if (Avatar.Length > 0)
             {
                 using MemoryStream ms = new MemoryStream();
@@ -122,9 +123,10 @@ namespace BBS.Controllers
             return RedirectToAction("UserCenter");
         }
         [HttpPost]
-        [Route("User/EditName/{Id}")]
-        public void EditName(int Id, [FromBody] JsonElement json)
+        [Route("User/EditName")]
+        public void EditName([FromBody] JsonElement json)
         {
+            int Id = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value!);
             string name = json.GetProperty("Name").ToString();
             if (userService.EditName(Id, name))
             {

@@ -11,7 +11,8 @@ namespace BBS.Interfaces
         public List<FriendRequest> FriendRequestsSent(int UserId);
         public void AddFriend(Friend friend, Friend friendOpposite);
         public void RemoveFriend(Friend friend, Friend friendOpposite);
-        public List<Friend> Friends(int UserId);
-        
+        public IEnumerable<object> Friends(int UserId);
+
+
     }
 }

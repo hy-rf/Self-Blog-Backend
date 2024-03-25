@@ -1,6 +1,8 @@
 ﻿using BBS.Data;
 using BBS.Interfaces;
 using BBS.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace BBS.Services
 {
@@ -21,28 +23,44 @@ namespace BBS.Services
 
         public List<FriendRequest> FriendRequests(int UserId)
         {
-            throw new NotImplementedException();
+            List<FriendRequest> ret = ctx.FriendRequest.Where(fr => fr.ReceiveUserId == UserId).Include(fr => fr.SendUser).ToList();
+            return ret;
         }
 
         public List<FriendRequest> FriendRequestsSent(int UserId)
         {
-            throw new NotImplementedException();
+            List<FriendRequest> ret = ctx.FriendRequest.Where(fr => fr.SendUserId == UserId).Include(fr => fr.ReceiveUser).ToList();
+            return ret;
         }
 
-        public List<Friend> Friends(int UserId)
+        public IEnumerable<object> Friends(int UserId)
         {
-            throw new NotImplementedException();
+            var friends = ctx.Friend.Where(f => f.UserId == UserId);
+            var ret = from f in ctx.Friend.Where(f => f.UserId == UserId)
+                      join user in ctx.User on f.FriendUserId equals user.Id
+                      select new
+                      {
+                          f.FriendUserId,
+                          user.Id,
+                          user.Name,
+                          user.Created,
+                          user.LastLogin,
+                          user.Avatar
+                      };
+            return ret.ToList();
         }
 
         public void RemoveFriend(Friend friend, Friend friendOpposite)
         {
-            throw new NotImplementedException();
+            ctx.Friend.Remove(friend);
+            ctx.Friend.Remove(friendOpposite);
+            ctx.SaveChanges();
         }
 
         public void RemoveFriendRequest(FriendRequest friendRequest)
         {
-
-            throw new NotImplementedException();
+            ctx.FriendRequest.Remove(ctx.FriendRequest.Where(fr => fr.ReceiveUserId == friendRequest.ReceiveUserId && fr.SendUserId == friendRequest.SendUserId).Single());
+            ctx.SaveChanges();
         }
     }
 }
