@@ -54,6 +54,7 @@ builder.Services.AddScoped<IReplyService, ReplyService>();
 builder.Services.AddScoped<IChatService, ChatService>();
 builder.Services.AddScoped<IFriendService, FriendService>();
 builder.Services.AddScoped<ITagService, TagService>();
+builder.Services.AddScoped<ILikeService, LikeService>();
 
 var app = builder.Build();
 

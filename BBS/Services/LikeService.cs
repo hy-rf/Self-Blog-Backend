@@ -1,38 +1,41 @@
-﻿using BBS.Interfaces;
+﻿using BBS.Data;
+using BBS.Interfaces;
 using BBS.Models;
 
 namespace BBS.Services
 {
-    public class LikeService : ILikeService
+    public class LikeService(AppDbContext ctx) : ILikeService
     {
         public void AddLikePost(LikedPost likedPost)
         {
-            throw new NotImplementedException();
+            ctx.LikedPost.Add(likedPost);
+            ctx.SaveChanges();
         }
 
         public void AddLikeReply(LikedReply likedReply)
         {
-            throw new NotImplementedException();
+            ctx.LikedReply.Add(likedReply);
+            ctx.SaveChanges();
         }
 
         public List<LikedPost> likedPosts(int userId)
         {
-            throw new NotImplementedException();
+            return ctx.LikedPost.Where(lp => lp.UserId == userId).ToList();
         }
 
         public List<LikedReply> likedReplies(int userId)
         {
-            throw new NotImplementedException();
+            return ctx.LikedReply.Where(lr => lr.UserId == userId).ToList();
         }
 
         public void RemoveLikePost(LikedPost likedPost)
         {
-            throw new NotImplementedException();
+            ctx.LikedPost.Remove(likedPost);
         }
 
         public void RemoveLikeReply(LikedReply likedReply)
         {
-            throw new NotImplementedException();
+            ctx.LikedReply.Remove(likedReply);
         }
     }
 }
