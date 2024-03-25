@@ -10,6 +10,10 @@ namespace BBS.Controllers
         [Route("/Like/Post")]
         public ActionResult LikePost([FromBody]LikedPost likedPost)
         {
+            if (User.Identity!.IsAuthenticated == false)
+            {
+                return Ok();
+            }
             likeService.AddLikePost(likedPost);
             return Ok();
         }
