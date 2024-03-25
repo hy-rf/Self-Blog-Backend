@@ -7,7 +7,7 @@ namespace BBS.Controllers
     public class LikeController(ILikeService likeService) : Controller
     {
         [HttpPost]
-        [Route("/like/post")]
+        [Route("/Like/Post")]
         public ActionResult LikePost([FromBody]LikedPost likedPost)
         {
             likeService.AddLikePost(likedPost);
