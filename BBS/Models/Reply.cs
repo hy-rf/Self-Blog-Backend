@@ -12,5 +12,6 @@ namespace BBS.Models
         public DateTime Modified { get; set; }
         [ForeignKey("UserId")]
         public User User { get; set; }
+        public List<LikedReply> Likes { get; set; }
     }
 }

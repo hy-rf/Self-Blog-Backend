@@ -29,11 +29,9 @@ namespace BBS.Services
                             Name = tag
                         };
                         ctx.Tag.Add(newtag);
-                        ctx.SaveChanges();
                     }
                     var posttag = new PostTag { TagId = ctx.Tag.Count() + 1, PostId = ctx.Post.Count() + 1 };
                     ctx.PostTag.Add(posttag);
-                    ctx.SaveChanges();
                 }
             });
             ctx.Post.Add(newPost);
@@ -68,28 +66,25 @@ namespace BBS.Services
                             Name = tag
                         };
                         ctx.Tag.Add(newtag);
-                        ctx.SaveChanges();
                     }
                     if (!ctx.PostTag.Any(pt => pt.TagId == ctx.Tag.Single(t => t.Name == tag).Id))
                     {
                         var posttag = new PostTag { TagId = ctx.Tag.Single(t => t.Name == tag).Id, PostId = Id };
                         ctx.PostTag.Add(posttag);
                     }
-                    ctx.SaveChanges();
                 }
             }
-
             ctx.SaveChanges();
             return true;
         }
         public Post GetPost(int Id)
         {
-            var GetPost = ctx.Post.Include(p => p.PostTags)!.ThenInclude(pt => pt.Tag).Include(p => p.Replies)!.ThenInclude(r => r.User).Include(p => p.User).Single(p => p.Id == Id);
+            var GetPost = ctx.Post.Include(p => p.PostTags)!.ThenInclude(pt => pt.Tag).Include(p => p.Replies)!.ThenInclude(r => r.User).Include(p => p.User).Include(p => p.Likes).ThenInclude(l => l.User).Single(p => p.Id == Id);
             return GetPost;
         }
         public List<Post> GetPosts()
         {
-            var GetPosts = ctx.Post.Include(p => p.User).ToList();
+            var GetPosts = ctx.Post.Include(p => p.User).Include(p => p.Likes).ThenInclude(l => l.User).ToList();
             return GetPosts;
         }
     }
