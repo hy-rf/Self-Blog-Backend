@@ -1,6 +1,7 @@
 ﻿using BBS.Interfaces;
 using BBS.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 namespace BBS.Controllers
 {
@@ -8,14 +9,18 @@ namespace BBS.Controllers
     {
         [HttpPost]
         [Route("/Like/Post")]
-        public ActionResult LikePost([FromBody]LikedPost likedPost)
+        public JsonResult LikePost([FromBody]LikedPost likedPost)
         {
             if (User.Identity!.IsAuthenticated == false)
             {
-                return Ok();
+                return Json(new LikedPost
+                {
+                    UserId = 0,
+                    PostId = 0
+                });
             }
             likeService.AddLikePost(likedPost);
-            return Ok();
+            return Json(likedPost);
         }
     }
 }
