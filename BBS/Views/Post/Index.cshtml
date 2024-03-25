@@ -15,11 +15,12 @@
     </div>
 }
 
-
+<div id="PostList">
 @foreach (var item in Model)
 {
     <div class="PostUnit">
         <a asp-controller="Post" asp-action="GetPost" asp-route-Id="@item.Id">Title : @item.Title</a>
+        <button class="LikeBtn">Like</button>
         <div class="UserInfo">
             <p>@item.UserId</p>
             <a href="/User/@item.UserId">@item.User.Name</a>
@@ -33,5 +34,7 @@
     </div>
     <br>
 }
+</div>
+
 <script src="~/Post.js" defer></script>
 <script src="~/PostCommon.js" defer></script>

@@ -30,30 +30,30 @@ document.getElementById("searchOptions").addEventListener("change", (e) => {
 });
 
 var floating = false;
-document.querySelector("main").addEventListener("mousedown", async (e) => {
+//document.querySelector("main").addEventListener("mousedown", async (e) => {
 
-    if (e.target.classList.contains("UserInfo")) {
-        var id = parseInt(e.target.firstElementChild.innerText);
-        response = () => {
-            return fetch(`/User/${id}`, {
-                method: "GET",
-                headers: {
-                    "Accept": "application/json",
-                    "Content-Type": "application/json"
-                },
-            }).then(response => {
-                return response.json();
-            });
-        }
-        response().then(res => {
-            var ele = document.createElement("div");
-            ele.innerHTML = `<p>${res["id"]}</p><p>${res["name"]}</p><a href="/User/UserPage/${res["id"]}">go to its page</a><img src="data:image/png;base64, ${res["avatar"]}" width="64" height="64"><button>close</button>`;
-            e.target.appendChild(ele);
-            ele.lastChild.addEventListener("click", () => {
-                ele.remove();
-            })
-        });
+//    if (e.target.classList.contains("UserInfo")) {
+//        var id = parseInt(e.target.firstElementChild.innerText);
+//        response = () => {
+//            return fetch(`/User/${id}`, {
+//                method: "GET",
+//                headers: {
+//                    "Accept": "application/json",
+//                    "Content-Type": "application/json"
+//                },
+//            }).then(response => {
+//                return response.json();
+//            });
+//        }
+//        response().then(res => {
+//            var ele = document.createElement("div");
+//            ele.innerHTML = `<p>${res["id"]}</p><p>${res["name"]}</p><a href="/User/UserPage/${res["id"]}">go to its page</a><img src="data:image/png;base64, ${res["avatar"]}" width="64" height="64"><button>close</button>`;
+//            e.target.appendChild(ele);
+//            ele.lastChild.addEventListener("click", () => {
+//                ele.remove();
+//            })
+//        });
 
-    }
-});
+//    }
+//});
 

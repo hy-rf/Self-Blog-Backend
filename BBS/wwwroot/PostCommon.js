@@ -1,15 +1,18 @@
 
 
 
-document.getElementById("LikeBtn").addEventListener("click", () => {
-    fetch("/Like/Post", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            PostId: document.getElementById("PostId").value
-        })
-    }).then(response => {
-        console.log(response);
-    });
+document.getElementById("PostList").addEventListener("click", () => {
+    if (e.target.classList.contains("LikeBtn")) {
+        fetch("/Like/Post", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                PostId: e.target.parentElement.href.split("/")[4]
+            })
+        }).then(response => {
+            console.log(response);
+        });
+    }
+});
