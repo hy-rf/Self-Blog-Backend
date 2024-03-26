@@ -93,7 +93,7 @@ window.onload = async () => {
     for (i = 0; i < ret.length; i++) {
         friendlist += `<a href="/User/${ret[i].friendUser.id}">${ret[i].friendUser.name}</a>
         <p>Joined at ${ret[i].friendUser.created}</p>
-        <img src="data:image/png;base64, ${ret[i].friendUser.avatar}" width="64" height="64">`;
+        <img src="data:image/png;base64, ${ret[i].friendUser.avatar}" width="64" height="64"><br>`;
     }
     ele.innerHTML = friendlist;
     document.querySelector("#User").appendChild(ele);

@@ -42,6 +42,7 @@ namespace BBS.Services
                 {
                     Id = f.FriendUser.Id,
                     Name = f.FriendUser.Name,
+                    Created = f.FriendUser.Created,
                     Avatar = f.FriendUser.Avatar
                 }
             }).ToList();

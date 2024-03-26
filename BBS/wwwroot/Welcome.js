@@ -30,13 +30,11 @@ document.getElementById("signupBtn").addEventListener("click", () => {
 //});
 
 
-document.getElementById("submitSignupBtn").addEventListener("click", async (e) => {
-    console.log("submitSignupBtn clicked");
-});
 
 
 
-document.getElementById("welcomeWrapper").addEventListener("click", async (e) => {
+
+document.getElementById("togglePanel").addEventListener("click", async (e) => {
     if (e.target.id == "submitLoginBtn") {
         var res = await fetch("/api/User/Login", {
             method: "POST",
