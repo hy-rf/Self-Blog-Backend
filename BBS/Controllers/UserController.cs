@@ -11,6 +11,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
+using BBS.Models;
 
 namespace BBS.Controllers
 {
@@ -48,7 +49,7 @@ namespace BBS.Controllers
             ViewBag.isFriend = friendService.isFriend(id, Id);
             ViewBag.isFriendRequestSent = friendService.isFriendRequestSent(id, Id);
             var model = userService.GetUser(Id);
-            return View("UserPage",model);
+            return View("UserPage", model);
         }
         [Route("Signup")]
         public ActionResult Signup(string Name, string Pwd)
@@ -143,6 +144,72 @@ namespace BBS.Controllers
             var ret = userService.GetUserLight(Id);
             return Json(ret);
         }
-        
+        /// <summary>
+        /// Test API
+        /// </summary>
+        /// <param name="LoginInfo"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/User/Login")]
+        public JsonResult LoginApi([FromBody] JsonElement LoginInfo)
+        {
+            string Name = LoginInfo.GetProperty("Name").ToString();
+            string Pwd = LoginInfo.GetProperty("Pwd").ToString();
+            if (!string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Pwd))
+            {
+                if (userService.Login(Name, Pwd, out int Id))
+                {
+                    var tokenHandler = new JwtSecurityTokenHandler();
+                    var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetValue<string>("JWT")));
+                    var tokenDescriptor = new SecurityTokenDescriptor
+                    {
+                        Subject = new ClaimsIdentity(new[]
+                        {
+                                new Claim(ClaimTypes.Sid, Convert.ToString(Id)),
+                                new Claim(ClaimTypes.Name, Name),
+                                new Claim(ClaimTypes.Role, "User"),
+                        // Add other claims as needed
+                       }),
+                        Expires = DateTime.Now.AddHours(5),
+                        SigningCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256)
+                    };
+                    var tokenString = tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor));
+                    HttpContext.Response.Cookies.Append("Token", tokenString);
+                    return Json(new JsonBody
+                    {
+                        Success = true,
+                        Payload = new Friend
+                        {
+                            Id = 1,
+                            UserId = 2,
+                            FriendUserId = 3
+                        },
+                        Message = "Login Success"
+                    });
+                }
+                return Json(new JsonBody
+                {
+                    Success = false,
+                    Payload = new Friend
+                    {
+                        Id = 1,
+                        UserId = 2,
+                        FriendUserId = 3
+                    },
+                    Message = "Login Failed"
+                });
+            }
+            return Json(new JsonBody
+            {
+                Success = false,
+                Payload = new Friend
+                {
+                    Id = 1,
+                    UserId = 2,
+                    FriendUserId = 3
+                },
+                Message = "Login Failed"
+            });
+        }
     }
 }
