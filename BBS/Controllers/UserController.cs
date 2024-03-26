@@ -202,11 +202,19 @@ namespace BBS.Controllers
             return Json(new JsonBody
             {
                 Success = false,
-                Payload = new Friend
-                {
-                    Id = 1,
-                    UserId = 2,
-                    FriendUserId = 3
+                Payload = new List<Object>(){
+                    new User
+                    {
+                        Id=1,
+                        Name="Test",
+                        Avatar="Test",
+                    },
+                    new Friend
+                    {
+                        Id = 1,
+                        UserId = 2,
+                        FriendUserId = 3
+                    }
                 },
                 Message = "Login Failed"
             });
