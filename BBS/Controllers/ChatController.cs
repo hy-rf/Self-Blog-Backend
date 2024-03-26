@@ -15,7 +15,7 @@ namespace BBS.Controllers
         {
             ViewBag.Id = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value);
             ViewBag.Name = User.FindFirst(ClaimTypes.Name)?.Value!.ToString();
-            var ret = chatService.GetChatRooms(Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value));
+            var ret = chatService.GetJoinedChatRooms(Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value));
             return View(ret);
         }
         [Authorize]

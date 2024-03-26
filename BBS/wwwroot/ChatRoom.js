@@ -1,6 +1,6 @@
 
 document.getElementById("addUsertoChatRoom").addEventListener("click", (e) => {
-    if (e.target.innerText == "kick") {
+    if (e.target.tagName == "BUTTON") {
         fetch("/Chat/AddChatRoomMember", {
             method: "POST",
             headers: {
