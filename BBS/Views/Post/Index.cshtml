@@ -16,24 +16,27 @@
 }
 
 <div id="PostList">
-@foreach (var item in Model)
-{
-    <div class="PostUnit">
-        <a asp-controller="Post" asp-action="GetPost" asp-route-Id="@item.Id">Title : @item.Title</a>
-        <button class="LikeBtn">Like</button>
-        <div class="UserInfo">
-            <p>@item.UserId</p>
-            <a href="/User/@item.UserId">@item.User.Name</a>
-            <img src="data:image/png;base64, @item.User.Avatar" width="64" height="64">
+    @foreach (var item in Model)
+    {
+        <div class="PostUnit">
+            <a asp-controller="Post" asp-action="GetPost" asp-route-Id="@item.Id">Title : @item.Title</a>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <button class="LikeBtn">Like</button>
+            }
+            <div class="UserInfo">
+                <p>@item.UserId</p>
+                <a href="/User/@item.UserId">@item.User.Name</a>
+                <img src="data:image/png;base64, @item.User.Avatar" width="64" height="64">
+            </div>
+
+            <p class="timeIndicator">
+                <span>Date Created : @item.Created.ToString("hh:mm yy/MM/dd")</span>
+                <span>Date Modified : @item.Modified.ToString("hh:mm yy/MM/dd")</span>
+            </p>
         </div>
-        
-        <p class="timeIndicator">
-            <span>Date Created : @item.Created.ToString("hh:mm yy/MM/dd")</span>
-            <span>Date Modified : @item.Modified.ToString("hh:mm yy/MM/dd")</span>
-        </p>
-    </div>
-    <br>
-}
+        <br>
+    }
 </div>
 
 <script src="~/Post.js" defer></script>

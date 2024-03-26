@@ -33,21 +33,9 @@ namespace BBS.Services
             return ret;
         }
 
-        public IEnumerable<object> Friends(int UserId)
+        public List<Friend> Friends(int UserId)
         {
-            var friends = ctx.Friend.Where(f => f.UserId == UserId);
-            var ret = from f in ctx.Friend.Where(f => f.UserId == UserId)
-                      join user in ctx.User on f.FriendUserId equals user.Id
-                      select new
-                      {
-                          f.FriendUserId,
-                          user.Id,
-                          user.Name,
-                          user.Created,
-                          user.LastLogin,
-                          user.Avatar
-                      };
-            return ret.ToList();
+            return ctx.Friend.Where(f => f.UserId == UserId).Include(f => f.FriendUser).ToList();
         }
 
         public bool isFriend(int UserId, int FriendUserId)

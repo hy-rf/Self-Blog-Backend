@@ -41,7 +41,7 @@
         @foreach (var item in Model.Posts)
         {
             <p>@item.Id</p>
-            <a href="Post/Detail/@item.Id">@item.Title</a>
+            <a href="/Post/Detail/@item.Id">@item.Title</a>
         }
     </div>
     <div id="Replies">
@@ -49,7 +49,7 @@
         @foreach (var item in Model.Replies)
         {
             <p>@item.Id</p>
-            <a href="Post/Detail/@item.PostId">@item.Content</a>
+            <a href="/Post/Detail/@item.PostId">@item.Content</a>
         }
     </div>
 </div>
