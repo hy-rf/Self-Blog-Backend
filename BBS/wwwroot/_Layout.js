@@ -25,9 +25,9 @@ readJson = (object) => {
     });
 }
 
-document.getElementById("searchOptions").addEventListener("change", (e) => {
-    document.getElementById("searchbox").setAttribute("placeholder", e.target.value);
-});
+//document.getElementById("searchOptions").addEventListener("change", (e) => {
+//    document.getElementById("searchbox").setAttribute("placeholder", e.target.value);
+//});
 
 var floating = false;
 //document.querySelector("main").addEventListener("mousedown", async (e) => {

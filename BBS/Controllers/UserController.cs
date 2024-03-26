@@ -178,45 +178,19 @@ namespace BBS.Controllers
                     return Json(new JsonBody
                     {
                         Success = true,
-                        Payload = new Friend
-                        {
-                            Id = 1,
-                            UserId = 2,
-                            FriendUserId = 3
-                        },
                         Message = "Login Success"
                     });
                 }
                 return Json(new JsonBody
                 {
                     Success = false,
-                    Payload = new Friend
-                    {
-                        Id = 1,
-                        UserId = 2,
-                        FriendUserId = 3
-                    },
                     Message = "Login Failed"
                 });
             }
             return Json(new JsonBody
             {
                 Success = false,
-                Payload = new List<Object>(){
-                    new User
-                    {
-                        Id=1,
-                        Name="Test",
-                        Avatar="Test",
-                    },
-                    new Friend
-                    {
-                        Id = 1,
-                        UserId = 2,
-                        FriendUserId = 3
-                    }
-                },
-                Message = "Login Failed"
+                Message = "No Input"
             });
         }
     }
