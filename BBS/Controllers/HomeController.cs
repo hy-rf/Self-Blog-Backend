@@ -9,10 +9,12 @@ namespace BBS.Controllers
 {
     public class HomeController() : Controller
     {
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
+        [HttpGet]
+        [Route("/")]
+        public IActionResult Index()
+        {
+            return View();
+        }
         //public ActionResult Search(string Option, string SearchTerm)
         //{
         //    switch (Option)

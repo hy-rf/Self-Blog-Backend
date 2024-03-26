@@ -2,6 +2,15 @@
 
 <link rel="stylesheet" href="~/Post.css">
 <h3>Post</h3>
+
+@for(int i = 0; i < ViewBag.NumPost/ViewBag.PostPerPage + 1; i++)
+{
+    if (ViewBag.NumPost % ViewBag.PostPerPage == 0 && i == ViewBag.NumPost / ViewBag.PostPerPage)
+    {
+        break;
+    }
+    <a href="/@(i+1)">@(i+1)</a>
+}
 @if (User.Identity!.IsAuthenticated)
 {
     <button id="toggleCreatePostBtn">Create Post</button>
@@ -19,6 +28,7 @@
     @foreach (var item in Model)
     {
         <div class="PostUnit">
+            <p>@item.Id</p>
             <a asp-controller="Post" asp-action="GetPost" asp-route-Id="@item.Id">Title : @item.Title</a>
             @if (User.Identity.IsAuthenticated)
             {
@@ -38,6 +48,9 @@
         <br>
     }
 </div>
-
+@for (int i = 0; i < ViewBag.NumPost / ViewBag.PostPerPage + 1; i++)
+{
+    <a href="/@(i+1)">@(i + 1)</a>
+}
 <script src="~/Post.js" defer></script>
 <script src="~/PostCommon.js" defer></script>

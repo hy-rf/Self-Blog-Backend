@@ -9,10 +9,12 @@ namespace BBS.Controllers
 {
     public class PostController(IPostService postService) : Controller
     {
-        [Route("/")]
-        public IActionResult Index()
+        [Route("/{page}")]
+        public IActionResult Index(int page)
         {
-            var model = postService.GetPosts();
+            ViewBag.NumPost = postService.CountPost();
+            ViewBag.PostPerPage = 10;
+            var model = postService.GetPostsByPage(page, 10);
             return View(model);
         }
         [HttpPost]

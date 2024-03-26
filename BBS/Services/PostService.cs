@@ -8,6 +8,11 @@ namespace BBS.Services
 {
     public class PostService(AppDbContext ctx) : IPostService
     {
+        public int CountPost()
+        {
+            return ctx.Post.Count();
+        }
+
         public bool CreatePost(string Title, string Content, string Tag, int UserId)
         {
             var newPost = new Post
@@ -85,6 +90,12 @@ namespace BBS.Services
         public List<Post> GetPosts()
         {
             var GetPosts = ctx.Post.Include(p => p.User).Include(p => p.Likes).ThenInclude(l => l.User).ToList();
+            return GetPosts;
+        }
+
+        public List<Post> GetPostsByPage(int PageIndex, int NumPostPerPage)
+        {
+            var GetPosts = ctx.Post.Include(p => p.User).Include(p => p.Likes).ThenInclude(l => l.User).OrderByDescending(p => p.Id).Skip((PageIndex - 1) * NumPostPerPage).Take(NumPostPerPage).ToList();
             return GetPosts;
         }
     }
