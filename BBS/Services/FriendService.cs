@@ -3,6 +3,7 @@ using BBS.Interfaces;
 using BBS.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using System.Linq;
 
 namespace BBS.Services
 {
@@ -35,7 +36,15 @@ namespace BBS.Services
 
         public List<Friend> Friends(int UserId)
         {
-            return ctx.Friend.Where(f => f.UserId == UserId).Include(f => f.FriendUser).ToList();
+            return ctx.Friend.Where(f => f.UserId == UserId).Include(f => f.FriendUser).Select(f => new Friend
+            {
+                FriendUser = new User
+                {
+                    Id = f.FriendUser.Id,
+                    Name = f.FriendUser.Name,
+                    Avatar = f.FriendUser.Avatar
+                }
+            }).ToList();
         }
 
         public bool isFriend(int UserId, int FriendUserId)
