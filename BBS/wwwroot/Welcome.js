@@ -57,4 +57,27 @@ document.getElementById("togglePanel").addEventListener("click", async (e) => {
             document.getElementById("submitLoginBtn").innerText = "Login Failed";
         }
     }
+    // TODO : implement api at backend
+    else if (e.target.id == "submitSignupBtn") {
+        var res = await fetch("/api/User/Signup", {
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                Name: document.getElementById("Name").value,
+                Pwd: document.getElementById("Pwd").value
+            })
+        }
+        ).then(response => {
+            return response.json();
+        });
+        if (res.success) {
+            window.location.href = "/UserCenter";
+        }
+        else {
+            document.getElementById("submitSignupBtn").innerText = "Signup Failed";
+        }
+    }
 });
