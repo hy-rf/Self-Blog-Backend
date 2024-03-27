@@ -70,8 +70,8 @@ getChatRoomList = () => {
     return fetch(`/Chat/GetChatRooms`, {
         method: "POST",
         headers: {
-            "Accept":"applicatoin/json",
-            "Content-Type":"application/json"
+            "Accept": "applicatoin/json",
+            "Content-Type": "application/json"
         },
         body: JSON.stringify({
             Id: document.getElementById("Id").innerText.split(":")[1].toString()
