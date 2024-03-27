@@ -51,51 +51,6 @@ namespace BBS.Controllers
             var model = userService.GetUser(Id);
             return View("UserPage", model);
         }
-        [Route("Signup")]
-        public ActionResult Signup(string Name, string Pwd)
-        {
-            if (!string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Pwd))
-            {
-                if (userService.Signup(Name, Pwd))
-                {
-                    return RedirectToAction("Index");
-                }
-                else
-                {
-                    return RedirectToAction("Index");
-                }
-            }
-            return RedirectToAction("Index");
-        }
-        [Route("Login")]
-        public ActionResult Login(string Name, string Pwd)
-        {
-            if (!string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Pwd))
-            {
-                if (userService.Login(Name, Pwd, out int Id))
-                {
-                    var tokenHandler = new JwtSecurityTokenHandler();
-                    var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetValue<string>("JWT")));
-                    var tokenDescriptor = new SecurityTokenDescriptor
-                    {
-                        Subject = new ClaimsIdentity(new[]
-                        {
-                                new Claim(ClaimTypes.Sid, Convert.ToString(Id)),
-                                new Claim(ClaimTypes.Name, Name),
-                                new Claim(ClaimTypes.Role, "User"),
-                        // Add other claims as needed
-                       }),
-                        Expires = DateTime.Now.AddHours(5),
-                        SigningCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256)
-                    };
-                    var tokenString = tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor));
-                    HttpContext.Response.Cookies.Append("Token", tokenString);
-                    return RedirectToAction("UserCenter");
-                }
-                return RedirectToAction("UserCenter");
-            }
-            return Redirect("/");
-        }
         [Route("User/EditAvatar")]
         public ActionResult EditAvatar(IFormFile Avatar)
         {
@@ -178,19 +133,19 @@ namespace BBS.Controllers
                     return Json(new JsonBody
                     {
                         Success = true,
-                        Message = "Login Success"
+                        Message = "Login Success!"
                     });
                 }
                 return Json(new JsonBody
                 {
                     Success = false,
-                    Message = "Login Failed"
+                    Message = "Login Failed, Wrong Name or Password."
                 });
             }
             return Json(new JsonBody
             {
                 Success = false,
-                Message = "No Input"
+                Message = "Login Failed, No Input."
             });
         }
         [HttpPost]
@@ -210,6 +165,37 @@ namespace BBS.Controllers
             {
                 Success = false,
                 Message = "Name is not available"
+            });
+        }
+        [HttpPost]
+        [Route("api/User/Signup")]
+        public JsonResult SignupApi([FromBody] JsonElement SingupInfo)
+        {
+            string Name = SingupInfo.GetProperty("Name").ToString();
+            string Pwd = SingupInfo.GetProperty("Pwd").ToString();
+            if (!string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Pwd))
+            {
+                if (userService.Signup(Name, Pwd))
+                {
+                    return Json(new JsonBody
+                    {
+                        Success = true,
+                        Message = "Signup Success!"
+                    });
+                }
+                else
+                {
+                    return Json(new JsonBody
+                    {
+                        Success = false,
+                        Message = "Signup Failed, Dulplicated Name."
+                    });
+                }
+            }
+            return Json(new JsonBody
+            {
+                Success = false,
+                Message = "Signup Failed, No Input."
             });
         }
     }

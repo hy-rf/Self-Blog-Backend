@@ -6,19 +6,21 @@ document.getElementById("loginBtn").addEventListener("click", () => {
             <input id="Name" name="Name" />
             <label for="Pwd">Pwd</label>
             <input id="Pwd" name="Pwd" type="password" />
+            <p></p>
             <button id="submitLoginBtn" type="submit">login</button>
         </div>`;
 });
 
 document.getElementById("signupBtn").addEventListener("click", () => {
     document.getElementById("togglePanel").innerHTML =
-        `<form method="POST" action="/Signup">
+        `<div>
             <label for="Name">Name</label>
             <input id="Name" name="Name" required />
             <label for="Pwd">Pwd</label>
             <input id="Pwd" name="Pwd" type="password" required />
+            <p></p>
             <button id="submitSignupBtn" type="submit">sign up</button>
-         </form>`;
+         </div>`;
 });
 
 //document.getElementById("loginBtn").addEventListener("click", () => {
@@ -51,10 +53,11 @@ document.getElementById("togglePanel").addEventListener("click", async (e) => {
             return response.json();
         });
         if (res.success) {
+            e.target.previousElementSibling.innerText = res.message;
             window.location.href = "/UserCenter";
         }
         else {
-            document.getElementById("submitLoginBtn").innerText = "Login Failed";
+            e.target.previousElementSibling.innerText = res.message;
         }
     }
     // TODO : implement api at backend
@@ -74,10 +77,21 @@ document.getElementById("togglePanel").addEventListener("click", async (e) => {
             return response.json();
         });
         if (res.success) {
+            await fetch("/api/User/Login", {
+                method: "POST",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    Name: document.getElementById("Name").value,
+                    Pwd: document.getElementById("Pwd").value
+                })
+            });
             window.location.href = "/UserCenter";
         }
         else {
-            document.getElementById("submitSignupBtn").innerText = "Signup Failed";
+            e.target.previousElementSibling.innerText = res.message;
         }
     }
 });
