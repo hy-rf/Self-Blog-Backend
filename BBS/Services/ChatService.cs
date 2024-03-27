@@ -37,6 +37,7 @@ namespace BBS.Services
             ctx.ChatRoomMember.Remove(torm);
             ctx.SaveChanges();
         }
+        // Security unsafe
         public List<ChatRoomMessage> GetChatMessages(int ChatRoomId)
         {
             var messages = ctx.ChatRoomMessage.Where(crm => crm.ChatRoomId == ChatRoomId).Include(crm => crm.User).Include(crm => crm.ChatRoom).ThenInclude(cr => cr.ChatRoomMembers).ThenInclude(crm => crm.User).ToList();
