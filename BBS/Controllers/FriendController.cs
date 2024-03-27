@@ -80,7 +80,12 @@ namespace BBS.Controllers
             //          };
             var result = friendService.Friends(Id);
             //var ret = JsonSerializer.Serialize(result);
-            return Json(result);
+            return Json(new JsonBody
+            {
+                Success = true,
+                Payload = result,
+                Message = "Success"
+            });
         }
     }
 }

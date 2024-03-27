@@ -59,6 +59,8 @@ EditName = (Id) => {
 getFriendList = () => {
     return fetch(`/FriendList/${document.getElementById("Id").innerText.split(":")[1].toString()}`).then(response => {
         return response.json();
+    }).then(ret => {
+        return ret.payload;
     }).catch(error => {
         console.log(error);
     });
