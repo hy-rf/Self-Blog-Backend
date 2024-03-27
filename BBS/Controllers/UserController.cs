@@ -193,5 +193,24 @@ namespace BBS.Controllers
                 Message = "No Input"
             });
         }
+        [HttpPost]
+        [Route("api/User/CheckDuplicatedName")]
+        public JsonResult CheckDuplicatedName([FromBody] JsonElement Name)
+        {
+            string name = Name.GetProperty("Name").ToString();
+            if (userService.CheckDuplicatedName(name))
+            {
+                return Json(new JsonBody
+                {
+                    Success = true,
+                    Message = "Name is available"
+                });
+            }
+            return Json(new JsonBody
+            {
+                Success = false,
+                Message = "Name is not available"
+            });
+        }
     }
 }

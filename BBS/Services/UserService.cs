@@ -11,7 +11,7 @@ namespace BBS.Services
     {
         public bool Signup(string Name, string Pwd)
         {
-            if (CheckSignup(Name))
+            if (CheckDuplicatedName(Name))
             {
                 var newUser = new User
                 {
@@ -27,7 +27,7 @@ namespace BBS.Services
             }
             return false;
         }
-        public bool CheckSignup(string Name)
+        public bool CheckDuplicatedName(string Name)
         {
             var Used = ctx.User.Any(u => u.Name == Name);
             if (Used)

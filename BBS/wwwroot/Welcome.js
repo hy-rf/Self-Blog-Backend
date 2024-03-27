@@ -81,3 +81,29 @@ document.getElementById("togglePanel").addEventListener("click", async (e) => {
         }
     }
 });
+
+document.getElementById("togglePanel").addEventListener("keyup", async (e) => {
+    if (e.target.id == "Name") {
+        var name = e.target.value;
+        var nameAvailable = await fetch("/api/User/CheckDuplicatedName", {
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                Name: name
+            })
+        }).then(response => {
+            return response.json();
+        }).then(ret => {
+            return ret.success;
+        });
+        if (nameAvailable) {
+            e.target.style.color = "green";
+        }
+        else {
+            e.target.style.color = "red";
+        }
+    }
+});
