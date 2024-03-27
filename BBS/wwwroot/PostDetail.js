@@ -25,5 +25,12 @@ PostContentOnEditor = async (PostId, html) => {
 }
 
 window.onload = () => {
-    document.getElementById("Tag").value = (document.getElementById("Tags")!=null)?document.getElementById("Tags").innerText.split(" ").join(""):"";
+    document.getElementById("toggleEditPostBtn").addEventListener("click", () => {
+        document.getElementById("PostFormWrapper").classList.toggle("hideEditPost");
+    });
+
+    document.getElementById("Tag").value = (document.getElementById("Tags") != null) ? document.getElementById("Tags").innerText.split(" ").join("") : "";
+    document.getElementById("Title").value = document.getElementsByClassName("Title")[0].innerText;
+    PostContentOnEditor(document.querySelector(".PostUnit p:nth-child(1)").innerText, document.getElementById("PostContent").innerHTML);
+    
 }

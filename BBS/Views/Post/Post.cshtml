@@ -20,7 +20,7 @@
     </div>
 }
 <div class="PostUnit">
-    <p>Post Id : @Model.Id</p>
+    <p>@Model.Id</p>
     <p class="Title">@Model.Title</p>
     <div id="PostContent">
         @Html.Raw(Model.Content)
@@ -72,14 +72,6 @@
     </form>
 }
 
-<script defer>
-    //
-    PostContentOnEditor(@Model.Id, `@Html.Raw(Model.Content)`);
-    document.getElementById("Title").value = document.getElementsByClassName("Title")[0].innerText;
-    document.getElementById("Tag").value = (document.getElementById("Tags").value == null) ? "" : document.getElementById("Tags").value;
-    document.getElementById("toggleEditPostBtn").addEventListener("click", () => {
-        document.getElementById("PostFormWrapper").classList.toggle("hideEditPost");
-    })
-</script>
+
 
 <script src="~/PostCommon.js" defer></script>

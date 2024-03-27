@@ -34,6 +34,7 @@ namespace BBS.Services
                             Name = tag
                         };
                         ctx.Tag.Add(newtag);
+                        ctx.SaveChanges();
                     }
                     var posttag = new PostTag { TagId = ctx.Tag.Count() + 1, PostId = ctx.Post.Count() + 1 };
                     ctx.PostTag.Add(posttag);
@@ -71,6 +72,7 @@ namespace BBS.Services
                             Name = tag
                         };
                         ctx.Tag.Add(newtag);
+                        ctx.SaveChanges();
                     }
                     if (!ctx.PostTag.Any(pt => pt.TagId == ctx.Tag.Single(t => t.Name == tag).Id))
                     {
