@@ -18,8 +18,11 @@ namespace BBS.Services
 
         public void AddFriendRequest(FriendRequest friendRequest)
         {
-            ctx.FriendRequest.Add(friendRequest);
-            ctx.SaveChanges();
+            if (!ctx.FriendRequest.Any(fr => fr.SendUserId == friendRequest.SendUserId && fr.ReceiveUserId == friendRequest.ReceiveUserId))
+            {
+                ctx.FriendRequest.Add(friendRequest);
+                ctx.SaveChanges();
+            }
         }
 
         public List<FriendRequest> FriendRequests(int UserId)

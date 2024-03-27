@@ -32,14 +32,14 @@ namespace BBS.Controllers
         {
             try
             {
-                string Id = User.FindFirst(ClaimTypes.Sid)?.Value;
+                string Id = User.FindFirst(ClaimTypes.Sid)!.Value;
                 ViewBag.Id = Convert.ToInt32(Id);
                 var model = userService.GetUser(ViewBag.Id);
                 return View(model);
             }
             catch
             {
-                return Unauthorized();
+                return View("Index");
             }
         }
         [Route("User/{Id}")]
@@ -51,6 +51,12 @@ namespace BBS.Controllers
             var model = userService.GetUser(Id);
             return View("UserPage", model);
         }
+        /// <summary>
+        /// DONE API
+        /// </summary>
+        /// <param name="Avatar"></param>
+        /// <returns></returns>
+        [HttpPost]
         [Route("User/EditAvatar")]
         public ActionResult EditAvatar(IFormFile Avatar)
         {
@@ -71,6 +77,7 @@ namespace BBS.Controllers
             }
             return RedirectToAction("UserCenter");
         }
+        // DONE API
         [HttpPost]
         [Route("User/EditName")]
         public void EditName([FromBody] JsonElement json)
@@ -91,19 +98,15 @@ namespace BBS.Controllers
             HttpContext.Response.Cookies.Delete("Token");
             return Redirect("/");
         }
+        // DONE API
         [HttpGet]
         [Route("api/User/{Id}")]
         public JsonResult UserJson(int Id)
         {
-            //HttpContext.Response.Headers.Append("Access-Control-Allow-Origin", "*");
             var ret = userService.GetUserLight(Id);
             return Json(ret);
         }
-        /// <summary>
-        /// Test API
-        /// </summary>
-        /// <param name="LoginInfo"></param>
-        /// <returns></returns>
+        // DONE API
         [HttpPost]
         [Route("api/User/Login")]
         public JsonResult LoginApi([FromBody] JsonElement LoginInfo)
@@ -148,6 +151,7 @@ namespace BBS.Controllers
                 Message = "Login Failed, No Input."
             });
         }
+        // DONE API
         [HttpPost]
         [Route("api/User/CheckDuplicatedName")]
         public JsonResult CheckDuplicatedName([FromBody] JsonElement Name)
@@ -167,6 +171,7 @@ namespace BBS.Controllers
                 Message = "Name is not available"
             });
         }
+        // DONE API
         [HttpPost]
         [Route("api/User/Signup")]
         public JsonResult SignupApi([FromBody] JsonElement SingupInfo)

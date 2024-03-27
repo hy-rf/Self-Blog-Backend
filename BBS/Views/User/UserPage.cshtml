@@ -24,7 +24,7 @@
         <h3 id="Title">@Name's Info:</h3>
         @if (User.Identity!.IsAuthenticated && Model.Id != Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value) && !ViewBag.isFriend && !ViewBag.isFriendRequestSent)
         {
-            <a id="sendFriendRequest">send friend request</a>
+            <button id="sendFriendRequest">send friend request</button>
         }
         <p id="Id">@Model.Id</p>
         <span>Name:</span><span id="name">@Model.Name</span>
@@ -59,17 +59,6 @@
     </div>
 </div>
 
-<script defer>
-    document.getElementById("sendFriendRequest").addEventListener("click", (e) => {
-        e.preventDefault();
-        fetch(`/Friend/@Model.Id`, {
-            method: "POST"
-        }).then(response => {
-            e.target.innerText = "success"
-        }).catch(response => {
-            e.target.innerText = "fail"
-        });
-    });
-</script>
+
 
 <script src="~/UserPage.js" defer></script>

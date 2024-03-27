@@ -23,7 +23,6 @@ namespace BBS.Controllers
             });
         }
         [HttpGet]
-        [Authorize]
         [Route("FriendRequests")]
         public ActionResult FriendRequests()
         {
@@ -32,7 +31,6 @@ namespace BBS.Controllers
             return View("FriendRequests", ret);
         }
         [HttpGet]
-        [Authorize]
         [Route("FriendRequestsSent")]
         public ActionResult FriendRequestSent()
         {
@@ -62,24 +60,12 @@ namespace BBS.Controllers
                 SendUserId = Id
             });
         }
+        // DONE API
         [HttpGet]
         [Route("FriendList/{Id}")]
         public JsonResult GetFriendList(int Id)
         {
-            //var friends = ctx.Friend.Where(f => f.UserId == Id);
-            //var ret = from f in ctx.Friend.Where(f => f.UserId == Id)
-            //          join user in ctx.User on f.FriendUserId equals user.Id
-            //          select new
-            //          {
-            //              f.FriendUserId,
-            //              user.Id,
-            //              user.Name,
-            //              user.Created,
-            //              user.LastLogin,
-            //              user.Avatar
-            //          };
             var result = friendService.Friends(Id);
-            //var ret = JsonSerializer.Serialize(result);
             return Json(new JsonBody
             {
                 Success = true,
