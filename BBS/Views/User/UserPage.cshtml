@@ -2,14 +2,19 @@
 
 <!--TODO-->
 <!--get friend list of current login user to determine which user has sendable friend req-->
-
-
-
 @model BBS.Models.User
 @{
     int i = 0;
     int j = 0;
     string Name = Model.Name!;
+    string Avatar(string Avatar)
+    {
+        if (Avatar != null)
+        {
+            return $"data:image/png;base64, {Avatar}";
+        }
+        return "/img/defaultAvatar.png";
+    }
 }
 
 <link rel="stylesheet" href="~/UserCenter.css">
@@ -32,7 +37,7 @@
         <h3>@Name's Avatar</h3>
         <form>
             <div id="Avatars">
-                <img src="data:image/png;base64, @Model.Avatar" width="128" height="128">
+                <img src=@Avatar width="128" height="128">
             </div>
         </form>
     </div>

@@ -1,5 +1,14 @@
 @model List<BBS.Models.Post>
-
+@{
+    string Avatar(string Avatar)
+    {
+        if (Avatar != null)
+        {
+            return $"data:image/png;base64, {Avatar}";
+        }
+        return "/img/defaultAvatar.png";
+    }
+}
 <link rel="stylesheet" href="~/Post.css">
 <h3>Post</h3>
 
@@ -37,7 +46,7 @@
             <div class="UserInfo">
                 <p>@item.UserId</p>
                 <a href="/User/@item.UserId">@item.User.Name</a>
-                <img src="data:image/png;base64, @item.User.Avatar" width="64" height="64">
+                <img src="@Avatar(item.User.Avatar!)" width="64" height="64">
             </div>
 
             <p class="timeIndicator">

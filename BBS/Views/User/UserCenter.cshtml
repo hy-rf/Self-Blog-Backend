@@ -3,6 +3,14 @@
     int i = 0;
     int j = 0;
     string Name = Model.Name!;
+    string Avatar(string Avatar)
+    {
+        if (Avatar != null)
+        {
+            return $"data:image/png;base64, {Avatar}";
+        }
+        return "/img/defaultAvatar.png";
+    }
 }
 
 <link rel="stylesheet" href="~/UserCenter.css">
@@ -21,9 +29,9 @@
     </div>
     <div id="Avatar">
         <h3>@Name's Avatar</h3>
-        <form method="POST" action="/User/EditAvatar/@Model.Id" enctype="multipart/form-data" onsubmit="UploadFile(this);return false;">
+        <form method="POST" action="/User/EditAvatar" enctype="multipart/form-data" onsubmit="UploadFile(this);return false;">
             <div id="Avatars">
-                <img src="data:image/png;base64, @Model.Avatar" width="128" height="128">
+                <img src="@Avatar(Model.Avatar)" width="128" height="128">
                 <img id="Preview" width="128" height="128">
             </div>
 
