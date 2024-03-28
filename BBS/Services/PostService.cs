@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BBS.Services
 {
-    public class PostService(AppDbContext ctx) : IPostService
+    public class PostService(AppDbContext ctx, ITagService tagService) : IPostService
     {
         public int CountPost()
         {
@@ -29,12 +29,7 @@ namespace BBS.Services
                 {
                     if (!ctx.Tag.Any(t => t.Name == tag))
                     {
-                        var newtag = new Tag
-                        {
-                            Name = tag
-                        };
-                        ctx.Tag.Add(newtag);
-                        ctx.SaveChanges();
+                        tagService.AddTag(tag);
                     }
                     var posttag = new PostTag { TagId = ctx.Tag.Count() + 1, PostId = ctx.Post.Count() + 1 };
                     ctx.PostTag.Add(posttag);
@@ -67,12 +62,7 @@ namespace BBS.Services
                 {
                     if (!ctx.Tag.Any(t => t.Name == tag))
                     {
-                        var newtag = new Tag
-                        {
-                            Name = tag
-                        };
-                        ctx.Tag.Add(newtag);
-                        ctx.SaveChanges();
+                        tagService.AddTag(tag);
                     }
                     if (!ctx.PostTag.Any(pt => pt.TagId == ctx.Tag.Single(t => t.Name == tag).Id))
                     {

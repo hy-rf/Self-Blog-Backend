@@ -12,5 +12,14 @@ namespace BBS.Services
         {
             return ctx.PostTag.Include(pt => pt.Post).ThenInclude(p => p.User).Where(pt => pt.TagId == TagId).ToList();
         }
+        public void AddTag(string Name)
+        {
+            var newtag = new Tag
+            {
+                Name = Name
+            };
+            ctx.Tag.Add(newtag);
+            ctx.SaveChanges();
+        }
     }
 }
