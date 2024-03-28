@@ -43,6 +43,11 @@ namespace BBS.Services
             var messages = ctx.ChatRoomMessage.Where(crm => crm.ChatRoomId == ChatRoomId).Include(crm => crm.User).Include(crm => crm.ChatRoom).ThenInclude(cr => cr.ChatRoomMembers).ThenInclude(crm => crm.User).ToList();
             return messages;
         }
+        public List<ChatRoomMessage> GetChatMessagesSimple(int ChatRoomId)
+        {
+            var messages = ctx.ChatRoomMessage.Where(crm => crm.ChatRoomId == ChatRoomId).Include(crm => crm.User).ToList();
+            return messages;
+        }
         public List<ChatRoom> GetJoinedChatRooms(int UserId)
         {
             var joinedRooms = ctx.ChatRoomMember

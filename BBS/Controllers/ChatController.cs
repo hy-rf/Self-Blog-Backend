@@ -128,5 +128,29 @@ namespace BBS.Controllers
                 });
             }
         }
+        [HttpPost]
+        [Route("api/GetChatRoomMessages")]
+        public JsonResult GetChatRoomMessages([FromBody] JsonElement json)
+        {
+            try
+            {
+                int ChatRoomId = Convert.ToInt32(json.GetProperty("chatRoomId").GetString());
+                var ret = chatService.GetChatMessagesSimple(ChatRoomId);
+                return Json(new JsonBody
+                {
+                    Success = true,
+                    Payload = ret,
+                    Message = "Success"
+                });
+            }
+            catch
+            {
+                return Json(new JsonBody
+                {
+                    Success = false,
+                    Message = "Error"
+                });
+            }
+        }   
     }
 }
