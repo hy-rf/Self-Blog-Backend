@@ -48,3 +48,7 @@
             width: 4rem;
             left: 70%;
         }
+
+        #togglePanel > div > p {
+            font-size: 0.8rem;
+        }

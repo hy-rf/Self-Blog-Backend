@@ -38,6 +38,16 @@ document.getElementById("signupBtn").addEventListener("click", () => {
 
 document.getElementById("togglePanel").addEventListener("click", async (e) => {
     if (e.target.id == "submitLoginBtn") {
+        e.target.previousElementSibling.innerText = ".";
+        var logging = true;
+        setInterval(() => {
+            if (logging) {
+                e.target.previousElementSibling.innerText += ".";
+                if (e.target.previousElementSibling.innerText.length >= 4) {
+                    e.target.previousElementSibling.innerText = ".";
+                }
+            }
+        }, 100);
         var res = await fetch("/api/User/Login", {
             method: "POST",
             headers: {
@@ -52,16 +62,32 @@ document.getElementById("togglePanel").addEventListener("click", async (e) => {
         ).then(response => {
             return response.json();
         });
+        logging = false;
         if (res.success) {
-            e.target.previousElementSibling.innerText = res.message;
+            e.target.previousElementSibling.innerText = res.message + " Redirecting";
+            setInterval(() => {
+                e.target.previousElementSibling.innerText += ".";
+                if (e.target.previousElementSibling.innerText.length >= 30) {
+                    e.target.previousElementSibling.innerText = res.message + " Redirecting";
+                }
+            }, 100);
             window.location.href = "/UserCenter";
         }
         else {
             e.target.previousElementSibling.innerText = res.message;
         }
     }
-    // TODO : implement api at backend
     else if (e.target.id == "submitSignupBtn") {
+        e.target.previousElementSibling.innerText = ".";
+        var signing = true;
+        setInterval(() => {
+            if (signing) {
+                e.target.previousElementSibling.innerText += ".";
+                if (e.target.previousElementSibling.innerText.length >= 4) {
+                    e.target.previousElementSibling.innerText = ".";
+                }
+            }
+        }, 100);
         var res = await fetch("/api/User/Signup", {
             method: "POST",
             headers: {
@@ -76,6 +102,7 @@ document.getElementById("togglePanel").addEventListener("click", async (e) => {
         ).then(response => {
             return response.json();
         });
+        signing = false;
         if (res.success) {
             await fetch("/api/User/Login", {
                 method: "POST",
@@ -95,7 +122,7 @@ document.getElementById("togglePanel").addEventListener("click", async (e) => {
         }
     }
 });
-
+// check if Name is used
 document.getElementById("togglePanel").addEventListener("keyup", async (e) => {
     if (e.target.id == "Name" && e.target.parentNode.querySelector("button").id == "submitSignupBtn") {
         var name = e.target.value;
