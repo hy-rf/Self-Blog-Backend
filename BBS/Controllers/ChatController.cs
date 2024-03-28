@@ -58,7 +58,7 @@ namespace BBS.Controllers
         {
             int UserId = Convert.ToInt32(json.GetProperty("Id").GetString());
             var ret = chatService.GetJoinedChatRooms(UserId);
-            return Json(ret.Select(cr => new {cr.Id, cr.Name}));
+            return Json(ret.Select(cr => new { cr.Id, cr.Name }));
         }
 
 
@@ -89,7 +89,7 @@ namespace BBS.Controllers
                     Message = e.Message
                 });
             }
-            
+
         }
         [HttpDelete]
         [Route("Chat/KickChatRoomMember")]
@@ -102,6 +102,31 @@ namespace BBS.Controllers
                 UserId = UserId,
                 ChatRoomId = ChatRoomId
             });
+        }
+        // API DONE
+        [HttpPost]
+        [Route("apt/GetJoinedChatRoom")]
+        public JsonResult GetJoinedChatRoom([FromBody] JsonElement json)
+        {
+            try
+            {
+                int UserId = Convert.ToInt32(json.GetProperty("Id").GetString());
+                var ret = chatService.GetJoinedChatRooms(UserId);
+                return Json(new JsonBody
+                {
+                    Success = true,
+                    Payload = ret,
+                    Message = "Success"
+                });
+            }
+            catch
+            {
+                return Json(new JsonBody
+                {
+                    Success = false,
+                    Message = "Error"
+                });
+            }
         }
     }
 }

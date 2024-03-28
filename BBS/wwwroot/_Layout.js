@@ -22,11 +22,39 @@ readJson = (object) => {
         body: JSON.stringify(object),
     }).then((response) => {
         return response.json();
-    }).catch((err) => {
-        console.log(err);
     });
 }
 
+var chatRoomWindow = document.createElement("div");
+chatRoomWindow.className = "ChatWindow";
+chatRoomWindow.innerHTML = `    <link rel="stylesheet" href="/ChatRoom.css">
+<div class="ChatWindow">
+    <div class="ChatRoom">
+        <div id="chatroomList">
+            <ul>
+            </ul>
+        </div>
+        <div id="chatroomMemberList">
+            <ul>
+            </ul>
+        </div>
+        <div id="addUsertoChatRoom">
+            <input type="text" id="UserId" placeholder="User Id">
+                <button>Add</button>
+        </div>
+    </div>
+    <div class="Chat">
+        <div id="chatContent">
+            <ul>
+            </ul>
+        </div>
+        <div id="chatInput">
+            <input type="text" id="chatInputBox">
+                <button>Send</button>
+        </div>
+    </div>
+</div>
+<script src="/ChatRoomWindow.js" defer></script>`
 
 
 
@@ -46,56 +74,16 @@ var toggleWindow = new Proxy({
     get: (target, prop) => {
         return target[prop];
     },
-    set: (target, prop, value) => {
+    set: async (target, prop, value) => {
         target[prop] = value;
         if (value) {
-            document.getElementsByTagName("main")[0].appendChild(document.createElement("chat-window"));
+            await document.getElementsByTagName("main")[0].appendChild(chatRoomWindow);
+            document.getElementById("chatroomList").dispatchEvent(new Event("change"));
         }
         else {
-            document.getElementsByTagName("main")[0].removeChild(document.getElementsByTagName("chat-window")[0]);
+            document.getElementsByTagName("main")[0].removeChild(chatRoomWindow);
         }
         return true;
     }
 });
 
-class chatWindow extends HTMLElement {
-    constructor() {
-        super();
-        this.attachShadow({ mode: "open" });
-        this.shadowRoot.innerHTML =
-            `<link rel="stylesheet" href="/ChatRoom.css">
-            <div class="ChatWindow">
-            <div class="ChatRoom">
-                <div id="chatroomMemberList">
-                    <ul>
-                        <li>
-                            <span>1</span>
-                            <button>kick</button>
-                        </li>
-                    </ul>
-                </div>
-                <div id="addUsertoChatRoom">
-                    <input type="text" id="UserId" placeholder="User Id">
-                    <button>Add</button>
-                </div>
-            </div>
-            <div class="Chat">
-                <div id="chatContent">
-                    <ul>
-                        <li>
-                            <span>1</span>
-                            <span>1</span>
-                        </li>
-                    </ul>
-                </div>
-                <div id="chatInput">
-                    <input type="text" id="chatInputBox">
-                    <button>Send</button>
-                </div>
-            </div>
-        </div>
-        <script src="/ChatRoom.js"></script>`;
-    }
-}
-
-customElements.define("chat-window", chatWindow);

@@ -1,7 +1,7 @@
 
 
 
-document.querySelector("main").addEventListener("click", () => {
+document.querySelector("main").addEventListener("click", (e) => {
     if (e.target.classList.contains("LikeBtn")) {
         fetch("/Like/Post", {
             method: "POST",

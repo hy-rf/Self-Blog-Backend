@@ -79,10 +79,6 @@ header {
     border-radius: 5px;
 }
 
-    #user > * {
-        border-radius: 5px;
-    }
-
 
 
 #UserMenu {
@@ -137,7 +133,7 @@ footer {
 }
 
 
-chat-window {
+.ChatWindow {
     position: fixed;
     right: 0;
     bottom: 0;
@@ -149,4 +145,5 @@ chat-window {
     border: 1px solid black;
     border-top-left-radius: 0.5rem;
     resize: none;
+    z-index: 99;
 }
