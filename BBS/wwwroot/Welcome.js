@@ -40,6 +40,7 @@ document.getElementById("togglePanel").addEventListener("click", async (e) => {
     if (e.target.id == "submitLoginBtn") {
         e.target.previousElementSibling.innerText = ".";
         var logging = true;
+        disableInput();
         setInterval(() => {
             if (logging) {
                 e.target.previousElementSibling.innerText += ".";
@@ -75,11 +76,13 @@ document.getElementById("togglePanel").addEventListener("click", async (e) => {
         }
         else {
             e.target.previousElementSibling.innerText = res.message;
+            enableInput()
         }
     }
     else if (e.target.id == "submitSignupBtn") {
         e.target.previousElementSibling.innerText = ".";
         var signing = true;
+        disableInput();
         setInterval(() => {
             if (signing) {
                 e.target.previousElementSibling.innerText += ".";
@@ -104,6 +107,13 @@ document.getElementById("togglePanel").addEventListener("click", async (e) => {
         });
         signing = false;
         if (res.success) {
+            e.target.previousElementSibling.innerText = res.message + " Redirecting";
+            setInterval(() => {
+                e.target.previousElementSibling.innerText += ".";
+                if (e.target.previousElementSibling.innerText.length >= res.message.length + 16) {
+                    e.target.previousElementSibling.innerText = res.message + " Redirecting";
+                }
+            }, 100);
             await fetch("/api/User/Login", {
                 method: "POST",
                 headers: {
@@ -119,6 +129,7 @@ document.getElementById("togglePanel").addEventListener("click", async (e) => {
         }
         else {
             e.target.previousElementSibling.innerText = res.message;
+            enableInput()
         }
     }
 });
@@ -148,3 +159,14 @@ document.getElementById("togglePanel").addEventListener("keyup", async (e) => {
         }
     }
 });
+
+function disableInput() {
+    document.querySelectorAll("#togglePanel>div>input")[0].disabled = true;
+    document.querySelectorAll("#togglePanel>div>input")[1].disabled = true;
+    document.querySelector("#togglePanel>div>button").disabled = true;
+}
+function enableInput() {
+    document.querySelectorAll("#togglePanel>div>input")[0].disabled = false;
+    document.querySelectorAll("#togglePanel>div>input")[1].disabled = false;
+    document.querySelector("#togglePanel>div>button").disabled = false;
+}
