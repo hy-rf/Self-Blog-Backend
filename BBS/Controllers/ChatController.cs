@@ -39,7 +39,7 @@ namespace BBS.Controllers
         }
         [HttpPost]
         [Route("Chat/CreateChatRoom")]
-        public void CreateChatRoom(string Name)
+        public ActionResult CreateChatRoom(string Name)
         {
             var newchatroom = new Models.ChatRoom
             {
@@ -51,6 +51,7 @@ namespace BBS.Controllers
                 ChatRoomId = newchatroom.Id,
                 UserId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value)
             });
+            return Redirect("/Chat/Index");
         }
         [HttpPost]
         [Route("Chat/GetChatRooms")]
@@ -128,6 +129,7 @@ namespace BBS.Controllers
                 });
             }
         }
+        // API DONE
         [HttpPost]
         [Route("api/GetChatRoomMessages")]
         public JsonResult GetChatRoomMessages([FromBody] JsonElement json)

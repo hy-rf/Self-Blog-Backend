@@ -30,28 +30,18 @@ var chatRoomWindow = document.createElement("div");
 chatRoomWindow.className = "ChatWindow";
 chatRoomWindow.innerHTML = `    <link rel="stylesheet" href="/ChatRoom.css">
 <div>
-    <div class="ChatRoom">
+    <div>
         <div id="chatroomList">
             <ul>
             </ul>
         </div>
-        <div id="chatroomMemberList">
-            <ul>
-            </ul>
-        </div>
-        <div id="addUsertoChatRoom">
-            <input type="text" id="UserId" placeholder="User Id">
-                <button>Add</button>
-        </div>
     </div>
-    <div class="Chat">
+    <div id="joinedChatRoom">
         <div id="chatContent">
             <ul>
             </ul>
         </div>
         <div id="chatInput">
-            <input type="text" id="chatInputBox">
-                <button id="sendButton">Send</button>
         </div>
     </div>
 </div>`
@@ -91,6 +81,7 @@ var toggleWindow = new Proxy({
                 return response.json();
             });
             if (res.success) {
+                document.querySelector("#chatroomList ul").innerText = "";
                 res.payload.forEach((element) => {
                     var li = document.createElement("li");
                     li.innerText = parseInt(element.id) + element.name;
@@ -101,7 +92,6 @@ var toggleWindow = new Proxy({
             else {
                 document.querySelector("#chatroomList ul").innerText = "No Chat Room";
             }
-
             document.getElementById("chatroomList").addEventListener("click", async (e) => {
                 if (e.target.tagName == "LI") {
                     var res = await fetch("/api/GetChatRoomMessages", {
@@ -117,6 +107,10 @@ var toggleWindow = new Proxy({
                         return res.json();
                     });
                     if (res.success) {
+                        document.getElementById("chatInput").innerHTML = "";
+                        document.getElementById("chatInput").innerHTML = `
+                                <input type="text" id="chatInputBox">
+                                <button id="sendButton">Send</button>`;
                         activeChatRoom = e.target.id.split("_")[1];
                         document.querySelector("#chatContent ul").innerText = "";
                         res.payload.forEach((element) => {
@@ -129,6 +123,7 @@ var toggleWindow = new Proxy({
                     }
                     else {
                         document.querySelector("#chatContent ul").innerText = "No Message";
+                        document.getElementById("chatInput").innerHTML = "";
                     }
                 }
             });
