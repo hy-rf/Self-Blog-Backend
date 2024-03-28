@@ -178,24 +178,33 @@ namespace BBS.Controllers
         {
             string Name = SingupInfo.GetProperty("Name").ToString();
             string Pwd = SingupInfo.GetProperty("Pwd").ToString();
+            string RePwd = SingupInfo.GetProperty("RePwd").ToString();
             if (!string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Pwd))
             {
-                if (userService.Signup(Name, Pwd))
+                if (Pwd == RePwd)
                 {
-                    return Json(new JsonBody
+                    if (userService.Signup(Name, Pwd))
                     {
-                        Success = true,
-                        Message = "Signup Success!"
-                    });
+                        return Json(new JsonBody
+                        {
+                            Success = true,
+                            Message = "Signup Success!"
+                        });
+                    }
+                    else
+                    {
+                        return Json(new JsonBody
+                        {
+                            Success = false,
+                            Message = "Signup Failed, Dulplicated Name."
+                        });
+                    }
                 }
-                else
+                return Json(new JsonBody
                 {
-                    return Json(new JsonBody
-                    {
-                        Success = false,
-                        Message = "Signup Failed, Dulplicated Name."
-                    });
-                }
+                    Success = false,
+                    Message = "Signup Failed, Passwords are not the same."
+                });
             }
             return Json(new JsonBody
             {

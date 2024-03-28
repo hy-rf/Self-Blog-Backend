@@ -18,6 +18,11 @@ document.getElementById("signupBtn").addEventListener("click", () => {
             <input id="Name" name="Name" required />
             <label for="Pwd">Pwd</label>
             <input id="Pwd" name="Pwd" type="password" required />
+            <input id="RePwd" name="RePwd" type="password" required />
+            <p>Password Security</p>
+            <div id="pwdSecurityIndicator">
+                <div></div><div></div><div></div>
+            </div>
             <p></p>
             <button id="submitSignupBtn" type="submit">sign up</button>
          </div>`;
@@ -99,7 +104,8 @@ document.getElementById("togglePanel").addEventListener("click", async (e) => {
             },
             body: JSON.stringify({
                 Name: document.getElementById("Name").value,
-                Pwd: document.getElementById("Pwd").value
+                Pwd: document.getElementById("Pwd").value,
+                RePwd: document.getElementById("RePwd").value
             })
         }
         ).then(response => {
@@ -156,6 +162,23 @@ document.getElementById("togglePanel").addEventListener("keyup", async (e) => {
         }
         else {
             e.target.style.color = "red";
+        }
+    }
+    else if (e.target.id == "Pwd" && e.target.parentNode.querySelector("button").id == "submitSignupBtn") {
+        if (/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}/.test(e.target.value)) {
+            document.querySelectorAll("#pwdSecurityIndicator>div")[0].style.backgroundColor = "red";
+            document.querySelectorAll("#pwdSecurityIndicator>div")[1].style.backgroundColor = "yellow";
+            document.querySelectorAll("#pwdSecurityIndicator>div")[2].style.backgroundColor = "green";
+        }
+        else if (/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{6,}/.test(e.target.value)) {
+            document.querySelectorAll("#pwdSecurityIndicator>div")[0].style.backgroundColor = "red";
+            document.querySelectorAll("#pwdSecurityIndicator>div")[1].style.backgroundColor = "yellow";
+            document.querySelectorAll("#pwdSecurityIndicator>div")[2].style.backgroundColor = "transparent";
+        }
+        else {
+            document.querySelectorAll("#pwdSecurityIndicator>div")[0].style.backgroundColor = "red";
+            document.querySelectorAll("#pwdSecurityIndicator>div")[1].style.backgroundColor = "transparent";
+            document.querySelectorAll("#pwdSecurityIndicator>div")[2].style.backgroundColor = "transparent";
         }
     }
 });
