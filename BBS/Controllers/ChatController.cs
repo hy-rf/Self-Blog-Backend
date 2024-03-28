@@ -1,4 +1,5 @@
 ﻿using BBS.Interfaces;
+using BBS.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
@@ -63,15 +64,32 @@ namespace BBS.Controllers
 
         [HttpPost]
         [Route("Chat/AddChatRoomMember")]
-        public void AddChatRoomMember([FromBody] JsonElement json)
+        public JsonResult AddChatRoomMember([FromBody] JsonElement json)
         {
-            int UserId = Convert.ToInt32(json.GetProperty("UserId").GetString());
-            int ChatRoomId = Convert.ToInt32(json.GetProperty("ChatRoomId").GetString());
-            chatService.AddMember(new Models.ChatRoomMember
+            try
             {
-                UserId = UserId,
-                ChatRoomId = ChatRoomId
-            });
+                int UserId = Convert.ToInt32(json.GetProperty("UserId").GetString());
+                int ChatRoomId = Convert.ToInt32(json.GetProperty("ChatRoomId").GetString());
+                chatService.AddMember(new Models.ChatRoomMember
+                {
+                    UserId = UserId,
+                    ChatRoomId = ChatRoomId
+                });
+                return Json(new JsonBody
+                {
+                    Success = true,
+                    Message = "Success"
+                });
+            }
+            catch (Exception e)
+            {
+                return Json(new JsonBody
+                {
+                    Success = false,
+                    Message = e.Message
+                });
+            }
+            
         }
         [HttpDelete]
         [Route("Chat/KickChatRoomMember")]

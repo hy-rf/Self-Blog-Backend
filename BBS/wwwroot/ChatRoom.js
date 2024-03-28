@@ -12,11 +12,18 @@ document.getElementById("addUsertoChatRoom").addEventListener("click", (e) => {
                 ChatRoomId: window.location.href.split("/")[4]
             }),
         }).then(response => {
-            e.target.innerText = "success"
-            window.location.reload();
+            return response.json();
+        }).then(ret => {
+            if (ret.success) {
+                console.log(ret);
+                e.target.innerText = ret.message;
+            }
+            else {
+                e.target.innerText = ret.message;
+            }
         });
     }
-})
+});
 document.getElementById("chatroomMemberList").addEventListener("click", (e) => {
     if (e.target.tagName == "BUTTON") {
         var userid = e.target.parentNode.firstElementChild.innerText;
@@ -36,4 +43,4 @@ document.getElementById("chatroomMemberList").addEventListener("click", (e) => {
         });
     }
     e.stopPropagation();
-})
+});

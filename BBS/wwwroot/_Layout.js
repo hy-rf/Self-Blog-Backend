@@ -1,3 +1,5 @@
+
+// This is function for dynamically visible header
 var prepos = window.scrollY;
 window.onscroll = () => {
     var curpos = window.scrollY;
@@ -25,35 +27,75 @@ readJson = (object) => {
     });
 }
 
-//document.getElementById("searchOptions").addEventListener("change", (e) => {
-//    document.getElementById("searchbox").setAttribute("placeholder", e.target.value);
-//});
 
-var floating = false;
-//document.querySelector("main").addEventListener("mousedown", async (e) => {
 
-//    if (e.target.classList.contains("UserInfo")) {
-//        var id = parseInt(e.target.firstElementChild.innerText);
-//        response = () => {
-//            return fetch(`/User/${id}`, {
-//                method: "GET",
-//                headers: {
-//                    "Accept": "application/json",
-//                    "Content-Type": "application/json"
-//                },
-//            }).then(response => {
-//                return response.json();
-//            });
-//        }
-//        response().then(res => {
-//            var ele = document.createElement("div");
-//            ele.innerHTML = `<p>${res["id"]}</p><p>${res["name"]}</p><a href="/User/UserPage/${res["id"]}">go to its page</a><img src="data:image/png;base64, ${res["avatar"]}" width="64" height="64"><button>close</button>`;
-//            e.target.appendChild(ele);
-//            ele.lastChild.addEventListener("click", () => {
-//                ele.remove();
-//            })
-//        });
 
-//    }
-//});
+document.getElementById("Chat").addEventListener("click", (e) => {
+    if (toggleWindow["isVisible"]) {
+        toggleWindow["isVisible"] = false;
+    }
+    else {
+        toggleWindow["isVisible"] = true;
+    }
+    e.preventDefault();
+});
 
+var toggleWindow = new Proxy({
+    isVisible: false
+}, {
+    get: (target, prop) => {
+        return target[prop];
+    },
+    set: (target, prop, value) => {
+        target[prop] = value;
+        if (value) {
+            document.getElementsByTagName("main")[0].appendChild(document.createElement("chat-window"));
+        }
+        else {
+            document.getElementsByTagName("main")[0].removeChild(document.getElementsByTagName("chat-window")[0]);
+        }
+        return true;
+    }
+});
+
+class chatWindow extends HTMLElement {
+    constructor() {
+        super();
+        this.attachShadow({ mode: "open" });
+        this.shadowRoot.innerHTML =
+            `<link rel="stylesheet" href="/ChatRoom.css">
+            <div class="ChatWindow">
+            <div class="ChatRoom">
+                <div id="chatroomMemberList">
+                    <ul>
+                        <li>
+                            <span>1</span>
+                            <button>kick</button>
+                        </li>
+                    </ul>
+                </div>
+                <div id="addUsertoChatRoom">
+                    <input type="text" id="UserId" placeholder="User Id">
+                    <button>Add</button>
+                </div>
+            </div>
+            <div class="Chat">
+                <div id="chatContent">
+                    <ul>
+                        <li>
+                            <span>1</span>
+                            <span>1</span>
+                        </li>
+                    </ul>
+                </div>
+                <div id="chatInput">
+                    <input type="text" id="chatInputBox">
+                    <button>Send</button>
+                </div>
+            </div>
+        </div>
+        <script src="/ChatRoom.js"></script>`;
+    }
+}
+
+customElements.define("chat-window", chatWindow);
