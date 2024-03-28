@@ -105,12 +105,12 @@ namespace BBS.Controllers
         }
         // API DONE
         [HttpPost]
-        [Route("apt/GetJoinedChatRoom")]
-        public JsonResult GetJoinedChatRoom([FromBody] JsonElement json)
+        [Route("api/GetJoinedChatRoom")]
+        public JsonResult GetJoinedChatRoom()
         {
             try
             {
-                int UserId = Convert.ToInt32(json.GetProperty("Id").GetString());
+                int UserId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value);
                 var ret = chatService.GetJoinedChatRooms(UserId);
                 return Json(new JsonBody
                 {

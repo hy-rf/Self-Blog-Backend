@@ -53,8 +53,7 @@ chatRoomWindow.innerHTML = `    <link rel="stylesheet" href="/ChatRoom.css">
                 <button>Send</button>
         </div>
     </div>
-</div>
-<script src="/ChatRoomWindow.js" defer></script>`
+</div>`
 
 
 
@@ -78,7 +77,26 @@ var toggleWindow = new Proxy({
         target[prop] = value;
         if (value) {
             await document.getElementsByTagName("main")[0].appendChild(chatRoomWindow);
-            document.getElementById("chatroomList").dispatchEvent(new Event("change"));
+            //document.getElementById("chatroomList").dispatchEvent(new Event("change"));
+            var res = await fetch("/api/GetJoinedChatRoom", {
+                method: "POST",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+            }).then(response => {
+                return response.json();
+            });
+            if (res.success) {
+                res.payload.forEach((element) => {
+                    var li = document.createElement("li");
+                    li.innerText = parseInt(element.id) + element.name;
+                    document.querySelector("#chatroomList ul").appendChild(li);
+                });
+            }
+            else {
+                document.querySelector("#chatroomList ul").innerText = "No Chat Room";
+            }
         }
         else {
             document.getElementsByTagName("main")[0].removeChild(chatRoomWindow);
