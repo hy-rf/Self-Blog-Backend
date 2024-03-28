@@ -97,7 +97,7 @@ document.getElementById("togglePanel").addEventListener("click", async (e) => {
 });
 
 document.getElementById("togglePanel").addEventListener("keyup", async (e) => {
-    if (e.target.id == "Name") {
+    if (e.target.id == "Name" && e.target.parentNode.querySelector("button").id == "submitSignupBtn") {
         var name = e.target.value;
         var nameAvailable = await fetch("/api/User/CheckDuplicatedName", {
             method: "POST",

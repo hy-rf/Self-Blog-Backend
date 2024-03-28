@@ -29,7 +29,7 @@ readJson = (object) => {
 var chatRoomWindow = document.createElement("div");
 chatRoomWindow.className = "ChatWindow";
 chatRoomWindow.innerHTML = `    <link rel="stylesheet" href="/ChatRoom.css">
-<div class="ChatWindow">
+<div>
     <div class="ChatRoom">
         <div id="chatroomList">
             <ul>
@@ -58,14 +58,17 @@ chatRoomWindow.innerHTML = `    <link rel="stylesheet" href="/ChatRoom.css">
 
 
 
-document.getElementById("Chat").addEventListener("click", (e) => {
-    if (toggleWindow["isVisible"]) {
-        toggleWindow["isVisible"] = false;
+document.getElementById("user").addEventListener("click", (e) => {
+    if (e.target.id == "Chat") {
+        if (toggleWindow["isVisible"]) {
+            toggleWindow["isVisible"] = false;
+        }
+        else {
+            toggleWindow["isVisible"] = true;
+        }
+        e.preventDefault();
     }
-    else {
-        toggleWindow["isVisible"] = true;
-    }
-    e.preventDefault();
+
 });
 var activeChatRoom = null;
 var toggleWindow = new Proxy({
@@ -128,7 +131,13 @@ var toggleWindow = new Proxy({
                         document.querySelector("#chatContent ul").innerText = "No Message";
                     }
                 }
-        });
+            });
+            document.querySelector(".ChatWindow").addEventListener("mouseover", () => {
+                document.querySelector(":root").style.overflow = "hidden";
+            });
+            document.querySelector(".ChatWindow").addEventListener("mouseout", () => {
+                document.querySelector(":root").style.overflow = "auto";
+            });
         }
         else {
             document.getElementsByTagName("main")[0].removeChild(chatRoomWindow);
