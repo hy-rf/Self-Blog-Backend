@@ -116,7 +116,6 @@ var chatWindow = new Proxy({
             document.getElementsByTagName("main")[0].removeChild(chatRoomWindow);
         }
         if (target.activeChatRoom) {
-            let conn;
             //////////////////////////
             //conn = new ChatRoomConnection();
             document.getElementById("chatroomList").style.display = "none";
@@ -165,7 +164,6 @@ var chatWindow = new Proxy({
             }
         }
         else if (!target.activeChatRoom) {
-            conn.connection.stop();
         }
         return true;
     }
@@ -176,12 +174,11 @@ function chatting() {
 
     "use strict";
     var connection = new signalR.HubConnectionBuilder().withUrl("/chat").build();
-
+    
     //Disable the send button until connection is established.
     document.getElementById("sendButton").disabled = true;
-
     connection.on("ReceiveMessage", function (roomid, userid, user, message) {
-
+        
 
         // We can assign user-supplied strings to an element's textContent because it
         // is not interpreted as markup. If you're assigning in any other way, you
@@ -210,6 +207,9 @@ function chatting() {
         });
         event.preventDefault();
     });
+    document.getElementById("backtoChatRoomListBtn").addEventListener("click", () => {
+        connection.stop();
+    })
 }
 
 class ChatRoomConnection {
