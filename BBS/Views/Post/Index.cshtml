@@ -1,3 +1,4 @@
+@using System.Security.Claims;
 @model List<BBS.Models.Post>
 @{
     string Avatar(string Avatar)
@@ -12,13 +13,13 @@
 <link rel="stylesheet" href="~/Post.css">
 <h3>Post</h3>
 
-@for(int i = 0; i < ViewBag.NumPost/ViewBag.PostPerPage + 1; i++)
+@for (int i = 0; i < ViewBag.NumPost / ViewBag.PostPerPage + 1; i++)
 {
     if (ViewBag.NumPost % ViewBag.PostPerPage == 0 && i == ViewBag.NumPost / ViewBag.PostPerPage)
     {
         break;
     }
-    <a href="/@(i+1)">@(i+1)</a>
+    <a href="/@(i+1)">@(i + 1)</a>
 }
 @if (User.Identity!.IsAuthenticated)
 {
@@ -37,11 +38,18 @@
     @foreach (var item in Model)
     {
         <div class="PostUnit">
-            <p>@item.Id</p>
+            <p>@item.Id</p><p>@item.Replies.Count() Replies</p>
             <a asp-controller="Post" asp-action="GetPost" asp-route-Id="@item.Id">Title : @item.Title</a>
             @if (User.Identity.IsAuthenticated)
             {
-                <button class="LikeBtn">Like</button>
+                if (item.Likes.Any(l => l.UserId == Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value)))
+                {
+                    <p>Liked</p>
+                }
+                else
+                {
+                    <button class="LikeBtn">Like</button>
+                }
             }
             <div class="UserInfo">
                 <p>@item.UserId</p>

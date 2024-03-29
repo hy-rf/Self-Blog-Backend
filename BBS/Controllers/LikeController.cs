@@ -1,6 +1,8 @@
 ﻿using BBS.Interfaces;
 using BBS.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualBasic;
+using System.Security.Claims;
 using System.Text.Json;
 
 namespace BBS.Controllers
@@ -9,18 +11,41 @@ namespace BBS.Controllers
     {
         [HttpPost]
         [Route("/Like/Post")]
-        public JsonResult LikePost([FromBody]LikedPost likedPost)
+        public JsonResult LikePost([FromBody] LikedPost likedPost)
         {
-            if (User.Identity!.IsAuthenticated == false)
+            if (User.Identity!.IsAuthenticated == true)
             {
-                return Json(new LikedPost
+                try
                 {
-                    UserId = 0,
-                    PostId = 0
-                });
+                    likeService.AddLikePost(new LikedPost
+                    {
+                        UserId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value),
+                        PostId = likedPost.PostId
+                    });
+                    return Json(new JsonBody
+                    {
+                        Success = true,
+                        Message = "Post liked"
+                    });
+                }
+                catch
+                {
+                    return Json(new JsonBody
+                    {
+                        Success = true,
+                        Message = "Post already liked"
+                    });
+                }
+                finally
+                {
+                    Console.WriteLine($"Like post request received at {DateTime.Now}");
+                }
             }
-            likeService.AddLikePost(likedPost);
-            return Json(likedPost);
+            return Json(new JsonBody
+            {
+                Success = true,
+                Message = "Not Authorized"
+            });
         }
     }
 }

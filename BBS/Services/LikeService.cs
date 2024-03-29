@@ -8,6 +8,11 @@ namespace BBS.Services
     {
         public void AddLikePost(LikedPost likedPost)
         {
+            // Check if the user has already liked the post
+            if (ctx.LikedPost.Any(lp => lp.UserId == likedPost.UserId && lp.PostId == likedPost.PostId))
+            {
+                return;
+            }
             ctx.LikedPost.Add(likedPost);
             ctx.SaveChanges();
         }
