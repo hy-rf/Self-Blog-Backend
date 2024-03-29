@@ -40,7 +40,7 @@
     <div class="UserInfo">
         <p>@Model.UserId</p>
         <a href="/User/@Model.UserId">@Model.User.Name</a>
-        <img src=@Avatar(Model.User.Avatar) width="64" height="64">
+        <img src="data:image/png;base64, @Model.User.Avatar" width="64" height="64">
     </div>
     <span>Date Created : @Model.Created</span>
     <span>Date Modified : @Model.Modified</span>
