@@ -24,28 +24,65 @@ readJson = (object) => {
         return response.json();
     });
 }
+handleChat = async (e) => {
+    if (e.target.tagName == "LI") {
+        var res = await fetch("/api/GetChatRoomMessages", {
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                chatRoomId: e.target.id.split("_")[1]
+            })
+        }).then(res => {
+            return res.json();
+        });
+        if (res.success) {
+            document.getElementById("chatroomList").style.display = "none";
+            chatRoomWindow.innerHTML += `
+                        <div id="chatContent">
+                            <button id="backtoChatRoomListBtn">back to chatroom list</button>
+                            <ul>
+                            </ul>
+                        </div>
+                        <div id="chatInput">
+                        </div>`;
+            document.getElementById("chatInput").innerHTML = "";
+            document.getElementById("chatInput").innerHTML = `
+                                <input type="text" id="chatInputBox">
+                                <button id="sendButton">Send</button>`;
+            activeChatRoom = e.target.id.split("_")[1];
+            document.querySelector("#chatContent ul").innerText = "";
+            res.payload.forEach((element) => {
+                var li = document.createElement("li");
+                li.innerText = `${element.user.name} says ${element.message}`;
+                document.querySelector("#chatContent ul").appendChild(li);
+            });
+            document.getElementById("backtoChatRoomListBtn").addEventListener("click", () => {
+                document.getElementById("chatContent").remove();
+                document.getElementById("chatInput").remove();
+                document.getElementById("chatroomList").style.display = "block";
+            });
+            chatting();
+
+        }
+        else {
+            document.querySelector("#chatContent ul").innerText = "No Message";
+            document.getElementById("chatInput").innerHTML = "";
+        }
+    }
+}
 
 // This is function for dynamically visible chat room window
 var chatRoomWindow = document.createElement("div");
 chatRoomWindow.className = "ChatWindow";
 chatRoomWindow.innerHTML = `    <link rel="stylesheet" href="/ChatRoom.css">
-<div>
-    <div>
-        <div id="chatroomList">
-            <ul>
-            </ul>
-        </div>
+    <div id="chatroomList">
+        <ul>
+        </ul>
     </div>
-    <div id="joinedChatRoom">
-        <div id="chatContent">
-            <ul>
-            </ul>
-        </div>
-        <div id="chatInput">
-        </div>
-    </div>
-</div>`
-
+    `
 
 
 document.getElementById("user").addEventListener("click", (e) => {
@@ -107,6 +144,15 @@ var toggleWindow = new Proxy({
                         return res.json();
                     });
                     if (res.success) {
+                        document.getElementById("chatroomList").style.display = "none";
+                        chatRoomWindow.innerHTML += `
+                        <div id="chatContent">
+                            <button id="backtoChatRoomListBtn">back to chatroom list</button>
+                            <ul>
+                            </ul>
+                        </div>
+                        <div id="chatInput">
+                        </div>`;
                         document.getElementById("chatInput").innerHTML = "";
                         document.getElementById("chatInput").innerHTML = `
                                 <input type="text" id="chatInputBox">
@@ -118,8 +164,13 @@ var toggleWindow = new Proxy({
                             li.innerText = `${element.user.name} says ${element.message}`;
                             document.querySelector("#chatContent ul").appendChild(li);
                         });
+                        document.getElementById("backtoChatRoomListBtn").addEventListener("click", () => {
+                            document.getElementById("chatContent").remove();
+                            document.getElementById("chatInput").remove();
+                            document.getElementById("chatroomList").style.display = "block";
+                        });
                         chatting();
-
+                        
                     }
                     else {
                         document.querySelector("#chatContent ul").innerText = "No Message";
