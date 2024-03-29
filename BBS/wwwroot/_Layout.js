@@ -24,6 +24,12 @@ readJson = (object) => {
         return response.json();
     });
 }
+disableScroll = () => {
+    document.querySelector(":root").style.overflow = "hidden";
+}
+enableScroll = () => {
+    document.querySelector(":root").style.overflow = "auto";
+}
 handleChat = async (e) => {
     if (e.target.tagName == "LI") {
         var res = await fetch("/api/GetChatRoomMessages", {
@@ -88,12 +94,7 @@ chatRoomWindow.innerHTML = `    <link rel="stylesheet" href="/ChatRoom.css">
 
 document.getElementById("user").addEventListener("click", (e) => {
     if (e.target.id == "Chat") {
-        if (toggleWindow["isVisible"]) {
-            toggleWindow["isVisible"] = false;
-        }
-        else {
-            toggleWindow["isVisible"] = true;
-        }
+        toggleWindow["isVisible"] = !toggleWindow.isVisible;
         e.preventDefault();
     }
 
@@ -131,17 +132,15 @@ var toggleWindow = new Proxy({
                 document.querySelector("#chatroomList ul").innerText = "No Chat Room";
             }
             document.getElementById("chatroomList").addEventListener("click", (e) => { handleChat(e); });
-            document.querySelector(".ChatWindow").addEventListener("mouseover", () => {
-                document.querySelector(":root").style.overflow = "hidden";
-            });
-            document.querySelector(".ChatWindow").addEventListener("mouseout", () => {
-                document.querySelector(":root").style.overflow = "auto";
-            });
+            document.querySelector(".ChatWindow").addEventListener("mouseover", () => { disableScroll(); });
+            document.querySelector(".ChatWindow").addEventListener("mouseout", () => { enableScroll(); });
         }
         else {
+            // Do something when the ChatWindow is closed and removed
+            document.querySelector(".ChatWindow").removeEventListener("mouseover", () => { disableScroll(); });
+            document.querySelector(".ChatWindow").removeEventListener("mouseout", () => { enableScroll(); });
             document.getElementsByTagName("main")[0].removeChild(chatRoomWindow);
         }
-
         return true;
     }
 });
