@@ -156,7 +156,7 @@ var chatWindow = new Proxy({
                 //////////////////////////////////
                 //conn.connStart();
                 //conn.openconn();
-                chatting();
+                chatting(chatWindow.activeChatRoom.toString());
             }
             else {
                 document.querySelector("#chatContent ul").innerText = "No Message";
@@ -170,19 +170,16 @@ var chatWindow = new Proxy({
 });
 
 
-function chatting() {
+function chatting(RoomId) {
 
     "use strict";
     var connection = new signalR.HubConnectionBuilder().withUrl("/chat").build();
     
     //Disable the send button until connection is established.
     document.getElementById("sendButton").disabled = true;
+    
     connection.on("ReceiveMessage", function (roomid, userid, user, message) {
         
-
-        // We can assign user-supplied strings to an element's textContent because it
-        // is not interpreted as markup. If you're assigning in any other way, you
-        // should be aware of possible script injection concerns.
         if (user != document.getElementById("userlink").innerText.split(" ")[1] || true) {
             var li = document.createElement("li");
             document.querySelector("#chatContent>ul").appendChild(li);
@@ -192,6 +189,7 @@ function chatting() {
     });
 
     connection.start().then(function () {
+        connection.invoke("Join", RoomId);
         document.getElementById("sendButton").disabled = false;
     }).catch(function (err) {
         return console.error(err.toString());
