@@ -60,6 +60,7 @@ handleChat = async (e) => {
                 document.querySelector("#chatContent ul").appendChild(li);
             });
             document.getElementById("backtoChatRoomListBtn").addEventListener("click", () => {
+                document.getElementById("chatroomList").addEventListener("click", (e) => { handleChat(e); });
                 document.getElementById("chatContent").remove();
                 document.getElementById("chatInput").remove();
                 document.getElementById("chatroomList").style.display = "block";
@@ -129,55 +130,7 @@ var toggleWindow = new Proxy({
             else {
                 document.querySelector("#chatroomList ul").innerText = "No Chat Room";
             }
-            document.getElementById("chatroomList").addEventListener("click", async (e) => {
-                if (e.target.tagName == "LI") {
-                    var res = await fetch("/api/GetChatRoomMessages", {
-                        method: "POST",
-                        headers: {
-                            "Accept": "application/json",
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            chatRoomId: e.target.id.split("_")[1]
-                        })
-                    }).then(res => {
-                        return res.json();
-                    });
-                    if (res.success) {
-                        document.getElementById("chatroomList").style.display = "none";
-                        chatRoomWindow.innerHTML += `
-                        <div id="chatContent">
-                            <button id="backtoChatRoomListBtn">back to chatroom list</button>
-                            <ul>
-                            </ul>
-                        </div>
-                        <div id="chatInput">
-                        </div>`;
-                        document.getElementById("chatInput").innerHTML = "";
-                        document.getElementById("chatInput").innerHTML = `
-                                <input type="text" id="chatInputBox">
-                                <button id="sendButton">Send</button>`;
-                        activeChatRoom = e.target.id.split("_")[1];
-                        document.querySelector("#chatContent ul").innerText = "";
-                        res.payload.forEach((element) => {
-                            var li = document.createElement("li");
-                            li.innerText = `${element.user.name} says ${element.message}`;
-                            document.querySelector("#chatContent ul").appendChild(li);
-                        });
-                        document.getElementById("backtoChatRoomListBtn").addEventListener("click", () => {
-                            document.getElementById("chatContent").remove();
-                            document.getElementById("chatInput").remove();
-                            document.getElementById("chatroomList").style.display = "block";
-                        });
-                        chatting();
-                        
-                    }
-                    else {
-                        document.querySelector("#chatContent ul").innerText = "No Message";
-                        document.getElementById("chatInput").innerHTML = "";
-                    }
-                }
-            });
+            document.getElementById("chatroomList").addEventListener("click", (e) => { handleChat(e); });
             document.querySelector(".ChatWindow").addEventListener("mouseover", () => {
                 document.querySelector(":root").style.overflow = "hidden";
             });
