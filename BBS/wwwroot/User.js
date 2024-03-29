@@ -87,7 +87,6 @@ getChatRoomList = () => {
 window.onload = async () => {
     // Grid E
     var ret = await getFriendList();
-    console.log(ret[0]);
     var friendlist = "";
     var ele = document.createElement("div");
     ele.setAttribute("id", "friends");
@@ -103,7 +102,6 @@ window.onload = async () => {
 
     // Grid F
     var ret2 = await getChatRoomList();
-    console.log(ret2[0]);
     var chatroomlist = "";
     var ele2 = document.createElement("div");
     ele2.setAttribute("id", "chatrooms");

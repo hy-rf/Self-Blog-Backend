@@ -11,6 +11,14 @@ window.onscroll = () => {
     }
     prepos = curpos;
 }
+var chatRoomWindow = document.createElement("div");
+chatRoomWindow.className = "ChatWindow";
+chatRoomWindow.innerHTML = `    <link rel="stylesheet" href="/ChatRoom.css">
+    <div id="chatroomList">
+        <ul>
+        </ul>
+    </div>
+    `;
 
 readJson = (object) => {
     return fetch("/test", {
@@ -25,7 +33,7 @@ readJson = (object) => {
     });
 }
 document.getElementsByTagName("main")[0].addEventListener("mouseover", (e) => {
-    if (e.target.classList.contains("ChatWindow")){
+    if (e.target.classList.contains("ChatWindow")) {
         disableScroll();
     }
 });
@@ -34,94 +42,54 @@ document.getElementsByTagName("main")[0].addEventListener("mouseout", (e) => {
         enableScroll();
     }
 });
+document.getElementsByTagName("main")[0].addEventListener("click", async (e) => {
+    if (e.target.tagName == "LI" && !chatWindow.activeChatRoom) {
+        chatWindow["activeChatRoom"] = e.target.id.split("_")[1];
+    }
+    else if (e.target.id == "backtoChatRoomListBtn") {
+        //document.getElementById("chatContent").remove();
+        //document.getElementById("chatInput").remove();
+        //document.getElementById("chatroomList").style.display = "block";
+        chatWindow["isVisible"] = true;
+        chatWindow["activeChatRoom"] = 0;
+    }
+}, true);
+document.getElementById("user").addEventListener("click", (e) => {
+    if (e.target.id == "Chat") {
+        chatWindow["isVisible"] = !chatWindow.isVisible;
+        e.preventDefault();
+    }
+});
 disableScroll = () => {
     document.querySelector(":root").style.overflow = "hidden";
 }
 enableScroll = () => {
     document.querySelector(":root").style.overflow = "auto";
 }
-handleChat = async (e) => {
-    if (e.target.tagName == "LI") {
-        var res = await fetch("/api/GetChatRoomMessages", {
-            method: "POST",
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                chatRoomId: e.target.id.split("_")[1]
-            })
-        }).then(res => {
-            return res.json();
-        });
-        if (res.success) {
-            document.getElementById("chatroomList").style.display = "none";
-            chatRoomWindow.innerHTML = `
-            <link rel="stylesheet" href="/ChatRoom.css">
-                        <div id="chatContent">
-                            <button id="backtoChatRoomListBtn">back to chatroom list</button>
-                            <ul>
-                            </ul>
-                        </div>
-                        <div id="chatInput">
-                        </div>`;
-            document.getElementById("chatInput").innerHTML = "";
-            document.getElementById("chatInput").innerHTML = `
-                                <input type="text" id="chatInputBox">
-                                <button id="sendButton">Send</button>`;
-            activeChatRoom = e.target.id.split("_")[1];
-            document.querySelector("#chatContent ul").innerText = "";
-            res.payload.forEach((element) => {
-                var li = document.createElement("li");
-                li.innerText = `${element.user.name} says ${element.message}`;
-                document.querySelector("#chatContent ul").appendChild(li);
-            });
-            document.getElementById("backtoChatRoomListBtn").addEventListener("click", () => {
-                document.getElementById("chatroomList").removeEventListener("click", (e) => { handleChat(e); });
-                document.getElementById("chatroomList").addEventListener("click", (e) => { handleChat(e); });
-                document.getElementById("chatContent").remove();
-                document.getElementById("chatInput").remove();
-                document.getElementById("chatroomList").style.display = "block";
-            });
-            chatting();
-
-        }
-        else {
-            document.querySelector("#chatContent ul").innerText = "No Message";
-            document.getElementById("chatInput").innerHTML = "";
-        }
-    }
-}
-
-// This is function for dynamically visible chat room window
-var chatRoomWindow = document.createElement("div");
-chatRoomWindow.className = "ChatWindow";
-chatRoomWindow.innerHTML = `    <link rel="stylesheet" href="/ChatRoom.css">
-    <div id="chatroomList">
-        <ul>
-        </ul>
-    </div>
-    `
 
 
-document.getElementById("user").addEventListener("click", (e) => {
-    if (e.target.id == "Chat") {
-        toggleWindow["isVisible"] = !toggleWindow.isVisible;
-        e.preventDefault();
-    }
-
-});
-var activeChatRoom = null;
-var toggleWindow = new Proxy({
-    isVisible: false
+var chatWindow = new Proxy({
+    isVisible: false,
+    activeChatRoom: 0
 }, {
     get: (target, prop) => {
         return target[prop];
     },
     set: async (target, prop, value) => {
         target[prop] = value;
-        if (value) {
-            await document.getElementsByTagName("main")[0].appendChild(chatRoomWindow);
+        
+        if (target["isVisible"]) {
+            
+            if (document.getElementsByTagName("main")[0].getElementsByClassName("ChatWindow").length == 0) {
+                await document.getElementsByTagName("main")[0].appendChild(chatRoomWindow);
+            }
+            chatRoomWindow.innerHTML = `    <link rel="stylesheet" href="/ChatRoom.css">
+    <div id="chatroomList">
+        <ul>
+        </ul>
+    </div>
+    `;
+            
             var res = await fetch("/api/GetJoinedChatRoom", {
                 method: "POST",
                 headers: {
@@ -143,12 +111,61 @@ var toggleWindow = new Proxy({
             else {
                 document.querySelector("#chatroomList ul").innerText = "No Chat Room";
             }
-            document.getElementById("chatroomList").addEventListener("click", (e) => { handleChat(e); });
         }
         else {
-            // Do something when the ChatWindow is closed and removed
-            document.getElementById("chatroomList").removeEventListener("click", (e) => { handleChat(e); });
             document.getElementsByTagName("main")[0].removeChild(chatRoomWindow);
+        }
+        if (target.activeChatRoom) {
+            let conn;
+            //////////////////////////
+            //conn = new ChatRoomConnection();
+            document.getElementById("chatroomList").style.display = "none";
+            chatRoomWindow.innerHTML = `
+            <link rel="stylesheet" href="/ChatRoom.css">
+                        <div id="chatContent">
+                            <button id="backtoChatRoomListBtn">back to chatroom list</button>
+                            <ul>
+                            </ul>
+                        </div>
+                        <div id="chatInput">
+                        </div>`;
+            //document.getElementById("chatInput").innerHTML = "";
+
+
+            var res = await fetch("/api/GetChatRoomMessages", {
+                method: "POST",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    chatRoomId: target.activeChatRoom
+                })
+            }).then(res => {
+                return res.json();
+            });
+            if (res.success) {
+                document.getElementById("chatInput").innerHTML = `
+                                <input type="text" id="chatInputBox">
+                                <button id="sendButton">Send</button>`;
+                document.querySelector("#chatContent ul").innerText = "";
+                res.payload.forEach((element) => {
+                    var li = document.createElement("li");
+                    li.innerText = `${element.user.name} says ${element.message}`;
+                    document.querySelector("#chatContent ul").appendChild(li);
+                });
+                //////////////////////////////////
+                //conn.connStart();
+                //conn.openconn();
+                chatting();
+            }
+            else {
+                document.querySelector("#chatContent ul").innerText = "No Message";
+                document.getElementById("chatInput").innerHTML = "";
+            }
+        }
+        else if (!target.activeChatRoom) {
+            conn.connection.stop();
         }
         return true;
     }
@@ -164,13 +181,17 @@ function chatting() {
     document.getElementById("sendButton").disabled = true;
 
     connection.on("ReceiveMessage", function (roomid, userid, user, message) {
-        var li = document.createElement("li");
-        document.querySelector("#chatContent>ul").appendChild(li);
+
+
         // We can assign user-supplied strings to an element's textContent because it
         // is not interpreted as markup. If you're assigning in any other way, you
         // should be aware of possible script injection concerns.
-        li.textContent = `${user} says ${message}`;
-        li.scrollIntoView();
+        if (user != document.getElementById("userlink").innerText.split(" ")[1] || true) {
+            var li = document.createElement("li");
+            document.querySelector("#chatContent>ul").appendChild(li);
+            li.textContent = `${user} says ${message}`;
+            li.scrollIntoView();
+        }
     });
 
     connection.start().then(function () {
@@ -180,7 +201,7 @@ function chatting() {
     });
 
     document.getElementById("sendButton").addEventListener("click", function (event) {
-        var roomid = activeChatRoom;
+        var roomid = chatWindow.activeChatRoom;
         var userid = document.getElementById("userlink").classList[0];
         var user = document.getElementById("userlink").innerText.split(" ")[1];
         var message = document.getElementById("chatInputBox").value;
@@ -189,4 +210,47 @@ function chatting() {
         });
         event.preventDefault();
     });
+}
+
+class ChatRoomConnection {
+    
+    constructor() {
+        "use strict";
+        this.connection = new signalR.HubConnectionBuilder().withUrl("/chat").build();
+    }
+    sendMsg = function (method, roomid, userid, user, message) {
+        this.connection.invoke(method, roomid, userid, user, message).catch(function (err) {
+            return console.error(err.toString());
+        });
+    }
+    openconn = () => {
+        document.getElementById("sendButton").disabled = true;
+        this.connection.on("ReceiveMessage", function (roomid, userid, user, message) {
+            if (user != document.getElementById("userlink").innerText.split(" ")[1] || true) {
+                var li = document.createElement("li");
+                document.querySelector("#chatContent>ul").appendChild(li);
+                li.textContent = `${user} says ${message}`;
+                li.scrollIntoView();
+            }
+        });
+        
+        document.getElementById("sendButton").addEventListener("click", function (event) {
+            var roomid = chatWindow.activeChatRoom;
+            var userid = document.getElementById("userlink").classList[0];
+            var user = document.getElementById("userlink").innerText.split(" ")[1];
+            var message = document.getElementById("chatInputBox").value;
+            self.connection.invoke("SendMessage", roomid, userid, user, message).catch(function (err) {
+                return console.error(err.toString());
+            });
+            event.preventDefault();
+        });
+    }
+    connStart = function () {
+        this.connection.start().then(function () {
+            document.getElementById("sendButton").disabled = false;
+        }).catch(function (err) {
+            return console.error(err.toString());
+        });
+    }
+    
 }
