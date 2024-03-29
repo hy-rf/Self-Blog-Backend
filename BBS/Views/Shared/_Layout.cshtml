@@ -2,6 +2,14 @@
 @{
     int Id = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value);
     string Name = User.FindFirst(ClaimTypes.Name)?.Value!;
+    string Avatar(string Avatar)
+    {
+        if (Avatar != null)
+        {
+            return $"data:image/png;base64, {Avatar}";
+        }
+        return "/img/defaultAvatar.png";
+    }
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -19,8 +27,8 @@
 <body>
     <header>
         <div id="navbar">
-            <a asp-controller="Home" asp-action="Index">Home</a>
-            <a asp-controller="Post" asp-action="Index">Post</a>
+            <a href="/">Home</a>
+            <a href="/1">Post</a>
         </div>
         <!--<div id="search">
             <input type="text" id="searchbox" placeholder="title">
@@ -35,11 +43,10 @@
         <div id="user">
             @if (User.Identity!.IsAuthenticated)
             {
-                <a id="userlink" asp-controller="User" asp-action="UserCenter">Hello! @(Name)</a>
-                <a href="/FriendRequests">Friend Requests</a>
-                <a href="/FriendRequestsSent">Friend Requests Sent</a>
+                <a id="userlink" class="@Id" asp-controller="User" asp-action="UserCenter">Hello! @(Name)</a>
                 <a href="/Chat/Index">Chat</a>
                 <a href="/Logout">Logout</a>
+                <a id="Chat" href="">ChatWindow</a>
             }
             else
             {
@@ -55,6 +62,8 @@
     </main>
     <footer>example footer</footer>
     <script src="~/_Layout.js"></script>
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+    @*<script src="~/ChatRoomWindow.js" defer></script>*@
 </body>
 
 </html>

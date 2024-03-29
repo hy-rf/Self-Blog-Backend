@@ -15,6 +15,6 @@ namespace BBS.Models
         public List<PostTag>? PostTags { get; set; }
         [ForeignKey("UserId")]
         public User User { get; set; }
-        //public List<PostTag>? PostTags { get; set; }
+        public List<LikedPost> Likes { get; set; }
     }
 }

@@ -52,10 +52,6 @@ header {
     background-color: lightgrey;
     backdrop-filter: blur(5px);
 }
-/*    header:hover {
-        background-color:lightslategrey;
-    }*/
-
 
 #navbar {
     position: absolute;
@@ -80,14 +76,8 @@ header {
 #user {
     position: absolute;
     right: 1rem;
-    /*    background-color: antiquewhite;*/
     border-radius: 5px;
 }
-
-    #user > * {
-        background-color: ghostwhite;
-        border-radius: 5px;
-    }
 
 
 
@@ -96,7 +86,6 @@ header {
     position: absolute;
     width: 100%;
     z-index: 99;
-    /*    background-color:antiquewhite;*/
 }
 
 .usermenu_show {
@@ -141,4 +130,20 @@ footer {
 
 #User > * > * {
     margin: 0.5rem;
+}
+
+
+.ChatWindow {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    background-color: wheat;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 20rem;
+    width: 20rem;
+    border: 1px solid black;
+    border-top-left-radius: 0.5rem;
+    resize: none;
+    z-index: 99;
 }

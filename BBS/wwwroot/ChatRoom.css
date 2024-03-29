@@ -1,3 +1,7 @@
-﻿main>div{
-    margin:2rem;
+﻿
+#addUsertoChatRoom>button {
+    border-radius: 5px;
+}
+#chatInput > button {
+    border-radius: 5px;
 }

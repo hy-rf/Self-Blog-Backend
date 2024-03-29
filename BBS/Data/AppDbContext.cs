@@ -19,7 +19,6 @@ public class AppDbContext : DbContext
     public DbSet<ChatRoom> ChatRoom { get; set; }
     public DbSet<ChatRoomMember> ChatRoomMember { get; set; }
     public DbSet<ChatRoomMessage> ChatRoomMessage { get; set; }
-
-
-
+    public DbSet<LikedPost> LikedPost { get; set; }
+    public DbSet<LikedReply> LikedReply { get; set; }
 }

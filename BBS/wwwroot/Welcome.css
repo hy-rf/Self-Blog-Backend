@@ -37,14 +37,28 @@
         margin: 1rem;
     }
 
-    #togglePanel > form {
+    #togglePanel > div {
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
     }
 
-        #togglePanel > form > button {
+        #togglePanel > div > button {
             position: relative;
             width: 4rem;
             left: 70%;
+        }
+
+        #togglePanel > div > p {
+            font-size: 0.8rem;
+        }
+
+#pwdSecurityIndicator{
+    display: flex;
+    flex-direction: row;
+}
+    
+        #pwdSecurityIndicator > * {
+            height:0.2rem;
+            width: calc(100%/3);
         }

@@ -5,35 +5,37 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using System.Text.Json;
 using BBS.Interfaces;
+using System.Runtime.Versioning;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BBS.Controllers
 {
-    public class FriendController(AppDbContext ctx, IFriendService friendService) : Controller
+    public class FriendController(IFriendService friendService) : Controller
     {
         [HttpPost]
         [Route("Friend/{Id}")]
         public void SendFriendRequest(int Id)
         {
-            ctx.FriendRequest.Add(new FriendRequest
+            friendService.AddFriendRequest(new FriendRequest
             {
                 SendUserId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value),
                 ReceiveUserId = Id
             });
-            ctx.SaveChanges();
         }
         [HttpGet]
         [Route("FriendRequests")]
         public ActionResult FriendRequests()
         {
-            var ret = ctx.FriendRequest.Where(fr => fr.ReceiveUserId == Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)!.Value)).Include(fr => fr.SendUser).ToList();
+            int UserId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)!.Value);
+            List<FriendRequest> ret = friendService.FriendRequests(UserId);
             return View("FriendRequests", ret);
         }
         [HttpGet]
         [Route("FriendRequestsSent")]
         public ActionResult FriendRequestSent()
         {
-            var ret = ctx.FriendRequest.Where(fr => fr.SendUserId == Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)!.Value)).Include(fr => fr.ReceiveUser).ToList();
-            var test = ret.GetType();
+            int UserId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)!.Value);
+            List<FriendRequest> ret = friendService.FriendRequestsSent(UserId);
             return View("FriendRequests", ret);
         }
         [HttpPost]
@@ -41,39 +43,35 @@ namespace BBS.Controllers
         public void FriendRequestApprove([FromBody] JsonElement json)
         {
             int Id = json.GetProperty("Id").GetInt32();
-            var newfriend = new Friend
+            friendService.AddFriend(
+                new Friend
+                {
+                    UserId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)!.Value),
+                    FriendUserId = Id,
+                },
+                new Friend
+                {
+                    FriendUserId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)!.Value),
+                    UserId = Id,
+                });
+            friendService.RemoveFriendRequest(new FriendRequest
             {
-                UserId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)!.Value),
-                FriendUserId = Id,
-            };
-            ctx.Friend.Add(newfriend);
-            var newfriendopposite = new Friend
-            {
-                FriendUserId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)!.Value),
-                UserId = Id,
-            };
-            var reqtorm = ctx.FriendRequest.Where(fr => fr.ReceiveUserId == Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)!.Value) && fr.SendUserId == Id).Single();
-            ctx.FriendRequest.Remove(reqtorm);
-            ctx.Friend.Add(newfriendopposite);
-            ctx.SaveChanges();
+                ReceiveUserId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)!.Value),
+                SendUserId = Id
+            });
         }
+        // DONE API
         [HttpGet]
         [Route("FriendList/{Id}")]
         public JsonResult GetFriendList(int Id)
         {
-            var friends = ctx.Friend.Where(f => f.UserId == Id);
-            var ret = from f in ctx.Friend.Where(f => f.UserId == Id)
-                      join user in ctx.User on f.FriendUserId equals user.Id
-                      select new
-                      {
-                          f.FriendUserId,
-                          user.Id,
-                          user.Name,
-                          user.Created,
-                          user.LastLogin,
-                          user.Avatar
-                      };
-            return Json(ret.ToList());
+            var result = friendService.Friends(Id);
+            return Json(new JsonBody
+            {
+                Success = true,
+                Payload = result,
+                Message = "Success"
+            });
         }
     }
 }

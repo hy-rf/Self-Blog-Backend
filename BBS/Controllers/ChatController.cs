@@ -1,4 +1,5 @@
 ﻿using BBS.Interfaces;
+using BBS.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
@@ -15,7 +16,7 @@ namespace BBS.Controllers
         {
             ViewBag.Id = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value);
             ViewBag.Name = User.FindFirst(ClaimTypes.Name)?.Value!.ToString();
-            var ret = chatService.GetChatRooms(Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value));
+            var ret = chatService.GetJoinedChatRooms(Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value));
             return View(ret);
         }
         [Authorize]
@@ -38,7 +39,7 @@ namespace BBS.Controllers
         }
         [HttpPost]
         [Route("Chat/CreateChatRoom")]
-        public void CreateChatRoom(string Name)
+        public ActionResult CreateChatRoom(string Name)
         {
             var newchatroom = new Models.ChatRoom
             {
@@ -50,6 +51,7 @@ namespace BBS.Controllers
                 ChatRoomId = newchatroom.Id,
                 UserId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value)
             });
+            return Redirect("/Chat/Index");
         }
         [HttpPost]
         [Route("Chat/GetChatRooms")]
@@ -57,21 +59,38 @@ namespace BBS.Controllers
         {
             int UserId = Convert.ToInt32(json.GetProperty("Id").GetString());
             var ret = chatService.GetJoinedChatRooms(UserId);
-            return Json(ret.Select(cr => new {cr.Id, cr.Name}));
+            return Json(ret.Select(cr => new { cr.Id, cr.Name }));
         }
 
 
         [HttpPost]
         [Route("Chat/AddChatRoomMember")]
-        public void AddChatRoomMember([FromBody] JsonElement json)
+        public JsonResult AddChatRoomMember([FromBody] JsonElement json)
         {
-            int UserId = Convert.ToInt32(json.GetProperty("UserId").GetString());
-            int ChatRoomId = Convert.ToInt32(json.GetProperty("ChatRoomId").GetString());
-            chatService.AddMember(new Models.ChatRoomMember
+            try
             {
-                UserId = UserId,
-                ChatRoomId = ChatRoomId
-            });
+                int UserId = Convert.ToInt32(json.GetProperty("UserId").GetString());
+                int ChatRoomId = Convert.ToInt32(json.GetProperty("ChatRoomId").GetString());
+                chatService.AddMember(new Models.ChatRoomMember
+                {
+                    UserId = UserId,
+                    ChatRoomId = ChatRoomId
+                });
+                return Json(new JsonBody
+                {
+                    Success = true,
+                    Message = "Success"
+                });
+            }
+            catch (Exception e)
+            {
+                return Json(new JsonBody
+                {
+                    Success = false,
+                    Message = e.Message
+                });
+            }
+
         }
         [HttpDelete]
         [Route("Chat/KickChatRoomMember")]
@@ -85,5 +104,55 @@ namespace BBS.Controllers
                 ChatRoomId = ChatRoomId
             });
         }
+        // API DONE
+        [HttpPost]
+        [Route("api/GetJoinedChatRoom")]
+        public JsonResult GetJoinedChatRoom()
+        {
+            try
+            {
+                int UserId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value);
+                var ret = chatService.GetJoinedChatRooms(UserId);
+                return Json(new JsonBody
+                {
+                    Success = true,
+                    Payload = ret,
+                    Message = "Success"
+                });
+            }
+            catch
+            {
+                return Json(new JsonBody
+                {
+                    Success = false,
+                    Message = "Error"
+                });
+            }
+        }
+        // API DONE
+        [HttpPost]
+        [Route("api/GetChatRoomMessages")]
+        public JsonResult GetChatRoomMessages([FromBody] JsonElement json)
+        {
+            try
+            {
+                int ChatRoomId = Convert.ToInt32(json.GetProperty("chatRoomId").GetString());
+                var ret = chatService.GetChatMessagesSimple(ChatRoomId);
+                return Json(new JsonBody
+                {
+                    Success = true,
+                    Payload = ret,
+                    Message = "Success"
+                });
+            }
+            catch
+            {
+                return Json(new JsonBody
+                {
+                    Success = false,
+                    Message = "Error"
+                });
+            }
+        }   
     }
 }

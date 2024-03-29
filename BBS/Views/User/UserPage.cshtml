@@ -2,24 +2,29 @@
 
 <!--TODO-->
 <!--get friend list of current login user to determine which user has sendable friend req-->
-
-
-
 @model BBS.Models.User
 @{
     int i = 0;
     int j = 0;
-    string Name = Model.Name!;
+    // string Name = Model.Name!;
+    string Avatar(string Avatar)
+    {
+        if (Avatar != null)
+        {
+            return $"data:image/png;base64, {Avatar}";
+        }
+        return "/img/defaultAvatar.png";
+    }
 }
 
 <link rel="stylesheet" href="~/UserCenter.css">
 
 <div id="User">
     <div id="Detail">
-        <h3 id="Title">@Name's Info:</h3>
+        <h3 id="Title">@Model.Name's Info:</h3>
         @if (User.Identity!.IsAuthenticated && Model.Id != Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value) && !ViewBag.isFriend && !ViewBag.isFriendRequestSent)
         {
-            <a id="sendFriendRequest">send friend request</a>
+            <button id="sendFriendRequest">send friend request</button>
         }
         <p id="Id">@Model.Id</p>
         <span>Name:</span><span id="name">@Model.Name</span>
@@ -29,7 +34,7 @@
         <p>Number of Replies:@foreach (var item in Model.Replies!) { j++; }@j</p>
     </div>
     <div id="Avatar">
-        <h3>@Name's Avatar</h3>
+        <h3>@Model.Name's Avatar</h3>
         <form>
             <div id="Avatars">
                 <img src="data:image/png;base64, @Model.Avatar" width="128" height="128">
@@ -37,34 +42,23 @@
         </form>
     </div>
     <div id="Posts">
-        <h3>@Name's Posts</h3>
+        <h3>@Model.Name's Posts</h3>
         @foreach (var item in Model.Posts)
         {
             <p>@item.Id</p>
-            <a href="Post/Detail/@item.Id">@item.Title</a>
+            <a href="/Post/Detail/@item.Id">@item.Title</a>
         }
     </div>
     <div id="Replies">
-        <h3>@Name's Replies</h3>
+        <h3>@Model.Name's Replies</h3>
         @foreach (var item in Model.Replies)
         {
             <p>@item.Id</p>
-            <a href="Post/Detail/@item.PostId">@item.Content</a>
+            <a href="/Post/Detail/@item.PostId">@item.Content</a>
         }
     </div>
 </div>
 
-<script defer>
-    document.getElementById("sendFriendRequest").addEventListener("click", (e) => {
-        e.preventDefault();
-        fetch(`/Friend/@Model.Id`, {
-            method: "POST"
-        }).then(response => {
-            e.target.innerText = "success"
-        }).catch(response => {
-            e.target.innerText = "fail"
-        });
-    });
-</script>
+
 
 <script src="~/UserPage.js" defer></script>

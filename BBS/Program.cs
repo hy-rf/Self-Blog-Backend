@@ -53,6 +53,8 @@ builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddScoped<IReplyService, ReplyService>();
 builder.Services.AddScoped<IChatService, ChatService>();
 builder.Services.AddScoped<IFriendService, FriendService>();
+builder.Services.AddScoped<ITagService, TagService>();
+builder.Services.AddScoped<ILikeService, LikeService>();
 
 var app = builder.Build();
 
@@ -63,10 +65,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-//app.MapControllerRoute(
-//    name: "default",
-//    pattern: "{controller=Home}/{action=Index}/{id?}"
-//    );
+
 app.MapHub<ChatRoom>("/chat");
 
 app.Run();

@@ -35,7 +35,7 @@ BindEditNameEvent();
 
 EditName = (Id) => {
     var newName = document.getElementById('inputName').value;
-    fetch(`/User/EditName/${Id}`, {
+    fetch(`/User/EditName`, {
         method: "POST",
         headers: {
             'Accept': 'application/json',
@@ -59,6 +59,8 @@ EditName = (Id) => {
 getFriendList = () => {
     return fetch(`/FriendList/${document.getElementById("Id").innerText.split(":")[1].toString()}`).then(response => {
         return response.json();
+    }).then(ret => {
+        return ret.payload;
     }).catch(error => {
         console.log(error);
     });
@@ -68,8 +70,8 @@ getChatRoomList = () => {
     return fetch(`/Chat/GetChatRooms`, {
         method: "POST",
         headers: {
-            "Accept":"applicatoin/json",
-            "Content-Type":"application/json"
+            "Accept": "applicatoin/json",
+            "Content-Type": "application/json"
         },
         body: JSON.stringify({
             Id: document.getElementById("Id").innerText.split(":")[1].toString()
@@ -91,9 +93,9 @@ window.onload = async () => {
     ele.setAttribute("id", "friends");
     ele.setAttribute("style", "grid-area:E;")
     for (i = 0; i < ret.length; i++) {
-        friendlist += `<a href="/User/${ret[i].id}">${ret[i].name}</a>
-        <p>${ret[i].created}</p>
-        <img src="data:image/png;base64, ${ret[i].avatar}" width="64" height="64">`;
+        friendlist += `<a href="/User/${ret[i].friendUser.id}">${ret[i].friendUser.name}</a>
+        <p>Joined at ${ret[i].friendUser.created}</p>
+        <img src="data:image/png;base64, ${ret[i].friendUser.avatar}" width="64" height="64"><br>`;
     }
     ele.innerHTML = friendlist;
     document.querySelector("#User").appendChild(ele);

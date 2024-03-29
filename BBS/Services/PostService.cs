@@ -6,8 +6,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BBS.Services
 {
-    public class PostService(AppDbContext ctx) : IPostService
+    public class PostService(AppDbContext ctx, ITagService tagService) : IPostService
     {
+        public int CountPost()
+        {
+            return ctx.Post.Count();
+        }
+
         public bool CreatePost(string Title, string Content, string Tag, int UserId)
         {
             var newPost = new Post
@@ -24,16 +29,10 @@ namespace BBS.Services
                 {
                     if (!ctx.Tag.Any(t => t.Name == tag))
                     {
-                        var newtag = new Tag
-                        {
-                            Name = tag
-                        };
-                        ctx.Tag.Add(newtag);
-                        ctx.SaveChanges();
+                        tagService.AddTag(tag);
                     }
                     var posttag = new PostTag { TagId = ctx.Tag.Count() + 1, PostId = ctx.Post.Count() + 1 };
                     ctx.PostTag.Add(posttag);
-                    ctx.SaveChanges();
                 }
             });
             ctx.Post.Add(newPost);
@@ -63,33 +62,32 @@ namespace BBS.Services
                 {
                     if (!ctx.Tag.Any(t => t.Name == tag))
                     {
-                        var newtag = new Tag
-                        {
-                            Name = tag
-                        };
-                        ctx.Tag.Add(newtag);
-                        ctx.SaveChanges();
+                        tagService.AddTag(tag);
                     }
                     if (!ctx.PostTag.Any(pt => pt.TagId == ctx.Tag.Single(t => t.Name == tag).Id))
                     {
                         var posttag = new PostTag { TagId = ctx.Tag.Single(t => t.Name == tag).Id, PostId = Id };
                         ctx.PostTag.Add(posttag);
                     }
-                    ctx.SaveChanges();
                 }
             }
-
             ctx.SaveChanges();
             return true;
         }
         public Post GetPost(int Id)
         {
-            var GetPost = ctx.Post.Include(p => p.PostTags)!.ThenInclude(pt => pt.Tag).Include(p => p.Replies)!.ThenInclude(r => r.User).Include(p => p.User).Single(p => p.Id == Id);
+            var GetPost = ctx.Post.Include(p => p.PostTags)!.ThenInclude(pt => pt.Tag).Include(p => p.Replies)!.ThenInclude(r => r.User).Include(p => p.User).Include(p => p.Likes).ThenInclude(l => l.User).Single(p => p.Id == Id);
             return GetPost;
         }
         public List<Post> GetPosts()
         {
-            var GetPosts = ctx.Post.Include(p => p.User).ToList();
+            var GetPosts = ctx.Post.Include(p => p.User).Include(p => p.Likes).ThenInclude(l => l.User).ToList();
+            return GetPosts;
+        }
+
+        public List<Post> GetPostsByPage(int PageIndex, int NumPostPerPage)
+        {
+            var GetPosts = ctx.Post.Include(p => p.User).Include(p => p.Likes).ThenInclude(l => l.User).Include(p => p.Replies).OrderByDescending(p => p.Id).Skip((PageIndex - 1) * NumPostPerPage).Take(NumPostPerPage).ToList();
             return GetPosts;
         }
     }

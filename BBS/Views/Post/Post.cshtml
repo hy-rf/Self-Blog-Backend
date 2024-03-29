@@ -4,6 +4,18 @@
 @{
     string content = $"{Html.Raw(Model.Content)}";
 }
+@{
+}
+@{
+    string Avatar(string Avatar)
+    {
+        if (Avatar != null)
+        {
+            return $"data:image/png;base64, {Avatar}";
+        }
+        return "/img/defaultAvatar.png";
+    }
+}
 
 <link rel="stylesheet" href="~/Post.css">
 <script src="~/PostDetail.js"></script>
@@ -20,7 +32,7 @@
     </div>
 }
 <div class="PostUnit">
-    <p>Post Id : @Model.Id</p>
+    <p>@Model.Id</p>
     <p class="Title">@Model.Title</p>
     <div id="PostContent">
         @Html.Raw(Model.Content)
@@ -33,15 +45,15 @@
     <span>Date Created : @Model.Created</span>
     <span>Date Modified : @Model.Modified</span>
     <p id="Tags">
-    @if (Model.PostTags != null)
-    {
-        
-        @foreach (var item in Model.PostTags)
+        @if (Model.PostTags != null)
         {
+
+            @foreach (var item in Model.PostTags)
+            {
                 <a asp-action="Index" asp-controller="Tag" asp-route-Id="@Convert.ToInt32(item.Tag.Id)">#@item.Tag.Name</a>
+            }
+
         }
-        
-    }
     </p>
 </div>
 
@@ -54,9 +66,9 @@
             <div class="UserInfo">
                 <p>@item.User.Id</p>
                 <a href="/User/@item.User.Id">@item.User.Name</a>
-                <img src="data:image/png;base64, @item.User.Avatar" width="64" height="64">
+                <img src=@Avatar(item.User.Avatar) width="64" height="64">
             </div>
-            
+
             <p class="timeIndicator">
                 <span>@item.Created</span>
                 <span>@item.Modified</span>
@@ -72,12 +84,6 @@
     </form>
 }
 
-<script defer>
-    //
-    PostContentOnEditor(@Model.Id, `@Html.Raw(Model.Content)`);
-    document.getElementById("Title").value = document.getElementsByClassName("Title")[0].innerText;
-    document.getElementById("Tag").value = (document.getElementById("Tags").value == null) ? "" : document.getElementById("Tags").value;
-    document.getElementById("toggleEditPostBtn").addEventListener("click", () => {
-        document.getElementById("PostFormWrapper").classList.toggle("hideEditPost");
-    })
-</script>
+
+
+<script src="~/PostCommon.js" defer></script>

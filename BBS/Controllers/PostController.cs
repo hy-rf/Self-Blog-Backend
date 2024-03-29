@@ -7,12 +7,14 @@ using System.Text.Json;
 
 namespace BBS.Controllers
 {
-    public class PostController(IPostService postService, IReplyService _replyService) : Controller
+    public class PostController(IPostService postService) : Controller
     {
-        [Route("/")]
-        public IActionResult Index()
+        [Route("/{page}")]
+        public IActionResult Index(int page)
         {
-            var model = postService.GetPosts();
+            ViewBag.NumPost = postService.CountPost();
+            ViewBag.PostPerPage = 10;
+            var model = postService.GetPostsByPage(page, 10);
             return View(model);
         }
         [HttpPost]
@@ -51,7 +53,7 @@ namespace BBS.Controllers
             string Content = json.GetProperty("Content").ToString();
             if (postService.GetPost(PostId).UserId != Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value))
             {
-                return RedirectToAction("GetPost", new { Id = PostId });
+                return BadRequest();
             }
             if (postService.EditPost(PostId, Title, Content, json.GetProperty("Tag").ToString()))
             {
