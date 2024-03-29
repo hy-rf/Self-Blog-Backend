@@ -24,6 +24,16 @@ readJson = (object) => {
         return response.json();
     });
 }
+document.getElementsByTagName("main")[0].addEventListener("mouseover", (e) => {
+    if (e.target.classList.contains("ChatWindow")){
+        disableScroll();
+    }
+});
+document.getElementsByTagName("main")[0].addEventListener("mouseout", (e) => {
+    if (e.target.classList.contains("ChatWindow")) {
+        enableScroll();
+    }
+});
 disableScroll = () => {
     document.querySelector(":root").style.overflow = "hidden";
 }
@@ -46,7 +56,8 @@ handleChat = async (e) => {
         });
         if (res.success) {
             document.getElementById("chatroomList").style.display = "none";
-            chatRoomWindow.innerHTML += `
+            chatRoomWindow.innerHTML = `
+            <link rel="stylesheet" href="/ChatRoom.css">
                         <div id="chatContent">
                             <button id="backtoChatRoomListBtn">back to chatroom list</button>
                             <ul>
@@ -66,6 +77,7 @@ handleChat = async (e) => {
                 document.querySelector("#chatContent ul").appendChild(li);
             });
             document.getElementById("backtoChatRoomListBtn").addEventListener("click", () => {
+                document.getElementById("chatroomList").removeEventListener("click", (e) => { handleChat(e); });
                 document.getElementById("chatroomList").addEventListener("click", (e) => { handleChat(e); });
                 document.getElementById("chatContent").remove();
                 document.getElementById("chatInput").remove();
@@ -132,13 +144,10 @@ var toggleWindow = new Proxy({
                 document.querySelector("#chatroomList ul").innerText = "No Chat Room";
             }
             document.getElementById("chatroomList").addEventListener("click", (e) => { handleChat(e); });
-            document.querySelector(".ChatWindow").addEventListener("mouseover", () => { disableScroll(); });
-            document.querySelector(".ChatWindow").addEventListener("mouseout", () => { enableScroll(); });
         }
         else {
             // Do something when the ChatWindow is closed and removed
-            document.querySelector(".ChatWindow").removeEventListener("mouseover", () => { disableScroll(); });
-            document.querySelector(".ChatWindow").removeEventListener("mouseout", () => { enableScroll(); });
+            document.getElementById("chatroomList").removeEventListener("click", (e) => { handleChat(e); });
             document.getElementsByTagName("main")[0].removeChild(chatRoomWindow);
         }
         return true;
