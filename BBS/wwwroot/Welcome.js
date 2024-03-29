@@ -151,12 +151,12 @@ document.getElementById("togglePanel").addEventListener("keyup", async (e) => {
         }
     }
     else if (e.target.id == "Pwd" && e.target.parentNode.querySelector("button").id == "submitSignupBtn") {
-        if (/^(.*[A-Z]){1,}/.test(e.target.value) && /^(.*[a-z]){1,}/.test(e.target.value) && /^(.*\d){1,}/.test(e.target.value) && /^(.*[@$! %*?&]){1,}/.test(e.target.value)) {
+        if (/^(.*[A-Z]){1,}/.test(e.target.value) && /^(.*[a-z]){1,}/.test(e.target.value) && /^(.*\d){1,}/.test(e.target.value) && /^(.*[~!@#$%^&*]){1,}/.test(e.target.value)) {
             document.querySelectorAll("#pwdSecurityIndicator>div")[0].style.backgroundColor = "red";
             document.querySelectorAll("#pwdSecurityIndicator>div")[1].style.backgroundColor = "yellow";
             document.querySelectorAll("#pwdSecurityIndicator>div")[2].style.backgroundColor = "green";
         }
-        else if (/^(.*[A-Z]){1,}/.test(e.target.value) && /^(.*[a-z]){1,}/.test(e.target.value) && /^(.*\d){1,}/.test(e.target.value)) {
+        else if (/^(.*[A-Z]){1,}/.test(e.target.value) && /^(.*[a-z]){1,}/.test(e.target.value) && /^(.*\d){1,}/.test(e.target.value) || /^(.*[~!@#$%^&*]){1,}/.test(e.target.value)) {
             document.querySelectorAll("#pwdSecurityIndicator>div")[0].style.backgroundColor = "red";
             document.querySelectorAll("#pwdSecurityIndicator>div")[1].style.backgroundColor = "yellow";
             document.querySelectorAll("#pwdSecurityIndicator>div")[2].style.backgroundColor = "transparent";
