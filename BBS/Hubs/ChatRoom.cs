@@ -11,7 +11,15 @@ namespace BBS.Hubs
         [Authorize]
         public async Task Join(string RoomId)
         {
-            await Groups.AddToGroupAsync(Context.ConnectionId, RoomId);
+            if (chatService.isInChatRoom(new ChatRoomMember
+            {
+                UserId = Convert.ToInt32(Context.User!.FindFirst(ClaimTypes.Sid)?.Value),
+                ChatRoomId = Convert.ToInt32(RoomId)
+            }))
+            {
+                await Groups.AddToGroupAsync(Context.ConnectionId, RoomId);
+            }
+
         }
         public async Task SendMessage(string RoomId, string UserId, string Name, string Message)
         {
