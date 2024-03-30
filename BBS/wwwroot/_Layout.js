@@ -20,18 +20,7 @@ chatRoomWindow.innerHTML = `    <link rel="stylesheet" href="/ChatRoom.css">
     </div>
     `;
 
-readJson = (object) => {
-    return fetch("/test", {
-        method: "POST",
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(object),
-    }).then((response) => {
-        return response.json();
-    });
-}
+
 document.getElementsByTagName("main")[0].addEventListener("mouseover", (e) => {
     if (e.target.classList.contains("ChatWindow")) {
         disableScroll();
@@ -47,9 +36,6 @@ document.getElementsByTagName("main")[0].addEventListener("click", async (e) => 
         chatWindow["activeChatRoom"] = e.target.id.split("_")[1];
     }
     else if (e.target.id == "backtoChatRoomListBtn") {
-        //document.getElementById("chatContent").remove();
-        //document.getElementById("chatInput").remove();
-        //document.getElementById("chatroomList").style.display = "block";
         chatWindow["isVisible"] = true;
         chatWindow["activeChatRoom"] = 0;
     }
@@ -77,7 +63,7 @@ var chatWindow = new Proxy({
     },
     set: async (target, prop, value) => {
         target[prop] = value;
-
+        console.log(target);
         if (target["isVisible"]) {
 
             if (document.getElementsByTagName("main")[0].getElementsByClassName("ChatWindow").length == 0) {
@@ -113,13 +99,11 @@ var chatWindow = new Proxy({
             }
         }
         else {
-            chatRoomWindow.style.display = "none";
-            //document.getElementsByTagName("main")[0].removeChild(chatRoomWindow);
+            // chatRoomWindow.style.display = "none";
+            document.getElementsByTagName("main")[0].removeChild(chatRoomWindow);
         }
         if (target.activeChatRoom) {
-            //////////////////////////
-            //conn = new ChatRoomConnection();
-            document.getElementById("chatroomList").style.display = "none";
+            // document.getElementById("chatroomList").style.display = "none";
             chatRoomWindow.innerHTML = `
             <link rel="stylesheet" href="/ChatRoom.css">
             <button id="backtoChatRoomListBtn">back</button>
@@ -211,45 +195,19 @@ function chatting(RoomId) {
     })
 }
 
-class ChatRoomConnection {
 
-    constructor() {
-        "use strict";
-        this.connection = new signalR.HubConnectionBuilder().withUrl("/chat").build();
-    }
-    sendMsg = function (method, roomid, userid, user, message) {
-        this.connection.invoke(method, roomid, userid, user, message).catch(function (err) {
-            return console.error(err.toString());
-        });
-    }
-    openconn = () => {
-        document.getElementById("sendButton").disabled = true;
-        this.connection.on("ReceiveMessage", function (roomid, userid, user, message) {
-            if (user != document.getElementById("userlink").innerText.split(" ")[1] || true) {
-                var li = document.createElement("li");
-                document.querySelector("#chatContent>ul").appendChild(li);
-                li.textContent = `${user} says ${message}`;
-                li.scrollIntoView();
-            }
-        });
 
-        document.getElementById("sendButton").addEventListener("click", function (event) {
-            var roomid = chatWindow.activeChatRoom;
-            var userid = document.getElementById("userlink").classList[0];
-            var user = document.getElementById("userlink").innerText.split(" ")[1];
-            var message = document.getElementById("chatInputBox").value;
-            self.connection.invoke("SendMessage", roomid, userid, user, message).catch(function (err) {
-                return console.error(err.toString());
-            });
-            event.preventDefault();
-        });
-    }
-    connStart = function () {
-        this.connection.start().then(function () {
-            document.getElementById("sendButton").disabled = false;
-        }).catch(function (err) {
-            return console.error(err.toString());
-        });
-    }
 
-}
+
+// readJson = (object) => {
+//     return fetch("/test", {
+//         method: "POST",
+//         headers: {
+//             "Accept": "application/json",
+//             "Content-Type": "application/json"
+//         },
+//         body: JSON.stringify(object),
+//     }).then((response) => {
+//         return response.json();
+//     });
+// }
