@@ -23,11 +23,13 @@ chatRoomWindow.innerHTML = `    <link rel="stylesheet" href="/ChatRoom.css">
 
 document.getElementsByTagName("main")[0].addEventListener("mouseover", (e) => {
     if (e.target.classList.contains("ChatWindow")) {
+        e.target.style.opacity = 1;
         disableScroll();
     }
 });
 document.getElementsByTagName("main")[0].addEventListener("mouseleave", (e) => {
     if (e.target.classList.contains("ChatWindow")) {
+        e.target.style.opacity = 0.5;
         enableScroll();
     }
 }, true);
