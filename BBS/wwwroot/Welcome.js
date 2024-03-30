@@ -173,9 +173,13 @@ function disableInput() {
     document.querySelectorAll("#togglePanel>div>input")[0].disabled = true;
     document.querySelectorAll("#togglePanel>div>input")[1].disabled = true;
     document.querySelector("#togglePanel>div>button").disabled = true;
+    document.getElementById("loginBtn").disabled = true;
+    document.getElementById("signupBtn").disabled = true;
 }
 function enableInput() {
     document.querySelectorAll("#togglePanel>div>input")[0].disabled = false;
     document.querySelectorAll("#togglePanel>div>input")[1].disabled = false;
     document.querySelector("#togglePanel>div>button").disabled = false;
+    document.getElementById("loginBtn").disabled = false;
+    document.getElementById("signupBtn").disabled = false;
 }

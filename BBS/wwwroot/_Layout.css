@@ -127,10 +127,31 @@ footer {
     margin: 0.5rem;
 }
 
-
-#User > * > * {
+#navbar > *:not(:hover) {
+    color: black;
+    background-color: lightgrey;
+    transition: 0.5s;
     margin: 0.5rem;
 }
+#navbar > *:hover {
+    color: lightgray;
+    background-color: black;
+    transition: 0.5s;
+    margin: 0.5rem;
+}
+#user > *:not(:hover) {
+    color: black;
+    background-color: lightgrey;
+    transition: 0.5s;
+    margin: 0.5rem;
+}
+#user > *:hover {
+    color: lightgray;
+    background-color: black;
+    transition: 0.5s;
+    margin: 0.5rem;
+}
+
 
 
 .ChatWindow {
