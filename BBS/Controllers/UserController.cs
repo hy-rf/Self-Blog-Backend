@@ -12,6 +12,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
 using BBS.Models;
+using Google.Authenticator;
 
 namespace BBS.Controllers
 {
@@ -214,6 +215,48 @@ namespace BBS.Controllers
             {
                 Success = false,
                 Message = "Signup Failed, No Input."
+            });
+        }
+        [HttpPost]
+        [Route("api/2fv")]
+        public JsonResult TwoFactor()
+        {
+            string user = User.FindFirst(ClaimTypes.Name)!.Value;
+            TwoFactorAuthenticator twoFactorAuthenticator = new TwoFactorAuthenticator();
+            var TwoFactorSecretCode = "TwoFactorSecretCode";
+            var accountSecretKey = $"{TwoFactorSecretCode}-{user}";
+            var setupCode = twoFactorAuthenticator.GenerateSetupCode("BBS", user, Encoding.ASCII.GetBytes(accountSecretKey));
+            var qrCodeUrl = setupCode.QrCodeSetupImageUrl;
+            var manualCode = setupCode.ManualEntryKey;
+            return Json(new JsonBody
+            {
+                Success = true,
+                Payload = new
+                {
+                    qrCodeUrl,
+                    manualCode
+                },
+                Message = "success"
+            });
+        }
+        [HttpPost]
+        [Route("apt/2fv/vali")]
+        public JsonResult Validate([FromBody] JsonElement code)
+        {
+            var Authenticator = new TwoFactorAuthenticator();
+            var valid = Authenticator.ValidateTwoFactorPIN($"TwoFactorSecretCode-{User.FindFirst(ClaimTypes.Name)!.Value}", code.GetString("code"));
+            if (valid)
+            {
+                return Json(new JsonBody
+                {
+                    Success = true,
+                    Message = "Verified"
+                });
+            }
+            return Json(new JsonBody
+            {
+                Success = false,
+                Message = "Failed"
             });
         }
     }

@@ -26,6 +26,10 @@
         <p>Number of Replies:@foreach (var item in Model.Replies!) { j++; }@j</p>
         <a href="/FriendRequests">Friend Requests</a>
         <a href="/FriendRequestsSent">Friend Requests Sent</a>
+        <a id="generate2FQRCode">test generate qrcode</a>
+        <img id="TwoFactorQRCode" />
+        <input id="2FCode" />
+        <button id="submit2FC">Verify</button>
     </div>
     <div id="Avatar">
         <h3>@Name's Avatar</h3>
