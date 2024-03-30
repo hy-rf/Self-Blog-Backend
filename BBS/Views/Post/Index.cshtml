@@ -44,7 +44,7 @@
             {
                 if (item.Likes.Any(l => l.UserId == Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value)))
                 {
-                    <p>Liked</p>
+                    <button class="LikeBtn">DeLike</button>
                 }
                 else
                 {

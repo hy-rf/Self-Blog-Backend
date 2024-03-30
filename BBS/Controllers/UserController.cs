@@ -102,7 +102,7 @@ namespace BBS.Controllers
             }
             return Redirect("/UserCenter");
         }
-        // DONE API
+        // API DONE NOT IN USE
         [HttpGet]
         [Route("api/User/{Id}")]
         public JsonResult UserJson(int Id)
@@ -110,7 +110,7 @@ namespace BBS.Controllers
             var ret = userService.GetUserLight(Id);
             return Json(ret);
         }
-        // DONE API
+        // API DONE
         [HttpPost]
         [Route("api/User/Login")]
         public JsonResult LoginApi([FromBody] JsonElement LoginInfo)
@@ -155,7 +155,7 @@ namespace BBS.Controllers
                 Message = "Login Failed, No Input."
             });
         }
-        // DONE API
+        // API DONE
         [HttpPost]
         [Route("api/User/CheckDuplicatedName")]
         public JsonResult CheckDuplicatedName([FromBody] JsonElement Name)
@@ -175,7 +175,7 @@ namespace BBS.Controllers
                 Message = "Name is not available"
             });
         }
-        // DONE API
+        // API DONE
         [HttpPost]
         [Route("api/User/Signup")]
         public JsonResult SignupApi([FromBody] JsonElement SingupInfo)

@@ -60,7 +60,7 @@ namespace BBS.Controllers
                 SendUserId = Id
             });
         }
-        // DONE API
+        // API DONE
         [HttpGet]
         [Route("FriendList/{Id}")]
         public JsonResult GetFriendList(int Id)

@@ -17,6 +17,7 @@ namespace BBS.Controllers
             var model = postService.GetPostsByPage(page, 10);
             return View(model);
         }
+        // API DONE
         [HttpPost]
         [Route("Post/CreatePost")]
         public ActionResult CreatePost([FromBody] JsonElement json)
@@ -45,6 +46,7 @@ namespace BBS.Controllers
             var ret = postService.GetPost(Id);
             return View("Post", ret);
         }
+        // API DONE
         [HttpPost]
         [Route("Post/EditPost")]
         public ActionResult EditPost([FromBody] JsonElement json)

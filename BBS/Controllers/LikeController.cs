@@ -10,11 +10,6 @@ namespace BBS.Controllers
     public class LikeController(ILikeService likeService) : Controller
     {
         // API DONE
-        /// <summary>
-        /// Post JSON stringified object as LikedPost backend object
-        /// </summary>
-        /// <param name="likedPost"></param>
-        /// <returns></returns>
         [HttpPost]
         [Route("/Like/Post")]
         public JsonResult LikePost([FromBody] LikedPost likedPost)
@@ -32,14 +27,6 @@ namespace BBS.Controllers
                     {
                         Success = true,
                         Message = "Post liked"
-                    });
-                }
-                catch
-                {
-                    return Json(new JsonBody
-                    {
-                        Success = true,
-                        Message = "Post already liked"
                     });
                 }
                 finally
