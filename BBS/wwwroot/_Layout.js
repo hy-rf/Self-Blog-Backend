@@ -37,11 +37,11 @@ document.getElementsByTagName("main")[0].addEventListener("mouseover", (e) => {
         disableScroll();
     }
 });
-document.getElementsByTagName("main")[0].addEventListener("mouseout", (e) => {
+document.getElementsByTagName("main")[0].addEventListener("mouseleave", (e) => {
     if (e.target.classList.contains("ChatWindow")) {
         enableScroll();
     }
-});
+}, true);
 document.getElementsByTagName("main")[0].addEventListener("click", async (e) => {
     if (e.target.tagName == "LI" && !chatWindow.activeChatRoom) {
         chatWindow["activeChatRoom"] = e.target.id.split("_")[1];
@@ -113,7 +113,8 @@ var chatWindow = new Proxy({
             }
         }
         else {
-            document.getElementsByTagName("main")[0].removeChild(chatRoomWindow);
+            chatRoomWindow.style.display = "none";
+            //document.getElementsByTagName("main")[0].removeChild(chatRoomWindow);
         }
         if (target.activeChatRoom) {
             //////////////////////////
