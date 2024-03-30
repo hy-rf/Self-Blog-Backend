@@ -11,5 +11,6 @@ namespace BBS.Interfaces
         public bool EditAvatar(int Id, string Avatar);
         public User GetUserLight(int Id);
         public bool EditName(int Id, string Name);
+        public bool Logoff(int Id);
     }
 }

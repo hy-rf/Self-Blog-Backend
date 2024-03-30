@@ -95,8 +95,12 @@ namespace BBS.Controllers
         [Route("Logout")]
         public ActionResult Logout()
         {
-            HttpContext.Response.Cookies.Delete("Token");
-            return Redirect("/");
+            if (userService.Logoff(Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value!)))
+            {
+                HttpContext.Response.Cookies.Delete("Token");
+                return Redirect("/");
+            }
+            return Redirect("/UserCenter");
         }
         // DONE API
         [HttpGet]

@@ -42,7 +42,8 @@ namespace BBS.Controllers
         [Route("Post/Detail/{Id}")]
         public ActionResult GetPost(int Id)
         {
-            return View("Post", postService.GetPost(Id));
+            var ret = postService.GetPost(Id);
+            return View("Post", ret);
         }
         [HttpPost]
         [Route("Post/EditPost")]

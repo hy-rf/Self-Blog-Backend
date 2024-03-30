@@ -31,7 +31,7 @@ namespace BBS.Services
                     {
                         tagService.AddTag(tag);
                     }
-                    var posttag = new PostTag { TagId = ctx.Tag.Count() + 1, PostId = ctx.Post.Count() + 1 };
+                    var posttag = new PostTag { TagId = ctx.Tag.Single(t => t.Name == tag).Id, PostId = ctx.Post.Count() + 1 };
                     ctx.PostTag.Add(posttag);
                 }
             });
