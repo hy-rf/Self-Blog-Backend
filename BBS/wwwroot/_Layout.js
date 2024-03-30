@@ -77,9 +77,9 @@ var chatWindow = new Proxy({
     },
     set: async (target, prop, value) => {
         target[prop] = value;
-        
+
         if (target["isVisible"]) {
-            
+
             if (document.getElementsByTagName("main")[0].getElementsByClassName("ChatWindow").length == 0) {
                 await document.getElementsByTagName("main")[0].appendChild(chatRoomWindow);
             }
@@ -89,7 +89,7 @@ var chatWindow = new Proxy({
         </ul>
     </div>
     `;
-            
+
             var res = await fetch("/api/GetJoinedChatRoom", {
                 method: "POST",
                 headers: {
@@ -122,8 +122,8 @@ var chatWindow = new Proxy({
             document.getElementById("chatroomList").style.display = "none";
             chatRoomWindow.innerHTML = `
             <link rel="stylesheet" href="/ChatRoom.css">
+            <button id="backtoChatRoomListBtn">back</button>
                         <div id="chatContent">
-                            <button id="backtoChatRoomListBtn">back to chatroom list</button>
                             <ul>
                             </ul>
                         </div>
@@ -175,12 +175,12 @@ function chatting(RoomId) {
 
     "use strict";
     var connection = new signalR.HubConnectionBuilder().withUrl("/chat").build();
-    
+
     //Disable the send button until connection is established.
     document.getElementById("sendButton").disabled = true;
-    
+
     connection.on("ReceiveMessage", function (roomid, userid, user, message) {
-        
+
         if (user != document.getElementById("userlink").innerText.split(" ")[1] || true) {
             var li = document.createElement("li");
             document.querySelector("#chatContent>ul").appendChild(li);
@@ -212,7 +212,7 @@ function chatting(RoomId) {
 }
 
 class ChatRoomConnection {
-    
+
     constructor() {
         "use strict";
         this.connection = new signalR.HubConnectionBuilder().withUrl("/chat").build();
@@ -232,7 +232,7 @@ class ChatRoomConnection {
                 li.scrollIntoView();
             }
         });
-        
+
         document.getElementById("sendButton").addEventListener("click", function (event) {
             var roomid = chatWindow.activeChatRoom;
             var userid = document.getElementById("userlink").classList[0];
@@ -251,5 +251,5 @@ class ChatRoomConnection {
             return console.error(err.toString());
         });
     }
-    
+
 }
