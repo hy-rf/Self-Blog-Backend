@@ -5,13 +5,13 @@
     border-radius: 3px;
 }
 
-    .EditButton:hover {
-        color: blue;
-    }
+.EditButton:hover {
+    color: blue;
+}
 
-    .ReplyButton:hover {
-        color: blue;
-    }
+.ReplyButton:hover {
+    color: blue;
+}
 
 #PostFormWrapper {
     position: relative;
@@ -33,49 +33,42 @@ span {
     font-size: 0.8rem;
 }
 
-.PostUnit {
+.PostUnit:not(:hover) {
     position: relative;
-    border: 1px solid black;
+    border: 1px solid white;
     border-radius: 2px;
-    box-shadow: 3px 2px 2px black;
     margin: 0.3rem 8px 0.3rem 6px;
-    background-color: lightgrey;
+    background-color: white;
+    transition: 0.5s;
 }
 
-    .PostUnit:hover {
-        box-shadow: inset 3px 2px 2px black;
-        top: 2px;
-        left: 2px;
-    }
+.PostUnit:hover {
+    border: 1px solid black;
+    transition: 0.5s;
+    margin: 0.3rem 8px 0.3rem 6px;
+}
 
 #PostContent {
     position: relative;
     border: 1px solid black;
     border-radius: 2px;
-    box-shadow: 3px 2px 2px black;
     margin: 0.3rem 8px 0.3rem 6px;
 }
 
-    #PostContent:hover {
-        box-shadow: inset 3px 2px 2px black;
-        top: 2px;
-        left: 2px;
-    }
 
-.ReplyUnit {
+.ReplyUnit:not(:hover) {
     position: relative;
-    border: 1px solid black;
+    border: 1px solid white;
     border-radius: 2px;
-    box-shadow: 3px 2px 2px black;
     margin: 0.3rem 8px 0.3rem 6px;
-    background-color: lightgrey;
+    background-color: white;
+    transition: 0.5s;
 }
 
-    .ReplyUnit:hover {
-        box-shadow: inset 3px 2px 2px black;
-        top: 2px;
-        left: 2px;
-    }
+.ReplyUnit:hover {
+    border: 1px solid black;
+    transition: 0.5s;
+}
 
 .hideEditPost {
     display: block !important;

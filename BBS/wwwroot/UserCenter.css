@@ -31,19 +31,18 @@
     grid-area: D;
 }
 
-#User > * {
+#User>*:not(:hover) {
     position: relative;
-    border: 1px solid black;
+    border: 1px solid white;
     border-radius: 2px;
-    box-shadow: 3px 2px 2px black;
-    background-color: lightgray;
+    background-color: white;
+    transition: 0.5s;
 }
 
-    #User > *:hover {
-        box-shadow: inset 3px 2px 2px black;
-        top: 2px;
-        left: 2px;
-    }
+#User>*:hover {
+    border: 1px solid black;
+    transition: 0.5s;
+}
 
 
 @media (max-width:800px) {

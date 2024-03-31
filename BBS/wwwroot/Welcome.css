@@ -21,7 +21,7 @@
     }
 
         #toggleBtns > *:hover {
-            background-color: lightgrey;
+            background-color: white;
             transition: 0.3s;
         }
 

@@ -31,7 +31,7 @@ body {
     min-height: 100vh;
     scroll-behavior: smooth;
     scrollbar-width: 0;
-    background-color: wheat;
+    background-color: white;
 }
 
 header {
@@ -49,7 +49,7 @@ header {
     border-bottom: 1px solid black;
     transition: 0.5s;
     z-index: 99;
-    background-color: lightgrey;
+    background-color: white;
     backdrop-filter: blur(5px);
 }
 
@@ -129,7 +129,7 @@ footer {
 
 #navbar > *:not(:hover) {
     color: black;
-    background-color: lightgrey;
+    background-color: white;
     transition: 0.5s;
     margin: 0.5rem;
 }
@@ -141,7 +141,7 @@ footer {
 }
 #user > *:not(:hover) {
     color: black;
-    background-color: lightgrey;
+    background-color: white;
     transition: 0.5s;
     margin: 0.5rem;
 }
