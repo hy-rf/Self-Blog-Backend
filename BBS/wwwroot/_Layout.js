@@ -13,12 +13,12 @@ window.onscroll = () => {
 }
 var chatRoomWindow = document.createElement("div");
 chatRoomWindow.className = "ChatWindow";
-chatRoomWindow.innerHTML = `    <link rel="stylesheet" href="/ChatRoom.css">
-    <div id="chatroomList">
-        <ul>
-        </ul>
-    </div>
-    `;
+chatRoomWindow.innerHTML = `
+<link rel="stylesheet" href="/ChatRoom.css">
+<div id="chatroomList">
+    <ul>
+    </ul>
+</div>`;
 
 
 document.getElementsByTagName("main")[0].addEventListener("mouseover", (e) => {
@@ -66,18 +66,17 @@ var chatWindow = new Proxy({
     set: async (target, prop, value) => {
         target[prop] = value;
         console.log(target);
-        if (target["isVisible"]) {
-
+        // When chat room window is visible do this
+        if (target.isVisible) {
             if (document.getElementsByTagName("main")[0].getElementsByClassName("ChatWindow").length == 0) {
                 await document.getElementsByTagName("main")[0].appendChild(chatRoomWindow);
             }
-            chatRoomWindow.innerHTML = `    <link rel="stylesheet" href="/ChatRoom.css">
-    <div id="chatroomList">
-        <ul>
-        </ul>
-    </div>
-    `;
-
+            chatRoomWindow.innerHTML = `
+            <link rel="stylesheet" href="/ChatRoom.css">
+            <div id="chatroomList">
+                <ul>
+                </ul>
+            </div>`;
             var res = await fetch("/api/GetJoinedChatRoom", {
                 method: "POST",
                 headers: {
@@ -101,23 +100,19 @@ var chatWindow = new Proxy({
             }
         }
         else {
-            // chatRoomWindow.style.display = "none";
             document.getElementsByTagName("main")[0].removeChild(chatRoomWindow);
         }
+        // When there is active chat room do this
         if (target.activeChatRoom) {
-            // document.getElementById("chatroomList").style.display = "none";
             chatRoomWindow.innerHTML = `
             <link rel="stylesheet" href="/ChatRoom.css">
             <button id="backtoChatRoomListBtn">back</button>
-                        <div id="chatContent">
-                            <ul>
-                            </ul>
-                        </div>
-                        <div id="chatInput">
-                        </div>`;
-            //document.getElementById("chatInput").innerHTML = "";
-
-
+            <div id="chatContent">
+                <ul>
+                </ul>
+            </div>
+            <div id="chatInput">
+            </div>`;
             var res = await fetch("/api/GetChatRoomMessages", {
                 method: "POST",
                 headers: {
@@ -140,17 +135,12 @@ var chatWindow = new Proxy({
                     li.innerText = `${element.user.name} says ${element.message}`;
                     document.querySelector("#chatContent ul").appendChild(li);
                 });
-                //////////////////////////////////
-                //conn.connStart();
-                //conn.openconn();
                 chatting(chatWindow.activeChatRoom.toString());
             }
             else {
                 document.querySelector("#chatContent ul").innerText = "No Message";
                 document.getElementById("chatInput").innerHTML = "";
             }
-        }
-        else if (!target.activeChatRoom) {
         }
         return true;
     }
