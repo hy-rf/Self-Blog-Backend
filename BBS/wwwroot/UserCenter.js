@@ -55,14 +55,9 @@ EditName = (Id) => {
             Name: newName
         }),
     }).then(response => {
+        location.reload();
         return;
     });
-    var ele = document.querySelector('#inputName');
-    ele.outerHTML = `<span id="name">${ele.value}</span>`;
-    document.getElementById("changeNameButton").remove();
-    BindEditNameEvent();
-    document.getElementById('Title').innerText = `${ele.value}'s Info:`;
-    document.getElementById('userlink').innerText = `Hello! ${ele.value}`;
 }
 
 
@@ -110,17 +105,17 @@ window.onload = async () => {
     document.querySelector("#User").appendChild(ele);
 
 
-    // Grid F
-    var ret2 = await getChatRoomList();
-    var chatroomlist = "";
-    var ele2 = document.createElement("div");
-    ele2.setAttribute("id", "chatrooms");
-    ele2.setAttribute("style", "position:relativel;grid-area:F;");
-    for (i = 0; i < ret2.length; i++) {
-        chatroomlist += `<a href="/ChatRoom/${ret2[i].id}">go to ${ret2[i].name}</a>`;
-    }
-    ele2.innerHTML = chatroomlist;
-    document.querySelector("#User").appendChild(ele2);
+    // Grid F Now Unnecessary
+    // var ret2 = await getChatRoomList();
+    // var chatroomlist = "";
+    // var ele2 = document.createElement("div");
+    // ele2.setAttribute("id", "chatrooms");
+    // ele2.setAttribute("style", "position:relativel;grid-area:F;");
+    // for (i = 0; i < ret2.length; i++) {
+    //     chatroomlist += `<a href="/ChatRoom/${ret2[i].id}">go to ${ret2[i].name}</a>`;
+    // }
+    // ele2.innerHTML = chatroomlist;
+    // document.querySelector("#User").appendChild(ele2);
 }
 
 // Get 2fQR
