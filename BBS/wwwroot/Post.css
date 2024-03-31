@@ -54,46 +54,60 @@ span {
     z-index: 1;
 } */
 
-.PostUnit:not(:hover) {
+.PostUnit {
+    position: relative;
+    border: 2px solid wheat;
+    border-radius: 1rem;
+    background-color: #ffffff88;
+    margin: 0.3rem 8px 0.3rem 6px;
+    transition: 0.5s;
+}
+/* .PostUnit:not(:hover) {
     position: relative;
     border: 1px solid white;
     border-radius: 2px;
     margin: 0.3rem 8px 0.3rem 6px;
     background-color: white;
     transition: 0.5s;
-}
+} */
 
 
-.PostUnit:hover {
+/* .PostUnit:hover {
     position: relative;
     border: 1px solid black;
     transition: 0.5s;
     margin: 0.3rem 8px 0.3rem 6px;
-}
+} */
 
 #PostContent {
     position: relative;
-    border: 1px solid grey;
-    border-radius: 2px;
     margin: 0.3rem 8px 0.3rem 6px;
 }
 
 
-.ReplyUnit:not(:hover) {
+.ReplyUnit {
+    position: relative;
+    border: 2px solid wheat;
+    border-radius: 1rem;
+    background-color: #ffffff88;
+    margin: 0.3rem 8px 0.3rem 6px;
+    transition: 0.5s;
+}
+/* .ReplyUnit:not(:hover) {
     position: relative;
     border: 1px solid white;
     border-radius: 2px;
     margin: 0.3rem 8px 0.3rem 6px;
     background-color: white;
     transition: 0.5s;
-}
+} */
 
-.ReplyUnit:hover {
+/* .ReplyUnit:hover {
     position: relative;
     border: 1px solid black;
     margin: 0.3rem 8px 0.3rem 6px;
     transition: 0.5s;
-}
+} */
 
 .hideEditPost {
     display: block !important;

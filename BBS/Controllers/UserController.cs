@@ -182,32 +182,16 @@ namespace BBS.Controllers
                 {
                     if (userService.Signup(Name, Pwd))
                     {
-                        return Json(new JsonBody
-                        {
-                            Success = true,
-                            Message = "Signup Success!"
-                        });
+                        return Json(JsonBody.CreateResponse(true, "Signup Success!"));
                     }
                     else
                     {
-                        return Json(new JsonBody
-                        {
-                            Success = false,
-                            Message = "Signup Failed, Dulplicated Name."
-                        });
+                        return Json(JsonBody.CreateResponse(false, "Signup Failed, Name is duplicated."));
                     }
                 }
-                return Json(new JsonBody
-                {
-                    Success = false,
-                    Message = "Signup Failed, Passwords are not the same."
-                });
+                return Json(JsonBody.CreateResponse(false, "Signup Failed, Passwords are not the same."));
             }
-            return Json(new JsonBody
-            {
-                Success = false,
-                Message = "Signup Failed, No Input."
-            });
+            return Json(JsonBody.CreateResponse(false, "Signup Failed, No Input."));
         }
         [HttpPost]
         [Route("api/2fv")]
@@ -220,16 +204,7 @@ namespace BBS.Controllers
             var setupCode = twoFactorAuthenticator.GenerateSetupCode("BBS", user, Encoding.ASCII.GetBytes(accountSecretKey));
             var qrCodeUrl = setupCode.QrCodeSetupImageUrl;
             var manualCode = setupCode.ManualEntryKey;
-            return Json(new JsonBody
-            {
-                Success = true,
-                Payload = new
-                {
-                    qrCodeUrl,
-                    manualCode
-                },
-                Message = "success"
-            });
+            return Json(JsonBody.CreateResponse(true, new { qrCodeUrl, manualCode }, "Two Factor Authentication Setup Success"));
         }
         [HttpPost]
         [Route("apt/2fv/vali")]
@@ -239,17 +214,9 @@ namespace BBS.Controllers
             var valid = Authenticator.ValidateTwoFactorPIN($"TwoFactorSecretCode-{User.FindFirst(ClaimTypes.Name)!.Value}", code.GetString("code"));
             if (valid)
             {
-                return Json(new JsonBody
-                {
-                    Success = true,
-                    Message = "Verified"
-                });
+                return Json(JsonBody.CreateResponse(true, "Two Factor Authentication Success"));
             }
-            return Json(new JsonBody
-            {
-                Success = false,
-                Message = "Failed"
-            });
+            return Json(JsonBody.CreateResponse(false, "Two Factor Authentication Failed"));
         }
     }
 }
