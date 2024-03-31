@@ -9,7 +9,6 @@ namespace BBS.Interfaces
         public bool Login(string Name, string Pwd, out int id);
         public User GetUser(int Id);
         public bool EditAvatar(int Id, string Avatar);
-        public User GetUserLight(int Id);
         public bool EditName(int Id, string Name);
         public bool Logoff(int Id);
     }

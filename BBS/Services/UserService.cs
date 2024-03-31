@@ -60,7 +60,7 @@ namespace BBS.Services
         }
         public User GetUser(int Id)
         {
-            var User = ctx.User.Include(u => u.Posts).Include(u => u.Replies).FirstOrDefault(u => u.Id == Id);
+            var User = ctx.User.Include(u => u.Posts).Include(u => u.Replies).Single(u => u.Id == Id);
             return User;
         }
         public bool EditAvatar(int Id, string Avatar)
@@ -77,12 +77,6 @@ namespace BBS.Services
             ctx.SaveChanges();
             return true;
         }
-        public User GetUserLight(int Id)
-        {
-            var User = ctx.User.FirstOrDefault(u => u.Id == Id);
-            return User;
-        }
-
         public bool Logoff(int Id)
         {
             var logoff = ctx.User.Single(u => u.Id == Id);

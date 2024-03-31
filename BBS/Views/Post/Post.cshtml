@@ -1,21 +1,8 @@
 ﻿@using BBS.Models;
 @model Post;
 @using System.Security.Claims;
-@{
-    string content = $"{Html.Raw(Model.Content)}";
-}
-@{
-}
-@{
-    string Avatar(string Avatar)
-    {
-        if (Avatar != null)
-        {
-            return $"data:image/png;base64, {Avatar}";
-        }
-        return "/img/defaultAvatar.png";
-    }
-}
+
+
 
 <link rel="stylesheet" href="~/Post.css">
 <script src="~/PostDetail.js"></script>

@@ -103,14 +103,6 @@ namespace BBS.Controllers
             }
             return Redirect("/UserCenter");
         }
-        // API DONE NOT IN USE
-        [HttpGet]
-        [Route("api/User/{Id}")]
-        public JsonResult UserJson(int Id)
-        {
-            var ret = userService.GetUserLight(Id);
-            return Json(ret);
-        }
         // API DONE
         [HttpPost]
         [Route("api/User/Login")]
