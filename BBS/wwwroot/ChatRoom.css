@@ -13,9 +13,17 @@
 #backtoChatRoomListBtn {
     position: absolute;
     top: 0;
+    width: 5ch;
     margin: 0.2rem;
     border-radius: 5px;
-
+}
+#chatRoomMemberListBtn{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 8ch;
+    margin: 0.2rem;
+    border-radius: 5px;
 }
 
 #chatroomList,
@@ -57,4 +65,7 @@
     border-bottom: 1px solid #000;
     cursor: default;
     transition: 0.5s;
+}
+#sendButton{
+    width: 5ch;
 }

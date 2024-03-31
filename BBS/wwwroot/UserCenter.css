@@ -44,6 +44,32 @@
     transition: 0.5s;
 }
 
+#avatar{
+    display: none;
+}
+label[for="avatar"]:not(:hover){
+    border: 1px solid white;
+    transition: 0.5s;
+    cursor: pointer;
+}
+label[for="avatar"]:hover{
+    border: 1px solid black;
+    transition: 0.5s;
+    cursor: pointer;
+}
+#updateAvatarBtn{
+    display: none;
+}
+label[for="updateAvatarBtn"]:not(:hover){
+    border: 1px solid white;
+    transition: 0.5s;
+    cursor: pointer;
+}
+label[for="updateAvatarBtn"]:hover{
+    border: 1px solid black;
+    transition: 0.5s;
+    cursor: pointer;
+}
 
 @media (max-width:800px) {
     #User {

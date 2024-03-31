@@ -106,7 +106,8 @@ var chatWindow = new Proxy({
         if (target.activeChatRoom) {
             chatRoomWindow.innerHTML = `
             <link rel="stylesheet" href="/ChatRoom.css">
-            <button id="backtoChatRoomListBtn">back</button>
+            <button id="backtoChatRoomListBtn">Back</button>
+            <button id="chatRoomMemberListBtn">Members</button>
             <div id="chatContent">
                 <ul>
                 </ul>

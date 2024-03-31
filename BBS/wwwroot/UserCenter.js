@@ -13,6 +13,16 @@ async function UploadFile(FormEle) {
         console.error('Error:', error);
     }
 }
+document.querySelector("label[for='updateAvatarBtn']").addEventListener("click", (e) => {
+    if (e.target.nextElementSibling.disabled == true) {
+        document.querySelector("label[for='avatar']").animate([
+            { borderColor: "red" },
+            { transition: "border-color 0.5s"}
+        ],{
+            duration: 1000,
+        })
+    }
+});
 
 document.querySelector("#avatar").addEventListener("change", () => {
     const [file] = document.querySelector("#avatar").files;

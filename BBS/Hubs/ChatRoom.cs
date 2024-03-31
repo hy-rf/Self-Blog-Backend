@@ -23,6 +23,10 @@ namespace BBS.Hubs
         }
         public async Task SendMessage(string RoomId, string UserId, string Name, string Message)
         {
+            if (string.IsNullOrEmpty(Message))
+            {
+                return;
+            }
             chatService.CreateChatMessage(new ChatRoomMessage
             {
                 UserId = Convert.ToInt32(Context.User!.FindFirst(ClaimTypes.Sid)?.Value),
