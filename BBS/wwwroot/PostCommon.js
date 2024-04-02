@@ -16,7 +16,12 @@ document.getElementById("PostList").addEventListener("click", async (e) => {
             return response.json();
         });
         if (res.success) {
-            e.target.outerHTML = "<p>Liked</p>";
+            if(res.message == "Post liked"){
+                e.target.src = "/img/heartfill.png";
+            }
+            else{
+                e.target.src = "/img/heartvac.png";
+            }
         }
         else {
             e.target.innerText = res.message;

@@ -35,11 +35,11 @@
             {
                 if (item.Likes.Any(l => l.UserId == Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value)))
                 {
-                    <button class="LikeBtn">DeLike</button>
+                    <img src="~/img/heartfill.png" class="LikeBtn" width="16" height="16">
                 }
                 else
                 {
-                    <button class="LikeBtn">Like</button>
+                    <img src="~/img/heartvac.png" class="LikeBtn" width="16" height="16">
                 }
             }
             <div class="UserInfo">

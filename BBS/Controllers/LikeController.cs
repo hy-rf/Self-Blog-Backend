@@ -29,6 +29,12 @@ namespace BBS.Controllers
                         Message = "Post liked"
                     });
                 }
+                catch{
+                    return Json(new JsonBody{
+                        Success = true,
+                        Message = "De-Liked Post"
+                    });
+                }
                 finally
                 {
                     Console.WriteLine($"Like post request received at {DateTime.Now}");

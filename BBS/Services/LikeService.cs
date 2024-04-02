@@ -18,6 +18,8 @@ namespace BBS.Services
             else
             {
                 RemoveLikePost(likedPost);
+                ctx.SaveChanges();
+                throw new Exception("Post already liked");
             }
         }
 
