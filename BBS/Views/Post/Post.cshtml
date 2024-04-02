@@ -18,9 +18,21 @@
         <button id="submitEditPost">Submit</button>
     </div>
 }
+<div id="PostList">
 <div class="PostUnit">
     <p>@Model.Id</p>
     <p class="Title">@Model.Title</p>
+    @if (User.Identity.IsAuthenticated)
+            {
+                if (Model.Likes.Any(l => l.UserId == Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value)))
+                {
+                    <img src="~/img/heartfill.png" class="LikeBtn" width="16" height="16">
+                }
+                else
+                {
+                    <img src="~/img/heartvac.png" class="LikeBtn" width="16" height="16">
+                }
+            }
     <div id="PostContent">
         @Html.Raw(Model.Content)
     </div>
@@ -43,7 +55,7 @@
         }
     </p>
 </div>
-
+</div>
 <div id="Replies">
     Replies
     @foreach (var item in Model.Replies!)
