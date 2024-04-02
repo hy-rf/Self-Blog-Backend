@@ -23,13 +23,11 @@ chatRoomWindow.innerHTML = `
 
 document.getElementsByTagName("main")[0].addEventListener("mouseover", (e) => {
     if (e.target.classList.contains("ChatWindow")) {
-        e.target.style.opacity = 1;
         disableScroll();
     }
 });
 document.getElementsByTagName("main")[0].addEventListener("mouseleave", (e) => {
     if (e.target.classList.contains("ChatWindow")) {
-        e.target.style.opacity = 0.5;
         enableScroll();
     }
 }, true);
@@ -81,16 +79,8 @@ document.getElementsByTagName("main")[0].addEventListener("click", async (e) => 
                     document.querySelector("#chatContent ul").appendChild(li);
                 });
             }
-            // chatRoomWindow.activeChatRoomMember = true;
-            // document.querySelector("#chatContent ul").innerText = "";
-            // res.payload.forEach((element) => {
-            //     var li = document.createElement("li");
-            //     li.innerText = `${element.user.id} ${element.user.name}`;
-            //     document.querySelector("#chatContent ul").appendChild(li);
-            // });
         }
         else {
-            // document.querySelector("#chatContent ul").innerText = "No Member";
         }
     }
 });
