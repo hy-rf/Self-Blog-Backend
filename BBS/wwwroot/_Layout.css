@@ -87,7 +87,27 @@ header {
     border-radius: 5px;
 }
 
+#navRight>img+div {
+    /* display: block; */
+    position: absolute;
+    top: 2.5rem;
+    right: 5rem;
+    border-radius: 1rem;
+    border: 1px solid grey;
+    opacity: 1;
+    transition: 0.5s;
+    /* z-index: 1; */
+}
 
+.userInfoShow {
+    opacity: 1;
+    transition: 0.5s;
+}
+
+#navRight>img+div>* {
+    font-size: 0.8rem;
+    margin: 0.3rem;
+}
 
 .header_hide {
     position: fixed;

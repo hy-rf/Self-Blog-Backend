@@ -343,15 +343,18 @@ fetch("/api/User/Avatar").then(res => {
 
 // Fix This
 // load user info popup
-//document.getElementById("userLink").addEventListener("mouseenter", (e) => {
-//    var res = fetch("/api/User").then(res => {
-//        return res.text();
-//    }).then(ret => {
-//        e.target.nextElementSibling.style.display = "block";
-//        e.target.nextElementSibling.innerHTML = ret;
-//    })
-//});
-//document.getElementById("userLink").addEventListener("mouseleave", (e) => {
-//    e.target.nextElementSibling.style.display = "none";
-//    e.target.nextElementSibling.innerHTML = "";
-//});
+document.getElementById("userLink").addEventListener("mouseenter", async (e) => {
+    var res = fetch("/api/User").then(res => {
+        return res.text();
+    }).then(async ret =>  {
+        //    e.target.nextElementSibling.style.display = "block";
+        e.target.nextElementSibling.innerHTML = await ret;
+        
+    }).then(() => {
+        e.target.nextElementSibling.classList.add("userInfoShow");
+    });
+});
+document.getElementById("userLink").addEventListener("mouseleave", (e) => {
+    e.target.nextElementSibling.classList.remove("userInfoShow");
+    e.target.nextElementSibling.innerHTML = "";
+});
