@@ -10,99 +10,22 @@ namespace BBS.Controllers
 {
     public class ChatController(IChatService chatService) : Controller
     {
-        [Authorize]
-        [Route("Chat/Index")]
-        public IActionResult Index()
-        {
-            ViewBag.Id = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value);
-            ViewBag.Name = User.FindFirst(ClaimTypes.Name)?.Value!.ToString();
-            var ret = chatService.GetJoinedChatRooms(Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value));
-            return View(ret);
-        }
-        [Authorize]
-        [Route("ChatRoom/{Id}")]
-        public IActionResult ChatRoom(int Id)
-        {
-            if (chatService.isInChatRoom(new Models.ChatRoomMember
-            {
-                Id = -1,
-                UserId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value),
-                ChatRoomId = Id,
-            }))
-            {
-                ViewBag.ChatRoomId = Id;
-                ViewBag.Id = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value);
-                ViewBag.Name = User.FindFirst(ClaimTypes.Name)?.Value!.ToString();
-                return View(chatService.GetChatMessages(Id));
-            }
-            return Redirect("/");
-        }
         [HttpPost]
-        [Route("Chat/CreateChatRoom")]
-        public ActionResult CreateChatRoom(string Name)
+        [Route("api/ChatRoom")]
+        public ActionResult CreateChatRoom([FromBody] Models.ChatRoom chatRoom)
         {
-            var newchatroom = new Models.ChatRoom
-            {
-                Name = Name
-            };
-            chatService.CreateChatRoom(newchatroom);
+            chatService.CreateChatRoom(chatRoom);
             chatService.AddMember(new Models.ChatRoomMember
             {
-                ChatRoomId = newchatroom.Id,
+                ChatRoomId = chatRoom.Id,
                 UserId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value)
             });
-            return Redirect("/Chat/Index");
-        }
-        [HttpPost]
-        [Route("Chat/GetChatRooms")]
-        public JsonResult GetChatRooms([FromBody] JsonElement json)
-        {
-            int UserId = Convert.ToInt32(json.GetProperty("Id").GetString());
-            var ret = chatService.GetJoinedChatRooms(UserId);
-            return Json(ret.Select(cr => new { cr.Id, cr.Name }));
-        }
-        // [HttpPost]
-        // [Route("Chat/AddChatRoomMember")]
-        // public JsonResult AddChatRoomMember([FromBody] JsonElement json)
-        // {
-        //     try
-        //     {
-        //         int UserId = Convert.ToInt32(json.GetProperty("UserId").GetString());
-        //         int ChatRoomId = Convert.ToInt32(json.GetProperty("ChatRoomId").GetString());
-        //         chatService.AddMember(new Models.ChatRoomMember
-        //         {
-        //             UserId = UserId,
-        //             ChatRoomId = ChatRoomId
-        //         });
-        //         return Json(new JsonBody
-        //         {
-        //             Success = true,
-        //             Message = "Success"
-        //         });
-        //     }
-        //     catch (Exception e)
-        //     {
-        //         return Json(new JsonBody
-        //         {
-        //             Success = false,
-        //             Message = e.Message
-        //         });
-        //     }
-
-        // }
-        [HttpDelete]
-        [Route("Chat/KickChatRoomMember")]
-        public void KickChatRoomMember([FromBody] JsonElement json)
-        {
-            int UserId = Convert.ToInt32(json.GetProperty("UserId").GetString());
-            int ChatRoomId = Convert.ToInt32(json.GetProperty("ChatRoomId").GetString());
-            chatService.KickMember(new Models.ChatRoomMember
+            return Json(new JsonBody
             {
-                UserId = UserId,
-                ChatRoomId = ChatRoomId
+                Success = true,
+                Message = "Chat room created"
             });
         }
-        // API DONE
         [HttpPost]
         [Route("api/GetJoinedChatRoom")]
         public JsonResult GetJoinedChatRoom()
@@ -127,7 +50,6 @@ namespace BBS.Controllers
                 });
             }
         }
-        // API DONE
         [HttpPost]
         [Route("api/GetChatRoomMessages")]
         public JsonResult GetChatRoomMessages([FromBody] JsonElement json)
@@ -152,7 +74,6 @@ namespace BBS.Controllers
                 });
             }
         }
-        // API DONE
         [HttpGet]
         [Route("api/ChatRoomMember/{ChatRoomId}")]
         public JsonResult GetChatRoomMember(int ChatRoomId)
@@ -190,6 +111,31 @@ namespace BBS.Controllers
                 {
                     Success = true,
                     Payload = null,
+                    Message = "Success"
+                });
+            }
+            catch
+            {
+                return Json(new JsonBody
+                {
+                    Success = false,
+                    Message = "Error"
+                });
+            }
+        }
+        [HttpDelete]
+        [Route("api/ChatRoomMember")]
+        public JsonResult DeleteChatRoomMember([FromBody] JsonElement memberToKick){
+            try
+            {
+                chatService.KickMember(new Models.ChatRoomMember
+                {
+                    UserId = Convert.ToInt32(memberToKick.GetProperty("userId").GetString()),
+                    ChatRoomId = Convert.ToInt32(memberToKick.GetProperty("ChatRoomId").GetString())
+                });
+                return Json(new JsonBody
+                {
+                    Success = true,
                     Message = "Success"
                 });
             }

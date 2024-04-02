@@ -83,6 +83,49 @@ document.getElementsByTagName("main")[0].addEventListener("click", async (e) => 
         else {
         }
     }
+    if (e.target.id == "addChatRoom") {
+        var res = await fetch("/api/ChatRoom", {
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                name: document.getElementById("chatInputBox").value
+            })
+        }).then(res => {
+            return res.json();
+        });
+        if (res.success) {
+            var res = await fetch("/api/GetJoinedChatRoom", {
+                method: "POST",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+            }).then(response => {
+                return response.json();
+            });
+            if (res.success) {
+                document.getElementById("chatInput").innerHTML = `
+                                <input type="text" id="chatInputBox">
+                                <button id="addChatRoom">Add</button>`;
+                document.querySelector("#chatroomList ul").innerText = "";
+                res.payload.forEach((element) => {
+                    var li = document.createElement("li");
+                    li.innerText = parseInt(element.id) + element.name;
+                    li.id = `chatroom_${element.id}`;
+                    document.querySelector("#chatroomList ul").appendChild(li);
+                });
+            }
+            else {
+                document.querySelector("#chatroomList ul").innerText = "No Chat Room";
+            }
+        }
+        else {
+        }
+
+    }
 });
 document.getElementById("user").addEventListener("click", (e) => {
     if (e.target.id == "Chat") {
@@ -119,6 +162,8 @@ var chatWindow = new Proxy({
             <div id="chatroomList">
                 <ul>
                 </ul>
+            </div>
+            <div id="chatInput">
             </div>`;
             var res = await fetch("/api/GetJoinedChatRoom", {
                 method: "POST",
@@ -130,6 +175,9 @@ var chatWindow = new Proxy({
                 return response.json();
             });
             if (res.success) {
+                document.getElementById("chatInput").innerHTML = `
+                                <input type="text" id="chatInputBox">
+                                <button id="addChatRoom">Add</button>`;
                 document.querySelector("#chatroomList ul").innerText = "";
                 res.payload.forEach((element) => {
                     var li = document.createElement("li");
@@ -187,6 +235,7 @@ var chatWindow = new Proxy({
             }
         }
         if (target.activeChatRoomMember) {
+            document.getElementById("chatRoomMemberListBtn").innerText = "Message";
             var res = await fetch(`/api/ChatRoomMember/${chatWindow.activeChatRoom}`, {
                 method: "GET",
                 headers: {
