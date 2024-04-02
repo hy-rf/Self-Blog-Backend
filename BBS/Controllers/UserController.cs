@@ -104,14 +104,32 @@ namespace BBS.Controllers
             return Redirect("/UserCenter");
         }
         [HttpGet]
-        [Route("api/User/{Id?}")]
-        public PartialViewResult UserInfo(int Id)
+        [Route("api/User/Avatar/{Id?}")]
+        public JsonResult UserAvatar(int Id)
         {
-            if (Id == null)
+            if (Id == 0)
             {
                 Id = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value!);
             }
-            return PartialView(userService.GetUser(Id));
+            try
+            {
+                return Json(JsonBody.CreateResponse(true, userService.GetUserBasic(Id).Avatar, "Avatar load success"));
+            }
+            catch
+            {
+                return Json(JsonBody.CreateResponse(false, "Avatar load fail"));
+            }
+
+        }
+        [HttpGet]
+        [Route("api/User/{Id?}")]
+        public PartialViewResult UserInfo(int Id)
+        {
+            if (Id == 0)
+            {
+                Id = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value!);
+            }
+            return PartialView(userService.GetUserBasic(Id));
         }
         // API DONE
         [HttpPost]
@@ -202,6 +220,17 @@ namespace BBS.Controllers
                 return Json(JsonBody.CreateResponse(false, "Signup Failed, Passwords are not the same."));
             }
             return Json(JsonBody.CreateResponse(false, "Signup Failed, No Input."));
+        }
+        [HttpDelete]
+        [Route("Logout")]
+        public JsonResult LogoutApi()
+        {
+            if (userService.Logoff(Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value!)))
+            {
+                HttpContext.Response.Cookies.Delete("Token");
+                return Json(JsonBody.CreateResponse(true, "Logout success!"));
+            }
+            return Json(JsonBody.CreateResponse(false, "Logout failed!"));
         }
         [HttpPost]
         [Route("api/2fv")]

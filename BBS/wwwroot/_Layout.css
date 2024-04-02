@@ -140,19 +140,52 @@ footer {
     margin: 0;
 }
 
-    #navRight > *:not(:hover) {
-        color: black;
-        background-color: white;
-        transition: 0.5s;
-        margin: 0.5rem;
+img#userLink {
+    position: absolute;
+    left: -2rem;
+    top: -0.3rem;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 99rem;
+}
+
+    img#userLink + div {
+        position: absolute;
     }
 
-    #navRight > *:hover {
-        color: lightgray;
-        background-color: black;
+    img#userLink:hover {
+        position: absolute;
+        left: -4rem;
+        top: -0.3rem;
+        width: 3rem;
+        height: 3rem;
+        border-radius: 99rem;
         transition: 0.5s;
-        margin: 0.5rem;
     }
+
+    img#userLink:not(:hover) {
+        position: absolute;
+        left: -2rem;
+        top: -0.3rem;
+        width: 1rem;
+        height: 1rem;
+        border-radius: 99rem;
+        transition: 0.5s;
+    }
+
+#navRight > *:not(:hover) {
+    color: black;
+    background-color: white;
+    transition: 0.5s;
+    margin: 0.5rem;
+}
+
+#navRight > *:hover {
+    color: lightgray;
+    background-color: black;
+    transition: 0.5s;
+    margin: 0.5rem;
+}
 
 
 

@@ -19,7 +19,9 @@ chatRoomWindow.innerHTML = `
     <ul>
     </ul>
 </div>`;
-
+document.getElementById("userLink").addEventListener("click", () => {
+    document.location.href = "/UserCenter";
+});
 
 document.getElementsByTagName("main")[0].addEventListener("mouseover", (e) => {
     if (e.target.classList.contains("ChatWindow")) {
@@ -127,10 +129,28 @@ document.getElementsByTagName("main")[0].addEventListener("click", async (e) => 
 
     }
 });
-document.getElementById("navRight").addEventListener("click", (e) => {
+document.getElementById("navRight").addEventListener("click", async (e) => {
     if (e.target.id == "Chat") {
         chatWindow["isVisible"] = !chatWindow.isVisible;
         e.preventDefault();
+    }
+    else if (e.target.innerText == "Logout") {
+        e.preventDefault();
+        var res = await fetch("/Logout", {
+            method: "DELETE"
+        }).then(res => {
+            return res.json();
+        }).then(ret => {
+            if (ret.success) {
+                document.location.href = "/Welcome"
+            }
+            else {
+                e.target.innerText = "Fail!";
+                setTimeout(() => {
+                    e.target.innerText = "Logout"
+                }, 3000);
+            }
+        })
     }
 });
 disableScroll = () => {
@@ -224,7 +244,7 @@ var chatWindow = new Proxy({
                 document.querySelector("#chatContent ul").innerText = "";
                 res.payload.forEach((element) => {
                     var li = document.createElement("li");
-                    li.innerText = `${element.user.name} says ${element.message}`;
+                    li.innerText = `${element.user.name} : ${element.message}`;
                     document.querySelector("#chatContent ul").appendChild(li);
                 });
                 chatting(chatWindow.activeChatRoom.toString());
@@ -278,7 +298,7 @@ function chatting(RoomId) {
         if (user != document.getElementById("userlink").innerText.split(" ")[1] || true) {
             var li = document.createElement("li");
             document.querySelector("#chatContent>ul").appendChild(li);
-            li.textContent = `${user} says ${message}`;
+            li.textContent = `${user} : ${message}`;
             li.scrollIntoView();
         }
     });
@@ -309,28 +329,29 @@ function chatting(RoomId) {
 }
 
 
+// load avatar
+fetch("/api/User/Avatar").then(res => {
+    return res.json();
+}).then(ret => {
+    if (ret.success) {
+        document.getElementById("userLink").src = `data:image/png;base64, ${ret.payload}`;
+    }
+});
 
 
 
-// readJson = (object) => {
-//     return fetch("/test", {
-//         method: "POST",
-//         headers: {
-//             "Accept": "application/json",
-//             "Content-Type": "application/json"
-//         },
-//         body: JSON.stringify(object),
-//     }).then((response) => {
-//         return response.json();
-//     });
-// }
 
-
-document.getElementById("userLink").addEventListener("mouseenter", (e) => {
-    var res = fetch("/api/User").then(res => {
-        return res.text();
-    }).then(ret => {
-        e.target.lastChild.style.display = "block";
-        e.target.lastChild.innerHTML = ret;
-    })
-})
+// Fix This
+// load user info popup
+//document.getElementById("userLink").addEventListener("mouseenter", (e) => {
+//    var res = fetch("/api/User").then(res => {
+//        return res.text();
+//    }).then(ret => {
+//        e.target.nextElementSibling.style.display = "block";
+//        e.target.nextElementSibling.innerHTML = ret;
+//    })
+//});
+//document.getElementById("userLink").addEventListener("mouseleave", (e) => {
+//    e.target.nextElementSibling.style.display = "none";
+//    e.target.nextElementSibling.innerHTML = "";
+//});
