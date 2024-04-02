@@ -268,13 +268,11 @@ footer {
     position: absolute;
     right: 0;
     bottom: 0;
-}
-
-span {
     color: grey;
     font-size: 0.8rem;
     z-index: 99;
 }
+
 
 .PostUnit {
     position: relative;
