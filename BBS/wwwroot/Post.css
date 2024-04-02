@@ -33,26 +33,6 @@ span {
     font-size: 0.8rem;
     z-index: 99;
 }
-/* .PostUnit::before {
-    display: block;
-    position: absolute;
-    background-color: white;
-    width: 100%;
-    height: 100%;
-    content: "";
-    opacity: 0;
-    z-index: -1;
-}
-.PostUnit::before:hover {
-    display: block;
-    position: absolute;
-    background-color: yellow;
-    width: 100%;
-    height: 100%;
-    content: "";
-    opacity: 0.5;
-    z-index: 1;
-} */
 
 .PostUnit {
     position: relative;
@@ -62,22 +42,6 @@ span {
     margin: 0.3rem 8px 0.3rem 6px;
     transition: 0.5s;
 }
-/* .PostUnit:not(:hover) {
-    position: relative;
-    border: 1px solid white;
-    border-radius: 2px;
-    margin: 0.3rem 8px 0.3rem 6px;
-    background-color: white;
-    transition: 0.5s;
-} */
-
-
-/* .PostUnit:hover {
-    position: relative;
-    border: 1px solid black;
-    transition: 0.5s;
-    margin: 0.3rem 8px 0.3rem 6px;
-} */
 
 #PostContent {
     position: relative;
@@ -93,7 +57,8 @@ span {
     margin: 0.3rem 8px 0.3rem 6px;
     transition: 0.5s;
 }
-.ReplyUnit::after {
+
+/* .ReplyUnit::after {
     display: block;
     position: relative;
     background-color: black;
@@ -125,35 +90,8 @@ span {
     transition: 0.5s;
     content: "";
     z-index: 99;
-}
-@keyframes example {
-    from {
-        left: 0;
-        width: 100%;
-    }
-    to {
-        left: 100%;
-        width: 0%;
-    }
-  }
-  
-
-
-/* .ReplyUnit:not(:hover) {
-    position: relative;
-    border: 1px solid white;
-    border-radius: 2px;
-    margin: 0.3rem 8px 0.3rem 6px;
-    background-color: white;
-    transition: 0.5s;
 } */
 
-/* .ReplyUnit:hover {
-    position: relative;
-    border: 1px solid black;
-    margin: 0.3rem 8px 0.3rem 6px;
-    transition: 0.5s;
-} */
 
 .hideEditPost {
     display: block !important;
@@ -161,4 +99,17 @@ span {
 
 #PostFormWrapper {
     display: none;
+}
+
+
+@keyframes example {
+    from {
+        left: 0;
+        width: 100%;
+    }
+
+    to {
+        left: 100%;
+        width: 0%;
+    }
 }
