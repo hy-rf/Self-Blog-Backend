@@ -240,3 +240,284 @@ footer {
 
 
 /*Post*/
+.EditButton,
+.ReplyButton {
+    cursor: pointer;
+    border: 1px black solid;
+    border-radius: 3px;
+}
+
+.EditButton:hover {
+    color: blue;
+}
+
+.ReplyButton:hover {
+    color: blue;
+}
+
+#PostFormWrapper {
+    position: relative;
+    margin: 1rem 2rem 1rem 2rem;
+}
+
+.showCreatePost {
+    display: block !important;
+}
+
+.timeIndicator {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+span {
+    color: grey;
+    font-size: 0.8rem;
+    z-index: 99;
+}
+
+.PostUnit {
+    position: relative;
+    border: 2px solid wheat;
+    border-radius: 1rem;
+    background-color: #ffffff88;
+    margin: 0.3rem 8px 0.3rem 6px;
+    transition: 0.5s;
+}
+
+#PostContent {
+    position: relative;
+    margin: 0.3rem 8px 0.3rem 6px;
+}
+
+
+.ReplyUnit {
+    position: relative;
+    border: 2px solid wheat;
+    border-radius: 1rem;
+    background-color: #ffffff88;
+    margin: 0.3rem 8px 0.3rem 6px;
+    transition: 0.5s;
+}
+
+/* .ReplyUnit::after {
+    display: block;
+    position: relative;
+    background-color: black;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: .5rem;
+    content: "";
+    z-index: 99;
+}
+
+.ReplyUnit:not(:hover):after {
+    display: block;
+    position: relative;
+    background-color: black;
+    height: .5rem;
+    content: "";
+    z-index: 99;
+    animation: example 0.5s;
+}
+.ReplyUnit:hover:after {
+    display: block;
+    position: relative;
+    background-color: black;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: .5rem;
+    transition: 0.5s;
+    content: "";
+    z-index: 99;
+} */
+
+
+.hideEditPost {
+    display: block !important;
+}
+
+#PostFormWrapper {
+    display: none;
+}
+
+
+@keyframes example {
+    from {
+        left: 0;
+        width: 100%;
+    }
+
+    to {
+        left: 100%;
+        width: 0%;
+    }
+}
+
+/*User*/
+
+
+#UserInfo {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    height: max-content;
+    width: calc(100%-4rem);
+    justify-content: space-between;
+    gap:1rem;
+    margin: 1rem 2rem 1rem 2rem
+}
+#User {
+    display: grid;
+    grid-template-areas: "A B" "C D" "E F";
+    gap: 2rem;
+    position: relative;
+    height: max-content;
+    width: calc(100%-4rem);
+    margin: 1rem 2rem 1rem 2rem;
+    line-height: 1.5rem;
+}
+
+#Detail {
+    grid-area: A;
+}
+
+#Avatar {
+    grid-area: B;
+}
+
+#Posts {
+    position: relative;
+    height: 8em;
+    overflow-y: auto;
+    grid-area: C;
+}
+
+#Replies {
+    position: relative;
+    height: 8em;
+    overflow-y: auto;
+    grid-area: D;
+}
+
+#User>* {
+    position: relative;
+    border: 2px solid wheat;
+    border-radius: 1rem;
+    background-color: #ffffff88;
+    transition: 0.5s;
+}
+#User>*>*{
+    margin: 0.5rem;
+}
+
+
+
+#avatar{
+    display: none;
+}
+label[for="avatar"]:not(:hover){
+    border: 1px solid white;
+    transition: 0.5s;
+    cursor: pointer;
+}
+label[for="avatar"]:hover{
+    border: 1px solid black;
+    transition: 0.5s;
+    cursor: pointer;
+}
+#updateAvatarBtn{
+    display: none;
+}
+label[for="updateAvatarBtn"]:not(:hover){
+    border: 1px solid white;
+    transition: 0.5s;
+    cursor: pointer;
+}
+label[for="updateAvatarBtn"]:hover{
+    border: 1px solid black;
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+@media (max-width:800px) {
+    #User {
+        grid-template-areas: "A" "B" "C" "D" "E" "F";
+    }
+}
+
+
+/*Chat*/
+#chatInput>button {
+    border-radius: 5px;
+}
+
+.ChatWindow {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+    background-color: #fff;
+}
+
+#backtoChatRoomListBtn {
+    position: absolute;
+    top: 0;
+    width: 5ch;
+    margin: 0.2rem;
+    border-radius: 5px;
+}
+#chatRoomMemberListBtn{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 8ch;
+    margin: 0.2rem;
+    border-radius: 5px;
+}
+
+#chatroomList,
+#chatContent {
+    overflow-y: auto;
+    position: relative;
+    top: 2rem;
+    height: 15.5rem;
+    margin: 0.2rem;
+}
+
+#chatInput {
+    margin: 0.2rem;
+}
+
+#chatroomList>ul>li:not(:hover) {
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+#chatroomList>ul>li:hover {
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+#chatContent>ul>li:not(:hover) {
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+    cursor: default;
+    transition: 0.5s;
+}
+
+#chatContent>ul>li:hover {
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+    cursor: default;
+    transition: 0.5s;
+}
+#sendButton{
+    width: 5ch;
+}

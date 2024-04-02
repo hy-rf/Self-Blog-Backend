@@ -36,7 +36,6 @@
             @if (User.Identity!.IsAuthenticated)
             {
                 <a id="userlink" class="@Id" asp-controller="User" asp-action="UserCenter">Hello! @(Name)</a>
-                <a href="/Chat/Index">Chat</a>
                 <a href="/Logout">Logout</a>
                 <a id="Chat" href="">ChatWindow</a>
             }
