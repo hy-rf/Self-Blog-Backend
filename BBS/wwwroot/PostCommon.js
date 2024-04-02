@@ -3,7 +3,6 @@
 
 document.getElementById("PostList").addEventListener("click", async (e) => {
     if (e.target.classList.contains("LikeBtn")) {
-        console.log(e.target.parentElement.firstChild)
         var res = await fetch("/Like/Post", {
             method: "POST",
             headers: {

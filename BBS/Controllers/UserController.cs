@@ -103,6 +103,16 @@ namespace BBS.Controllers
             }
             return Redirect("/UserCenter");
         }
+        [HttpGet]
+        [Route("api/User/{Id?}")]
+        public PartialViewResult UserInfo(int Id)
+        {
+            if (Id == null)
+            {
+                Id = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value!);
+            }
+            return PartialView(userService.GetUser(Id));
+        }
         // API DONE
         [HttpPost]
         [Route("api/User/Login")]

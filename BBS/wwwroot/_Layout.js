@@ -127,7 +127,7 @@ document.getElementsByTagName("main")[0].addEventListener("click", async (e) => 
 
     }
 });
-document.getElementById("user").addEventListener("click", (e) => {
+document.getElementById("navRight").addEventListener("click", (e) => {
     if (e.target.id == "Chat") {
         chatWindow["isVisible"] = !chatWindow.isVisible;
         e.preventDefault();
@@ -324,3 +324,13 @@ function chatting(RoomId) {
 //         return response.json();
 //     });
 // }
+
+
+document.getElementById("userLink").addEventListener("mouseenter", (e) => {
+    var res = fetch("/api/User").then(res => {
+        return res.text();
+    }).then(ret => {
+        e.target.lastChild.style.display = "block";
+        e.target.lastChild.innerHTML = ret;
+    })
+})

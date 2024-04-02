@@ -1,0 +1,16 @@
+﻿@model BBS.Models.User
+@using System.Security.Claims;
+<div>
+    @if (Model.Id == Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value))
+    {
+        <h3><a href="/UserCenter">@Model.Name</a></h3>
+    }
+    else
+    {
+        <h3><a href="/User/@Model.Id">@Model.Name</a></h3>
+    }
+    <p>Created:@Model.Created</p>
+    <p>Last Login:@Model.LastLogin</p>
+    <a href="/FriendRequests">Friend Requests</a>
+    <a href="/FriendRequestsSent">Friend Requests Sent</a>
+</div>

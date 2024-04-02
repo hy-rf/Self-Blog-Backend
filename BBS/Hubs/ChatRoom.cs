@@ -18,7 +18,7 @@ namespace BBS.Hubs
                 ChatRoomId = Convert.ToInt32(RoomId)
             }))
             {
-                OnlineUsers.Add(Convert.ToInt32(RoomId), Convert.ToInt32(Context.User!.FindFirst(ClaimTypes.Sid)?.Value));
+                //OnlineUsers.Add(Convert.ToInt32(RoomId), Convert.ToInt32(Context.User!.FindFirst(ClaimTypes.Sid)?.Value));
                 await Groups.AddToGroupAsync(Context.ConnectionId, RoomId);
             }
 

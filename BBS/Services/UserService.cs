@@ -91,5 +91,10 @@ namespace BBS.Services
                 return false;
             }
         }
+
+        public User GetUserBasic(int Id)
+        {
+            return ctx.User.Single(u => u.Id ==Id);
+        }
     }
 }

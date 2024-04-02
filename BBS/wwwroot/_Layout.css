@@ -24,7 +24,11 @@
 html {
     /*    min-height: 100%;*/
 }
-
+/*Temperary*/
+#userlink {
+    display: none;
+}
+/*Temperary*/
 
 body {
     position: absolute;
@@ -55,12 +59,12 @@ header {
     backdrop-filter: blur(5px);
 }
 
-#navbar {
+#navLeft {
     position: absolute;
     left: 1rem;
 }
 
-#search {
+/*#search {
     position: absolute;
     right: 11rem;
 }
@@ -73,26 +77,15 @@ header {
 #searchOptions > * {
     font-size: 0.8rem;
     height: 1.1rem;
-}
+}*/
 
-#user {
+#navRight {
     position: absolute;
     right: 1rem;
     border-radius: 5px;
 }
 
 
-
-#UserMenu {
-    display: none;
-    position: absolute;
-    width: 100%;
-    z-index: 99;
-}
-
-.usermenu_show {
-    display: block;
-}
 
 .header_hide {
     position: fixed;
@@ -129,30 +122,37 @@ footer {
     margin: 0.5rem;
 }
 
-#navbar > *:not(:hover) {
+#navLeft > *:not(:hover) {
     color: black;
     background-color: white;
     transition: 0.5s;
     margin: 0.5rem;
 }
-#navbar > *:hover {
+
+#navLeft > *:hover {
     color: lightgray;
     background-color: black;
     transition: 0.5s;
     margin: 0.5rem;
 }
-#user > *:not(:hover) {
-    color: black;
-    background-color: white;
-    transition: 0.5s;
-    margin: 0.5rem;
+
+#navRight > * {
+    margin: 0;
 }
-#user > *:hover {
-    color: lightgray;
-    background-color: black;
-    transition: 0.5s;
-    margin: 0.5rem;
-}
+
+    #navRight > *:not(:hover) {
+        color: black;
+        background-color: white;
+        transition: 0.5s;
+        margin: 0.5rem;
+    }
+
+    #navRight > *:hover {
+        color: lightgray;
+        background-color: black;
+        transition: 0.5s;
+        margin: 0.5rem;
+    }
 
 
 
@@ -228,15 +228,15 @@ footer {
             font-size: 0.8rem;
         }
 
-#pwdSecurityIndicator{
+#pwdSecurityIndicator {
     display: flex;
     flex-direction: row;
 }
-    
-        #pwdSecurityIndicator > * {
-            height:0.2rem;
-            width: calc(100%/3);
-        }
+
+    #pwdSecurityIndicator > * {
+        height: 0.2rem;
+        width: calc(100%/3);
+    }
 
 
 /*Post*/
@@ -247,13 +247,13 @@ footer {
     border-radius: 3px;
 }
 
-.EditButton:hover {
-    color: blue;
-}
+    .EditButton:hover {
+        color: blue;
+    }
 
-.ReplyButton:hover {
-    color: blue;
-}
+    .ReplyButton:hover {
+        color: blue;
+    }
 
 #PostFormWrapper {
     position: relative;
@@ -364,9 +364,10 @@ footer {
     height: max-content;
     width: calc(100%-4rem);
     justify-content: space-between;
-    gap:1rem;
+    gap: 1rem;
     margin: 1rem 2rem 1rem 2rem
 }
+
 #User {
     display: grid;
     grid-template-areas: "A B" "C D" "E F";
@@ -400,41 +401,47 @@ footer {
     grid-area: D;
 }
 
-#User>* {
+#User > * {
     position: relative;
     border: 2px solid wheat;
     border-radius: 1rem;
     background-color: #ffffff88;
     transition: 0.5s;
 }
-#User>*>*{
-    margin: 0.5rem;
-}
+
+    #User > * > * {
+        margin: 0.5rem;
+    }
 
 
 
-#avatar{
+#avatar {
     display: none;
 }
-label[for="avatar"]:not(:hover){
+
+label[for="avatar"]:not(:hover) {
     border: 1px solid white;
     transition: 0.5s;
     cursor: pointer;
 }
-label[for="avatar"]:hover{
+
+label[for="avatar"]:hover {
     border: 1px solid black;
     transition: 0.5s;
     cursor: pointer;
 }
-#updateAvatarBtn{
+
+#updateAvatarBtn {
     display: none;
 }
-label[for="updateAvatarBtn"]:not(:hover){
+
+label[for="updateAvatarBtn"]:not(:hover) {
     border: 1px solid white;
     transition: 0.5s;
     cursor: pointer;
 }
-label[for="updateAvatarBtn"]:hover{
+
+label[for="updateAvatarBtn"]:hover {
     border: 1px solid black;
     transition: 0.5s;
     cursor: pointer;
@@ -448,7 +455,7 @@ label[for="updateAvatarBtn"]:hover{
 
 
 /*Chat*/
-#chatInput>button {
+#chatInput > button {
     border-radius: 5px;
 }
 
@@ -467,7 +474,8 @@ label[for="updateAvatarBtn"]:hover{
     margin: 0.2rem;
     border-radius: 5px;
 }
-#chatRoomMemberListBtn{
+
+#chatRoomMemberListBtn {
     position: absolute;
     top: 0;
     right: 0;
@@ -489,33 +497,34 @@ label[for="updateAvatarBtn"]:hover{
     margin: 0.2rem;
 }
 
-#chatroomList>ul>li:not(:hover) {
+#chatroomList > ul > li:not(:hover) {
     border-top: 1px solid #fff;
     border-bottom: 1px solid #fff;
     cursor: pointer;
     transition: 0.5s;
 }
 
-#chatroomList>ul>li:hover {
+#chatroomList > ul > li:hover {
     border-top: 1px solid #000;
     border-bottom: 1px solid #000;
     transition: 0.5s;
     cursor: pointer;
 }
 
-#chatContent>ul>li:not(:hover) {
+#chatContent > ul > li:not(:hover) {
     border-top: 1px solid #fff;
     border-bottom: 1px solid #fff;
     cursor: default;
     transition: 0.5s;
 }
 
-#chatContent>ul>li:hover {
+#chatContent > ul > li:hover {
     border-top: 1px solid #000;
     border-bottom: 1px solid #000;
     cursor: default;
     transition: 0.5s;
 }
-#sendButton{
+
+#sendButton {
     width: 5ch;
 }

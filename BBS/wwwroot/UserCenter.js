@@ -13,6 +13,8 @@ async function UploadFile(FormEle) {
         console.error('Error:', error);
     }
 }
+
+// warn when click on update avatar button while no file uploaded
 document.querySelector("label[for='updateAvatarBtn']").addEventListener("click", (e) => {
     if (e.target.nextElementSibling.disabled == true) {
         document.querySelector("label[for='avatar']").animate([
@@ -24,6 +26,7 @@ document.querySelector("label[for='updateAvatarBtn']").addEventListener("click",
     }
 });
 
+// preview avatar
 document.querySelector("#avatar").addEventListener("change", () => {
     const [file] = document.querySelector("#avatar").files;
     if (file) {
@@ -31,6 +34,7 @@ document.querySelector("#avatar").addEventListener("change", () => {
     }
     document.querySelector("form>button").removeAttribute("disabled");
 });
+
 
 BindEditNameEvent = () => {
     document.querySelector('#name').addEventListener('click', () => {
@@ -118,6 +122,7 @@ window.onload = async () => {
     // document.querySelector("#User").appendChild(ele2);
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////// Experimental 2FV
 // Get 2fQR
 document.getElementById("generate2FQRCode").addEventListener("click", async (e) => {
     e.preventDefault();
