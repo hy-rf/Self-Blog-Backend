@@ -41,7 +41,59 @@ document.getElementsByTagName("main")[0].addEventListener("click", async (e) => 
         chatWindow["isVisible"] = true;
         chatWindow["activeChatRoom"] = 0;
     }
+    else if (e.target.id == "chatRoomMemberListBtn") {
+        chatWindow["activeChatRoomMember"] = !chatWindow.activeChatRoomMember;
+    }
 }, true);
+document.getElementsByTagName("main")[0].addEventListener("click", async (e) => {
+    if (e.target.id == "addMemberBtn") {
+        var res = await fetch("/api/ChatRoomMember", {
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                ChatRoomId: chatWindow.activeChatRoom,
+                userId: document.getElementById("userId").value
+            })
+        }).then(res => {
+            return res.json();
+        });
+        if (res.success) {
+            var res = await fetch(`/api/ChatRoomMember/${chatWindow.activeChatRoom}`, {
+                method: "GET",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                }
+            }).then(res => {
+                return res.json();
+            });
+            if (res.success) {
+                document.getElementById("chatInput").innerHTML = `
+                                <input type="text" id="userId">
+                                <button id="addMemberBtn">Add</button>`;
+                document.querySelector("#chatContent ul").innerText = "";
+                res.payload.forEach((element) => {
+                    var li = document.createElement("li");
+                    li.innerText = `${element.user.id} ${element.user.name}`;
+                    document.querySelector("#chatContent ul").appendChild(li);
+                });
+            }
+            // chatRoomWindow.activeChatRoomMember = true;
+            // document.querySelector("#chatContent ul").innerText = "";
+            // res.payload.forEach((element) => {
+            //     var li = document.createElement("li");
+            //     li.innerText = `${element.user.id} ${element.user.name}`;
+            //     document.querySelector("#chatContent ul").appendChild(li);
+            // });
+        }
+        else {
+            // document.querySelector("#chatContent ul").innerText = "No Member";
+        }
+    }
+});
 document.getElementById("user").addEventListener("click", (e) => {
     if (e.target.id == "Chat") {
         chatWindow["isVisible"] = !chatWindow.isVisible;
@@ -58,7 +110,8 @@ enableScroll = () => {
 
 var chatWindow = new Proxy({
     isVisible: false,
-    activeChatRoom: 0
+    activeChatRoom: 0,
+    activeChatRoomMember: false
 }, {
     get: (target, prop) => {
         return target[prop];
@@ -143,6 +196,31 @@ var chatWindow = new Proxy({
                 document.getElementById("chatInput").innerHTML = "";
             }
         }
+        if (target.activeChatRoomMember) {
+            var res = await fetch(`/api/ChatRoomMember/${chatWindow.activeChatRoom}`, {
+                method: "GET",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                }
+            }).then(res => {
+                return res.json();
+            });
+            if (res.success) {
+                document.getElementById("chatInput").innerHTML = `
+                                <input type="text" id="userId">
+                                <button id="addMemberBtn">Add</button>`;
+                document.querySelector("#chatContent ul").innerText = "";
+                res.payload.forEach((element) => {
+                    var li = document.createElement("li");
+                    li.innerText = `${element.user.id} ${element.user.name}`;
+                    document.querySelector("#chatContent ul").appendChild(li);
+                });
+            }
+            else {
+                document.querySelector("#chatContent ul").innerText = "No Member";
+            }
+        }
         return true;
     }
 });
@@ -185,7 +263,10 @@ function chatting(RoomId) {
     });
     document.getElementById("backtoChatRoomListBtn").addEventListener("click", () => {
         connection.stop();
-    })
+    });
+    document.getElementById("chatRoomMemberListBtn").addEventListener("click", () => {
+        connection.stop();
+    });
 }
 
 

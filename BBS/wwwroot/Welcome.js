@@ -8,6 +8,7 @@ document.getElementById("loginBtn").addEventListener("click", () => {
             <input id="Pwd" name="Pwd" type="password" />
             <p></p>
             <button id="submitLoginBtn" type="submit">login</button>
+            <button>fill demo info</button>
         </div>`;
 });
 document.getElementById("signupBtn").addEventListener("click", () => {
@@ -28,6 +29,11 @@ document.getElementById("signupBtn").addEventListener("click", () => {
 });
 // submit login or signup
 document.getElementById("togglePanel").addEventListener("click", async (e) => {
+    if (e.target.innerText == "fill demo info") {
+        document.getElementById("Name").value = "rf";
+        document.getElementById("Pwd").value = "0000";
+        document.getElementById("submitLoginBtn").click();
+    }
     if (e.target.id == "submitLoginBtn") {
         e.target.previousElementSibling.innerText = ".";
         var logging = true;

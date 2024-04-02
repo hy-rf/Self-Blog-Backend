@@ -56,5 +56,11 @@ namespace BBS.Services
                 .ToList();
             return joinedRooms;
         }
+
+        public List<ChatRoomMember> GetChatRoomMembers(int ChatRoomId)
+        {
+            var members = ctx.ChatRoomMember.Where(crm => crm.ChatRoomId == ChatRoomId).Include(crm => crm.User).ToList();
+            return members;
+        }
     }
 }

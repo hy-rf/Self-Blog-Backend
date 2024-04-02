@@ -12,5 +12,6 @@ namespace BBS.Interfaces
         public void KickMember(ChatRoomMember chatRoomMember);
         public List<ChatRoomMessage> GetChatMessages(int ChatRoomId);
         public List<ChatRoomMessage> GetChatMessagesSimple(int ChatRoomId);
+        public List<ChatRoomMember> GetChatRoomMembers(int ChatRoomId);
     }
 }
