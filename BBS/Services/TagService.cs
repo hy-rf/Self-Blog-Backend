@@ -10,7 +10,7 @@ namespace BBS.Services
     {
         public List<PostTag> PostTags(int TagId)
         {
-            return ctx.PostTag.Include(pt => pt.Post).ThenInclude(p => p.User).Where(pt => pt.TagId == TagId).ToList();
+            return ctx.PostTag.Include(pt => pt.Post).ThenInclude(p => p.User).Include(pt => pt.Tag).Where(pt => pt.TagId == TagId).ToList();
         }
         public void AddTag(string Name)
         {

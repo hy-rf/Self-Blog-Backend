@@ -302,9 +302,12 @@ img#userLink {
     right: 0;
     bottom: 0;
     color: grey;
-    font-size: 0.8rem;
     z-index: 99;
 }
+
+    .timeIndicator > span {
+        font-size: 0.8rem;
+    }
 
 
 .PostUnit {
@@ -314,6 +317,11 @@ img#userLink {
     background-color: #ffffff88;
     margin: 0.3rem 8px 0.3rem 6px;
     transition: 0.5s;
+}
+
+.LikeBtn {
+    position: absolute;
+    right: 0;
 }
 
 #PostContent {

@@ -29,7 +29,8 @@
     @foreach (var item in Model)
     {
         <div class="PostUnit">
-            <p>@item.Id</p><p>@item.Replies!.Count() Replies</p>
+            <p style="display: none;">@item.Id</p>
+            <p>@item.Replies!.Count()Replies</p>
             <a asp-controller="Post" asp-action="GetPost" asp-route-Id="@item.Id">Title : @item.Title</a>
             @if (User.Identity.IsAuthenticated)
             {
@@ -49,8 +50,8 @@
             </div>
 
             <p class="timeIndicator">
-                <span>Date Created : @item.Created.ToString("hh:mm yy/MM/dd")</span>
-                <span>Date Modified : @item.Modified.ToString("hh:mm yy/MM/dd")</span>
+                <span>Created:@item.Created.ToString("hh:mm yy/MM/dd")</span>
+                <span>Modified:@item.Modified.ToString("hh:mm yy/MM/dd")</span>
             </p>
         </div>
         <br>
