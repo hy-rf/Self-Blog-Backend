@@ -46,6 +46,13 @@ namespace BBS.Controllers
             var ret = postService.GetPost(Id);
             return View("Post", ret);
         }
+        [HttpGet]
+        [Route("api/Post/{Id}")]
+        public JsonResult GetPostAPI(int Id)
+        {
+            var ret = postService.GetPost(Id).Content;
+            return Json(JsonBody.CreateResponse(true, ret, "success"));
+        }
         // API DONE
         [HttpPost]
         [Route("Post/EditPost")]

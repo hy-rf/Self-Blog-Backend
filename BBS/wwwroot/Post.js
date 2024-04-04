@@ -1,7 +1,9 @@
 
-var PostEditorConfig = {};
-PostEditorConfig.toolbar = "basic";
-var PostEditor = new RichTextEditor("#CreatePostForm", PostEditorConfig);
+const quillEdit = new Quill('#CreatePostForm', {
+    modules: {
+    },
+    theme: 'snow'
+});
 document.getElementById("submitPost").addEventListener("click", (e) => {
     fetch(`/Post/CreatePost`, {
         method: "POST",
@@ -12,7 +14,7 @@ document.getElementById("submitPost").addEventListener("click", (e) => {
         body: JSON.stringify({
             Title: document.getElementById("Title").value,
             Tag: document.getElementById("Tag").value,
-            Content: PostEditor.getHTMLCode()
+            Content: quillEdit.getContents()
         }),
     }).then(response => {
         location.reload();
