@@ -3,7 +3,7 @@
 @using System.Security.Claims;
 
 
-<script src="~/PostDetail.js"></script>
+
 @if (User.Identity!.IsAuthenticated && Model.UserId == Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value))
 {
     <button id="toggleEditPostBtn">edit</button>
@@ -82,7 +82,3 @@
         <button type="submit">Reply</button>
     </form>
 }
-
-
-
-<script src="~/PostCommon.js" defer></script>

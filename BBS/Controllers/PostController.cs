@@ -9,7 +9,7 @@ namespace BBS.Controllers
 {
     public class PostController(IPostService postService) : Controller
     {
-        [Route("/{page}")]
+        [Route("Post/{page}")]
         public IActionResult Index(int page)
         {
             ViewBag.NumPost = postService.CountPost();

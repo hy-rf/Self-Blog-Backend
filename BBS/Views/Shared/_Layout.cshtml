@@ -20,7 +20,7 @@
     <header>
         <div id="navLeft">
             <a href="/">Home</a>
-            <a href="/1">Post</a>
+            <a href="/Post/1">Post</a>
         </div>
         <!--<div id="search">
             <input type="text" id="searchbox" placeholder="title">
@@ -68,6 +68,15 @@
             break;
         case "User":
             <script src="~/UserPage.js" defer></script>
+            break;
+        case "Post":
+            <script src="~/PostCommon.js" defer></script>
+            if (ViewContext.HttpContext.Request.Path.Value.Split("/")[2] == "Detail"){
+                <script src="~/PostDetail.js" defer></script>
+            }
+            else{
+                <script src="~/Post.js" defer></script>
+            }
             break;
     }
 </body>
