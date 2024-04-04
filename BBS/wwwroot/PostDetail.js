@@ -2,10 +2,12 @@
 var PostContent;
 const quill = new Quill('#PostContent', {
     readOnly: true,
-    modules: {
-    },
 });
 const quillEdit = new Quill('#EditPostForm', {
+    modules: {
+        toolbar: ['bold', 'italic', 'underline', 'strike']
+    },
+    theme: 'snow'
 });
 window.onload = () => {
     fetch(`/api/Post/${document.location.href.split("/")[5]}`).then(res => {

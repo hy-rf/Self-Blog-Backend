@@ -19,7 +19,7 @@ chatRoomWindow.innerHTML = `
     <ul>
     </ul>
 </div>`;
-document.getElementById("navRight").addEventListener("click", () => {
+document.getElementById("navRight").addEventListener("click", (e) => {
     if (e.target.id == "userLink"){
         document.location.href = "/UserCenter";
     }

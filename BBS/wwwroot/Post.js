@@ -1,6 +1,7 @@
 
 const quillEdit = new Quill('#CreatePostForm', {
     modules: {
+        toolbar: ['bold', 'italic', 'underline', 'strike']
     },
     theme: 'snow'
 });
