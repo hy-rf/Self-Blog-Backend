@@ -64,7 +64,7 @@ namespace BBS.Services
                     {
                         tagService.AddTag(tag);
                     }
-                    if (!ctx.PostTag.Any(pt => pt.TagId == ctx.Tag.Single(t => t.Name == tag).Id))
+                    if (!ctx.PostTag.Any(pt => pt.TagId == ctx.Tag.Single(t => t.Name == tag).Id && pt.PostId == Id))
                     {
                         var posttag = new PostTag { TagId = ctx.Tag.Single(t => t.Name == tag).Id, PostId = Id };
                         ctx.PostTag.Add(posttag);
@@ -89,6 +89,22 @@ namespace BBS.Services
         {
             var GetPosts = ctx.Post.Include(p => p.User).Include(p => p.Likes).ThenInclude(l => l.User).Include(p => p.Replies).OrderByDescending(p => p.Id).Skip((PageIndex - 1) * NumPostPerPage).Take(NumPostPerPage).ToList();
             return GetPosts;
+        }
+
+        public List<Post> GetPostsLite()
+        {
+            return ctx.Post.Include(p => p.User).Select(p => new Post{
+                Id = p.Id,
+                Title = p.Title,
+                Created = p.Created,
+                Modified = p.Modified,
+                UserId = p.UserId,
+                User = new User{
+                    Id = p.User.Id,
+                    Name = p.User.Name,
+                    Avatar = p.User.Avatar
+                }
+            }).ToList();
         }
     }
 }

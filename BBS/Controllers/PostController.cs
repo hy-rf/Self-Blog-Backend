@@ -48,7 +48,7 @@ namespace BBS.Controllers
         }
         [HttpGet]
         [Route("api/Post/{Id}")]
-        public JsonResult GetPostAPI(int Id)
+        public JsonResult GetPostContentAPI(int Id)
         {
             var ret = postService.GetPost(Id).Content;
             return Json(JsonBody.CreateResponse(true, ret, "success"));
@@ -70,6 +70,12 @@ namespace BBS.Controllers
                 return RedirectToAction("GetPost", new { Id = PostId });
             }
             return RedirectToAction("GetPost", new { Id = PostId });
+        }
+        [HttpPost]
+        [Route("api/Post")]
+        public JsonResult GetPost(){
+            var result = postService.GetPostsLite();
+            return Json(JsonBody.CreateResponse(true, result, "success"));
         }
     }
 }
