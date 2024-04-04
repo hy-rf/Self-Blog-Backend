@@ -19,8 +19,10 @@ chatRoomWindow.innerHTML = `
     <ul>
     </ul>
 </div>`;
-document.getElementById("userLink").addEventListener("click", () => {
-    document.location.href = "/UserCenter";
+document.getElementById("navRight").addEventListener("click", () => {
+    if (e.target.id == "userLink"){
+        document.location.href = "/UserCenter";
+    }
 });
 
 document.getElementsByTagName("main")[0].addEventListener("mouseover", (e) => {

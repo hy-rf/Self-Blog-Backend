@@ -58,7 +58,18 @@
     <footer>example footer</footer>
     <script src="~/_Layout.js"></script>
     <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
-    @*<script src="~/ChatRoomWindow.js" defer></script>*@
+    @switch (ViewContext.HttpContext.Request.Path.Value.Split("/")[1])
+    {
+        case "Welcome":
+            <script src="~/Welcome.js" defer></script>
+            break;
+        case "UserCenter":
+            <script src="~/UserCenter.js" defer></script>
+            break;
+        case "User":
+            <script src="~/UserPage.js" defer></script>
+            break;
+    }
 </body>
 
 </html>

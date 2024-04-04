@@ -33,14 +33,14 @@ namespace BBS.Controllers
         {
             try
             {
-                string Id = User.FindFirst(ClaimTypes.Sid)!.Value;
+                string Id = User.FindFirst(ClaimTypes.Sid).Value;
                 ViewBag.Id = Convert.ToInt32(Id);
                 var model = userService.GetUser(ViewBag.Id);
                 return View(model);
             }
             catch
             {
-                return View("Index");
+                return Redirect("/Welcome");
             }
         }
         [Route("User/{Id}")]
@@ -52,11 +52,10 @@ namespace BBS.Controllers
             var model = userService.GetUser(Id);
             return View("UserPage", model);
         }
-        /// <summary>
-        /// DONE API
-        /// </summary>
-        /// <param name="Avatar"></param>
-        /// <returns></returns>
+
+
+
+        // DONE API
         [HttpPost]
         [Route("User/EditAvatar")]
         public ActionResult EditAvatar(IFormFile Avatar)
@@ -93,16 +92,7 @@ namespace BBS.Controllers
             Response.StatusCode = 404;
             return;
         }
-        [Route("Logout")]
-        public ActionResult Logout()
-        {
-            if (userService.Logoff(Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value!)))
-            {
-                HttpContext.Response.Cookies.Delete("Token");
-                return Redirect("/");
-            }
-            return Redirect("/UserCenter");
-        }
+
         [HttpGet]
         [Route("api/User/Avatar/{Id?}")]
         public JsonResult UserAvatar(int Id)
