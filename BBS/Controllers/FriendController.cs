@@ -12,7 +12,7 @@ using BBS.Hubs;
 
 namespace BBS.Controllers
 {
-    public class FriendController(IFriendService friendService, IHubContext<Notification> notification) : Controller
+    public class FriendController(IFriendService friendService, IHubContext<BBS.Hubs.Notification> notification) : Controller
     {
         [HttpPost]
         [Route("Friend/{Id}")]

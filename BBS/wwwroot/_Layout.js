@@ -22,8 +22,9 @@ function handleNotification() {
         });
     });
     notificationConnection.on("ReceiveNotification", function (msg) {
-        document.getElementById("notificationList").innerHTML += `<p>${msg}</p>`;
-        document.getElementById("notification").style.color = "red";
+        console.log(msg);
+        // document.getElementById("notificationList").innerHTML += `<p>${msg}</p>`;
+        // document.getElementById("notification").style.color = "red";
     });
 }
 

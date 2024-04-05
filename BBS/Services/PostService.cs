@@ -13,7 +13,7 @@ namespace BBS.Services
             return ctx.Post.Count();
         }
 
-        public bool CreatePost(string Title, string Content, string Tag, int UserId)
+        public bool CreatePost(string Title, string Content, string Tag, int UserId, out int Id)
         {
             var newPost = new Post
             {
@@ -37,6 +37,7 @@ namespace BBS.Services
             });
             ctx.Post.Add(newPost);
             ctx.SaveChanges();
+            Id = newPost.Id;
             return true;
         }
         public bool EditPost(int Id, string Title, string Content, string Tag)

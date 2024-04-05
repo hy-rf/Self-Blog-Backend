@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace BBS.Controllers
 {
 
-    public class PostController(IPostService postService, IFriendService friendService, IHubContext<Notification> notification) : Controller
+    public class PostController(IPostService postService, IFriendService friendService, INotificationService notificationService, IHubContext<Hubs.Notification> notification) : Controller
     {
         [Route("Post/{page}")]
         public IActionResult Index(int page)
@@ -27,13 +27,29 @@ namespace BBS.Controllers
         {
             // try
             // {
+            int Id;
             ViewBag.Id = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value);
-            if (postService.CreatePost(json.GetProperty("Title").ToString(), json.GetProperty("Content").ToString(), json.GetProperty("Tag").ToString(), ViewBag.Id))
+            if (postService.CreatePost(json.GetProperty("Title").ToString(), json.GetProperty("Content").ToString(), json.GetProperty("Tag").ToString(), ViewBag.Id, out Id))
             {
                 IAsyncEnumerable<Friend> Friend = friendService.Friends(ViewBag.Id);
                 await foreach (var item in Friend)
                 {
-                    _ = notification.Clients.User(item.FriendUser.Id.ToString()).SendAsync("ReceiveNotification", $"Friend {ViewBag.Id} created a new post");
+                    // await notificationService.AddNotification(new BBS.Models.Notification
+                    // {
+                    //     UserId = item.FriendUser.Id,
+                    //     Type = "Post",
+                    //     Message = $"Friend {ViewBag.Id} created a new post: {json.GetProperty("Title")}",
+                    //     Url = $"/Post/{Id}",
+                    //     IsRead = false
+                    // });
+                    _ = notification.Clients.User(item.FriendUser.Id.ToString()).SendAsync("ReceiveNotification", new BBS.Models.Notification
+                    {
+                        UserId = item.FriendUser.Id,
+                        Type = "Post",
+                        Message = $"Friend {ViewBag.Id} created a new post: {json.GetProperty("Title")}",
+                        Url = $"/Post/{Id}",
+                        IsRead = false
+                    });
                 }
                 return RedirectToAction("Index");
             }
