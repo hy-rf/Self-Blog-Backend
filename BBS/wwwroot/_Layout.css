@@ -211,6 +211,16 @@ img#userLink:not(:hover) {
     margin: 0.5rem;
 }
 
+#notificationList{
+    display: none;
+    position: fixed;
+    top: 1rem;
+    right: 0;
+}
+.showNotificationList{
+    display: block !important;
+}
+
 
 
 .ChatWindow {

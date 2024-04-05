@@ -22,7 +22,8 @@ function handleNotification() {
         });
     });
     notificationConnection.on("ReceiveNotification", function (msg) {
-        console.log(msg);
+        document.getElementById("notificationList").innerHTML += `<p>${msg}</p>`;
+        document.getElementById("notification").style.color = "red";
     });
 }
 
@@ -38,6 +39,28 @@ document.getElementById("navRight").addEventListener("click", (e) => {
         document.location.href = "/UserCenter";
     }
 });
+document.getElementById("notification").addEventListener("click", (e) => {
+    showNotificationList["isVisible"] = !showNotificationList.isVisible;
+    e.target.style.color = "black";
+    e.preventDefault();
+});
+var showNotificationList = new Proxy({
+    isVisible: false
+}, {
+    get: (target, prop) => {
+        return target[prop];
+    },
+    set: (target, prop, value) => {
+        target[prop] = value;
+        if (value) {
+            document.getElementById("notificationList").style.display = "block";
+        }
+        else {
+            document.getElementById("notificationList").style.display = "none";
+        }
+    }
+});
+
 
 document.getElementsByTagName("main")[0].addEventListener("mouseover", (e) => {
     if (e.target.classList.contains("ChatWindow")) {

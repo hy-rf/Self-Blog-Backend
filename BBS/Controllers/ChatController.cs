@@ -12,10 +12,10 @@ namespace BBS.Controllers
     {
         [HttpPost]
         [Route("api/ChatRoom")]
-        public ActionResult CreateChatRoom([FromBody] Models.ChatRoom chatRoom)
+        public ActionResult CreateChatRoom([FromBody] ChatRoom chatRoom)
         {
             chatService.CreateChatRoom(chatRoom);
-            chatService.AddMember(new Models.ChatRoomMember
+            chatService.AddMember(new ChatRoomMember
             {
                 ChatRoomId = chatRoom.Id,
                 UserId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value)

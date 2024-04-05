@@ -7,10 +7,12 @@ using System.Text.Json;
 using BBS.Interfaces;
 using System.Runtime.Versioning;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.SignalR;
+using BBS.Hubs;
 
 namespace BBS.Controllers
 {
-    public class FriendController(IFriendService friendService) : Controller
+    public class FriendController(IFriendService friendService, IHubContext<Notification> notification) : Controller
     {
         [HttpPost]
         [Route("Friend/{Id}")]
@@ -21,6 +23,7 @@ namespace BBS.Controllers
                 SendUserId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value),
                 ReceiveUserId = Id
             });
+            notification.Clients.User(Id.ToString()).SendAsync("ReceiveNotification", $"Friend request from {User.FindFirst(ClaimTypes.Name)?.Value}");
         }
         [HttpGet]
         [Route("FriendRequests")]
