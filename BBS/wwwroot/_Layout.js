@@ -186,6 +186,7 @@ document.getElementById("navRight").addEventListener("click", async (e) => {
                 setTimeout(() => {
                     e.target.innerText = "Logout"
                 }, 3000);
+                document.location.href = "/Welcome"
             }
         })
     }

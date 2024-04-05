@@ -25,11 +25,9 @@ namespace BBS.Controllers
         [Route("Post/CreatePost")]
         public async Task<IActionResult> CreatePost([FromBody] JsonElement json)
         {
-            // try
-            // {
             int Id;
             ViewBag.Id = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value);
-            if (postService.CreatePost(json.GetProperty("Title").ToString(), json.GetProperty("Content").ToString(), json.GetProperty("Tag").ToString(), ViewBag.Id, out Id))
+            if (postService.CreatePost(json.GetProperty("Title").ToString(), json.GetProperty("Content").ToString(), json.GetProperty("Tag").ToString(), ViewBag.Id, out Id).IsCompleted)
             {
                 IAsyncEnumerable<Friend> Friend = friendService.Friends(ViewBag.Id);
                 await foreach (var item in Friend)

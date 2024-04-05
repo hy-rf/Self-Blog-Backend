@@ -78,18 +78,18 @@ namespace BBS.Services
             ctx.SaveChanges();
             return true;
         }
-        public bool Logoff(int Id)
+        public Task<bool> Logoff(int Id)
         {
             var logoff = ctx.User.Single(u => u.Id == Id);
             logoff.LoggedIn = 0;
             try
             {
                 ctx.SaveChanges();
-                return true;
+                return Task.FromResult(true);
             }
             catch
             {
-                return false;
+                return Task.FromResult(false);
             }
         }
 

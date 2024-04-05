@@ -11,6 +11,6 @@ namespace BBS.IService
         public User GetUserBasic(int Id);
         public bool EditAvatar(int Id, string Avatar);
         public bool EditName(int Id, string Name);
-        public bool Logoff(int Id);
+        public Task<bool> Logoff(int Id);
     }
 }

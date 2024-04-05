@@ -215,7 +215,7 @@ namespace BBS.Controllers
         [Route("Logout")]
         public JsonResult LogoutApi()
         {
-            if (userService.Logoff(Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value!)))
+            if (userService.Logoff(Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value!)).IsCompleted)
             {
                 HttpContext.Response.Cookies.Delete("Token");
                 return Json(JsonBody.CreateResponse(true, "Logout success!"));

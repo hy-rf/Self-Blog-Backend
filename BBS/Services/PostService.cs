@@ -47,6 +47,7 @@ namespace BBS.Services
             EditPost.Title = Title;
             EditPost.Content = Content;
             EditPost.Modified = DateTime.Now;
+            postRepository.UpdateAsync(EditPost);
             //Compare between old posttags and new posttags then remove old posttag thats not in new posttags
             var oldtags = ctx.PostTag.Where(t => t.PostId == Id).Include(t => t.Tag);
             var newtags = Tag.Split("#").ToList();

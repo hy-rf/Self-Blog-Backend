@@ -287,8 +287,8 @@ img#userLink:not(:hover) {
 
 #togglePanel>div>button {
     position: relative;
-    width: 4rem;
-    left: 70%;
+    width: 5rem;
+    left: 60%;
 }
 
 #togglePanel>div>p {
