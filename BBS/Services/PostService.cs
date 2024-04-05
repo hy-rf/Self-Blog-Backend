@@ -95,13 +95,15 @@ namespace BBS.Services
 
         public List<Post> GetPostsLite()
         {
-            return ctx.Post.Include(p => p.User).Select(p => new Post{
+            return ctx.Post.Include(p => p.User).Select(p => new Post
+            {
                 Id = p.Id,
                 Title = p.Title,
                 Created = p.Created,
                 Modified = p.Modified,
                 UserId = p.UserId,
-                User = new User{
+                User = new User
+                {
                     Id = p.User.Id,
                     Name = p.User.Name,
                     Avatar = p.User.Avatar
