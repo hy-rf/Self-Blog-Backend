@@ -10,6 +10,9 @@ using BBS.IService;
 using BBS.Services;
 using BBS.Hubs;
 using BBS.Common;
+using BBS.IRepository;
+using BBS.Repository;
+using BBS.Models;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -49,7 +52,7 @@ builder.Services.AddDbContextPool<AppDbContext>(options =>
 });
 
 
-
+builder.Services.AddScoped<IBaseRepository<Post>, BaseRepository<Post>>();
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPostService, PostService>();
@@ -72,8 +75,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
-app.MapHub<Notification>("/notification");
-app.MapHub<ChatRoom>("/chat");
+app.MapHub<BBS.Hubs.Notification>("/notification");
+app.MapHub<BBS.Hubs.ChatRoom>("/chat");
 
 
 app.Run();
