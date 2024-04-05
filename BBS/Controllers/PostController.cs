@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace BBS.Controllers
 {
-    public class PostController(IPostService postService, IHubContext<Notification> notification) : Controller
+    public class PostController(IPostService postService, IFriendService friendService, IHubContext<Notification> notification) : Controller
     {
         [Route("Post/{page}")]
         public IActionResult Index(int page)

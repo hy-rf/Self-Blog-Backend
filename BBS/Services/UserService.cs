@@ -1,6 +1,7 @@
 ﻿using BBS.Data;
 using BBS.Interfaces;
 using BBS.Models;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 
 namespace BBS.Services

@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.SignalR;
 using BBS.Hubs;
+using BBS.Common;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -65,6 +66,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+
 app.MapHub<Notification>("/notification");
 app.MapHub<ChatRoom>("/chat");
 
