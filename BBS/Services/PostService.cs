@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BBS.Services
 {
-    public class PostService(AppDbContext ctx, ITagService tagService, IPostRepository postRepository, ITagRepository tagRepository) : IPostService
+    public class PostService(AppDbContext ctx, ITagService tagService, IPostRepository postRepository, ITagRepository tagRepository, IPostTagRepository postTagRepository) : IPostService
     {
         public int CountPost()
         {
@@ -34,7 +34,7 @@ namespace BBS.Services
                         tagRepository.CreateAsync(new Tag { Name = tag });
                     }
                     var posttag = new PostTag { TagId = ctx.Tag.Single(t => t.Name == tag).Id, PostId = ctx.Post.Count() + 1 };
-                    ctx.PostTag.Add(posttag);
+                    postTagRepository.CreateAsync(posttag);
                 }
             });
             _ = postRepository.CreateAsync(newPost);
@@ -55,7 +55,7 @@ namespace BBS.Services
             {
                 if (!newtags.Contains(t.Tag.Name))
                 {
-                    ctx.PostTag.Remove(t);
+                    postTagRepository.DeleteAsync(t.Id);
                 }
             }
             //Compare between old posttags and new posttags then remove old posttag thats not in new posttags end
@@ -70,7 +70,7 @@ namespace BBS.Services
                     if (!ctx.PostTag.Any(pt => pt.TagId == ctx.Tag.Single(t => t.Name == tag).Id && pt.PostId == Id))
                     {
                         var posttag = new PostTag { TagId = ctx.Tag.Single(t => t.Name == tag).Id, PostId = Id };
-                        ctx.PostTag.Add(posttag);
+                        postTagRepository.CreateAsync(posttag);
                     }
                 }
             }
