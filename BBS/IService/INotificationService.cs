@@ -1,7 +1,7 @@
 
 using BBS.Hubs;
 
-namespace BBS.Interfaces
+namespace BBS.IService
 {
     public interface INotificationService
     {

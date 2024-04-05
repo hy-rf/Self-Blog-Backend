@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using BBS.Interfaces;
+using BBS.IService;
 using BBS.Models;
 using System.Security.Claims;
 

@@ -1,5 +1,5 @@
 ﻿using BBS.Hubs;
-using BBS.Interfaces;
+using BBS.IService;
 using BBS.Models;
 using BBS.Services;
 using Microsoft.AspNetCore.Mvc;

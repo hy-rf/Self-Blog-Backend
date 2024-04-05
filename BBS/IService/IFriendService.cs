@@ -1,7 +1,7 @@
 ﻿using BBS.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BBS.Interfaces
+namespace BBS.IService
 {
     public interface IFriendService
     {

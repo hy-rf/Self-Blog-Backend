@@ -1,6 +1,6 @@
 ﻿using BBS.Models;
 
-namespace BBS.Interfaces
+namespace BBS.IService
 {
     public interface ILikeService
     {

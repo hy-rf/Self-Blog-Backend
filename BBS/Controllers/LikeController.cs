@@ -1,4 +1,4 @@
-﻿using BBS.Interfaces;
+﻿using BBS.IService;
 using BBS.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic;

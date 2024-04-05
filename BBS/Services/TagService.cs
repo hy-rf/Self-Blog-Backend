@@ -1,5 +1,5 @@
 ﻿using BBS.Data;
-using BBS.Interfaces;
+using BBS.IService;
 using BBS.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;

@@ -1,5 +1,5 @@
 ﻿using BBS.Data;
-using BBS.Interfaces;
+using BBS.IService;
 using BBS.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

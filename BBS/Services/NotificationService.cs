@@ -1,7 +1,7 @@
 
 using BBS.Data;
 using BBS.Hubs;
-using BBS.Interfaces;
+using BBS.IService;
 
 namespace BBS.Services
 {
