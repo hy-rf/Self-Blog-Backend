@@ -31,7 +31,6 @@ namespace BBS.Controllers
             if (postService.CreatePost(json.GetProperty("Title").ToString(), json.GetProperty("Content").ToString(), json.GetProperty("Tag").ToString(), ViewBag.Id))
             {
                 IAsyncEnumerable<Friend> Friend = friendService.Friends(ViewBag.Id);
-                List<string> list = new List<string>();
                 await foreach (var item in Friend)
                 {
                     await notification.Clients.User(item.FriendUser.Id.ToString()).SendAsync("ReceiveNotification", $"Friend {ViewBag.Id} created a new post");
