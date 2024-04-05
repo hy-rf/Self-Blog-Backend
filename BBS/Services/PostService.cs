@@ -87,11 +87,15 @@ namespace BBS.Services
             var GetPosts = ctx.Post.Include(p => p.User).Include(p => p.Likes).ThenInclude(l => l.User).ToList();
             return GetPosts;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="PageIndex"></param>
+        /// <param name="NumPostPerPage"></param>
+        /// <returns></returns>
         public List<Post> GetPostsByPage(int PageIndex, int NumPostPerPage)
         {
-            var GetPosts = ctx.Post.Include(p => p.User).Include(p => p.Likes).ThenInclude(l => l.User).Include(p => p.Replies).OrderByDescending(p => p.Id).Skip((PageIndex - 1) * NumPostPerPage).Take(NumPostPerPage).ToList();
-            return GetPosts;
+            return postRepository.GetPostsForPostList(PageIndex, NumPostPerPage).Result;
         }
 
         public List<Post> GetPostsLite()
