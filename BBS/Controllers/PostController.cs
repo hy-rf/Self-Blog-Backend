@@ -30,16 +30,11 @@ namespace BBS.Controllers
             ViewBag.Id = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value);
             if (postService.CreatePost(json.GetProperty("Title").ToString(), json.GetProperty("Content").ToString(), json.GetProperty("Tag").ToString(), ViewBag.Id))
             {
-                var Friend = friendService.Friends(ViewBag.Id);
+                IAsyncEnumerable<Friend> Friend = friendService.Friends(ViewBag.Id);
                 List<string> list = new List<string>();
-                foreach (var item in Friend)
+                await foreach (var item in Friend)
                 {
-                    list.Add(item.FriendUser.Id.ToString());
-                    // await notification.Clients.User(item.FriendUser.Id.ToString()).SendAsync("ReceiveNotification", $"Friend {ViewBag.Id} created a new post");
-                }
-                foreach (var item in list)
-                {
-                    await notification.Clients.User(item).SendAsync("ReceiveNotification", $"Friend {ViewBag.Id} created a new post");
+                    await notification.Clients.User(item.FriendUser.Id.ToString()).SendAsync("ReceiveNotification", $"Friend {ViewBag.Id} created a new post");
                 }
                 return RedirectToAction("Index");
             }
