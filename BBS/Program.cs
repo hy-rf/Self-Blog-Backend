@@ -57,6 +57,8 @@ builder.Services.AddScoped<IFriendService, FriendService>();
 builder.Services.AddScoped<ITagService, TagService>();
 builder.Services.AddScoped<ILikeService, LikeService>();
 
+builder.Services.AddSingleton<IUserIdProvider, MyUserIdProvider>();
+
 var app = builder.Build();
 
 

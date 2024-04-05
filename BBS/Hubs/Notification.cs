@@ -14,9 +14,7 @@ namespace BBS.Hubs
             {
                 int UserId = Convert.ToInt32(Context.User.FindFirst(ClaimTypes.Sid).Value);
                 string UserName = Context.User.FindFirst(ClaimTypes.Name).Value;
-
-                await Groups.AddToGroupAsync(Context.ConnectionId, UserId.ToString());
-                await Clients.All.SendAsync("Join", $"{UserId} {UserName}");
+                await Clients.User(UserId.ToString()).SendAsync("Join", "U");
             }
             catch
             {

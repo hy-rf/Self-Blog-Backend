@@ -9,6 +9,7 @@ using System.Text.Json;
 
 namespace BBS.Controllers
 {
+
     public class PostController(IPostService postService, IFriendService friendService, IHubContext<Notification> notification) : Controller
     {
         [Route("Post/{page}")]
@@ -22,24 +23,25 @@ namespace BBS.Controllers
         // API DONE
         [HttpPost]
         [Route("Post/CreatePost")]
-        public ActionResult CreatePost([FromBody] JsonElement json)
+        public async Task<IActionResult> CreatePost([FromBody] JsonElement json)
         {
-            try
+            // try
+            // {
+            ViewBag.Id = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value);
+            if (postService.CreatePost(json.GetProperty("Title").ToString(), json.GetProperty("Content").ToString(), json.GetProperty("Tag").ToString(), ViewBag.Id))
             {
-                ViewBag.Id = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value);
-                if (postService.CreatePost(json.GetProperty("Title").ToString(), json.GetProperty("Content").ToString(), json.GetProperty("Tag").ToString(), ViewBag.Id))
+                var Friend = friendService.Friends(ViewBag.Id);
+                List<string> list = new List<string>();
+                foreach (var item in Friend)
                 {
-                    notification.Clients.All.SendAsync("ReceiveNotification", $"{ViewBag.Id} created a new post");
-                    return RedirectToAction("Index");
+                    list.Add(item.FriendUser.Id.ToString());
+                    // await notification.Clients.User(item.FriendUser.Id.ToString()).SendAsync("ReceiveNotification", $"Friend {ViewBag.Id} created a new post");
                 }
-            }
-            catch
-            {
-                return RedirectToRoute(new
+                foreach (var item in list)
                 {
-                    controller = "User",
-                    action = "Index"
-                });
+                    await notification.Clients.User(item).SendAsync("ReceiveNotification", $"Friend {ViewBag.Id} created a new post");
+                }
+                return RedirectToAction("Index");
             }
             return RedirectToAction("Index");
         }
@@ -76,7 +78,8 @@ namespace BBS.Controllers
         }
         [HttpPost]
         [Route("api/Post")]
-        public JsonResult GetPost(){
+        public JsonResult GetPost()
+        {
             var result = postService.GetPostsLite();
             return Json(JsonBody.CreateResponse(true, result, "success"));
         }
