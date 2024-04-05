@@ -17,9 +17,6 @@ function handleNotification() {
     "use strict";
     var notificationConnection = new signalR.HubConnectionBuilder().withUrl("/notification").build();
     notificationConnection.start().then(function () {
-        notificationConnection.on("Join", function (msg) {
-            console.log(msg);
-        });
     });
     notificationConnection.on("ReceiveNotification", function (msg) {
         console.log(msg);

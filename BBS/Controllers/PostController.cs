@@ -46,8 +46,8 @@ namespace BBS.Controllers
                     {
                         UserId = item.FriendUser.Id,
                         Type = "Post",
-                        Message = $"Friend {ViewBag.Id} created a new post: {json.GetProperty("Title")}",
-                        Url = $"/Post/{Id}",
+                        Message = $"New post:{json.GetProperty("Title")}",
+                        Url = $"/Post/Detail{Id}",
                         IsRead = false
                     });
                 }

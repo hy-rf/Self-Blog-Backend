@@ -6,7 +6,7 @@ namespace BBS.Interfaces
     {
         public bool CheckDuplicatedName(string Name);
         public bool Signup(string Name, string Pwd);
-        public bool Login(string Name, string Pwd, out int id);
+        public Task<bool> Login(string Name, string Pwd, out int id);
         public User GetUser(int Id);
         public User GetUserBasic(int Id);
         public bool EditAvatar(int Id, string Avatar);

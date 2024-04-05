@@ -36,7 +36,7 @@ namespace BBS.Services
             }
             return true;
         }
-        public bool Login(string Name, string Pwd, out int id)
+        public Task<bool> Login(string Name, string Pwd, out int id)
         {
             try
             {
@@ -48,16 +48,16 @@ namespace BBS.Services
                     updateLastLogin.LoggedIn = 1;
                     id = Matched.Id;
                     ctx.SaveChanges();
-                    return true;
+                    return Task.FromResult(true);
                 }
             }
             catch
             {
                 id = -1;
-                return false;
+                return Task.FromResult(false);
             }
             id = -1;
-            return false;
+            return Task.FromResult(false);
         }
         public User GetUser(int Id)
         {

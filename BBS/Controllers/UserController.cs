@@ -130,7 +130,7 @@ namespace BBS.Controllers
             string Pwd = LoginInfo.GetProperty("Pwd").ToString();
             if (!string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Pwd))
             {
-                if (userService.Login(Name, Pwd, out int Id))
+                if (userService.Login(Name, Pwd, out int Id).Result)
                 {
                     var tokenHandler = new JwtSecurityTokenHandler();
                     var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetValue<string>("JWT")));

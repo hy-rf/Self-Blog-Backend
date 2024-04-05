@@ -8,31 +8,5 @@ namespace BBS.Hubs
 {
     public class Notification : Hub
     {
-        public override async Task OnConnectedAsync()
-        {
-            try
-            {
-                int UserId = Convert.ToInt32(Context.User.FindFirst(ClaimTypes.Sid).Value);
-                string UserName = Context.User.FindFirst(ClaimTypes.Name).Value;
-                await Clients.User(UserId.ToString()).SendAsync("Join", "U");
-            }
-            catch
-            {
-                await Clients.All.SendAsync("Join", "Anonymous joined");
-            }
-        }
-        public async Task SendMessage()
-        {
-            try
-            {
-                string Url = Context.GetHttpContext().Request.Path;
-                await Clients.All.SendAsync("ReceiveNotification", Url);
-            }
-            catch
-            {
-                await Clients.All.SendAsync("ReceiveNotification", "Anonymous");
-            }
-
-        }
     }
 }
