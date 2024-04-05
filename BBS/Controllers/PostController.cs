@@ -33,7 +33,7 @@ namespace BBS.Controllers
                 IAsyncEnumerable<Friend> Friend = friendService.Friends(ViewBag.Id);
                 await foreach (var item in Friend)
                 {
-                    await notification.Clients.User(item.FriendUser.Id.ToString()).SendAsync("ReceiveNotification", $"Friend {ViewBag.Id} created a new post");
+                    _ = notification.Clients.User(item.FriendUser.Id.ToString()).SendAsync("ReceiveNotification", $"Friend {ViewBag.Id} created a new post");
                 }
                 return RedirectToAction("Index");
             }
