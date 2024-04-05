@@ -8,14 +8,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BBS.Services
 {
-    public class PostService(AppDbContext ctx, ITagService tagService, IPostRepository postRepository) : IPostService
+    public class PostService(AppDbContext ctx, ITagService tagService, IPostRepository postRepository, ITagRepository tagRepository) : IPostService
     {
         public int CountPost()
         {
             return ctx.Post.Count();
         }
 
-        public bool CreatePost(string Title, string Content, string Tag, int UserId, out int Id)
+        public Task<bool> CreatePost(string Title, string Content, string Tag, int UserId, out int Id)
         {
             var newPost = new Post
             {
@@ -31,7 +31,7 @@ namespace BBS.Services
                 {
                     if (!ctx.Tag.Any(t => t.Name == tag))
                     {
-                        tagService.AddTag(tag);
+                        tagRepository.CreateAsync(new Tag { Name = tag });
                     }
                     var posttag = new PostTag { TagId = ctx.Tag.Single(t => t.Name == tag).Id, PostId = ctx.Post.Count() + 1 };
                     ctx.PostTag.Add(posttag);
@@ -39,7 +39,7 @@ namespace BBS.Services
             });
             _ = postRepository.CreateAsync(newPost);
             Id = newPost.Id;
-            return true;
+            return Task.FromResult(true);
         }
         public bool EditPost(int Id, string Title, string Content, string Tag)
         {
@@ -64,7 +64,7 @@ namespace BBS.Services
                 {
                     if (!ctx.Tag.Any(t => t.Name == tag))
                     {
-                        tagService.AddTag(tag);
+                        tagRepository.CreateAsync(new Tag { Name = tag });
                     }
                     if (!ctx.PostTag.Any(pt => pt.TagId == ctx.Tag.Single(t => t.Name == tag).Id && pt.PostId == Id))
                     {

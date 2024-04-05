@@ -6,7 +6,7 @@ using BBS.Models;
 
 namespace BBS.Repository
 {
-    public class PostRepository(AppDbContext context) : BaseRepository<Post>(context), IPostRepository
+    public class TagRepository(AppDbContext context) : BaseRepository<Tag>(context), ITagRepository
     {
     }
 
