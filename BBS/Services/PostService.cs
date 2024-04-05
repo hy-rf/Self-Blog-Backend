@@ -2,12 +2,13 @@
 using BBS.IRepository;
 using BBS.IService;
 using BBS.Models;
+using BBS.Repository;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 
 namespace BBS.Services
 {
-    public class PostService(AppDbContext ctx, ITagService tagService, IBaseRepository<Post> baseRepository) : IPostService
+    public class PostService(AppDbContext ctx, ITagService tagService, IPostRepository postRepository) : IPostService
     {
         public int CountPost()
         {
@@ -36,7 +37,7 @@ namespace BBS.Services
                     ctx.PostTag.Add(posttag);
                 }
             });
-            baseRepository.CreateAsync(newPost);
+            _ = postRepository.CreateAsync(newPost);
             Id = newPost.Id;
             return true;
         }
