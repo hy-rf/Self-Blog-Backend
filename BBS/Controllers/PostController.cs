@@ -1,13 +1,15 @@
-﻿using BBS.Interfaces;
+﻿using BBS.Hubs;
+using BBS.Interfaces;
 using BBS.Models;
 using BBS.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using System.Security.Claims;
 using System.Text.Json;
 
 namespace BBS.Controllers
 {
-    public class PostController(IPostService postService) : Controller
+    public class PostController(IPostService postService, IHubContext<Notification> notification) : Controller
     {
         [Route("Post/{page}")]
         public IActionResult Index(int page)
@@ -27,6 +29,7 @@ namespace BBS.Controllers
                 ViewBag.Id = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value);
                 if (postService.CreatePost(json.GetProperty("Title").ToString(), json.GetProperty("Content").ToString(), json.GetProperty("Tag").ToString(), ViewBag.Id))
                 {
+                    notification.Clients.All.SendAsync("ReceiveNotification", $"{ViewBag.Id} created a new post");
                     return RedirectToAction("Index");
                 }
             }

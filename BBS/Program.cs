@@ -65,7 +65,8 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-
+app.MapHub<Notification>("/notification");
 app.MapHub<ChatRoom>("/chat");
+
 
 app.Run();

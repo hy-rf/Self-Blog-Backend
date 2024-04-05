@@ -8,7 +8,6 @@ namespace BBS.Hubs
 {
     public class ChatRoom(IChatService chatService) : Hub
     {
-        public static Dictionary<int, int> OnlineUsers = new Dictionary<int, int>();
         [Authorize]
         public async Task Join(string RoomId)
         {
@@ -18,7 +17,6 @@ namespace BBS.Hubs
                 ChatRoomId = Convert.ToInt32(RoomId)
             }))
             {
-                //OnlineUsers.Add(Convert.ToInt32(RoomId), Convert.ToInt32(Context.User!.FindFirst(ClaimTypes.Sid)?.Value));
                 await Groups.AddToGroupAsync(Context.ConnectionId, RoomId);
             }
 

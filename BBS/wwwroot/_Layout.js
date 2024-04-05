@@ -11,16 +11,30 @@ window.onscroll = () => {
     }
     prepos = curpos;
 }
+
+handleNotification();
+function handleNotification() {
+    "use strict";
+    var notificationConnection = new signalR.HubConnectionBuilder().withUrl("/notification").build();
+    notificationConnection.start().then(function () {
+        notificationConnection.on("Join", function (msg) {
+            console.log(msg);
+        });
+    });
+    notificationConnection.on("ReceiveNotification", function (msg) {
+        console.log(msg);
+    });
+}
+
 var chatRoomWindow = document.createElement("div");
 chatRoomWindow.className = "ChatWindow";
 chatRoomWindow.innerHTML = `
-<link rel="stylesheet" href="/ChatRoom.css">
 <div id="chatroomList">
     <ul>
     </ul>
 </div>`;
 document.getElementById("navRight").addEventListener("click", (e) => {
-    if (e.target.id == "userLink"){
+    if (e.target.id == "userLink") {
         document.location.href = "/UserCenter";
     }
 });
@@ -180,7 +194,6 @@ var chatWindow = new Proxy({
                 await document.getElementsByTagName("main")[0].appendChild(chatRoomWindow);
             }
             chatRoomWindow.innerHTML = `
-            <link rel="stylesheet" href="/ChatRoom.css">
             <div id="chatroomList">
                 <ul>
                 </ul>
@@ -218,7 +231,6 @@ var chatWindow = new Proxy({
         // When there is active chat room do this
         if (target.activeChatRoom) {
             chatRoomWindow.innerHTML = `
-            <link rel="stylesheet" href="/ChatRoom.css">
             <button id="backtoChatRoomListBtn">Back</button>
             <button id="chatRoomMemberListBtn">Members</button>
             <div id="chatContent">
@@ -345,18 +357,24 @@ fetch("/api/User/Avatar").then(res => {
 
 // Fix This
 // load user info popup
-document.getElementById("userLink").addEventListener("mouseenter", async (e) => {
-    var res = fetch("/api/User").then(res => {
-        return res.text();
-    }).then(async ret =>  {
-        //    e.target.nextElementSibling.style.display = "block";
-        e.target.nextElementSibling.innerHTML = await ret;
-        
-    }).then(() => {
-        e.target.nextElementSibling.classList.add("userInfoShow");
-    });
+document.getElementById("navRight").addEventListener("mouseenter", async (e) => {
+    if (e.target.id == "userLink") {
+        var res = fetch("/api/User").then(res => {
+            return res.text();
+        }).then(async ret => {
+            //    e.target.nextElementSibling.style.display = "block";
+            e.target.nextElementSibling.innerHTML = await ret;
+
+        }).then(() => {
+            e.target.nextElementSibling.classList.add("userInfoShow");
+        });
+    }
 });
-document.getElementById("userLink").addEventListener("mouseleave", (e) => {
-    e.target.nextElementSibling.classList.remove("userInfoShow");
-    e.target.nextElementSibling.innerHTML = "";
+document.getElementById("navRight").addEventListener("mouseleave", (e) => {
+    if (e.target.id == "userLink") {
+        e.target.nextElementSibling.classList.remove("userInfoShow");
+        e.target.nextElementSibling.innerHTML = "";
+    }
+
 });
+
