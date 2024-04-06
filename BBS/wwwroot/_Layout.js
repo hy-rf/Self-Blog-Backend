@@ -19,7 +19,11 @@ function handleNotification() {
     notificationConnection.start().then(function () {
     });
     notificationConnection.on("ReceiveNotification", function (msg) {
-        console.log(msg);
+        console.log(notifications)
+        var newData = notifications.data;
+        newData.push(msg);
+        console.log(newData);
+        notifications.data = newData;
         // document.getElementById("notificationList").innerHTML += `<p>${msg}</p>`;
         // document.getElementById("notification").style.color = "red";
     });
@@ -36,12 +40,13 @@ document.getElementById("navRight").addEventListener("click", (e) => {
     if (e.target.id == "userLink") {
         document.location.href = "/UserCenter";
     }
+    else if (e.target.id == "notification") {
+        showNotificationList["isVisible"] = !showNotificationList.isVisible;
+        e.target.style.color = "black";
+        e.preventDefault();
+    }
 });
-document.getElementById("notification").addEventListener("click", (e) => {
-    showNotificationList["isVisible"] = !showNotificationList.isVisible;
-    e.target.style.color = "black";
-    e.preventDefault();
-});
+
 var showNotificationList = new Proxy({
     isVisible: false
 }, {
@@ -399,4 +404,31 @@ document.getElementById("navRight").addEventListener("mouseleave", (e) => {
     }
 
 });
+
+fetch("/Notifications").then(res => {
+    return res.json();
+}).then(ret => {
+    if (ret.success) {
+        notifications.data = ret.payload;
+    }
+});
+
+var notifications = new Proxy({
+    data: null
+}, {
+    get: function (target, prop) {
+        return target[prop];
+    },
+    set: function (target, prop, value) {
+        Reflect.set(target, prop, value);
+        console.log("set");
+        document.getElementById("notificationList").innerHTML = "<h4>notifications</h4>"
+        var dt = target.data;
+        for (i = 0; i < dt.length; i++) {
+            document.getElementById("notificationList").innerHTML += `<a href="${dt[i].url}">${dt[i].type}</a><br>`;
+        }
+        return true;
+    }
+});
+
 

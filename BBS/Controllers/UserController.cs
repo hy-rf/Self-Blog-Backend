@@ -26,17 +26,14 @@ namespace BBS.Controllers
         [Route("UserCenter")]
         public IActionResult UserCenter(ClaimsPrincipal claimsPrincipal)
         {
-            try
-            {
-                string Id = User.FindFirst(ClaimTypes.Sid).Value;
-                ViewBag.Id = Convert.ToInt32(Id);
-                var model = userService.GetUser(ViewBag.Id);
-                return View(model);
-            }
-            catch
+            if (!User.Identity.IsAuthenticated)
             {
                 return Redirect("/Welcome");
             }
+            string Id = User.FindFirst(ClaimTypes.Sid)!.Value;
+            ViewBag.Id = Convert.ToInt32(Id);
+            var model = userService.GetUser(ViewBag.Id);
+            return View(model);
         }
         [Route("User/{Id}")]
         public IActionResult UserPage(int Id)

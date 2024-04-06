@@ -20,25 +20,29 @@
             <a href="/">Home</a>
             <a href="/Post/1">Post</a>
         </div>
-        <div id="navRight">
-            @if (User.Identity!.IsAuthenticated)
-            {
+
+        @if (User.Identity!.IsAuthenticated)
+        {
+            <div id="navRight">
                 <a id="userlink" class="@Id" asp-controller="User" asp-action="UserCenter">Hello! @(Name)</a>
                 <img id="userLink"></img>
                 <div></div>
                 <a href="/Logout">Logout</a>
                 <a id="Chat" href="">ChatWindow</a>
                 <a id="notification" href="">Notif</a>
-                <div id="notificationList">
-                    <h4>notifications</h4>
-                </div>
+            </div>
+            <div id="notificationList">
+                <h4>notifications</h4>
+            </div>
 
-            }
-            else
-            {
+        }
+        else
+        {
+            <div id="navRight">
                 <a asp-controller="User" asp-action="Index">Login/Signup</a>
-            }
-        </div>
+            </div>
+        }
+
     </header>
     <main>
         <br>
@@ -67,10 +71,12 @@
             break;
         case "Post":
             <script src="~/PostCommon.js" defer></script>
-            if (ViewContext.HttpContext.Request.Path.Value?.Split("/")[2] == "Detail"){
+            if (ViewContext.HttpContext.Request.Path.Value?.Split("/")[2] == "Detail")
+            {
                 <script src="~/PostDetail.js" defer></script>
             }
-            else{
+            else
+            {
                 <script src="~/Post.js" defer></script>
             }
             break;
