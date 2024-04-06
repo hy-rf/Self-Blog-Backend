@@ -1,14 +1,14 @@
-
+﻿using BBS.IService;
 using MailKit.Net.Smtp;
 using MailKit.Security;
 using Microsoft.AspNetCore.Mvc;
 using MimeKit;
 
-namespace BBS.Controllers
+namespace BBS.Services
 {
-    public class MailController : Controller
+    public class MailService : IMailService
     {
-        public IActionResult SendMail()
+        public Task<bool> SendMail()
         {
             var message = new MimeMessage();
             message.From.Add(new MailboxAddress("FromName", "heyu880202@gmail.com"));
@@ -22,7 +22,7 @@ namespace BBS.Controllers
                 client.Send(message);
                 client.Disconnect(true);
             }
-            return View();
+            return Task.FromResult(true);
         }
     }
 }
