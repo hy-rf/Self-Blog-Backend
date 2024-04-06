@@ -23,7 +23,7 @@ namespace BBS.Services
                 Created = DateTime.Now,
                 Modified = DateTime.Now
             };
-            Tag.Split("#").ToList().ForEach(tag =>
+            Tag.Replace(" ", "").Split("#").ToList().ForEach(tag =>
             {
                 if (tag != "")
                 {
@@ -57,7 +57,7 @@ namespace BBS.Services
             postRepository.UpdateAsync(EditPost);
             //Compare between old posttags and new posttags then remove old posttag thats not in new posttags
             var oldtags = postTagRepository.GetPostTagsByPostId(Id).Result;
-            var newtags = Tag.Split("#").ToList();
+            var newtags = Tag.Replace(" ", "").Split("#").ToList();
             foreach (var t in oldtags)
             {
                 if (!newtags.Contains(t.Tag.Name))

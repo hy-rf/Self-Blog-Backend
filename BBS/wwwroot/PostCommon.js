@@ -15,10 +15,10 @@ document.getElementById("PostList").addEventListener("click", async (e) => {
             return response.json();
         });
         if (res.success) {
-            if(res.message == "Post liked"){
+            if (res.message == "Post liked") {
                 e.target.src = "/img/heartfill.png";
             }
-            else{
+            else {
                 e.target.src = "/img/heartvac.png";
             }
         }
@@ -27,3 +27,13 @@ document.getElementById("PostList").addEventListener("click", async (e) => {
         }
     }
 });
+
+document.getElementById("Tag").addEventListener("keydown", (e) => {
+    if (e.key === " " || e.key === "Enter") {
+        var tagArray = e.target.value.split(" ").filter((item) => item != "");
+        e.target.value = tagArray.map(tag => tag.startsWith("#") ? tag : "#" + tag).join(" ");
+    }
+    else if (e.key === "#") {
+        e.target.value = e.target.value.slice(0, -1);
+    }
+})
