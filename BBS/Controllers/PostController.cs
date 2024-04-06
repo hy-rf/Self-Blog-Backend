@@ -48,14 +48,14 @@ namespace BBS.Controllers
         [Route("Post/Detail/{Id}")]
         public ActionResult GetPost(int Id)
         {
-            var ret = postService.GetPost(Id);
+            var ret = postService.GetPost(Id).Result;
             return View("Post", ret);
         }
         [HttpGet]
         [Route("api/Post/{Id}")]
         public JsonResult GetPostContentAPI(int Id)
         {
-            var ret = postService.GetPost(Id).Content;
+            var ret = postService.GetPost(Id).Result.Content;
             return Json(JsonBody.CreateResponse(true, ret, "success"));
         }
         // API DONE
@@ -66,7 +66,7 @@ namespace BBS.Controllers
             int PostId = json.GetProperty("PostId").GetInt32();
             string Title = json.GetProperty("Title").ToString();
             string Content = json.GetProperty("Content").ToString();
-            if (postService.GetPost(PostId).UserId != Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value))
+            if (postService.GetPost(PostId).Result.UserId != Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value))
             {
                 return BadRequest();
             }
@@ -80,8 +80,7 @@ namespace BBS.Controllers
         [Route("api/Post")]
         public JsonResult GetPost()
         {
-            var result = postService.GetPostsLite();
-            return Json(JsonBody.CreateResponse(true, result, "success"));
+            return Json(JsonBody.CreateResponse(true, "success"));
         }
     }
 }
