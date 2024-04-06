@@ -1,8 +1,9 @@
 
 const quillEdit = new Quill('#CreatePostForm', {
     modules: {
-        toolbar: ['bold', 'italic', 'underline', 'strike']
+        toolbar: ['bold', 'italic', 'underline', 'strike', 'link', 'image', 'code-block', 'video', 'blockquote', 'clean']
     },
+    placeholder: 'Compose an epic...',
     theme: 'snow'
 });
 document.getElementById("submitPost").addEventListener("click", (e) => {
@@ -18,8 +19,14 @@ document.getElementById("submitPost").addEventListener("click", (e) => {
             Content: quillEdit.getContents()
         }),
     }).then(response => {
-        location.reload();
-        return;
+        return response.json();
+    }).then(ret => {
+        if (ret.success) {
+            location.reload();
+        }
+        else {
+            alert(ret.message);
+        }
     });
 });
 document.getElementById("toggleCreatePostBtn").addEventListener("click", () => {

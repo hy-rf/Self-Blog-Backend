@@ -322,10 +322,10 @@ img#userLink:not(:hover) {
     color: blue;
 }
 
-/* #PostFormWrapper {
+#PostFormWrapper {
     position: relative;
     margin: 1rem 2rem 1rem 2rem;
-} */
+}
 
 .showCreatePost {
     display: block !important;
