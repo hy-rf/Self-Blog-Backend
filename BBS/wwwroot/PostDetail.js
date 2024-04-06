@@ -21,7 +21,6 @@ document.getElementById("toggleEditPostBtn").addEventListener("click", () => {
 fetch(`/api/Post/${document.location.href.split("/")[5]}`).then(res => {
     return res.json();
 }).then(ret => {
-    console.log(ret);
     if (ret.success) {
         PostContent = JSON.parse(ret.payload)
         quill.setContents(PostContent);
