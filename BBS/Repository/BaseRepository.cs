@@ -12,59 +12,57 @@ namespace BBS.Repository
     public class BaseRepository<T> : IBaseRepository<T> where T : class, new()
     {
         private readonly AppDbContext _context;
-        private readonly DbSet<T> _dbSet;
 
         public BaseRepository(AppDbContext context)
         {
             _context = context;
-            _dbSet = context.Set<T>();
         }
 
         public async Task<bool> CreateAsync(T entity)
         {
-            await _dbSet.AddAsync(entity);
+            await _context.Set<T>().AddAsync(entity);
             return await _context.SaveChangesAsync() > 0;
         }
 
         public async Task<T> GetAsync(int id)
         {
-            return await _dbSet.FindAsync(id);
+            return await _context.Set<T>().FindAsync(id);
         }
 
         public async Task<List<T>> GetAllAsync()
         {
-            return await _dbSet.ToListAsync();
+            return await _context.Set<T>().ToListAsync();
         }
 
         public async Task<List<T>> GetAllAsync(Expression<Func<T, bool>> whereLambda)
         {
-            return await _dbSet.Where(whereLambda).ToListAsync();
+            return await _context.Set<T>().Where(whereLambda).ToListAsync();
         }
 
         public async Task<List<T>> GetAllAsync(int page, int size, Expression<Func<T, bool>> whereLambda)
         {
-            return await _dbSet.Where(whereLambda).Skip((page - 1) * size).Take(size).ToListAsync();
+            return await _context.Set<T>().Where(whereLambda).Skip((page - 1) * size).Take(size).ToListAsync();
         }
 
         public async Task<bool> UpdateAsync(T entity)
         {
-            _dbSet.Update(entity);
+            _context.Set<T>().Update(entity);
             return await _context.SaveChangesAsync() > 0;
         }
 
         public async Task<bool> DeleteAsync(int id)
         {
-            var entity = await _dbSet.FindAsync(id);
-            _dbSet.Remove(entity);
+            var entity = await _context.Set<T>().FindAsync(id);
+            _context.Set<T>().Remove(entity);
             return await _context.SaveChangesAsync() > 0;
         }
         public async Task<T> GetOneAsync(Expression<Func<T, bool>> whereLambda)
         {
-            return await _dbSet.FirstOrDefaultAsync(whereLambda);
+            return await _context.Set<T>().FirstOrDefaultAsync(whereLambda);
         }
         public async Task<bool> IsExist(Expression<Func<T, bool>> whereLambda)
         {
-            return _dbSet.Any(whereLambda);
+            return _context.Set<T>().Any(whereLambda);
         }
     }
 }
