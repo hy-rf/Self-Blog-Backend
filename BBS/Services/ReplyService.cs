@@ -1,7 +1,6 @@
 ﻿using BBS.Data;
 using BBS.IService;
 using BBS.Models;
-using Microsoft.Data.Sqlite;
 
 namespace BBS.Services
 {
@@ -9,7 +8,8 @@ namespace BBS.Services
     {
         public bool Reply(string Content, int UserId, int PostId)
         {
-            var newReply = new Reply{
+            var newReply = new Reply
+            {
                 Content = Content,
                 UserId = UserId,
                 PostId = PostId,

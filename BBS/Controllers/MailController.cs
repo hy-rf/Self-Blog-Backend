@@ -1,8 +1,8 @@
 
-using Microsoft.AspNetCore.Mvc;
 using MailKit.Net.Smtp;
-using MimeKit;
 using MailKit.Security;
+using Microsoft.AspNetCore.Mvc;
+using MimeKit;
 
 namespace BBS.Controllers
 {

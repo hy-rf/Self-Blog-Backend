@@ -1,9 +1,7 @@
 ﻿using BBS.IService;
 using BBS.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualBasic;
 using System.Security.Claims;
-using System.Text.Json;
 
 namespace BBS.Controllers
 {
@@ -29,8 +27,10 @@ namespace BBS.Controllers
                         Message = "Post liked"
                     });
                 }
-                catch{
-                    return Json(new JsonBody{
+                catch
+                {
+                    return Json(new JsonBody
+                    {
                         Success = true,
                         Message = "De-Liked Post"
                     });

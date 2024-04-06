@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace BBS.Models
+﻿namespace BBS.Models
 {
     public class PostTag
     {

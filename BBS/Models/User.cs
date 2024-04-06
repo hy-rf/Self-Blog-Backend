@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace BBS.Models
+﻿namespace BBS.Models
 {
     public class User
     {
@@ -10,7 +8,7 @@ namespace BBS.Models
         public DateTime Created { get; set; }
         public DateTime LastLogin { get; set; }
         public string? Avatar { get; set; }
-        public int LoggedIn {  get; set; }
+        public int LoggedIn { get; set; }
         public ICollection<Post>? Posts { get; set; }
         public ICollection<Reply>? Replies { get; set; }
         //[NotMapped]

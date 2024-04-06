@@ -8,5 +8,5 @@ namespace BBS.IRepository
         Task<List<Post>> GetPostsForPostList(int PageIndex, int NumPostPerPage);
     }
 
-    
+
 }

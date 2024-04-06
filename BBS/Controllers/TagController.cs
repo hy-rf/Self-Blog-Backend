@@ -1,8 +1,5 @@
-﻿using BBS.Data;
-using BBS.IService;
-using BBS.Models;
+﻿using BBS.IService;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace BBS.Controllers
 {

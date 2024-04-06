@@ -2,8 +2,6 @@
 using BBS.IRepository;
 using BBS.IService;
 using BBS.Models;
-using BBS.Repository;
-using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 
 namespace BBS.Services

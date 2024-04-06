@@ -1,8 +1,9 @@
 
-using System.Security.Claims;
 using Microsoft.AspNetCore.SignalR;
+using System.Security.Claims;
 
-namespace BBS.Common{
+namespace BBS.Common
+{
     public class MyUserIdProvider : IUserIdProvider
     {
         public string GetUserId(HubConnectionContext connection)

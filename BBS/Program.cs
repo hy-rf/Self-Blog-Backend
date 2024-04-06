@@ -1,18 +1,14 @@
-using Microsoft.EntityFrameworkCore;
+using BBS.Common;
+using BBS.Data;
+using BBS.IRepository;
+using BBS.IService;
+using BBS.Repository;
+using BBS.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Microsoft.AspNetCore.SignalR;
-
-
-using BBS.Data;
-using BBS.IService;
-using BBS.Services;
-using BBS.Hubs;
-using BBS.Common;
-using BBS.IRepository;
-using BBS.Repository;
-using BBS.Models;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -31,7 +27,7 @@ builder.Services.AddAuthentication(opt =>
         {
             ValidateIssuer = false,
             ValidateAudience = false,
-            ValidateIssuerSigningKey =true,
+            ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetValue<string>("JWT")!))
         };
         options.Events = new JwtBearerEvents

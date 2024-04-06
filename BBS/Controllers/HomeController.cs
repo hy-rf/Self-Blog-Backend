@@ -1,10 +1,6 @@
-﻿using BBS.Data;
-using BBS.IService;
+﻿using BBS.IService;
 using BBS.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
-using System.Text.Json;
 
 namespace BBS.Controllers
 {
@@ -18,7 +14,8 @@ namespace BBS.Controllers
         }
         [HttpGet]
         [Route("Brief")]
-        public JsonResult Brief(){
+        public JsonResult Brief()
+        {
             return Json(JsonBody.CreateResponse(true, userService.GetUserBasic(1), "User information"));
         }
         //public ActionResult Search(string Option, string SearchTerm)

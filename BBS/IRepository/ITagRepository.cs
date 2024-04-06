@@ -7,5 +7,5 @@ namespace BBS.IRepository
         public Task<Tag> GetTagByNameAsync(string name);
     }
 
-    
+
 }

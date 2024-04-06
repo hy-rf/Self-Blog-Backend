@@ -1,5 +1,4 @@
 ﻿using BBS.Models;
-using Microsoft.AspNetCore.Mvc;
 
 namespace BBS.IService
 {

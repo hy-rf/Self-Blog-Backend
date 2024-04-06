@@ -1,7 +1,5 @@
 ﻿using BBS.IService;
 using BBS.Models;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using System.Text.Json;
@@ -99,7 +97,8 @@ namespace BBS.Controllers
         }
         [HttpPost]
         [Route("api/ChatRoomMember")]
-        public JsonResult AddChatRoomMember([FromBody] JsonElement newMember){
+        public JsonResult AddChatRoomMember([FromBody] JsonElement newMember)
+        {
             try
             {
                 chatService.AddMember(new Models.ChatRoomMember
@@ -125,7 +124,8 @@ namespace BBS.Controllers
         }
         [HttpDelete]
         [Route("api/ChatRoomMember")]
-        public JsonResult DeleteChatRoomMember([FromBody] JsonElement memberToKick){
+        public JsonResult DeleteChatRoomMember([FromBody] JsonElement memberToKick)
+        {
             try
             {
                 chatService.KickMember(new Models.ChatRoomMember

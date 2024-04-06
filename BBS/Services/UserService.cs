@@ -1,7 +1,6 @@
 ﻿using BBS.Data;
 using BBS.IService;
 using BBS.Models;
-using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 
 namespace BBS.Services
@@ -95,7 +94,7 @@ namespace BBS.Services
 
         public User GetUserBasic(int Id)
         {
-            return ctx.User.Single(u => u.Id ==Id);
+            return ctx.User.Single(u => u.Id == Id);
         }
     }
 }

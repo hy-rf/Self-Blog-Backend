@@ -1,6 +1,3 @@
-
-using BBS.Hubs;
-
 namespace BBS.IService
 {
     public interface INotificationService

@@ -1,6 +1,5 @@
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using BBS.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BBS.Data;
 

@@ -2,8 +2,6 @@
 using BBS.IService;
 using BBS.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
-using System.Linq;
 
 namespace BBS.Services
 {

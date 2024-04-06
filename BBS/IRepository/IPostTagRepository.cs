@@ -4,8 +4,8 @@ namespace BBS.IRepository
 {
     public interface IPostTagRepository : IBaseRepository<PostTag>
     {
-        
+
     }
 
-    
+
 }

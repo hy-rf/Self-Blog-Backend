@@ -1,13 +1,13 @@
 
-namespace BBS.Repository{
+namespace BBS.Repository
+{
+    using BBS.Data;
+    using BBS.IRepository;
+    using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;
     using System.Linq.Expressions;
     using System.Threading.Tasks;
-    using BBS.Data;
-    using BBS.IRepository;
-    using BBS.Models;
-    using Microsoft.EntityFrameworkCore;
 
     public class BaseRepository<T> : IBaseRepository<T> where T : class, new()
     {
@@ -58,10 +58,12 @@ namespace BBS.Repository{
             _dbSet.Remove(entity);
             return await _context.SaveChangesAsync() > 0;
         }
-        public async Task<T> GetOneAsync(Expression<Func<T, bool>> whereLambda){
+        public async Task<T> GetOneAsync(Expression<Func<T, bool>> whereLambda)
+        {
             return await _dbSet.FirstOrDefaultAsync(whereLambda);
         }
-        public async Task<bool> IsExist(Expression<Func<T, bool>> whereLambda){
+        public async Task<bool> IsExist(Expression<Func<T, bool>> whereLambda)
+        {
             return _dbSet.Any(whereLambda);
         }
     }
