@@ -49,5 +49,7 @@ namespace BBS.IRepository
         /// <param name="id"></param>
         /// <returns></returns>
         Task<bool> DeleteAsync(int id);
+        Task<T> GetOneAsync(Expression<Func<T, bool>> whereLambda);
+        Task<bool> IsExist(Expression<Func<T, bool>> whereLambda);
     }
 }

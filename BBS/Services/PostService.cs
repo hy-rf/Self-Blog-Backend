@@ -29,11 +29,11 @@ namespace BBS.Services
             {
                 if (tag != "")
                 {
-                    if (!ctx.Tag.Any(t => t.Name == tag))
+                    if (!tagRepository.IsExist(t => t.Name == tag).Result)
                     {
                         tagRepository.CreateAsync(new Tag { Name = tag });
                     }
-                    var posttag = new PostTag { TagId = ctx.Tag.Single(t => t.Name == tag).Id, PostId = ctx.Post.Count() + 1 };
+                    var posttag = new PostTag { TagId = tagRepository.GetTagByNameAsync(tag).Result.Id, PostId = postRepository.GetAllAsync().Result.Count + 1 };
                     postTagRepository.CreateAsync(posttag);
                 }
             });
@@ -63,13 +63,13 @@ namespace BBS.Services
             {
                 if (tag != "")
                 {
-                    if (!ctx.Tag.Any(t => t.Name == tag))
+                    if (!tagRepository.IsExist(t => t.Name == tag).Result)
                     {
                         tagRepository.CreateAsync(new Tag { Name = tag });
                     }
                     if (!ctx.PostTag.Any(pt => pt.TagId == ctx.Tag.Single(t => t.Name == tag).Id && pt.PostId == Id))
                     {
-                        var posttag = new PostTag { TagId = ctx.Tag.Single(t => t.Name == tag).Id, PostId = Id };
+                        var posttag = new PostTag { TagId = tagRepository.GetTagByNameAsync(tag).Result.Id, PostId = Id };
                         postTagRepository.CreateAsync(posttag);
                     }
                 }

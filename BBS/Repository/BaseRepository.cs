@@ -58,5 +58,11 @@ namespace BBS.Repository{
             _dbSet.Remove(entity);
             return await _context.SaveChangesAsync() > 0;
         }
+        public async Task<T> GetOneAsync(Expression<Func<T, bool>> whereLambda){
+            return await _dbSet.FirstOrDefaultAsync(whereLambda);
+        }
+        public async Task<bool> IsExist(Expression<Func<T, bool>> whereLambda){
+            return _dbSet.Any(whereLambda);
+        }
     }
 }
