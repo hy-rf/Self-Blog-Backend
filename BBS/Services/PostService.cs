@@ -39,6 +39,15 @@ namespace BBS.Services
             Id = newPost.Id;
             return Task.FromResult(true);
         }
+        #region
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="Title"></param>
+        /// <param name="Content"></param>
+        /// <param name="Tag"></param>
+        /// <returns></returns>
         public bool EditPost(int Id, string Title, string Content, string Tag)
         {
             var EditPost = postRepository.GetAsync(Id).Result;
@@ -78,6 +87,7 @@ namespace BBS.Services
         {
             return await postRepository.GetPostById(Id);
         }
+        #endregion
         /// <summary>
         /// 
         /// </summary>

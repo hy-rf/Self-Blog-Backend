@@ -1,5 +1,5 @@
-﻿using BBS.IService;
-using BBS.Models;
+﻿using BBS.Common;
+using BBS.IService;
 using Google.Authenticator;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;

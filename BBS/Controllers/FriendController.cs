@@ -1,4 +1,5 @@
-﻿using BBS.IService;
+﻿using BBS.Common;
+using BBS.IService;
 using BBS.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;

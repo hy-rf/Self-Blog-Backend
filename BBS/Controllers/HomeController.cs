@@ -1,5 +1,5 @@
-﻿using BBS.IService;
-using BBS.Models;
+﻿using BBS.Common;
+using BBS.IService;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BBS.Controllers
