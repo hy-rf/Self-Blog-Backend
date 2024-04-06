@@ -3,10 +3,14 @@ document.getElementById("Detail").addEventListener("click", (e) => {
         fetch(`/Friend/${document.getElementById("Id").innerText}`, {
             method: "POST"
         }).then(response => {
-            e.target.innerText = "success"
-        }).catch(response => {
-            e.target.innerText = "fail"
+            return response.json();
+        }).then(ret => {
+            if (ret.success) {
+                e.target.innerText = "Request Sent";
+            }
+            else {
+                e.target.innerText = "Request Failed";
+            }
         });
     }
-
 });

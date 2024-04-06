@@ -32,22 +32,16 @@ namespace BBS.Controllers
                 IAsyncEnumerable<Friend> Friend = friendService.Friends(ViewBag.Id);
                 await foreach (var item in Friend)
                 {
-                    // await notificationService.AddNotification(new BBS.Models.Notification
-                    // {
-                    //     UserId = item.FriendUser.Id,
-                    //     Type = "Post",
-                    //     Message = $"Friend {ViewBag.Id} created a new post: {json.GetProperty("Title")}",
-                    //     Url = $"/Post/{Id}",
-                    //     IsRead = false
-                    // });
-                    _ = notification.Clients.User(item.FriendUser.Id.ToString()).SendAsync("ReceiveNotification", new BBS.Models.Notification
+                    Models.Notification newNotification = new()
                     {
                         UserId = item.FriendUser.Id,
                         Type = "Post",
-                        Message = $"New post:{json.GetProperty("Title")}",
-                        Url = $"/Post/Detail{Id}",
+                        Message = $"{ViewBag.Id}",
+                        Url = $"/Post/Detail/{Id}",
                         IsRead = false
-                    });
+                    };
+                    await notificationService.AddNotification(newNotification);
+                    await notification.Clients.User(item.FriendUser.Id.ToString()).SendAsync("ReceiveNotification", newNotification);
                 }
                 return RedirectToAction("Index");
             }

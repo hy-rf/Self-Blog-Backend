@@ -1,17 +1,17 @@
 
 using BBS.Data;
 using BBS.Hubs;
+using BBS.IRepository;
 using BBS.IService;
+using BBS.Repository;
 
 namespace BBS.Services
 {
-    public class NotificationService(AppDbContext ctx) : INotificationService
+    public class NotificationService(INotificationRepository notificationRepository) : INotificationService
     {
-        public async Task<Task> AddNotification(Models.Notification notification)
+        public async Task<bool> AddNotification(Models.Notification notification)
         {
-            ctx.Notification.Add(notification);
-            await ctx.SaveChangesAsync();
-            return Task.CompletedTask;
+            return await notificationRepository.CreateAsync(notification);
         }
     }
 }
