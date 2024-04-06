@@ -22,7 +22,7 @@
         <p class="Title">@Model.Title</p>
         @if (User.Identity.IsAuthenticated)
         {
-            if (Model.Likes.Any(l => l.UserId == Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value)))
+            if (Model.Likes!.Any(l => l.UserId == Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value)))
             {
                 <img src="~/img/heartfill.png" class="LikeBtn" width="16" height="16">
             }
@@ -36,7 +36,7 @@
         </div>
         <div class="UserInfo">
             <p style="display: none;">@Model.UserId</p>
-            <a href="/User/@Model.UserId">@Model.User.Name</a>
+            <a href="/User/@Model.UserId">@Model.User!.Name</a>
             <img src="data:image/png;base64, @Model.User.Avatar" width="8" height="8">
         </div>
         <p class="timeIndicator">
@@ -63,7 +63,7 @@
         <div class="ReplyUnit">
             <p>@item.Content</p>
             <div class="UserInfo">
-                <p>@item.User.Id</p>
+                <p>@item.User!.Id</p>
                 <a href="/User/@item.User.Id">@item.User.Name</a>
                 <img src="data:image/png;base64, @item.User.Avatar" width="8" height="8">
             </div>
