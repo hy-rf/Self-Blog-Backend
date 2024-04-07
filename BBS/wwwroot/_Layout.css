@@ -216,9 +216,24 @@ img#userLink:not(:hover) {
     position: fixed;
     top: 1rem;
     right: 0;
+    background-color: var(--main-color);
+    border: 1px solid black;
+    border-radius: 1rem;
 }
 .showNotificationList{
     display: block !important;
+}
+#notificationList>*{
+    font-size: 0.8rem;
+    margin: 0.5rem;
+}
+#notificationList>*:hover{
+    background-color: lightgray;
+    transition: 0.5s;
+}
+#notificationList>*:not(:hover){
+    background-color: var(--main-color);
+    transition: 0.5s;
 }
 
 
