@@ -1,6 +1,5 @@
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using BBS.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BBS.Data;
 
@@ -21,4 +20,5 @@ public class AppDbContext : DbContext
     public DbSet<ChatRoomMessage> ChatRoomMessage { get; set; }
     public DbSet<LikedPost> LikedPost { get; set; }
     public DbSet<LikedReply> LikedReply { get; set; }
+    public DbSet<Notification> Notification { get; set; }
 }

@@ -1,26 +1,42 @@
-﻿using BBS.Data;
+﻿using BBS.Common;
+using BBS.IService;
 using BBS.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.SignalR;
 using System.Security.Claims;
 using System.Text.Json;
-using BBS.Interfaces;
-using System.Runtime.Versioning;
-using Microsoft.AspNetCore.Authorization;
 
 namespace BBS.Controllers
 {
-    public class FriendController(IFriendService friendService) : Controller
+    public class FriendController(IFriendService friendService, INotificationService notificationService, IHubContext<BBS.Hubs.Notification> notification) : Controller
     {
         [HttpPost]
         [Route("Friend/{Id}")]
-        public void SendFriendRequest(int Id)
+        public async Task<JsonResult> SendFriendRequest(int Id)
         {
+            int SendUserId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value);
             friendService.AddFriendRequest(new FriendRequest
             {
-                SendUserId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value),
+                SendUserId = SendUserId,
                 ReceiveUserId = Id
             });
+            Models.Notification newNotification = new()
+            {
+                UserId = Id,
+                Type = "FriendRequest",
+                Message = $"{SendUserId}",
+                Url = $"/FriendRequests",
+                IsRead = false
+            };
+            if (notificationService.AddNotification(newNotification).IsCompleted)
+            {
+                await notification.Clients.User(Id.ToString()).SendAsync("ReceiveNotification", newNotification);
+                return Json(JsonBody.CreateResponse(true, "success"));
+            }
+            else
+            {
+                return Json(JsonBody.CreateResponse(false, "fail"));
+            }
         }
         [HttpGet]
         [Route("FriendRequests")]
@@ -60,7 +76,7 @@ namespace BBS.Controllers
                 SendUserId = Id
             });
         }
-        // DONE API
+        // API DONE
         [HttpGet]
         [Route("FriendList/{Id}")]
         public JsonResult GetFriendList(int Id)

@@ -8,6 +8,8 @@ document.getElementById("loginBtn").addEventListener("click", () => {
             <input id="Pwd" name="Pwd" type="password" />
             <p></p>
             <button id="submitLoginBtn" type="submit">login</button>
+            <button>demo</button>
+            <button>demo2</button>
         </div>`;
 });
 document.getElementById("signupBtn").addEventListener("click", () => {
@@ -28,6 +30,22 @@ document.getElementById("signupBtn").addEventListener("click", () => {
 });
 // submit login or signup
 document.getElementById("togglePanel").addEventListener("click", async (e) => {
+    /// demo start
+    // demo 1
+    if (e.target.innerText == "demo") {
+        document.getElementById("Name").value = "rf";
+        document.getElementById("Pwd").value = "0000";
+        document.getElementById("submitLoginBtn").click();
+    }
+    // demo2
+    if (e.target.innerText == "demo2") {
+        document.getElementById("Name").value = "qwerty";
+        document.getElementById("Pwd").value = "qwe";
+        document.getElementById("submitLoginBtn").click();
+    }
+    /// demo end
+
+
     if (e.target.id == "submitLoginBtn") {
         e.target.previousElementSibling.innerText = ".";
         var logging = true;
@@ -173,9 +191,13 @@ function disableInput() {
     document.querySelectorAll("#togglePanel>div>input")[0].disabled = true;
     document.querySelectorAll("#togglePanel>div>input")[1].disabled = true;
     document.querySelector("#togglePanel>div>button").disabled = true;
+    document.getElementById("loginBtn").disabled = true;
+    document.getElementById("signupBtn").disabled = true;
 }
 function enableInput() {
     document.querySelectorAll("#togglePanel>div>input")[0].disabled = false;
     document.querySelectorAll("#togglePanel>div>input")[1].disabled = false;
     document.querySelector("#togglePanel>div>button").disabled = false;
+    document.getElementById("loginBtn").disabled = false;
+    document.getElementById("signupBtn").disabled = false;
 }

@@ -8,8 +8,8 @@ namespace BBS.Models
         public int SendUserId { get; set; }
         public int ReceiveUserId { get; set; }
         [ForeignKey("SendUserId")]
-        public User SendUser { get; set; }
+        public User? SendUser { get; set; }
         [ForeignKey("ReceiveUserId")]
-        public User ReceiveUser { get; set; }
+        public User? ReceiveUser { get; set; }
     }
 }

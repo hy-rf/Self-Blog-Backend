@@ -1,9 +1,7 @@
 ﻿using BBS.Data;
-using BBS.Interfaces;
+using BBS.IService;
 using BBS.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
-using System.Linq;
 
 namespace BBS.Services
 {
@@ -37,9 +35,9 @@ namespace BBS.Services
             return ret;
         }
 
-        public List<Friend> Friends(int UserId)
+        public IAsyncEnumerable<Friend> Friends(int UserId)
         {
-            return ctx.Friend.Where(f => f.UserId == UserId).Include(f => f.FriendUser).Select(f => new Friend
+            return (IAsyncEnumerable<Friend>)ctx.Friend.Where(f => f.UserId == UserId).Include(f => f.FriendUser).Select(f => new Friend
             {
                 FriendUser = new User
                 {
@@ -48,7 +46,7 @@ namespace BBS.Services
                     Created = f.FriendUser.Created,
                     Avatar = f.FriendUser.Avatar
                 }
-            }).ToList();
+            });
         }
 
         public bool isFriend(int UserId, int FriendUserId)

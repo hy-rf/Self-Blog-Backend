@@ -1,20 +1,14 @@
-﻿using BBS.Interfaces;
+﻿using BBS.Common;
+using BBS.IService;
 using BBS.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualBasic;
 using System.Security.Claims;
-using System.Text.Json;
 
 namespace BBS.Controllers
 {
     public class LikeController(ILikeService likeService) : Controller
     {
         // API DONE
-        /// <summary>
-        /// Post JSON stringified object as LikedPost backend object
-        /// </summary>
-        /// <param name="likedPost"></param>
-        /// <returns></returns>
         [HttpPost]
         [Route("/Like/Post")]
         public JsonResult LikePost([FromBody] LikedPost likedPost)
@@ -39,7 +33,7 @@ namespace BBS.Controllers
                     return Json(new JsonBody
                     {
                         Success = true,
-                        Message = "Post already liked"
+                        Message = "De-Liked Post"
                     });
                 }
                 finally

@@ -1,7 +1,11 @@
 
-var PostEditorConfig = {};
-PostEditorConfig.toolbar = "basic";
-var PostEditor = new RichTextEditor("#CreatePostForm", PostEditorConfig);
+const quillEdit = new Quill('#CreatePostForm', {
+    modules: {
+        toolbar: ['bold', 'italic', 'underline', 'strike', 'link', 'image', 'code-block', 'video', 'blockquote', 'clean']
+    },
+    placeholder: 'Compose an epic...',
+    theme: 'snow'
+});
 document.getElementById("submitPost").addEventListener("click", (e) => {
     fetch(`/Post/CreatePost`, {
         method: "POST",
@@ -12,11 +16,17 @@ document.getElementById("submitPost").addEventListener("click", (e) => {
         body: JSON.stringify({
             Title: document.getElementById("Title").value,
             Tag: document.getElementById("Tag").value,
-            Content: PostEditor.getHTMLCode()
+            Content: quillEdit.getContents()
         }),
     }).then(response => {
-        location.reload();
-        return;
+        return response.json();
+    }).then(ret => {
+        if (ret.success) {
+            location.reload();
+        }
+        else {
+            alert(ret.message);
+        }
     });
 });
 document.getElementById("toggleCreatePostBtn").addEventListener("click", () => {

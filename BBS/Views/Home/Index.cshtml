@@ -1,1 +1,14 @@
 ﻿<h3>Home</h3>
+
+
+<div id="PostList">
+    <div class="PostUnit" v-for="post in brief">
+        <p v-text="post.id"></p>
+        <p v-text="post.title"></p>
+        <div class="PostUnit">
+            <p v-text="post.user.id"></p>
+            <p v-text="post.user.name"></p>
+            <img v-bind:src="'data:image/png;base64, '+post.user.avatar" width="16" height="16" />
+        </div>
+    </div>
+</div>

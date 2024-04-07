@@ -12,103 +12,135 @@ window.onscroll = () => {
     prepos = curpos;
 }
 
-readJson = (object) => {
-    return fetch("/test", {
-        method: "POST",
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(object),
-    }).then((response) => {
-        return response.json();
+handleNotification();
+function handleNotification() {
+    "use strict";
+    var notificationConnection = new signalR.HubConnectionBuilder().withUrl("/notification").build();
+    notificationConnection.start().then(function () {
+    });
+    notificationConnection.on("ReceiveNotification", function (msg) {
+        console.log(notifications)
+        var newData = notifications.data;
+        newData.push(msg);
+        console.log(newData);
+        notifications.data = newData;
+        // document.getElementById("notificationList").innerHTML += `<p>${msg}</p>`;
+        // document.getElementById("notification").style.color = "red";
     });
 }
-handleChat = async (e) => {
-    if (e.target.tagName == "LI") {
-        var res = await fetch("/api/GetChatRoomMessages", {
+
+var chatRoomWindow = document.createElement("div");
+chatRoomWindow.className = "ChatWindow";
+chatRoomWindow.innerHTML = `
+<div id="chatroomList">
+    <ul>
+    </ul>
+</div>`;
+document.getElementById("navRight").addEventListener("click", (e) => {
+    if (e.target.id == "userLink") {
+        document.location.href = "/UserCenter";
+    }
+    else if (e.target.id == "notification") {
+        showNotificationList["isVisible"] = !showNotificationList.isVisible;
+        e.target.style.color = "black";
+        e.preventDefault();
+    }
+});
+
+var showNotificationList = new Proxy({
+    isVisible: false
+}, {
+    get: (target, prop) => {
+        return target[prop];
+    },
+    set: (target, prop, value) => {
+        target[prop] = value;
+        if (value) {
+            document.getElementById("notificationList").style.display = "block";
+        }
+        else {
+            document.getElementById("notificationList").style.display = "none";
+        }
+    }
+});
+
+
+document.getElementsByTagName("main")[0].addEventListener("mouseover", (e) => {
+    if (e.target.classList.contains("ChatWindow")) {
+        disableScroll();
+    }
+});
+document.getElementsByTagName("main")[0].addEventListener("mouseleave", (e) => {
+    if (e.target.classList.contains("ChatWindow")) {
+        enableScroll();
+    }
+}, true);
+document.getElementsByTagName("main")[0].addEventListener("click", async (e) => {
+    if (e.target.tagName == "LI" && !chatWindow.activeChatRoom) {
+        chatWindow["activeChatRoom"] = e.target.id.split("_")[1];
+    }
+    else if (e.target.id == "backtoChatRoomListBtn") {
+        chatWindow["isVisible"] = true;
+        chatWindow["activeChatRoom"] = 0;
+    }
+    else if (e.target.id == "chatRoomMemberListBtn") {
+        chatWindow["activeChatRoomMember"] = !chatWindow.activeChatRoomMember;
+    }
+}, true);
+document.getElementsByTagName("main")[0].addEventListener("click", async (e) => {
+    if (e.target.id == "addMemberBtn") {
+        var res = await fetch("/api/ChatRoomMember", {
             method: "POST",
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                chatRoomId: e.target.id.split("_")[1]
+                ChatRoomId: chatWindow.activeChatRoom,
+                userId: document.getElementById("userId").value
             })
         }).then(res => {
             return res.json();
         });
         if (res.success) {
-            document.getElementById("chatroomList").style.display = "none";
-            chatRoomWindow.innerHTML += `
-                        <div id="chatContent">
-                            <button id="backtoChatRoomListBtn">back to chatroom list</button>
-                            <ul>
-                            </ul>
-                        </div>
-                        <div id="chatInput">
-                        </div>`;
-            document.getElementById("chatInput").innerHTML = "";
-            document.getElementById("chatInput").innerHTML = `
-                                <input type="text" id="chatInputBox">
-                                <button id="sendButton">Send</button>`;
-            activeChatRoom = e.target.id.split("_")[1];
-            document.querySelector("#chatContent ul").innerText = "";
-            res.payload.forEach((element) => {
-                var li = document.createElement("li");
-                li.innerText = `${element.user.name} says ${element.message}`;
-                document.querySelector("#chatContent ul").appendChild(li);
+            var res = await fetch(`/api/ChatRoomMember/${chatWindow.activeChatRoom}`, {
+                method: "GET",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                }
+            }).then(res => {
+                return res.json();
             });
-            document.getElementById("backtoChatRoomListBtn").addEventListener("click", () => {
-                document.getElementById("chatroomList").addEventListener("click", (e) => { handleChat(e); });
-                document.getElementById("chatContent").remove();
-                document.getElementById("chatInput").remove();
-                document.getElementById("chatroomList").style.display = "block";
-            });
-            chatting();
-
+            if (res.success) {
+                document.getElementById("chatInput").innerHTML = `
+                                <input type="text" id="userId">
+                                <button id="addMemberBtn">Add</button>`;
+                document.querySelector("#chatContent ul").innerText = "";
+                res.payload.forEach((element) => {
+                    var li = document.createElement("li");
+                    li.innerText = `${element.user.id} ${element.user.name}`;
+                    document.querySelector("#chatContent ul").appendChild(li);
+                });
+            }
         }
         else {
-            document.querySelector("#chatContent ul").innerText = "No Message";
-            document.getElementById("chatInput").innerHTML = "";
         }
     }
-}
-
-// This is function for dynamically visible chat room window
-var chatRoomWindow = document.createElement("div");
-chatRoomWindow.className = "ChatWindow";
-chatRoomWindow.innerHTML = `    <link rel="stylesheet" href="/ChatRoom.css">
-    <div id="chatroomList">
-        <ul>
-        </ul>
-    </div>
-    `
-
-
-document.getElementById("user").addEventListener("click", (e) => {
-    if (e.target.id == "Chat") {
-        if (toggleWindow["isVisible"]) {
-            toggleWindow["isVisible"] = false;
-        }
-        else {
-            toggleWindow["isVisible"] = true;
-        }
-        e.preventDefault();
-    }
-
-});
-var activeChatRoom = null;
-var toggleWindow = new Proxy({
-    isVisible: false
-}, {
-    get: (target, prop) => {
-        return target[prop];
-    },
-    set: async (target, prop, value) => {
-        target[prop] = value;
-        if (value) {
-            await document.getElementsByTagName("main")[0].appendChild(chatRoomWindow);
+    if (e.target.id == "addChatRoom") {
+        var res = await fetch("/api/ChatRoom", {
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                name: document.getElementById("chatInputBox").value
+            })
+        }).then(res => {
+            return res.json();
+        });
+        if (res.success) {
             var res = await fetch("/api/GetJoinedChatRoom", {
                 method: "POST",
                 headers: {
@@ -119,6 +151,9 @@ var toggleWindow = new Proxy({
                 return response.json();
             });
             if (res.success) {
+                document.getElementById("chatInput").innerHTML = `
+                                <input type="text" id="chatInputBox">
+                                <button id="addChatRoom">Add</button>`;
                 document.querySelector("#chatroomList ul").innerText = "";
                 res.payload.forEach((element) => {
                     var li = document.createElement("li");
@@ -130,24 +165,168 @@ var toggleWindow = new Proxy({
             else {
                 document.querySelector("#chatroomList ul").innerText = "No Chat Room";
             }
-            document.getElementById("chatroomList").addEventListener("click", (e) => { handleChat(e); });
-            document.querySelector(".ChatWindow").addEventListener("mouseover", () => {
-                document.querySelector(":root").style.overflow = "hidden";
+        }
+        else {
+        }
+
+    }
+});
+document.getElementById("navRight").addEventListener("click", async (e) => {
+    if (e.target.id == "Chat") {
+        chatWindow["isVisible"] = !chatWindow.isVisible;
+        e.preventDefault();
+    }
+    else if (e.target.innerText == "Logout") {
+        e.preventDefault();
+        var res = await fetch("/Logout", {
+            method: "DELETE"
+        }).then(res => {
+            return res.json();
+        }).then(ret => {
+            if (ret.success) {
+                document.location.href = "/Welcome"
+            }
+            else {
+                e.target.innerText = "Fail!";
+                setTimeout(() => {
+                    e.target.innerText = "Logout"
+                }, 3000);
+                document.location.href = "/Welcome"
+            }
+        })
+    }
+});
+disableScroll = () => {
+    document.querySelector(":root").style.overflow = "hidden";
+}
+enableScroll = () => {
+    document.querySelector(":root").style.overflow = "auto";
+}
+
+
+var chatWindow = new Proxy({
+    isVisible: false,
+    activeChatRoom: 0,
+    activeChatRoomMember: false
+}, {
+    get: (target, prop) => {
+        return target[prop];
+    },
+    set: async (target, prop, value) => {
+        target[prop] = value;
+        console.log(target);
+        // When chat room window is visible do this
+        if (target.isVisible) {
+            if (document.getElementsByTagName("main")[0].getElementsByClassName("ChatWindow").length == 0) {
+                await document.getElementsByTagName("main")[0].appendChild(chatRoomWindow);
+            }
+            chatRoomWindow.innerHTML = `
+            <div id="chatroomList">
+                <ul>
+                </ul>
+            </div>
+            <div id="chatInput">
+            </div>`;
+            var res = await fetch("/api/GetJoinedChatRoom", {
+                method: "POST",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+            }).then(response => {
+                return response.json();
             });
-            document.querySelector(".ChatWindow").addEventListener("mouseout", () => {
-                document.querySelector(":root").style.overflow = "auto";
-            });
+            if (res.success) {
+                document.getElementById("chatInput").innerHTML = `
+                                <input type="text" id="chatInputBox">
+                                <button id="addChatRoom">Add</button>`;
+                document.querySelector("#chatroomList ul").innerText = "";
+                res.payload.forEach((element) => {
+                    var li = document.createElement("li");
+                    li.innerText = parseInt(element.id) + element.name;
+                    li.id = `chatroom_${element.id}`;
+                    document.querySelector("#chatroomList ul").appendChild(li);
+                });
+            }
+            else {
+                document.querySelector("#chatroomList ul").innerText = "No Chat Room";
+            }
         }
         else {
             document.getElementsByTagName("main")[0].removeChild(chatRoomWindow);
         }
-
+        // When there is active chat room do this
+        if (target.activeChatRoom) {
+            chatRoomWindow.innerHTML = `
+            <button id="backtoChatRoomListBtn">Back</button>
+            <button id="chatRoomMemberListBtn">Members</button>
+            <div id="chatContent">
+                <ul>
+                </ul>
+            </div>
+            <div id="chatInput">
+            </div>`;
+            var res = await fetch("/api/GetChatRoomMessages", {
+                method: "POST",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    chatRoomId: target.activeChatRoom
+                })
+            }).then(res => {
+                return res.json();
+            });
+            if (res.success) {
+                document.getElementById("chatInput").innerHTML = `
+                                <input type="text" id="chatInputBox">
+                                <button id="sendButton">Send</button>`;
+                document.querySelector("#chatContent ul").innerText = "";
+                res.payload.forEach((element) => {
+                    var li = document.createElement("li");
+                    li.innerText = `${element.user.name} : ${element.message}`;
+                    document.querySelector("#chatContent ul").appendChild(li);
+                });
+                chatting(chatWindow.activeChatRoom.toString());
+            }
+            else {
+                document.querySelector("#chatContent ul").innerText = "No Message";
+                document.getElementById("chatInput").innerHTML = "";
+            }
+        }
+        if (target.activeChatRoomMember) {
+            document.getElementById("chatRoomMemberListBtn").innerText = "Message";
+            var res = await fetch(`/api/ChatRoomMember/${chatWindow.activeChatRoom}`, {
+                method: "GET",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                }
+            }).then(res => {
+                return res.json();
+            });
+            if (res.success) {
+                document.getElementById("chatInput").innerHTML = `
+                                <input type="text" id="userId">
+                                <button id="addMemberBtn">Add</button>`;
+                document.querySelector("#chatContent ul").innerText = "";
+                res.payload.forEach((element) => {
+                    var li = document.createElement("li");
+                    li.innerText = `${element.user.id} ${element.user.name}`;
+                    document.querySelector("#chatContent ul").appendChild(li);
+                });
+            }
+            else {
+                document.querySelector("#chatContent ul").innerText = "No Member";
+            }
+        }
         return true;
     }
 });
 
 
-function chatting() {
+function chatting(RoomId) {
 
     "use strict";
     var connection = new signalR.HubConnectionBuilder().withUrl("/chat").build();
@@ -156,23 +335,24 @@ function chatting() {
     document.getElementById("sendButton").disabled = true;
 
     connection.on("ReceiveMessage", function (roomid, userid, user, message) {
-        var li = document.createElement("li");
-        document.querySelector("#chatContent>ul").appendChild(li);
-        // We can assign user-supplied strings to an element's textContent because it
-        // is not interpreted as markup. If you're assigning in any other way, you
-        // should be aware of possible script injection concerns.
-        li.textContent = `${user} says ${message}`;
-        li.scrollIntoView();
+
+        if (user != document.getElementById("userlink").innerText.split(" ")[1] || true) {
+            var li = document.createElement("li");
+            document.querySelector("#chatContent>ul").appendChild(li);
+            li.textContent = `${user} : ${message}`;
+            li.scrollIntoView();
+        }
     });
 
     connection.start().then(function () {
+        connection.invoke("Join", RoomId);
         document.getElementById("sendButton").disabled = false;
     }).catch(function (err) {
         return console.error(err.toString());
     });
 
     document.getElementById("sendButton").addEventListener("click", function (event) {
-        var roomid = activeChatRoom;
+        var roomid = chatWindow.activeChatRoom;
         var userid = document.getElementById("userlink").classList[0];
         var user = document.getElementById("userlink").innerText.split(" ")[1];
         var message = document.getElementById("chatInputBox").value;
@@ -181,4 +361,74 @@ function chatting() {
         });
         event.preventDefault();
     });
+    document.getElementById("backtoChatRoomListBtn").addEventListener("click", () => {
+        connection.stop();
+    });
+    document.getElementById("chatRoomMemberListBtn").addEventListener("click", () => {
+        connection.stop();
+    });
 }
+
+
+// load avatar
+fetch("/api/User/Avatar").then(res => {
+    return res.json();
+}).then(ret => {
+    if (ret.success) {
+        document.getElementById("userLink").src = `data:image/png;base64, ${ret.payload}`;
+    }
+});
+
+
+
+
+// Fix This
+// load user info popup
+document.getElementById("navRight").addEventListener("mouseenter", async (e) => {
+    if (e.target.id == "userLink") {
+        var res = fetch("/api/User").then(res => {
+            return res.text();
+        }).then(async ret => {
+            //    e.target.nextElementSibling.style.display = "block";
+            e.target.nextElementSibling.innerHTML = await ret;
+
+        }).then(() => {
+            e.target.nextElementSibling.classList.add("userInfoShow");
+        });
+    }
+});
+document.getElementById("navRight").addEventListener("mouseleave", (e) => {
+    if (e.target.id == "userLink") {
+        e.target.nextElementSibling.classList.remove("userInfoShow");
+        e.target.nextElementSibling.innerHTML = "";
+    }
+
+});
+
+fetch("/Notifications").then(res => {
+    return res.json();
+}).then(ret => {
+    if (ret.success) {
+        notifications.data = ret.payload;
+    }
+});
+
+var notifications = new Proxy({
+    data: null
+}, {
+    get: function (target, prop) {
+        return target[prop];
+    },
+    set: function (target, prop, value) {
+        Reflect.set(target, prop, value);
+        console.log("set");
+        document.getElementById("notificationList").innerHTML = "<h4>notifications</h4>"
+        var dt = target.data;
+        for (i = 0; i < dt.length; i++) {
+            document.getElementById("notificationList").innerHTML += `<a href="${dt[i].url}">${dt[i].type}</a><br>`;
+        }
+        return true;
+    }
+});
+
+

@@ -1,5 +1,5 @@
 ﻿using BBS.Data;
-using BBS.Interfaces;
+using BBS.IService;
 using BBS.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -55,6 +55,12 @@ namespace BBS.Services
                 .Select(crm => crm.ChatRoom)
                 .ToList();
             return joinedRooms;
+        }
+
+        public List<ChatRoomMember> GetChatRoomMembers(int ChatRoomId)
+        {
+            var members = ctx.ChatRoomMember.Where(crm => crm.ChatRoomId == ChatRoomId).Include(crm => crm.User).ToList();
+            return members;
         }
     }
 }

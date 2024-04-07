@@ -4,8 +4,8 @@
     {
         public int Id { get; set; }
         public int UserId { get; set; }
-        public User User { get; set; }
+        public User? User { get; set; }
         public int ReplyId { get; set; }
-        public Reply Reply { get; set; }
+        public Reply? Reply { get; set; }
     }
 }

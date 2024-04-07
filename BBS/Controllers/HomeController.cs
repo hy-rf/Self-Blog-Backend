@@ -1,19 +1,22 @@
-﻿using BBS.Data;
-using BBS.Models;
+﻿using BBS.Common;
+using BBS.IService;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
-using System.Text.Json;
 
 namespace BBS.Controllers
 {
-    public class HomeController() : Controller
+    public class HomeController(IUserService userService) : Controller
     {
         [HttpGet]
         [Route("/")]
         public IActionResult Index()
         {
             return View();
+        }
+        [HttpGet]
+        [Route("Brief")]
+        public JsonResult Brief()
+        {
+            return Json(JsonBody.CreateResponse(true, userService.GetUserBasic(1), "User information"));
         }
         //public ActionResult Search(string Option, string SearchTerm)
         //{

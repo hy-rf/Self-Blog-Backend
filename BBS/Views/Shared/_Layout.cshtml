@@ -2,14 +2,6 @@
 @{
     int Id = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value);
     string Name = User.FindFirst(ClaimTypes.Name)?.Value!;
-    string Avatar(string Avatar)
-    {
-        if (Avatar != null)
-        {
-            return $"data:image/png;base64, {Avatar}";
-        }
-        return "/img/defaultAvatar.png";
-    }
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -19,40 +11,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BBS</title>
     <link rel="stylesheet" href="~/_Layout.css">
-    <link rel="stylesheet" href="~/richtexteditor/rte_theme_default.css" />
-    <script type="text/javascript" src="~/richtexteditor/rte.js"></script>
-    <script type="text/javascript" src="~/richtexteditor/plugins/all_plugins.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.0-rc.4/dist/quill.snow.css" rel="stylesheet">
 </head>
 
 <body>
     <header>
-        <div id="navbar">
+        <div id="navLeft">
             <a href="/">Home</a>
-            <a href="/1">Post</a>
+            <a href="/Post/1">Post</a>
         </div>
-        <!--<div id="search">
-            <input type="text" id="searchbox" placeholder="title">
-            <select id="searchOptions">
-                <option value="title">Title</option>
-                <option value="content">Content</option>
-                <option value="author">Author</option>
-                <option value="tag">Tag</option>
-            </select>
-            <button id="searchBtn">Search</button>
-        </div>-->
-        <div id="user">
-            @if (User.Identity!.IsAuthenticated)
-            {
+
+        @if (User.Identity!.IsAuthenticated)
+        {
+            <div id="navRight">
                 <a id="userlink" class="@Id" asp-controller="User" asp-action="UserCenter">Hello! @(Name)</a>
-                <a href="/Chat/Index">Chat</a>
+                <img id="userLink"></img>
+                <div></div>
                 <a href="/Logout">Logout</a>
                 <a id="Chat" href="">ChatWindow</a>
-            }
-            else
-            {
+                <a id="notification" href="">Notif</a>
+            </div>
+            <div id="notificationList">
+                <h4>notifications</h4>
+            </div>
+
+        }
+        else
+        {
+            <div id="navRight">
                 <a asp-controller="User" asp-action="Index">Login/Signup</a>
-            }
-        </div>
+            </div>
+        }
+
     </header>
     <main>
         <br>
@@ -61,9 +51,36 @@
         <br>
     </main>
     <footer>example footer</footer>
-    <script src="~/_Layout.js"></script>
+    <script src="~/_Layout.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.0-rc.4/dist/quill.js"></script>
     <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
-    @*<script src="~/ChatRoomWindow.js" defer></script>*@
+    @switch (ViewContext.HttpContext.Request.Path.Value?.Split("/")[1])
+    {
+        case "":
+            <script src="~/Home.js" defer></script>
+            break;
+        case "Welcome":
+            <script src="~/Welcome.js" defer></script>
+            break;
+        case "UserCenter":
+            <script src="~/UserCenter.js" defer></script>
+            break;
+        case "User":
+            <script src="~/UserPage.js" defer></script>
+            break;
+        case "Post":
+            <script src="~/PostCommon.js" defer></script>
+            if (ViewContext.HttpContext.Request.Path.Value?.Split("/")[2] == "Detail")
+            {
+                <script src="~/PostDetail.js" defer></script>
+            }
+            else
+            {
+                <script src="~/Post.js" defer></script>
+            }
+            break;
+    }
 </body>
 
 </html>

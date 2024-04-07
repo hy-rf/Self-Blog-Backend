@@ -2,18 +2,8 @@
 @{
     int i = 0;
     int j = 0;
-    string Name = Model.Name!;
-    string Avatar(string Avatar)
-    {
-        if (Avatar != null)
-        {
-            return $"data:image/png;base64, {Avatar}";
-        }
-        return "/img/defaultAvatar.png";
-    }
 }
 
-<link rel="stylesheet" href="~/UserCenter.css">
 
 <div id="User">
     <div id="Detail">
@@ -26,22 +16,26 @@
         <p>Number of Replies:@foreach (var item in Model.Replies!) { j++; }@j</p>
         <a href="/FriendRequests">Friend Requests</a>
         <a href="/FriendRequestsSent">Friend Requests Sent</a>
+        <a id="generate2FQRCode">test generate qrcode</a>
+        <img id="TwoFactorQRCode" />
+        <input id="2FCode" />
+        <button id="submit2FC">Verify</button>
     </div>
     <div id="Avatar">
-        <h3>@Name's Avatar</h3>
+        <h3>@Model.Name's Avatar</h3>
         <form method="POST" action="/User/EditAvatar" enctype="multipart/form-data" onsubmit="UploadFile(this);return false;">
             <div id="Avatars">
-                <img src="@Avatar(Model.Avatar)" width="128" height="128">
+                <img src="data:image/png;base64, @Model.Avatar" width="128" height="128">
                 <img id="Preview" width="128" height="128">
             </div>
-
+            <label for="avatar">Choose Photo</label>
             <input type="file" id="avatar" name="avatar" value="Choose Photo">
-
-            <button type="submit" disabled>Update Avatar</button>
+            <label for="updateAvatarBtn">Update</label>
+            <button id="updateAvatarBtn" type="submit" disabled></button>
         </form>
     </div>
     <div id="Posts">
-        <h3>@Name's Posts</h3>
+        <h3>@Model.Name's Posts</h3>
         @foreach (var item in Model.Posts)
         {
             <p>@item.Id</p>
@@ -49,7 +43,7 @@
         }
     </div>
     <div id="Replies">
-        <h3>@Name's Replies</h3>
+        <h3>@Model.Name's Replies</h3>
         @foreach (var item in Model.Replies)
         {
             <p>@item.Id</p>
@@ -57,7 +51,3 @@
         }
     </div>
 </div>
-
-
-
-<script src="~/User.js" defer></script>

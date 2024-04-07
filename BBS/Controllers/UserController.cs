@@ -1,17 +1,13 @@
-﻿using BBS.Data;
-using BBS.Interfaces;
-using BBS.Services;
+﻿using BBS.Common;
+using BBS.IService;
+using Google.Authenticator;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
-using BBS.Models;
 
 namespace BBS.Controllers
 {
@@ -30,17 +26,14 @@ namespace BBS.Controllers
         [Route("UserCenter")]
         public IActionResult UserCenter(ClaimsPrincipal claimsPrincipal)
         {
-            try
+            if (!User.Identity.IsAuthenticated)
             {
-                string Id = User.FindFirst(ClaimTypes.Sid)!.Value;
-                ViewBag.Id = Convert.ToInt32(Id);
-                var model = userService.GetUser(ViewBag.Id);
-                return View(model);
+                return Redirect("/Welcome");
             }
-            catch
-            {
-                return View("Index");
-            }
+            string Id = User.FindFirst(ClaimTypes.Sid)!.Value;
+            ViewBag.Id = Convert.ToInt32(Id);
+            var model = userService.GetUser(ViewBag.Id);
+            return View(model);
         }
         [Route("User/{Id}")]
         public IActionResult UserPage(int Id)
@@ -51,11 +44,10 @@ namespace BBS.Controllers
             var model = userService.GetUser(Id);
             return View("UserPage", model);
         }
-        /// <summary>
-        /// DONE API
-        /// </summary>
-        /// <param name="Avatar"></param>
-        /// <returns></returns>
+
+
+
+        // DONE API
         [HttpPost]
         [Route("User/EditAvatar")]
         public ActionResult EditAvatar(IFormFile Avatar)
@@ -92,21 +84,36 @@ namespace BBS.Controllers
             Response.StatusCode = 404;
             return;
         }
-        [Route("Logout")]
-        public ActionResult Logout()
-        {
-            HttpContext.Response.Cookies.Delete("Token");
-            return Redirect("/");
-        }
-        // DONE API
+
         [HttpGet]
-        [Route("api/User/{Id}")]
-        public JsonResult UserJson(int Id)
+        [Route("api/User/Avatar/{Id?}")]
+        public JsonResult UserAvatar(int Id)
         {
-            var ret = userService.GetUserLight(Id);
-            return Json(ret);
+            if (Id == 0)
+            {
+                Id = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value!);
+            }
+            try
+            {
+                return Json(JsonBody.CreateResponse(true, userService.GetUserBasic(Id).Avatar, "Avatar load success"));
+            }
+            catch
+            {
+                return Json(JsonBody.CreateResponse(false, "Avatar load fail"));
+            }
+
         }
-        // DONE API
+        [HttpGet]
+        [Route("api/User/{Id?}")]
+        public PartialViewResult UserInfo(int Id)
+        {
+            if (Id == 0)
+            {
+                Id = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value!);
+            }
+            return PartialView(userService.GetUserBasic(Id));
+        }
+        // API DONE
         [HttpPost]
         [Route("api/User/Login")]
         public JsonResult LoginApi([FromBody] JsonElement LoginInfo)
@@ -115,7 +122,7 @@ namespace BBS.Controllers
             string Pwd = LoginInfo.GetProperty("Pwd").ToString();
             if (!string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Pwd))
             {
-                if (userService.Login(Name, Pwd, out int Id))
+                if (userService.Login(Name, Pwd, out int Id).Result)
                 {
                     var tokenHandler = new JwtSecurityTokenHandler();
                     var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetValue<string>("JWT")));
@@ -151,7 +158,7 @@ namespace BBS.Controllers
                 Message = "Login Failed, No Input."
             });
         }
-        // DONE API
+        // API DONE
         [HttpPost]
         [Route("api/User/CheckDuplicatedName")]
         public JsonResult CheckDuplicatedName([FromBody] JsonElement Name)
@@ -171,7 +178,7 @@ namespace BBS.Controllers
                 Message = "Name is not available"
             });
         }
-        // DONE API
+        // API DONE
         [HttpPost]
         [Route("api/User/Signup")]
         public JsonResult SignupApi([FromBody] JsonElement SingupInfo)
@@ -185,32 +192,52 @@ namespace BBS.Controllers
                 {
                     if (userService.Signup(Name, Pwd))
                     {
-                        return Json(new JsonBody
-                        {
-                            Success = true,
-                            Message = "Signup Success!"
-                        });
+                        return Json(JsonBody.CreateResponse(true, "Signup Success!"));
                     }
                     else
                     {
-                        return Json(new JsonBody
-                        {
-                            Success = false,
-                            Message = "Signup Failed, Dulplicated Name."
-                        });
+                        return Json(JsonBody.CreateResponse(false, "Signup Failed, Name is duplicated."));
                     }
                 }
-                return Json(new JsonBody
-                {
-                    Success = false,
-                    Message = "Signup Failed, Passwords are not the same."
-                });
+                return Json(JsonBody.CreateResponse(false, "Signup Failed, Passwords are not the same."));
             }
-            return Json(new JsonBody
+            return Json(JsonBody.CreateResponse(false, "Signup Failed, No Input."));
+        }
+        [HttpDelete]
+        [Route("Logout")]
+        public JsonResult LogoutApi()
+        {
+            if (userService.Logoff(Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value!)).IsCompleted)
             {
-                Success = false,
-                Message = "Signup Failed, No Input."
-            });
+                HttpContext.Response.Cookies.Delete("Token");
+                return Json(JsonBody.CreateResponse(true, "Logout success!"));
+            }
+            return Json(JsonBody.CreateResponse(false, "Logout failed!"));
+        }
+        [HttpPost]
+        [Route("api/2fv")]
+        public JsonResult TwoFactor()
+        {
+            string user = User.FindFirst(ClaimTypes.Name)!.Value;
+            TwoFactorAuthenticator twoFactorAuthenticator = new TwoFactorAuthenticator();
+            var TwoFactorSecretCode = "TwoFactorSecretCode";
+            var accountSecretKey = $"{TwoFactorSecretCode}-{user}";
+            var setupCode = twoFactorAuthenticator.GenerateSetupCode("BBS", user, Encoding.ASCII.GetBytes(accountSecretKey));
+            var qrCodeUrl = setupCode.QrCodeSetupImageUrl;
+            var manualCode = setupCode.ManualEntryKey;
+            return Json(JsonBody.CreateResponse(true, new { qrCodeUrl, manualCode }, "Two Factor Authentication Setup Success"));
+        }
+        [HttpPost]
+        [Route("apt/2fv/vali")]
+        public JsonResult Validate([FromBody] JsonElement code)
+        {
+            var Authenticator = new TwoFactorAuthenticator();
+            var valid = Authenticator.ValidateTwoFactorPIN($"TwoFactorSecretCode-{User.FindFirst(ClaimTypes.Name)!.Value}", code.GetString("code"));
+            if (valid)
+            {
+                return Json(JsonBody.CreateResponse(true, "Two Factor Authentication Success"));
+            }
+            return Json(JsonBody.CreateResponse(false, "Two Factor Authentication Failed"));
         }
     }
 }

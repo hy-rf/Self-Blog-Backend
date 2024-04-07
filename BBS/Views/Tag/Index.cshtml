@@ -1,5 +1,7 @@
-﻿@using BBS.Models;
-<link rel="stylesheet" href="~/Post.css">
+﻿
+@model List<BBS.Models.PostTag>
+
+<h3>Posts with "@Model[0].Tag.Name" tag</h3>
 @foreach(var item in Model)
 {
     <div class="PostUnit">
@@ -11,8 +13,8 @@
         </div>
         
         <p class="timeIndicator">
-            <span>Date Created : @item.Post.Created.ToString("hh:mm yy/MM/dd")</span>
-            <span>Date Modified : @item.Post.Modified.ToString("hh:mm yy/MM/dd")</span>
+            <span>Created:@item.Post.Created.ToString("hh:mm yy/MM/dd")</span>
+            <span>Modified:@item.Post.Modified.ToString("hh:mm yy/MM/dd")</span>
         </p>
     </div>
     <br>

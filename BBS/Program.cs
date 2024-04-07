@@ -1,12 +1,14 @@
-using BBS.Interfaces;
+using BBS.Common;
 using BBS.Data;
+using BBS.IRepository;
+using BBS.IService;
+using BBS.Repository;
 using BBS.Services;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Microsoft.AspNetCore.SignalR;
-using BBS.Hubs;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,7 +27,7 @@ builder.Services.AddAuthentication(opt =>
         {
             ValidateIssuer = false,
             ValidateAudience = false,
-            ValidateIssuerSigningKey =true,
+            ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetValue<string>("JWT")!))
         };
         options.Events = new JwtBearerEvents
@@ -46,7 +48,10 @@ builder.Services.AddDbContextPool<AppDbContext>(options =>
 });
 
 
-
+builder.Services.AddScoped<IPostRepository, PostRepository>();
+builder.Services.AddScoped<ITagRepository, TagRepository>();
+builder.Services.AddScoped<IPostTagRepository, PostTagRepository>();
+builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPostService, PostService>();
@@ -55,6 +60,11 @@ builder.Services.AddScoped<IChatService, ChatService>();
 builder.Services.AddScoped<IFriendService, FriendService>();
 builder.Services.AddScoped<ITagService, TagService>();
 builder.Services.AddScoped<ILikeService, LikeService>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
+
+
+
+builder.Services.AddSingleton<IUserIdProvider, MyUserIdProvider>();
 
 var app = builder.Build();
 
@@ -66,6 +76,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
-app.MapHub<ChatRoom>("/chat");
+app.MapHub<BBS.Hubs.Notification>("/notification");
+app.MapHub<BBS.Hubs.ChatRoom>("/chat");
+
 
 app.Run();

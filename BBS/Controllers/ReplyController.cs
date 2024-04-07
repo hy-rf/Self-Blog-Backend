@@ -1,6 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using BBS.Interfaces;
-using BBS.Models;
+﻿using BBS.IService;
+using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace BBS.Controllers

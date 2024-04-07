@@ -2,7 +2,6 @@
 
 document.querySelector("#friendRequestsReceived").addEventListener("click", (e) => {
     if (e.target.tagName == "BUTTON") {
-        //send approve request and add friend to database
         fetch("/Friend", {
             method: "POST",
             headers: {
