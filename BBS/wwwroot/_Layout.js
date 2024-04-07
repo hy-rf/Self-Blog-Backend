@@ -285,8 +285,8 @@ var chatWindow = new Proxy({
                 document.querySelector("#chatContent ul").innerText = "";
                 res.payload.forEach((element) => {
                     var li = document.createElement("li");
-                    li.innerText = `${element.user.name} : ${element.message}`;
-                    document.querySelector("#chatContent ul").appendChild(li);
+                    li.innerHTML = `${element.user.name} : ${element.message} <p class="timeIndicator">${new Date(element.created).toLocaleString('en-US', { timeZoneName: 'short' })}</p>`;
+                    document.querySelector("#chatContent>ul").appendChild(li);
                 });
                 chatting(chatWindow.activeChatRoom.toString());
             }
@@ -314,7 +314,7 @@ var chatWindow = new Proxy({
                 res.payload.forEach((element) => {
                     var li = document.createElement("li");
                     li.innerText = `${element.user.id} ${element.user.name}`;
-                    document.querySelector("#chatContent ul").appendChild(li);
+                    document.querySelector("#chatContent>ul").appendChild(li);
                 });
             }
             else {
@@ -334,14 +334,13 @@ function chatting(RoomId) {
     //Disable the send button until connection is established.
     document.getElementById("sendButton").disabled = true;
 
-    connection.on("ReceiveMessage", function (roomid, userid, user, message) {
+    connection.on("ReceiveMessage", function (roomid, userid, user, message, time) {
 
-        if (user != document.getElementById("userlink").innerText.split(" ")[1] || true) {
-            var li = document.createElement("li");
-            document.querySelector("#chatContent>ul").appendChild(li);
-            li.textContent = `${user} : ${message}`;
-            li.scrollIntoView();
-        }
+        var li = document.createElement("li");
+        li.innerHTML = `${user} : ${message} <p class="timeIndicator">${new Date(time).toLocaleString('en-US', { timeZoneName: 'short' })}</p>`;
+        document.querySelector("#chatContent>ul").appendChild(li);
+        li.scrollIntoView();
+
     });
 
     connection.start().then(function () {
