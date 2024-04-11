@@ -30,7 +30,7 @@
     {
         <div class="PostUnit">
             <p style="display: none;">@item.Id</p>
-            <p>@item.Replies!.Count()Replies</p>
+            <i class="fa-regular fa-comment"><span>@item.Replies!.Count()</span></i>
             <a asp-controller="Post" asp-action="GetPost" asp-route-Id="@item.Id">Title : @item.Title</a>
             @if (User.Identity.IsAuthenticated)
             {
