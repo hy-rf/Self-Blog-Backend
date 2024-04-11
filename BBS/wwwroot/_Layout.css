@@ -121,9 +121,12 @@ main {
     position: relative;
     height: 100%;
     width: 100%;
+    margin-top: var(--header-height);
+    margin-bottom: var(--footer-height);
     border-left: 1px solid black;
     border-right: 1px solid black;
     overflow: hidden;
+    transition: 0.2s;
 }
 
 
@@ -139,6 +142,7 @@ footer {
     border-left: 1px solid black;
     border-right: 1px solid black;
     border-bottom: 1px solid black;
+    text-align-last: center;
 }
 
 
@@ -185,6 +189,7 @@ img#userLink {
         height: 3rem;
         border-radius: 99rem;
         transition: 0.5s;
+        cursor: pointer;
     }
 
     img#userLink:not(:hover) {
@@ -355,17 +360,16 @@ img#userLink {
     right: 0;
     bottom: 0;
     color: grey;
-    z-index: 99;
 }
 
     .timeIndicator > span {
         font-size: 0.8rem;
     }
 
-    p.timeIndicator {
-        font-size: 0.8rem;
-        text-align-last: end;
-    }
+p.timeIndicator {
+    font-size: 0.8rem;
+    text-align-last: end;
+}
 
 
 .PostUnit {
@@ -552,11 +556,7 @@ label[for="updateAvatarBtn"]:hover {
     cursor: pointer;
 }
 
-@media (max-width:800px) {
-    #User {
-        grid-template-areas: "A" "B" "C" "D" "E" "F";
-    }
-}
+
 
 
 /*Chat*/
@@ -636,4 +636,46 @@ label[for="updateAvatarBtn"]:hover {
 
 #sendButton {
     width: 5ch;
+}
+
+
+
+@media (max-width:800px) {
+    #User {
+        grid-template-areas: "A" "B" "C" "D" "E" "F";
+    }
+
+    header {
+        bottom: 0;
+        top: auto;
+        border-radius: 0.5rem 0.5rem 0 0;
+        border-top: 1px solid black;
+        border-bottom: 0;
+        background-color: white;
+    }
+
+    main {
+        margin-top: 0;
+    }
+
+    footer {
+        display: none;
+    }
+
+    img#userLink:hover {
+        position: absolute;
+        left: -4rem;
+        top: -2.5rem;
+        width: 3rem;
+        height: 3rem;
+        border-radius: 99rem;
+        transition: 0.5s;
+        cursor: pointer;
+    }
+    .ChatWindow {
+        bottom: var(--header-height);
+    }
+    #notificationList{
+        top: -50rem;
+    }
 }

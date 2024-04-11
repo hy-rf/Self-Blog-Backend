@@ -36,8 +36,8 @@
         </div>
         <div class="UserInfo">
             <p style="display: none;">@Model.UserId</p>
-            <a href="/User/@Model.UserId">@Model.User!.Name</a>
-            <img src="data:image/png;base64, @Model.User.Avatar" width="8" height="8">
+            <a href="/User/@Model.UserId"><img src="data:image/png;base64, @Model.User.Avatar" width="32" height="32"></a>
+            
         </div>
         <p class="timeIndicator">
             <span>Created:@Model.Created.ToString("hh:mm yy/MM/dd")</span>
@@ -64,8 +64,8 @@
             <p>@item.Content</p>
             <div class="UserInfo">
                 <p>@item.User!.Id</p>
-                <a href="/User/@item.User.Id">@item.User.Name</a>
-                <img src="data:image/png;base64, @item.User.Avatar" width="8" height="8">
+                <a href="/User/@item.User.Id"><img src="data:image/png;base64, @item.User.Avatar" width="32" height="32"></a>
+                
             </div>
 
             <p class="timeIndicator">
