@@ -294,7 +294,6 @@ img#userLink {
 #togglePanel {
     position: relative;
     border: 1px solid grey;
-    width: min-content;
     height: 100%;
     margin: 1rem auto;
 }
@@ -312,7 +311,7 @@ img#userLink {
         #togglePanel > div > button {
             position: relative;
             width: 5rem;
-            left: 60%;
+            right: 1rem;
         }
 
         #togglePanel > div > p {
