@@ -1,7 +1,13 @@
 
 // This is function for dynamically visible header
-
-if (window.innerWidth > 800) {
+window.addEventListener("resize", handleWindowResize);
+var pcWidth = false;
+function handleWindowResize(){
+    if (window.innerWidth > 800){
+        pcWidth = true;
+    }
+}
+if (pcWidth) {
     var prepos = window.scrollY;
     window.onscroll = () => {
         var curpos = window.scrollY;
@@ -180,7 +186,7 @@ document.getElementById("navRight").addEventListener("click", async (e) => {
         chatWindow["isVisible"] = !chatWindow.isVisible;
         e.preventDefault();
     }
-    else if (e.target.innerText == "Logout") {
+    else if (e.target.id === "logoutBtn") {
         e.preventDefault();
         var res = await fetch("/Logout", {
             method: "DELETE"
@@ -199,6 +205,7 @@ document.getElementById("navRight").addEventListener("click", async (e) => {
             }
         })
     }
+    e.stopPropagation();
 });
 disableScroll = () => {
     document.querySelector(":root").style.overflow = "hidden";

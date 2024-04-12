@@ -295,7 +295,7 @@ img#userLink:not(:hover) {
     position: relative;
     border: 1px solid grey;
     height: 100%;
-    margin: 1rem auto;
+    margin: 1rem 30% auto 30%;
 }
 
 #togglePanel>* {
@@ -309,7 +309,7 @@ img#userLink:not(:hover) {
 }
 
 #togglePanel>div>input{
-    width: 9rem;
+    width: 60%;
 }
 
 #togglePanel>div>p {
@@ -684,5 +684,11 @@ label[for="updateAvatarBtn"]:hover {
 
     #notificationList {
         top: -50rem;
+    }
+    #togglePanel{
+        margin: 1rem 20% auto 20%;
+    }
+    #togglePanel>div>input{
+        width: 100%;
     }
 }

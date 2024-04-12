@@ -18,7 +18,7 @@
     <header>
         <div id="navLeft">
             <a href="/">Home</a>
-            <a href="/Post/1">Post</a>
+            <a href="/Post/1"><i class="fa-solid fa-newspaper"></i></a>
         </div>
 
         @if (User.Identity!.IsAuthenticated)
@@ -27,9 +27,9 @@
                 <a id="userlink" class="@Id" asp-controller="User" asp-action="UserCenter">Hello! @(Name)</a>
                 <img id="userLink"></img>
                 <div></div>
-                <a href="/Logout">Logout</a>
-                <a id="Chat" href="">ChatWindow</a>
-                <a id="notification" href="">Notif</a>
+                <a id="logoutBtn" href="/Logout"><i class="fa-solid fa-right-from-bracket"></i></a>
+                <a id="Chat" href=""><i class="fa-brands fa-rocketchat"></i></a>
+                <a id="notification" href=""><i class="fa-solid fa-bell"></i></a>
             </div>
             <div id="notificationList">
                 <h4>notifications</h4>
