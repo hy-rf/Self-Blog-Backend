@@ -89,24 +89,24 @@ header {
     border-radius: 5px;
 }
 
-    #navRight > img + div {
-        /* display: block; */
-        position: absolute;
-        top: 2.5rem;
-        right: 5rem;
-        border-radius: 1rem;
-        border: 1px solid grey;
-        opacity: 1;
-        transition: 0.5s;
-        /* z-index: 1; */
-    }
+#navRight>img+div {
+    /* display: block; */
+    position: absolute;
+    top: 2.5rem;
+    right: 5rem;
+    border-radius: 1rem;
+    border: 1px solid grey;
+    opacity: 1;
+    transition: 0.5s;
+    /* z-index: 1; */
+}
 
 .userInfoShow {
     opacity: 1;
     transition: 0.5s;
 }
 
-#navRight > img + div > * {
+#navRight>img+div>* {
     font-size: 0.8rem;
     margin: 0.3rem;
 }
@@ -146,25 +146,25 @@ footer {
 }
 
 
-.PostUnit > * {
+.PostUnit>* {
     margin: 0.5rem;
 }
 
-#navLeft > *:not(:hover) {
+#navLeft>*:not(:hover) {
     color: black;
     background-color: var(--main-color);
     transition: 0.5s;
     margin: 0.5rem;
 }
 
-#navLeft > *:hover {
+#navLeft>*:hover {
     color: lightgray;
     background-color: black;
     transition: 0.5s;
     margin: 0.5rem;
 }
 
-#navRight > * {
+#navRight>* {
     margin: 0;
 }
 
@@ -177,39 +177,39 @@ img#userLink {
     border-radius: 99rem;
 }
 
-    img#userLink + div {
-        position: absolute;
-    }
+img#userLink+div {
+    position: absolute;
+}
 
-    img#userLink:hover {
-        position: absolute;
-        left: -4rem;
-        top: -0.3rem;
-        width: 3rem;
-        height: 3rem;
-        border-radius: 99rem;
-        transition: 0.5s;
-        cursor: pointer;
-    }
+img#userLink:hover {
+    position: absolute;
+    left: -4rem;
+    top: -0.3rem;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 99rem;
+    transition: 0.5s;
+    cursor: pointer;
+}
 
-    img#userLink:not(:hover) {
-        position: absolute;
-        left: -2rem;
-        top: -0.3rem;
-        width: 1rem;
-        height: 1rem;
-        border-radius: 99rem;
-        transition: 0.5s;
-    }
+img#userLink:not(:hover) {
+    position: absolute;
+    left: -2rem;
+    top: -0.3rem;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 99rem;
+    transition: 0.5s;
+}
 
-#navRight > *:not(:hover) {
+#navRight>*:not(:hover) {
     color: black;
     background-color: var(--main-color);
     transition: 0.5s;
     margin: 0.5rem;
 }
 
-#navRight > *:hover {
+#navRight>*:hover {
     color: lightgray;
     background-color: black;
     transition: 0.5s;
@@ -230,20 +230,20 @@ img#userLink {
     display: block !important;
 }
 
-#notificationList > * {
+#notificationList>* {
     font-size: 0.8rem;
     margin: 0.5rem;
 }
 
-    #notificationList > *:hover {
-        background-color: lightgray;
-        transition: 0.5s;
-    }
+#notificationList>*:hover {
+    background-color: lightgray;
+    transition: 0.5s;
+}
 
-    #notificationList > *:not(:hover) {
-        background-color: var(--main-color);
-        transition: 0.5s;
-    }
+#notificationList>*:not(:hover) {
+    background-color: var(--main-color);
+    transition: 0.5s;
+}
 
 
 
@@ -279,17 +279,17 @@ img#userLink {
     margin: 0 auto;
 }
 
-    #toggleBtns > * {
-        width: 4rem;
-        background-color: var(--main-color);
-        border: 1px grey solid;
-        transition: 0.3s;
-    }
+#toggleBtns>* {
+    width: 4rem;
+    background-color: var(--main-color);
+    border: 1px grey solid;
+    transition: 0.3s;
+}
 
-        #toggleBtns > *:hover {
-            background-color: var(--main-color);
-            transition: 0.3s;
-        }
+#toggleBtns>*:hover {
+    background-color: var(--main-color);
+    transition: 0.3s;
+}
 
 #togglePanel {
     position: relative;
@@ -298,35 +298,41 @@ img#userLink {
     margin: 1rem auto;
 }
 
-    #togglePanel > * {
-        margin: 1rem;
-    }
+#togglePanel>* {
+    margin: 1rem;
+}
 
-    #togglePanel > div {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-    }
+#togglePanel>div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
 
-        #togglePanel > div > button {
-            position: relative;
-            width: 5rem;
-            right: 1rem;
-        }
+#togglePanel>div>input{
+    width: 9rem;
+}
 
-        #togglePanel > div > p {
-            font-size: 0.8rem;
-        }
+#togglePanel>div>p {
+    font-size: 0.8rem;
+}
+
+#togglePanel>div>button {
+    position: relative;
+    width: min-content;
+    left: 50%;
+}
+
+
 
 #pwdSecurityIndicator {
     display: flex;
     flex-direction: row;
 }
 
-    #pwdSecurityIndicator > * {
-        height: 0.2rem;
-        width: calc(100%/3);
-    }
+#pwdSecurityIndicator>* {
+    height: 0.2rem;
+    width: calc(100%/3);
+}
 
 
 /*Post*/
@@ -337,13 +343,13 @@ img#userLink {
     border-radius: 3px;
 }
 
-    .EditButton:hover {
-        color: blue;
-    }
+.EditButton:hover {
+    color: blue;
+}
 
-    .ReplyButton:hover {
-        color: blue;
-    }
+.ReplyButton:hover {
+    color: blue;
+}
 
 #PostFormWrapper {
     position: relative;
@@ -361,9 +367,9 @@ img#userLink {
     color: grey;
 }
 
-    .timeIndicator > span {
-        font-size: 0.8rem;
-    }
+.timeIndicator>span {
+    font-size: 0.8rem;
+}
 
 p.timeIndicator {
     font-size: 0.8rem;
@@ -470,7 +476,7 @@ p.timeIndicator {
     margin: 1rem 2rem 1rem 2rem
 }
 
-.UserInfo > img {
+.UserInfo>img {
     width: 3rem;
     height: 3rem;
     border-radius: 99rem;
@@ -509,7 +515,7 @@ p.timeIndicator {
     grid-area: D;
 }
 
-#User > * {
+#User>* {
     position: relative;
     border: 2px solid wheat;
     border-radius: 1rem;
@@ -517,9 +523,9 @@ p.timeIndicator {
     transition: 0.5s;
 }
 
-    #User > * > * {
-        margin: 0.5rem;
-    }
+#User>*>* {
+    margin: 0.5rem;
+}
 
 
 
@@ -559,7 +565,7 @@ label[for="updateAvatarBtn"]:hover {
 
 
 /*Chat*/
-#chatInput > button {
+#chatInput>button {
     border-radius: 5px;
 }
 
@@ -597,36 +603,36 @@ label[for="updateAvatarBtn"]:hover {
     margin: 0.2rem;
 }
 
-    #chatContent * {
-        position: relative;
-    }
+#chatContent * {
+    position: relative;
+}
 
 #chatInput {
     margin: 0.2rem;
 }
 
-#chatroomList > ul > li:not(:hover) {
+#chatroomList>ul>li:not(:hover) {
     border-top: 1px solid var(--main-color);
     border-bottom: 1px solid var(--main-color);
     cursor: pointer;
     transition: 0.5s;
 }
 
-#chatroomList > ul > li:hover {
+#chatroomList>ul>li:hover {
     border-top: 1px solid #000;
     border-bottom: 1px solid #000;
     transition: 0.5s;
     cursor: pointer;
 }
 
-#chatContent > ul > li:not(:hover) {
+#chatContent>ul>li:not(:hover) {
     border-top: 1px solid #fff;
     border-bottom: 1px solid #fff;
     cursor: default;
     transition: 0.5s;
 }
 
-#chatContent > ul > li:hover {
+#chatContent>ul>li:hover {
     border-top: 1px solid #000;
     border-bottom: 1px solid #000;
     cursor: default;
@@ -671,10 +677,12 @@ label[for="updateAvatarBtn"]:hover {
         transition: 0.5s;
         cursor: pointer;
     }
+
     .ChatWindow {
         bottom: var(--header-height);
     }
-    #notificationList{
+
+    #notificationList {
         top: -50rem;
     }
 }
