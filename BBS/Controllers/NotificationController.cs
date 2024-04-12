@@ -12,7 +12,7 @@ namespace BBS.Controllers
         [HttpGet("Notifications")]
         public async Task<JsonResult> Notifications()
         {
-            if (!User.Identity.IsAuthenticated)
+            if (!User.Identity!.IsAuthenticated)
             {
                 return Json(JsonBody.CreateResponse(false, "Unauthorized"));
 			}

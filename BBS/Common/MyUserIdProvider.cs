@@ -8,7 +8,14 @@ namespace BBS.Common
     {
         public string GetUserId(HubConnectionContext connection)
         {
-            return connection.User.FindFirst(ClaimTypes.Sid)?.Value;
+            if (connection != null)
+            {
+                if (connection.User != null)
+                {
+                    return connection.User.FindFirst(ClaimTypes.Sid)?.Value!;
+                }
+            }
+            return string.Empty;
         }
     }
 }
