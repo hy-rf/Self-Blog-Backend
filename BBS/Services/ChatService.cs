@@ -45,7 +45,8 @@ namespace BBS.Services
         }
         public List<ChatRoomMessage> GetChatMessagesSimple(int ChatRoomId)
         {
-            var messages = ctx.ChatRoomMessage.Where(crm => crm.ChatRoomId == ChatRoomId).Include(crm => crm.User).Select(crm => new ChatRoomMessage{
+            var messages = ctx.ChatRoomMessage.Where(crm => crm.ChatRoomId == ChatRoomId).Include(crm => crm.User).Select(crm => new ChatRoomMessage
+            {
                 ChatRoomId = crm.ChatRoomId,
                 UserId = crm.UserId,
                 Message = crm.Message,

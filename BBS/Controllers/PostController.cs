@@ -82,7 +82,8 @@ namespace BBS.Controllers
                     return Json(JsonBody.CreateResponse(false, "Unauthorized Access"));
                 }
             }
-            catch{
+            catch
+            {
                 return Json(JsonBody.CreateResponse(false, "Unauthorized Access"));
             }
 

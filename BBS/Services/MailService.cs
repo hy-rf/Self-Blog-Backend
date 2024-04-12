@@ -1,7 +1,6 @@
 ﻿using BBS.IService;
 using MailKit.Net.Smtp;
 using MailKit.Security;
-using Microsoft.AspNetCore.Mvc;
 using MimeKit;
 
 namespace BBS.Services

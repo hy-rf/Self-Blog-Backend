@@ -36,7 +36,7 @@ namespace BBS.Hubs
                 Created = Time,
                 ChatRoomId = Convert.ToInt32(RoomId),
             });
-            
+
             await Clients.Group(RoomId).SendAsync("ReceiveMessage", RoomId, UserId, Name, Message, Time.ToLocalTime());
         }
     }

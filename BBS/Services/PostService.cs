@@ -1,8 +1,6 @@
-﻿using BBS.Data;
-using BBS.IRepository;
+﻿using BBS.IRepository;
 using BBS.IService;
 using BBS.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace BBS.Services
 {
