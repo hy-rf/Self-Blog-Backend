@@ -110,6 +110,9 @@ header {
     font-size: 0.8rem;
     margin: 0.3rem;
 }
+#navRight>li{
+    margin: 0 !important;
+}
 
 .header_hide {
     position: fixed;

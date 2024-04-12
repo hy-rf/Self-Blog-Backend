@@ -46,16 +46,7 @@ chatRoomWindow.innerHTML = `
     <ul>
     </ul>
 </div>`;
-document.getElementById("navRight").addEventListener("click", (e) => {
-    if (e.target.id == "userLink") {
-        document.location.href = "/UserCenter";
-    }
-    else if (e.target.id == "notification") {
-        showNotificationList["isVisible"] = !showNotificationList.isVisible;
-        e.target.style.color = "black";
-        e.preventDefault();
-    }
-});
+
 
 var showNotificationList = new Proxy({
     isVisible: false
@@ -182,11 +173,11 @@ document.getElementsByTagName("main")[0].addEventListener("click", async (e) => 
     }
 });
 document.getElementById("navRight").addEventListener("click", async (e) => {
-    if (e.target.id == "Chat") {
+    if (e.target.id === "chat") {
         chatWindow["isVisible"] = !chatWindow.isVisible;
         e.preventDefault();
     }
-    else if (e.target.id === "logoutBtn") {
+    if (e.target.id === "logoutBtn") {
         e.preventDefault();
         var res = await fetch("/Logout", {
             method: "DELETE"
@@ -205,8 +196,17 @@ document.getElementById("navRight").addEventListener("click", async (e) => {
             }
         })
     }
+    if (e.target.id === "userLink") {
+        document.location.href = "/UserCenter";
+    }
+    if (e.target.id === "notification") {
+        console.log("click");
+        showNotificationList["isVisible"] = !showNotificationList.isVisible;
+        e.target.style.color = "black";
+        e.preventDefault();
+    }
     e.stopPropagation();
-});
+}, true);
 disableScroll = () => {
     document.querySelector(":root").style.overflow = "hidden";
 }
