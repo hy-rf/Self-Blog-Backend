@@ -1,15 +1,10 @@
 
 // This is function for dynamically visible header
-window.addEventListener("resize", handleWindowResize);
-var pcWidth = false;
-function handleWindowResize(){
-    if (window.innerWidth > 800){
-        pcWidth = true;
-    }
-}
-if (pcWidth) {
-    var prepos = window.scrollY;
-    window.onscroll = () => {
+
+var prepos = window.scrollY;
+
+window.onscroll = () => {
+    if (window.innerWidth > 800) {
         var curpos = window.scrollY;
         if (prepos >= curpos) {
             document.querySelector("header").classList.remove("header_hide");
@@ -20,6 +15,8 @@ if (pcWidth) {
         prepos = curpos;
     }
 }
+
+
 
 
 handleNotification();
