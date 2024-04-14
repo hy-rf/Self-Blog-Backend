@@ -1,16 +1,23 @@
 
 // This is function for dynamically visible header
+
 var prepos = window.scrollY;
+
 window.onscroll = () => {
-    var curpos = window.scrollY;
-    if (prepos >= curpos) {
-        document.querySelector("header").classList.remove("header_hide");
+    if (window.innerWidth > 800) {
+        var curpos = window.scrollY;
+        if (prepos >= curpos) {
+            document.querySelector("header").classList.remove("header_hide");
+        }
+        else {
+            document.querySelector("header").classList.add("header_hide");
+        }
+        prepos = curpos;
     }
-    else {
-        document.querySelector("header").classList.add("header_hide");
-    }
-    prepos = curpos;
 }
+
+
+
 
 handleNotification();
 function handleNotification() {
@@ -36,16 +43,7 @@ chatRoomWindow.innerHTML = `
     <ul>
     </ul>
 </div>`;
-document.getElementById("navRight").addEventListener("click", (e) => {
-    if (e.target.id == "userLink") {
-        document.location.href = "/UserCenter";
-    }
-    else if (e.target.id == "notification") {
-        showNotificationList["isVisible"] = !showNotificationList.isVisible;
-        e.target.style.color = "black";
-        e.preventDefault();
-    }
-});
+
 
 var showNotificationList = new Proxy({
     isVisible: false
@@ -172,11 +170,11 @@ document.getElementsByTagName("main")[0].addEventListener("click", async (e) => 
     }
 });
 document.getElementById("navRight").addEventListener("click", async (e) => {
-    if (e.target.id == "Chat") {
+    if (e.target.id === "chat") {
         chatWindow["isVisible"] = !chatWindow.isVisible;
         e.preventDefault();
     }
-    else if (e.target.innerText == "Logout") {
+    if (e.target.id === "logoutBtn") {
         e.preventDefault();
         var res = await fetch("/Logout", {
             method: "DELETE"
@@ -195,7 +193,17 @@ document.getElementById("navRight").addEventListener("click", async (e) => {
             }
         })
     }
-});
+    if (e.target.id === "userLink") {
+        document.location.href = "/UserCenter";
+    }
+    if (e.target.id === "notification") {
+        console.log("click");
+        showNotificationList["isVisible"] = !showNotificationList.isVisible;
+        e.target.style.color = "black";
+        e.preventDefault();
+    }
+    e.stopPropagation();
+}, true);
 disableScroll = () => {
     document.querySelector(":root").style.overflow = "hidden";
 }
@@ -285,8 +293,8 @@ var chatWindow = new Proxy({
                 document.querySelector("#chatContent ul").innerText = "";
                 res.payload.forEach((element) => {
                     var li = document.createElement("li");
-                    li.innerText = `${element.user.name} : ${element.message}`;
-                    document.querySelector("#chatContent ul").appendChild(li);
+                    li.innerHTML = chatMessageUnit(element.user.name, element.message, element.created);
+                    document.querySelector("#chatContent>ul").appendChild(li);
                 });
                 chatting(chatWindow.activeChatRoom.toString());
             }
@@ -295,6 +303,7 @@ var chatWindow = new Proxy({
                 document.getElementById("chatInput").innerHTML = "";
             }
         }
+        // if user is in chat room member list do this
         if (target.activeChatRoomMember) {
             document.getElementById("chatRoomMemberListBtn").innerText = "Message";
             var res = await fetch(`/api/ChatRoomMember/${chatWindow.activeChatRoom}`, {
@@ -314,7 +323,7 @@ var chatWindow = new Proxy({
                 res.payload.forEach((element) => {
                     var li = document.createElement("li");
                     li.innerText = `${element.user.id} ${element.user.name}`;
-                    document.querySelector("#chatContent ul").appendChild(li);
+                    document.querySelector("#chatContent>ul").appendChild(li);
                 });
             }
             else {
@@ -334,14 +343,13 @@ function chatting(RoomId) {
     //Disable the send button until connection is established.
     document.getElementById("sendButton").disabled = true;
 
-    connection.on("ReceiveMessage", function (roomid, userid, user, message) {
+    connection.on("ReceiveMessage", function (roomid, userid, user, message, time) {
 
-        if (user != document.getElementById("userlink").innerText.split(" ")[1] || true) {
-            var li = document.createElement("li");
-            document.querySelector("#chatContent>ul").appendChild(li);
-            li.textContent = `${user} : ${message}`;
-            li.scrollIntoView();
-        }
+        var li = document.createElement("li");
+        li.innerHTML = chatMessageUnit(user, message, time);
+        document.querySelector("#chatContent>ul").appendChild(li);
+        li.scrollIntoView();
+
     });
 
     connection.start().then(function () {
@@ -425,10 +433,17 @@ var notifications = new Proxy({
         document.getElementById("notificationList").innerHTML = "<h4>notifications</h4>"
         var dt = target.data;
         for (i = 0; i < dt.length; i++) {
-            document.getElementById("notificationList").innerHTML += `<a href="${dt[i].url}">${dt[i].type}</a><br>`;
+            document.getElementById("notificationList").innerHTML += notificationUnit(dt[i].url, dt[i].type);
         }
         return true;
     }
 });
 
+function notificationUnit(url, type) {
+    return `<a href="${url}">${type}</a><br>`;
+}
 
+
+function chatMessageUnit(name, message, created) {
+    return `${name} : ${message} <p class="timeIndicator">${new Date(created).toLocaleString('en-US', { timeZoneName: 'short' })}</p>`
+}

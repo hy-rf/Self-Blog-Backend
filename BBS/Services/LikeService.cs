@@ -14,29 +14,39 @@ namespace BBS.Services
             {
                 ctx.LikedPost.Add(likedPost);
                 ctx.SaveChanges();
+                return;
             }
-            else
-            {
-                RemoveLikePost(likedPost);
-                ctx.SaveChanges();
-                throw new Exception("Post already liked");
-            }
+            RemoveLikePost(likedPost);
+            ctx.SaveChanges();
         }
 
         public void AddLikeReply(LikedReply likedReply)
         {
             // Check if the user has already liked the reply
-            if (ctx.LikedReply.Any(lp => lp.UserId == likedReply.UserId && lp.ReplyId == likedReply.ReplyId))
+            if (!ctx.LikedReply.Any(lp => lp.UserId == likedReply.UserId && lp.ReplyId == likedReply.ReplyId))
             {
+                ctx.LikedReply.Add(likedReply);
+                ctx.SaveChanges();
                 return;
             }
-            ctx.LikedReply.Add(likedReply);
+            RemoveLikeReply(likedReply);
             ctx.SaveChanges();
         }
 
         public List<LikedPost> likedPosts(int userId)
         {
-            return ctx.LikedPost.Where(lp => lp.UserId == userId).Include(lp => lp.Post).ToList();
+            return ctx.LikedPost.Where(lp => lp.UserId == userId).Include(lp => lp.Post).Select(lp => new LikedPost
+            {
+                UserId = lp.UserId,
+                PostId = lp.PostId,
+                Post = new Post
+                {
+                    Title = lp.Post.Title,
+                    Content = lp.Post.Content,
+                    Created = lp.Post.Created,
+                    Modified = lp.Post.Modified
+                }
+            }).ToList();
         }
 
         public List<LikedReply> likedReplies(int userId)

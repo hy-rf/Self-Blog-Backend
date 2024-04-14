@@ -28,14 +28,16 @@ namespace BBS.Hubs
             {
                 return;
             }
+            DateTime Time = DateTime.Now;
             chatService.CreateChatMessage(new ChatRoomMessage
             {
                 UserId = Convert.ToInt32(Context.User!.FindFirst(ClaimTypes.Sid)?.Value),
                 Message = Message,
-                Created = DateTime.Now,
+                Created = Time,
                 ChatRoomId = Convert.ToInt32(RoomId),
             });
-            await Clients.Group(RoomId).SendAsync("ReceiveMessage", RoomId, UserId, Name, Message);
+
+            await Clients.Group(RoomId).SendAsync("ReceiveMessage", RoomId, UserId, Name, Message, Time.ToLocalTime());
         }
     }
 }

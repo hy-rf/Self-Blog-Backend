@@ -9,7 +9,7 @@ document.querySelector("#friendRequestsReceived").addEventListener("click", (e) 
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                Id: parseInt(e.target.parentNode.firstElementChild.innerText)
+                Id: parseInt(e.target.parentNode.firstElementChild.children[1].innerText)
             })
         }).then(response => {
             e.target.innerText = "success"

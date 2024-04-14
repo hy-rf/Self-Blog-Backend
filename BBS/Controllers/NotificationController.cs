@@ -3,7 +3,6 @@ using BBS.IService;
 using BBS.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using System.Text.Json;
 
 namespace BBS.Controllers
 {
@@ -12,10 +11,10 @@ namespace BBS.Controllers
         [HttpGet("Notifications")]
         public async Task<JsonResult> Notifications()
         {
-            if (!User.Identity.IsAuthenticated)
+            if (!User.Identity!.IsAuthenticated)
             {
                 return Json(JsonBody.CreateResponse(false, "Unauthorized"));
-			}
+            }
             int UserId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid).Value);
             var ret = notificationService.GetAllNotifications(UserId).Result;
             return Json(JsonBody.CreateResponse(true, ret, "Get notification success"));

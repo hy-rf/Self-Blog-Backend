@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace BBS.IService
+﻿namespace BBS.IService
 {
     public interface IMailService
     {

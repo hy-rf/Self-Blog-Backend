@@ -30,7 +30,7 @@
     {
         <div class="PostUnit">
             <p style="display: none;">@item.Id</p>
-            <p>@item.Replies!.Count()Replies</p>
+            <i class="fa-regular fa-comment"><span>@item.Replies!.Count()</span></i>
             <a asp-controller="Post" asp-action="GetPost" asp-route-Id="@item.Id">Title : @item.Title</a>
             @if (User.Identity.IsAuthenticated)
             {
@@ -44,8 +44,8 @@
                 }
             }
             <div class="UserInfo">
-                <a href="/User/@item.UserId">@item.User.Name</a>
-                <img src="data:image/png;base64, @item.User.Avatar" width="8" height="8">
+                <a href="/User/@item.UserId"><img src="data:image/png;base64, @item.User.Avatar" width="32" height="32"></a>
+                
             </div>
 
             <p class="timeIndicator">

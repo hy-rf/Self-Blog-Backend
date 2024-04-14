@@ -11,9 +11,9 @@ namespace BBS.Services
             return await notificationRepository.CreateAsync(notification);
         }
 
-		public async Task<List<Notification>> GetAllNotifications(int UserId)
-		{
+        public async Task<List<Notification>> GetAllNotifications(int UserId)
+        {
             return await notificationRepository.GetAllAsync(n => n.UserId == UserId);
-		}
-	}
+        }
+    }
 }

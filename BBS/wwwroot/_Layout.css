@@ -110,6 +110,9 @@ header {
     font-size: 0.8rem;
     margin: 0.3rem;
 }
+#navRight>li{
+    margin: 0 !important;
+}
 
 .header_hide {
     position: fixed;
@@ -121,9 +124,12 @@ main {
     position: relative;
     height: 100%;
     width: 100%;
+    margin-top: var(--header-height);
+    margin-bottom: var(--footer-height);
     border-left: 1px solid black;
     border-right: 1px solid black;
     overflow: hidden;
+    transition: 0.2s;
 }
 
 
@@ -139,6 +145,7 @@ footer {
     border-left: 1px solid black;
     border-right: 1px solid black;
     border-bottom: 1px solid black;
+    text-align-last: center;
 }
 
 
@@ -185,6 +192,7 @@ img#userLink:hover {
     height: 3rem;
     border-radius: 99rem;
     transition: 0.5s;
+    cursor: pointer;
 }
 
 img#userLink:not(:hover) {
@@ -211,7 +219,7 @@ img#userLink:not(:hover) {
     margin: 0.5rem;
 }
 
-#notificationList{
+#notificationList {
     display: none;
     position: fixed;
     top: 1rem;
@@ -220,18 +228,22 @@ img#userLink:not(:hover) {
     border: 1px solid black;
     border-radius: 1rem;
 }
-.showNotificationList{
+
+.showNotificationList {
     display: block !important;
 }
-#notificationList>*{
+
+#notificationList>* {
     font-size: 0.8rem;
     margin: 0.5rem;
 }
-#notificationList>*:hover{
+
+#notificationList>*:hover {
     background-color: lightgray;
     transition: 0.5s;
 }
-#notificationList>*:not(:hover){
+
+#notificationList>*:not(:hover) {
     background-color: var(--main-color);
     transition: 0.5s;
 }
@@ -285,9 +297,8 @@ img#userLink:not(:hover) {
 #togglePanel {
     position: relative;
     border: 1px solid grey;
-    width: min-content;
     height: 100%;
-    margin: 1rem auto;
+    margin: 1rem 30% auto 30%;
 }
 
 #togglePanel>* {
@@ -300,15 +311,21 @@ img#userLink:not(:hover) {
     gap: 0.5rem;
 }
 
-#togglePanel>div>button {
-    position: relative;
-    width: 5rem;
-    left: 60%;
+#togglePanel>div>input{
+    width: 60%;
 }
 
 #togglePanel>div>p {
     font-size: 0.8rem;
 }
+
+#togglePanel>div>button {
+    position: relative;
+    width: min-content;
+    left: 50%;
+}
+
+
 
 #pwdSecurityIndicator {
     display: flex;
@@ -351,11 +368,15 @@ img#userLink:not(:hover) {
     right: 0;
     bottom: 0;
     color: grey;
-    z-index: 99;
 }
 
 .timeIndicator>span {
     font-size: 0.8rem;
+}
+
+p.timeIndicator {
+    font-size: 0.8rem;
+    text-align-last: end;
 }
 
 
@@ -543,11 +564,7 @@ label[for="updateAvatarBtn"]:hover {
     cursor: pointer;
 }
 
-@media (max-width:800px) {
-    #User {
-        grid-template-areas: "A" "B" "C" "D" "E" "F";
-    }
-}
+
 
 
 /*Chat*/
@@ -589,6 +606,10 @@ label[for="updateAvatarBtn"]:hover {
     margin: 0.2rem;
 }
 
+#chatContent * {
+    position: relative;
+}
+
 #chatInput {
     margin: 0.2rem;
 }
@@ -623,4 +644,54 @@ label[for="updateAvatarBtn"]:hover {
 
 #sendButton {
     width: 5ch;
+}
+
+
+
+@media (max-width:800px) {
+    #User {
+        grid-template-areas: "A" "B" "C" "D" "E" "F";
+    }
+
+    header {
+        bottom: 0;
+        top: auto;
+        border-radius: 0.5rem 0.5rem 0 0;
+        border-top: 1px solid black;
+        border-bottom: 0;
+        background-color: white;
+    }
+
+    main {
+        margin-top: 0;
+    }
+
+    footer {
+        display: none;
+    }
+
+    img#userLink:hover {
+        position: absolute;
+        left: -4rem;
+        top: -2.5rem;
+        width: 3rem;
+        height: 3rem;
+        border-radius: 99rem;
+        transition: 0.5s;
+        cursor: pointer;
+    }
+
+    .ChatWindow {
+        bottom: var(--header-height);
+    }
+
+    #notificationList {
+        top: -50rem;
+    }
+    #togglePanel{
+        margin: 1rem 20% auto 20%;
+    }
+    #togglePanel>div>input{
+        width: 100%;
+    }
 }

@@ -47,5 +47,12 @@ namespace BBS.Controllers
                 Message = "Not Authorized"
             });
         }
+        [HttpGet]
+        [Route("/Like/{UserId}")]
+        public JsonResult LikedPosts(int UserId)
+        {
+            var ret = likeService.likedPosts(UserId);
+            return Json(JsonBody.CreateResponse(true, ret, "success"));
+        }
     }
 }
