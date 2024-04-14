@@ -293,7 +293,7 @@ var chatWindow = new Proxy({
                 document.querySelector("#chatContent ul").innerText = "";
                 res.payload.forEach((element) => {
                     var li = document.createElement("li");
-                    li.innerHTML = `${element.user.name} : ${element.message} <p class="timeIndicator">${new Date(element.created).toLocaleString('en-US', { timeZoneName: 'short' })}</p>`;
+                    li.innerHTML = chatMessageUnit(element.user.name, element.message, element.created);
                     document.querySelector("#chatContent>ul").appendChild(li);
                 });
                 chatting(chatWindow.activeChatRoom.toString());
@@ -303,6 +303,7 @@ var chatWindow = new Proxy({
                 document.getElementById("chatInput").innerHTML = "";
             }
         }
+        // if user is in chat room member list do this
         if (target.activeChatRoomMember) {
             document.getElementById("chatRoomMemberListBtn").innerText = "Message";
             var res = await fetch(`/api/ChatRoomMember/${chatWindow.activeChatRoom}`, {
@@ -345,7 +346,7 @@ function chatting(RoomId) {
     connection.on("ReceiveMessage", function (roomid, userid, user, message, time) {
 
         var li = document.createElement("li");
-        li.innerHTML = `${user} : ${message} <p class="timeIndicator">${new Date(time).toLocaleString('en-US', { timeZoneName: 'short' })}</p>`;
+        li.innerHTML = chatMessageUnit(user, message, time);
         document.querySelector("#chatContent>ul").appendChild(li);
         li.scrollIntoView();
 
@@ -432,10 +433,17 @@ var notifications = new Proxy({
         document.getElementById("notificationList").innerHTML = "<h4>notifications</h4>"
         var dt = target.data;
         for (i = 0; i < dt.length; i++) {
-            document.getElementById("notificationList").innerHTML += `<a href="${dt[i].url}">${dt[i].type}</a><br>`;
+            document.getElementById("notificationList").innerHTML += notificationUnit(dt[i].url, dt[i].type);
         }
         return true;
     }
 });
 
+function notificationUnit(url, type) {
+    return `<a href="${url}">${type}</a><br>`;
+}
 
+
+function chatMessageUnit(name, message, created) {
+    return `${name} : ${message} <p class="timeIndicator">${new Date(created).toLocaleString('en-US', { timeZoneName: 'short' })}</p>`
+}
