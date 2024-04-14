@@ -19,8 +19,8 @@ document.querySelector("label[for='updateAvatarBtn']").addEventListener("click",
     if (e.target.nextElementSibling.disabled == true) {
         document.querySelector("label[for='avatar']").animate([
             { borderColor: "red" },
-            { transition: "border-color 0.5s"}
-        ],{
+            { transition: "border-color 0.5s" }
+        ], {
             duration: 1000,
         })
     }
@@ -74,6 +74,15 @@ getFriendList = () => {
         console.log(error);
     });
 }
+getLikedPosts = () => {
+    return fetch(`/Like/${document.getElementById("Id").innerText.split(":")[1].toString()}`).then(response => {
+        return response.json();
+    }).then(ret => {
+        return ret.payload;
+    }).catch(error => {
+        console.log(error);
+    });
+}
 
 getChatRoomList = () => {
     return fetch(`/Chat/GetChatRooms`, {
@@ -108,18 +117,16 @@ window.onload = async () => {
     ele.innerHTML = friendlist;
     document.querySelector("#User").appendChild(ele);
 
-
-    // Grid F Now Unnecessary
-    // var ret2 = await getChatRoomList();
-    // var chatroomlist = "";
-    // var ele2 = document.createElement("div");
-    // ele2.setAttribute("id", "chatrooms");
-    // ele2.setAttribute("style", "position:relativel;grid-area:F;");
-    // for (i = 0; i < ret2.length; i++) {
-    //     chatroomlist += `<a href="/ChatRoom/${ret2[i].id}">go to ${ret2[i].name}</a>`;
-    // }
-    // ele2.innerHTML = chatroomlist;
-    // document.querySelector("#User").appendChild(ele2);
+    var ret2 = await getLikedPosts();
+    var likedPosts = "";
+    var ele2 = document.createElement("div");
+    //ele2.setAttribute("id", "chatrooms");
+    ele2.setAttribute("style", "position:relativel;grid-area:F;");
+    for (i = 0; i < ret2.length; i++) {
+        likedPosts += `<a href="/Post/Detail/${ret2[i].post.id}">${ret2[i].post.title}</a>`;
+    }
+    ele2.innerHTML = likedPosts;
+    document.querySelector("#User").appendChild(ele2);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////// Experimental 2FV
