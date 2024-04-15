@@ -15,7 +15,7 @@ document.getElementById("PostList").addEventListener("click", async (e) => {
             return response.json();
         });
         if (res.success) {
-            if (res.message == "Post liked") {
+            if (e.target.src == "/img/heartvac.png") {
                 e.target.src = "/img/heartfill.png";
             }
             else {
