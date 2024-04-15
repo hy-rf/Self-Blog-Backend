@@ -110,8 +110,7 @@ header {
     font-size: 0.8rem;
     margin: 0.3rem;
 }
-
-#navRight>li {
+#navRight>li{
     margin: 0 !important;
 }
 
@@ -150,9 +149,7 @@ footer {
 }
 
 
-.PostUnit>* {
-    margin: 0.5rem;
-}
+
 
 #navLeft>*:not(:hover) {
     color: black;
@@ -312,7 +309,7 @@ img#userLink:not(:hover) {
     gap: 0.5rem;
 }
 
-#togglePanel>div>input {
+#togglePanel>div>input{
     width: 60%;
 }
 
@@ -389,6 +386,9 @@ p.timeIndicator {
     margin: 0.3rem 8px 0.3rem 6px;
     transition: 0.5s;
 }
+.PostUnit>* {
+    margin: 0.5rem;
+}
 
 .LikeBtn {
     position: absolute;
@@ -409,41 +409,9 @@ p.timeIndicator {
     margin: 0.3rem 8px 0.3rem 6px;
     transition: 0.5s;
 }
-
-/* .ReplyUnit::after {
-    display: block;
-    position: relative;
-    background-color: black;
-    bottom: 0;
-    left: 0;
-    width: 0%;
-    height: .5rem;
-    content: "";
-    z-index: 99;
+.ReplyUnit>* {
+    margin: 0.5rem;
 }
-
-.ReplyUnit:not(:hover):after {
-    display: block;
-    position: relative;
-    background-color: black;
-    height: .5rem;
-    content: "";
-    z-index: 99;
-    animation: example 0.5s;
-}
-.ReplyUnit:hover:after {
-    display: block;
-    position: relative;
-    background-color: black;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: .5rem;
-    transition: 0.5s;
-    content: "";
-    z-index: 99;
-} */
-
 
 .hideEditPost {
     display: block !important;
@@ -657,12 +625,12 @@ label[for="updateAvatarBtn"]:hover {
     header {
         bottom: 0;
         top: auto;
-        /* height: calc(2 * var(--header-height)); */
         border-radius: 0.5rem 0.5rem 0 0;
         border-top: 1px solid black;
         border-bottom: 0;
         background-color: white;
         zoom: 1.3;
+        margin-bottom: 0;
     }
 
     main {
@@ -692,15 +660,13 @@ label[for="updateAvatarBtn"]:hover {
         top: -27.5rem;
     }
 
-    #welcomeWrapper {
+    #welcomeWrapper{
         margin: 1rem;
     }
-
-    #togglePanel {
+    #togglePanel{
         margin: 1rem 20% auto 20%;
     }
-
-    #togglePanel>div>input {
+    #togglePanel>div>input{
         width: 100%;
     }
 
