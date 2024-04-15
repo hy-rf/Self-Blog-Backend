@@ -15,7 +15,7 @@ document.getElementById("PostList").addEventListener("click", async (e) => {
             return response.json();
         });
         if (res.success) {
-            if (e.target.src == "/img/heartvac.png") {
+            if (/vac/.test(e.target.src)) {
                 e.target.src = "/img/heartfill.png";
             }
             else {
