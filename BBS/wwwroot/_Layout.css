@@ -42,6 +42,7 @@ body {
     scroll-behavior: smooth;
     scrollbar-width: 0;
     background-color: var(--main-color);
+    background-image: url(https://garden.spoonflower.com/c/14227021/p/f/m/LCcK28a2wICLKqTrti0CvRaMLDCIrIsim-GDq-q5bC1GBeOjeuEy/Blue%20stars.jpg);
 }
 
 header {
@@ -59,29 +60,13 @@ header {
     border-bottom: 1px solid black;
     transition: 0.5s;
     z-index: 99;
-    background-color: var(--main-color);
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(3px);
 }
 
 #navLeft {
     position: absolute;
     left: 1rem;
 }
-
-/*#search {
-    position: absolute;
-    right: 11rem;
-}
-
-    #search > * {
-        font-size: 0.8rem;
-        height: 1.1rem;
-    }
-
-#searchOptions > * {
-    font-size: 0.8rem;
-    height: 1.1rem;
-}*/
 
 #navRight {
     position: absolute;
@@ -146,6 +131,7 @@ footer {
     border-right: 1px solid black;
     border-bottom: 1px solid black;
     text-align-last: center;
+    backdrop-filter: blur(3px);
 }
 
 
@@ -153,14 +139,12 @@ footer {
 
 #navLeft>*:not(:hover) {
     color: black;
-    background-color: var(--main-color);
     transition: 0.5s;
     margin: 0.5rem;
 }
 
 #navLeft>*:hover {
     color: lightgray;
-    background-color: black;
     transition: 0.5s;
     margin: 0.5rem;
 }
@@ -205,14 +189,12 @@ img#userLink:not(:hover) {
 
 #navRight>*:not(:hover) {
     color: black;
-    background-color: var(--main-color);
     transition: 0.5s;
     margin: 0.5rem;
 }
 
 #navRight>*:hover {
     color: lightgray;
-    background-color: black;
     transition: 0.5s;
     margin: 0.5rem;
 }
@@ -222,7 +204,6 @@ img#userLink:not(:hover) {
     position: fixed;
     top: 1rem;
     right: 0;
-    background-color: var(--main-color);
     border: 1px solid black;
     border-radius: 1rem;
 }
@@ -385,6 +366,7 @@ p.timeIndicator {
     background-color: #ffffff88;
     margin: 0.3rem 8px 0.3rem 6px;
     transition: 0.5s;
+    backdrop-filter: blur(3px);
 }
 .PostUnit>* {
     margin: 0.5rem;
@@ -408,6 +390,7 @@ p.timeIndicator {
     background-color: #ffffff88;
     margin: 0.3rem 8px 0.3rem 6px;
     transition: 0.5s;
+    backdrop-filter: blur(3px);
 }
 .ReplyUnit>* {
     margin: 0.5rem;
@@ -493,6 +476,7 @@ p.timeIndicator {
     border-radius: 1rem;
     background-color: #ffffff88;
     transition: 0.5s;
+    backdrop-filter: blur(3px);
 }
 
 #User>*>* {
@@ -628,7 +612,6 @@ label[for="updateAvatarBtn"]:hover {
         border-radius: 0.5rem 0.5rem 0 0;
         border-top: 1px solid black;
         border-bottom: 0;
-        background-color: white;
         zoom: 1.3;
         margin-bottom: 0;
     }
