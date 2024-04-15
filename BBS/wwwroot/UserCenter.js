@@ -54,7 +54,7 @@
     //ele2.setAttribute("id", "chatrooms");
     ele2.setAttribute("style", "position:relativel;grid-area:F;");
     for (i = 0; i < ret2.length; i++) {
-        likedPosts += `<a href="/Post/Detail/${ret2[i].post.id}">${ret2[i].post.title}</a>`;
+        likedPosts += `<a href="/Post/Detail/${ret2[i].postId}">${ret2[i].post.title}</a>`;
     }
     ele2.innerHTML = likedPosts;
     document.querySelector("#User").appendChild(ele2);
