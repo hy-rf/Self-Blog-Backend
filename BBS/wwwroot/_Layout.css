@@ -703,4 +703,8 @@ label[for="updateAvatarBtn"]:hover {
     #togglePanel>div>input {
         width: 100%;
     }
+
+    .timeIndicator>span {
+        font-size: 0.55rem;
+    }
 }
