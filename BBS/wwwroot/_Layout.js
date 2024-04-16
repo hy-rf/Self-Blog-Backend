@@ -168,7 +168,7 @@ var chatWindow = new Proxy({
                 document.getElementById("chatInput").innerHTML = `
                                 <input type="text" id="chatInputBox">
                                 <button id="sendButton">Send</button>`;
-                document.querySelector("#chatContent ul").innerText = "";
+                document.querySelector("#chatContent ul").innerHTML = "";
                 res.payload.forEach((element) => {
                     var li = document.createElement("li");
                     li.innerHTML = chatMessageUnit(element.user.name, element.message, element.created);
@@ -184,6 +184,10 @@ var chatWindow = new Proxy({
         // if user is in chat room member list do this
         if (target.activeChatRoomMember) {
             document.getElementById("chatRoomMemberListBtn").innerText = "Message";
+            document.querySelector("#chatContent ul").innerHTML = "";
+            document.getElementById("chatInput").innerHTML = `
+                                <input type="text" id="userId">
+                                <button id="addMemberBtn">Add</button>`;
             var res = await fetch(`/api/ChatRoomMember/${chatWindow.activeChatRoom}`, {
                 method: "GET",
                 headers: {
@@ -194,10 +198,6 @@ var chatWindow = new Proxy({
                 return res.json();
             });
             if (res.success) {
-                document.getElementById("chatInput").innerHTML = `
-                                <input type="text" id="userId">
-                                <button id="addMemberBtn">Add</button>`;
-                document.querySelector("#chatContent ul").innerText = "";
                 res.payload.forEach((element) => {
                     var li = document.createElement("li");
                     li.innerText = `${element.user.id} ${element.user.name}`;
