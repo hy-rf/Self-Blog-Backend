@@ -61,6 +61,7 @@ header {
     transition: 0.5s;
     z-index: 99;
     backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
 }
 
 #navLeft {
@@ -132,6 +133,7 @@ footer {
     border-bottom: 1px solid black;
     text-align-last: center;
     backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
 }
 
 
@@ -361,12 +363,12 @@ p.timeIndicator {
 
 .PostUnit {
     position: relative;
-    border: 2px solid wheat;
     border-radius: 1rem;
     background-color: #ffffff88;
     margin: 0.3rem 8px 0.3rem 6px;
     transition: 0.5s;
     backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
 }
 .PostUnit>* {
     margin: 0.5rem;
@@ -386,12 +388,12 @@ p.timeIndicator {
 
 .ReplyUnit {
     position: relative;
-    border: 2px solid wheat;
     border-radius: 1rem;
     background-color: #ffffff88;
     margin: 0.3rem 8px 0.3rem 6px;
     transition: 0.5s;
     backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
 }
 .ReplyUnit>* {
     margin: 0.5rem;
@@ -473,11 +475,11 @@ p.timeIndicator {
 
 #User>* {
     position: relative;
-    border: 2px solid wheat;
     border-radius: 1rem;
     background-color: #ffffff88;
     transition: 0.5s;
     backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
 }
 
 #User>*>* {
