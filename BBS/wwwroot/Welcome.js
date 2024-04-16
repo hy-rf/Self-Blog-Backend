@@ -30,22 +30,6 @@ document.getElementById("signupBtn").addEventListener("click", () => {
 });
 // submit login or signup
 document.getElementById("togglePanel").addEventListener("click", async (e) => {
-    /// demo start
-    // demo 1
-    if (e.target.innerText == "demo") {
-        document.getElementById("Name").value = "rf";
-        document.getElementById("Pwd").value = "0000";
-        document.getElementById("submitLoginBtn").click();
-    }
-    // demo2
-    if (e.target.innerText == "demo2") {
-        document.getElementById("Name").value = "qwerty";
-        document.getElementById("Pwd").value = "qwe";
-        document.getElementById("submitLoginBtn").click();
-    }
-    /// demo end
-
-
     if (e.target.id == "submitLoginBtn") {
         e.target.previousElementSibling.innerText = ".";
         var logging = true;
