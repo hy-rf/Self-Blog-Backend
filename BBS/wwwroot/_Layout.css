@@ -50,9 +50,9 @@ header {
     align-self: center;
     border-bottom-left-radius: 0.5rem;
     border-bottom-right-radius: 0.5rem;
-    border-left: 1px solid black;
-    border-right: 1px solid black;
-    border-bottom: 1px solid black;
+    border-left: 1px solid grey;
+    border-right: 1px solid grey;
+    border-bottom: 1px solid grey;
     transition: 0.5s;
     z-index: 99;
     backdrop-filter: blur(3px);
@@ -107,8 +107,8 @@ main {
     width: 100%;
     margin-top: var(--header-height);
     margin-bottom: var(--footer-height);
-    border-left: 1px solid black;
-    border-right: 1px solid black;
+    border-left: 1px solid grey;
+    border-right: 1px solid grey;
     overflow: hidden;
     transition: 0.2s;
 }
@@ -122,10 +122,7 @@ footer {
     position: absolute;
     width: 100%;
     bottom: 0;
-    border-top: 1px solid black;
-    border-left: 1px solid black;
-    border-right: 1px solid black;
-    border-bottom: 1px solid black;
+    border: 1px solid grey;
     text-align-last: center;
     backdrop-filter: blur(3px);
     -webkit-backdrop-filter: blur(3px);
@@ -201,7 +198,7 @@ img#userLink:not(:hover) {
     position: fixed;
     top: 1rem;
     right: 0;
-    border: 1px solid black;
+    border: 1px solid grey;
     border-radius: 1rem;
     backdrop-filter: blur(3px);
     -webkit-backdrop-filter: blur(3px);
@@ -331,7 +328,7 @@ img#userLink:not(:hover) {
 .EditButton,
 .ReplyButton {
     cursor: pointer;
-    border: 1px black solid;
+    border: 1px grey solid;
     border-radius: 3px;
 }
 
@@ -585,8 +582,8 @@ label[for="updateAvatarBtn"]:hover {
 }
 
 #chatroomList>ul>li:hover {
-    border-top: 1px solid #000;
-    border-bottom: 1px solid #000;
+    border-top: 1px solid grey;
+    border-bottom: 1px solid grey;
     transition: 0.5s;
     cursor: pointer;
 }
@@ -599,8 +596,8 @@ label[for="updateAvatarBtn"]:hover {
 }
 
 #chatContent>ul>li:hover {
-    border-top: 1px solid #000;
-    border-bottom: 1px solid #000;
+    border-top: 1px solid grey;
+    border-bottom: 1px solid grey;
     cursor: default;
     transition: 0.5s;
 }
@@ -621,7 +618,7 @@ label[for="updateAvatarBtn"]:hover {
         top: auto;
         height: calc(var(--header-height) * 2);
         border-radius: 0.5rem 0.5rem 0 0;
-        border-top: 1px solid black;
+        border-top: 1px solid grey;
         border-bottom: 0;
         margin-bottom: 0;
     }

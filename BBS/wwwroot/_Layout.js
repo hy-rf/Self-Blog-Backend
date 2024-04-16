@@ -38,11 +38,6 @@ fetch("/api/User/Avatar").then(res => {
 
 var chatRoomWindow = document.createElement("div");
 chatRoomWindow.className = "ChatWindow";
-chatRoomWindow.innerHTML = `
-<div id="chatroomList">
-    <ul>
-    </ul>
-</div>`;
 
 
 
