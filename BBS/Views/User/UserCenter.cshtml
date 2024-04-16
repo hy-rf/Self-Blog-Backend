@@ -7,22 +7,17 @@
 
 <div id="User">
     <div id="Detail">
-        <h3 id="Title">@Model.Name's Info:</h3>
+        <h3 id="Title">Basic</h3>
         <p id="Id">Id:@Model.Id</p>
         <span>Name:</span><span id="name">@Model.Name</span>
         <p>Created:@Model.Created</p>
-        <p>Last Login:@Model.LastLogin</p>
-        <p>Number of Posts:@foreach (var item in Model.Posts!) { i++; }@i</p>
-        <p>Number of Replies:@foreach (var item in Model.Replies!) { j++; }@j</p>
+        <p>Posts:@foreach (var item in Model.Posts!) { i++; }@i</p>
+        <p>Replies:@foreach (var item in Model.Replies!) { j++; }@j</p>
         <a href="/FriendRequests">Friend Requests</a>
         <a href="/FriendRequestsSent">Friend Requests Sent</a>
-        @*<a id="generate2FQRCode">test generate qrcode</a>
-        <img id="TwoFactorQRCode" />
-        <input id="2FCode" />
-        <button id="submit2FC">Verify</button>*@
     </div>
     <div id="Avatar">
-        <h3>@Model.Name's Avatar</h3>
+        <h3>Avatar</h3>
         <form method="POST" action="/User/EditAvatar" enctype="multipart/form-data" onsubmit="UploadFile(this);return false;">
             <div id="Avatars">
                 <img src="data:image/png;base64, @Model.Avatar" width="128" height="128">
@@ -35,18 +30,16 @@
         </form>
     </div>
     <div id="Posts">
-        <h3>@Model.Name's Posts</h3>
+        <h3>Posts</h3>
         @foreach (var item in Model.Posts)
         {
-            <p>@item.Id</p>
             <a href="Post/Detail/@item.Id">@item.Title</a>
         }
     </div>
     <div id="Replies">
-        <h3>@Model.Name's Replies</h3>
+        <h3>Replies</h3>
         @foreach (var item in Model.Replies)
         {
-            <p>@item.Id</p>
             <a href="Post/Detail/@item.PostId">@item.Content</a>
         }
     </div>

@@ -468,6 +468,12 @@ p.timeIndicator {
 #Avatar {
     grid-area: B;
 }
+#Avatars>img{
+    border-radius: 99rem;
+}
+#friends>img{
+    border-radius: 99rem;
+}
 
 #Posts {
     position: relative;

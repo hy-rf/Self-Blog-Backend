@@ -39,11 +39,10 @@
     var friendlist = "";
     var ele = document.createElement("div");
     ele.setAttribute("id", "friends");
-    ele.setAttribute("style", "grid-area:E;")
+    ele.setAttribute("style", "grid-area:E;");
     for (i = 0; i < ret.length; i++) {
-        friendlist += `<a href="/User/${ret[i].friendUser.id}">${ret[i].friendUser.name}</a>
-        <p>Joined at ${ret[i].friendUser.created}</p>
-        <img src="data:image/png;base64, ${ret[i].friendUser.avatar}" width="64" height="64"><br>`;
+        friendlist += `<img src="data:image/png;base64, ${ret[i].friendUser.avatar}" width="64" height="64">
+        <a href="/User/${ret[i].friendUser.id}">${ret[i].friendUser.name}</a>`;
     }
     ele.innerHTML = friendlist;
     document.querySelector("#User").appendChild(ele);
