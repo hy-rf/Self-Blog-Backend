@@ -655,7 +655,7 @@ label[for="updateAvatarBtn"]:hover {
     }
 
     .ChatWindow {
-        bottom: var(--header-height);
+        bottom: calc(var(--header-height) * 2);
     }
 
     #notificationList {
