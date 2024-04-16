@@ -23,9 +23,6 @@
     width: 0;
 }
 
-html {
-    /*    min-height: 100%;*/
-}
 
 /*Temperary*/
 #userlink {
@@ -250,13 +247,15 @@ img#userLink:not(:hover) {
 /*Welcome*/
 #welcomeWrapper {
     position: relative;
-    margin: 1rem 5rem 1rem 5rem;
+    margin: 1rem 20% 1rem 20%;
     border: 1px solid grey;
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    border-radius: 1rem;
 }
 
 #toggleBtns {
     position: relative;
-    border: 1px solid grey;
     display: flex;
     flex-direction: row;
     width: max-content;
@@ -265,9 +264,9 @@ img#userLink:not(:hover) {
 
 #toggleBtns>* {
     width: 4rem;
-    background-color: var(--main-color);
-    border: 1px grey solid;
-    transition: 0.3s;
+    border: 1px solid grey;
+    border-radius: 5px;
+    margin: 5px 5px 5px 5px;
 }
 
 #toggleBtns>*:hover {
@@ -277,7 +276,6 @@ img#userLink:not(:hover) {
 
 #togglePanel {
     position: relative;
-    border: 1px solid grey;
     height: 100%;
     margin: 1rem 30% auto 30%;
 }
@@ -293,7 +291,7 @@ img#userLink:not(:hover) {
 }
 
 #togglePanel>div>input{
-    width: 60%;
+    width: 100%;
 }
 
 #togglePanel>div>p {
@@ -304,6 +302,12 @@ img#userLink:not(:hover) {
     position: relative;
     width: min-content;
     left: 50%;
+    border-radius: 5px;
+    border: 1px solid grey;
+}
+
+#submitSignupBtn{
+    width: 5rem !important;
 }
 
 
