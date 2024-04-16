@@ -425,7 +425,7 @@ async function handleRightNavBarActions(e) {
 
 function handleLoading(target){
     if (isLoading) {
-        target.innerText += "";
+        target.innerText += ".";
         if (target.innerText.innerText.length >= 4) {
             target.innerText.innerText = ".";
         }
