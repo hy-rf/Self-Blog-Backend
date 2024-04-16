@@ -101,8 +101,10 @@ var chatWindow = new Proxy({
     },
     set: async (target, prop, value) => {
         target[prop] = value;
+        var isLoading = false;
         // When chat room window is visible do this
         if (target.isVisible) {
+
             if (document.getElementsByTagName("main")[0].getElementsByClassName("ChatWindow").length == 0) {
                 await document.getElementsByTagName("main")[0].appendChild(chatRoomWindow);
             }
@@ -113,6 +115,15 @@ var chatWindow = new Proxy({
             </div>
             <div id="chatInput">
             </div>`;
+            isLoading = true;
+            setInterval(() => {
+                if (isLoading) {
+                    document.querySelector("#chatroomList ul").innerText += "";
+                    if (document.querySelector("#chatroomList ul").innerText.innerText.length >= 4) {
+                        document.querySelector("#chatroomList ul").innerText.innerText = ".";
+                    }
+                }
+            }, 100);
             var res = await fetch("/api/GetJoinedChatRoom", {
                 method: "POST",
                 headers: {
@@ -123,6 +134,7 @@ var chatWindow = new Proxy({
                 return response.json();
             });
             if (res.success) {
+                isLoading = false;
                 document.getElementById("chatInput").innerHTML = `
                                 <input type="text" id="chatInputBox">
                                 <button id="addChatRoom">Add</button>`;
@@ -152,6 +164,14 @@ var chatWindow = new Proxy({
             </div>
             <div id="chatInput">
             </div>`;
+            isLoading = true;
+            setInterval(() => {
+                if (isLoading) {
+                    if (document.querySelector("#chatContent ul").innerText.length >= 4) {
+                        document.querySelector("#chatContent ul").innerText = ".";
+                    }
+                }
+            }, 100);
             var res = await fetch("/api/GetChatRoomMessages", {
                 method: "POST",
                 headers: {
@@ -165,6 +185,7 @@ var chatWindow = new Proxy({
                 return res.json();
             });
             if (res.success) {
+                isLoading = false;
                 document.getElementById("chatInput").innerHTML = `
                                 <input type="text" id="chatInputBox">
                                 <button id="sendButton">Send</button>`;
@@ -183,8 +204,16 @@ var chatWindow = new Proxy({
         }
         // if user is in chat room member list do this
         if (target.activeChatRoomMember) {
+            document.querySelector("#chatContent ul").innerText = "";
+            isLoading = true;
+            setInterval(() => {
+                if (isLoading) {
+                    if (document.querySelector("#chatContent ul").innerText.length >= 4) {
+                        document.querySelector("#chatContent ul").innerText = ".";
+                    }
+                }
+            }, 100);
             document.getElementById("chatRoomMemberListBtn").innerText = "Message";
-            document.querySelector("#chatContent ul").innerHTML = "";
             document.getElementById("chatInput").innerHTML = `
                                 <input type="text" id="userId">
                                 <button id="addMemberBtn">Add</button>`;
@@ -198,6 +227,8 @@ var chatWindow = new Proxy({
                 return res.json();
             });
             if (res.success) {
+                document.querySelector("#chatContent ul").innerText = "";
+                isLoading = false;
                 res.payload.forEach((element) => {
                     var li = document.createElement("li");
                     li.innerText = `${element.user.id} ${element.user.name}`;
