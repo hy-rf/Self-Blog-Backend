@@ -484,7 +484,7 @@ p.timeIndicator {
 
 #Replies {
     position: relative;
-    height: 8em;
+    height: auto;
     overflow-y: auto;
     grid-area: D;
 }
