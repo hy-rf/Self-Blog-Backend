@@ -85,48 +85,6 @@
         }
         document.querySelector("form>button").removeAttribute("disabled");
     });
-
-
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////// Experimental 2FV
-    // Get 2fQR
-    document.getElementById("generate2FQRCode").addEventListener("click", async (e) => {
-        e.preventDefault();
-        let res = await fetch("/api/2fv", {
-            method: "POST",
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-            },
-        }).then(res => {
-            return res.json();
-        });
-        if (res.success) {
-            document.getElementById("TwoFactorQRCode").src = res.payload["qrCodeUrl"];
-        }
-    });
-    // Validate 2fQR
-    document.getElementById("submit2FC").addEventListener("click", async (e) => {
-        let code = document.getElementById("2FCode").value;
-        var res = await fetch("/apt/2fv/vali", {
-            method: "POST",
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                "code": code
-            })
-        }).then(res => {
-            return res.json();
-        });
-        if (res.success) {
-            e.target.innerText = "Success!"
-        }
-        else {
-            e.target.innerText = "Failed!"
-        }
-    })
 })();
 
 
