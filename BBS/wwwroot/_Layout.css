@@ -205,6 +205,8 @@ img#userLink:not(:hover) {
     right: 0;
     border: 1px solid black;
     border-radius: 1rem;
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
 }
 
 .showNotificationList {
@@ -232,15 +234,19 @@ img#userLink:not(:hover) {
     position: fixed;
     right: 0;
     bottom: 0;
-    background-color: var(--main-color);
     overflow-y: auto;
     overflow-x: hidden;
     height: 20rem;
     width: 20rem;
-    border: 1px solid black;
+    border: 1px solid grey;
     border-top-left-radius: 0.5rem;
     resize: none;
-    z-index: 99;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
 }
 
 
@@ -532,13 +538,6 @@ label[for="updateAvatarBtn"]:hover {
     border-radius: 5px;
 }
 
-.ChatWindow {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    overflow: hidden;
-    background-color: var(--main-color);
-}
 
 #backtoChatRoomListBtn {
     position: absolute;
