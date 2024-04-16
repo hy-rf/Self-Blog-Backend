@@ -472,7 +472,7 @@ p.timeIndicator {
 
 #Posts {
     position: relative;
-    height: 8em;
+    height: auto;
     overflow-y: auto;
     grid-area: C;
 }
