@@ -14,9 +14,8 @@
         <div id="Id"><span>Id:</span><span>@Model.Id</span></div>
         <span>Name:</span><span id="name">@Model.Name</span>
         <p>Created:@Model.Created</p>
-        <p>Last Login:@Model.LastLogin</p>
-        <p>Number of Posts: @Model.Posts!.Count()</p>
-        <p>Number of Replies: @Model.Replies!.Count()</p>
+        <p>Posts:@Model.Posts!.Count()</p>
+        <p>Replies:@Model.Replies!.Count()</p>
     </div>
     <div id="Avatar">
         <h3>@Model.Name's Avatar</h3>
@@ -30,7 +29,6 @@
         <h3>@Model.Name's Posts</h3>
         @foreach (var item in Model.Posts!)
         {
-            <p>@item.Id</p>
             <a href="/Post/Detail/@item.Id">@item.Title</a>
         }
     </div>
@@ -38,7 +36,6 @@
         <h3>@Model.Name's Replies</h3>
         @foreach (var item in Model.Replies!)
         {
-            <p>@item.Id</p>
             <a href="/Post/Detail/@item.PostId">@item.Content</a>
         }
     </div>

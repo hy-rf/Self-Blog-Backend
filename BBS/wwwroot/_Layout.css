@@ -4,8 +4,6 @@
     padding: 0;
     font-size: 1.1rem;
     font-family: monospace;
-    /* background-color: black !important;
-    color: white !important; */
 }
 
 :root {
@@ -23,9 +21,6 @@
     width: 0;
 }
 
-html {
-    /*    min-height: 100%;*/
-}
 
 /*Temperary*/
 #userlink {
@@ -42,6 +37,7 @@ body {
     scroll-behavior: smooth;
     scrollbar-width: 0;
     background-color: var(--main-color);
+    background-image: url(https://garden.spoonflower.com/c/14227021/p/f/m/LCcK28a2wICLKqTrti0CvRaMLDCIrIsim-GDq-q5bC1GBeOjeuEy/Blue%20stars.jpg);
 }
 
 header {
@@ -54,34 +50,19 @@ header {
     align-self: center;
     border-bottom-left-radius: 0.5rem;
     border-bottom-right-radius: 0.5rem;
-    border-left: 1px solid black;
-    border-right: 1px solid black;
-    border-bottom: 1px solid black;
+    border-left: 1px solid grey;
+    border-right: 1px solid grey;
+    border-bottom: 1px solid grey;
     transition: 0.5s;
     z-index: 99;
-    background-color: var(--main-color);
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
 }
 
 #navLeft {
     position: absolute;
     left: 1rem;
 }
-
-/*#search {
-    position: absolute;
-    right: 11rem;
-}
-
-    #search > * {
-        font-size: 0.8rem;
-        height: 1.1rem;
-    }
-
-#searchOptions > * {
-    font-size: 0.8rem;
-    height: 1.1rem;
-}*/
 
 #navRight {
     position: absolute;
@@ -110,7 +91,8 @@ header {
     font-size: 0.8rem;
     margin: 0.3rem;
 }
-#navRight>li{
+
+#navRight>li {
     margin: 0 !important;
 }
 
@@ -126,8 +108,8 @@ main {
     width: 100%;
     margin-top: var(--header-height);
     margin-bottom: var(--footer-height);
-    border-left: 1px solid black;
-    border-right: 1px solid black;
+    border-left: 1px solid grey;
+    border-right: 1px solid grey;
     overflow: hidden;
     transition: 0.2s;
 }
@@ -141,28 +123,23 @@ footer {
     position: absolute;
     width: 100%;
     bottom: 0;
-    border-top: 1px solid black;
-    border-left: 1px solid black;
-    border-right: 1px solid black;
-    border-bottom: 1px solid black;
+    border: 1px solid grey;
     text-align-last: center;
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
 }
 
 
-.PostUnit>* {
-    margin: 0.5rem;
-}
+
 
 #navLeft>*:not(:hover) {
     color: black;
-    background-color: var(--main-color);
     transition: 0.5s;
     margin: 0.5rem;
 }
 
 #navLeft>*:hover {
     color: lightgray;
-    background-color: black;
     transition: 0.5s;
     margin: 0.5rem;
 }
@@ -207,14 +184,11 @@ img#userLink:not(:hover) {
 
 #navRight>*:not(:hover) {
     color: black;
-    background-color: var(--main-color);
     transition: 0.5s;
-    margin: 0.5rem;
 }
 
 #navRight>*:hover {
     color: lightgray;
-    background-color: black;
     transition: 0.5s;
     margin: 0.5rem;
 }
@@ -224,9 +198,10 @@ img#userLink:not(:hover) {
     position: fixed;
     top: 1rem;
     right: 0;
-    background-color: var(--main-color);
-    border: 1px solid black;
+    border: 1px solid grey;
     border-radius: 1rem;
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
 }
 
 .showNotificationList {
@@ -254,28 +229,34 @@ img#userLink:not(:hover) {
     position: fixed;
     right: 0;
     bottom: 0;
-    background-color: var(--main-color);
     overflow-y: auto;
     overflow-x: hidden;
     height: 20rem;
     width: 20rem;
-    border: 1px solid black;
+    border: 1px solid grey;
     border-top-left-radius: 0.5rem;
     resize: none;
-    z-index: 99;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
 }
 
 
 /*Welcome*/
 #welcomeWrapper {
     position: relative;
-    margin: 1rem 5rem 1rem 5rem;
+    margin: 1rem 20% 1rem 20%;
     border: 1px solid grey;
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    border-radius: 1rem;
 }
 
 #toggleBtns {
     position: relative;
-    border: 1px solid grey;
     display: flex;
     flex-direction: row;
     width: max-content;
@@ -284,9 +265,9 @@ img#userLink:not(:hover) {
 
 #toggleBtns>* {
     width: 4rem;
-    background-color: var(--main-color);
-    border: 1px grey solid;
-    transition: 0.3s;
+    border: 1px solid grey;
+    border-radius: 5px;
+    margin: 5px 5px 5px 5px;
 }
 
 #toggleBtns>*:hover {
@@ -296,7 +277,6 @@ img#userLink:not(:hover) {
 
 #togglePanel {
     position: relative;
-    border: 1px solid grey;
     height: 100%;
     margin: 1rem 30% auto 30%;
 }
@@ -311,8 +291,8 @@ img#userLink:not(:hover) {
     gap: 0.5rem;
 }
 
-#togglePanel>div>input{
-    width: 60%;
+#togglePanel>div>input {
+    width: 100%;
 }
 
 #togglePanel>div>p {
@@ -321,11 +301,11 @@ img#userLink:not(:hover) {
 
 #togglePanel>div>button {
     position: relative;
-    width: min-content;
+    width: max-content;
     left: 50%;
+    border-radius: 5px;
+    border: 1px solid grey;
 }
-
-
 
 #pwdSecurityIndicator {
     display: flex;
@@ -342,7 +322,7 @@ img#userLink:not(:hover) {
 .EditButton,
 .ReplyButton {
     cursor: pointer;
-    border: 1px black solid;
+    border: 1px grey solid;
     border-radius: 3px;
 }
 
@@ -382,16 +362,32 @@ p.timeIndicator {
 
 .PostUnit {
     position: relative;
-    border: 2px solid wheat;
     border-radius: 1rem;
     background-color: #ffffff88;
     margin: 0.3rem 8px 0.3rem 6px;
     transition: 0.5s;
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+}
+
+.PostUnit>* {
+    margin: 0.5rem;
 }
 
 .LikeBtn {
     position: absolute;
     right: 0;
+    z-index: 1;
+}
+
+.LikeBtn:hover {
+    fill: #ff0088 !important;
+    transition: 0.3s;
+}
+
+.LikeBtn:not(:hover) {
+    fill: #ffffff !important;
+    transition: 0.3s;
 }
 
 #PostContent {
@@ -402,47 +398,17 @@ p.timeIndicator {
 
 .ReplyUnit {
     position: relative;
-    border: 2px solid wheat;
     border-radius: 1rem;
     background-color: #ffffff88;
     margin: 0.3rem 8px 0.3rem 6px;
     transition: 0.5s;
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
 }
 
-/* .ReplyUnit::after {
-    display: block;
-    position: relative;
-    background-color: black;
-    bottom: 0;
-    left: 0;
-    width: 0%;
-    height: .5rem;
-    content: "";
-    z-index: 99;
+.ReplyUnit>* {
+    margin: 0.5rem;
 }
-
-.ReplyUnit:not(:hover):after {
-    display: block;
-    position: relative;
-    background-color: black;
-    height: .5rem;
-    content: "";
-    z-index: 99;
-    animation: example 0.5s;
-}
-.ReplyUnit:hover:after {
-    display: block;
-    position: relative;
-    background-color: black;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: .5rem;
-    transition: 0.5s;
-    content: "";
-    z-index: 99;
-} */
-
 
 .hideEditPost {
     display: block !important;
@@ -479,7 +445,7 @@ p.timeIndicator {
     margin: 1rem 2rem 1rem 2rem
 }
 
-.UserInfo>img {
+.UserInfo>a>img {
     width: 3rem;
     height: 3rem;
     border-radius: 99rem;
@@ -504,26 +470,35 @@ p.timeIndicator {
     grid-area: B;
 }
 
+#Avatars>img {
+    border-radius: 99rem;
+}
+
+#friends>img {
+    border-radius: 99rem;
+}
+
 #Posts {
     position: relative;
-    height: 8em;
+    height: auto;
     overflow-y: auto;
     grid-area: C;
 }
 
 #Replies {
     position: relative;
-    height: 8em;
+    height: auto;
     overflow-y: auto;
     grid-area: D;
 }
 
 #User>* {
     position: relative;
-    border: 2px solid wheat;
     border-radius: 1rem;
     background-color: #ffffff88;
     transition: 0.5s;
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
 }
 
 #User>*>* {
@@ -572,13 +547,6 @@ label[for="updateAvatarBtn"]:hover {
     border-radius: 5px;
 }
 
-.ChatWindow {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    overflow: hidden;
-    background-color: var(--main-color);
-}
 
 #backtoChatRoomListBtn {
     position: absolute;
@@ -622,8 +590,8 @@ label[for="updateAvatarBtn"]:hover {
 }
 
 #chatroomList>ul>li:hover {
-    border-top: 1px solid #000;
-    border-bottom: 1px solid #000;
+    border-top: 1px solid grey;
+    border-bottom: 1px solid grey;
     transition: 0.5s;
     cursor: pointer;
 }
@@ -636,8 +604,8 @@ label[for="updateAvatarBtn"]:hover {
 }
 
 #chatContent>ul>li:hover {
-    border-top: 1px solid #000;
-    border-bottom: 1px solid #000;
+    border-top: 1px solid grey;
+    border-bottom: 1px solid grey;
     cursor: default;
     transition: 0.5s;
 }
@@ -646,7 +614,9 @@ label[for="updateAvatarBtn"]:hover {
     width: 5ch;
 }
 
-
+#postListBtn:hover g>g>path{
+    fill: #ffffff;
+}
 
 @media (max-width:800px) {
     #User {
@@ -656,14 +626,19 @@ label[for="updateAvatarBtn"]:hover {
     header {
         bottom: 0;
         top: auto;
+        height: calc(var(--header-height) * 2);
         border-radius: 0.5rem 0.5rem 0 0;
-        border-top: 1px solid black;
+        border-top: 1px solid grey;
         border-bottom: 0;
-        background-color: white;
+        margin-bottom: 0;
+    }
+
+    i {
+        zoom: 1.5;
     }
 
     main {
-        margin-top: 0;
+        margin: 0 1rem 3rem 0;
     }
 
     footer {
@@ -681,17 +656,48 @@ label[for="updateAvatarBtn"]:hover {
         cursor: pointer;
     }
 
+    img#userLink {
+        position: absolute;
+        width: 2.5rem !important;
+        height: 2.5rem !important;
+        left: -3rem !important;
+        top: 0rem !important;
+    }
+
     .ChatWindow {
-        bottom: var(--header-height);
+        bottom: calc(var(--header-height) * 2);
     }
 
     #notificationList {
-        top: -50rem;
+        top: -27.5rem;
     }
-    #togglePanel{
+
+    #welcomeWrapper {
+        margin: 1rem;
+    }
+
+    #togglePanel {
         margin: 1rem 20% auto 20%;
     }
-    #togglePanel>div>input{
+
+    #togglePanel>div>input {
         width: 100%;
+    }
+
+    #togglePanel>div>button {
+        left: 0;
+        width: 100%;
+    }
+
+    .timeIndicator>span {
+        font-size: 0.55rem;
+    }
+
+    #navRight {
+        margin-top: 0.1rem;
+    }
+
+    #navLeft {
+        margin-top: 0.1rem;
     }
 }

@@ -39,11 +39,10 @@
     var friendlist = "";
     var ele = document.createElement("div");
     ele.setAttribute("id", "friends");
-    ele.setAttribute("style", "grid-area:E;")
+    ele.setAttribute("style", "grid-area:E;");
     for (i = 0; i < ret.length; i++) {
-        friendlist += `<a href="/User/${ret[i].friendUser.id}">${ret[i].friendUser.name}</a>
-        <p>Joined at ${ret[i].friendUser.created}</p>
-        <img src="data:image/png;base64, ${ret[i].friendUser.avatar}" width="64" height="64"><br>`;
+        friendlist += `<img src="data:image/png;base64, ${ret[i].friendUser.avatar}" width="64" height="64">
+        <a href="/User/${ret[i].friendUser.id}">${ret[i].friendUser.name}</a>`;
     }
     ele.innerHTML = friendlist;
     document.querySelector("#User").appendChild(ele);
@@ -54,7 +53,7 @@
     //ele2.setAttribute("id", "chatrooms");
     ele2.setAttribute("style", "position:relativel;grid-area:F;");
     for (i = 0; i < ret2.length; i++) {
-        likedPosts += `<a href="/Post/Detail/${ret2[i].post.id}">${ret2[i].post.title}</a>`;
+        likedPosts += `<a href="/Post/Detail/${ret2[i].postId}">${ret2[i].post.title}</a>`;
     }
     ele2.innerHTML = likedPosts;
     document.querySelector("#User").appendChild(ele2);
@@ -85,48 +84,6 @@
         }
         document.querySelector("form>button").removeAttribute("disabled");
     });
-
-
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////// Experimental 2FV
-    // Get 2fQR
-    document.getElementById("generate2FQRCode").addEventListener("click", async (e) => {
-        e.preventDefault();
-        let res = await fetch("/api/2fv", {
-            method: "POST",
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-            },
-        }).then(res => {
-            return res.json();
-        });
-        if (res.success) {
-            document.getElementById("TwoFactorQRCode").src = res.payload["qrCodeUrl"];
-        }
-    });
-    // Validate 2fQR
-    document.getElementById("submit2FC").addEventListener("click", async (e) => {
-        let code = document.getElementById("2FCode").value;
-        var res = await fetch("/apt/2fv/vali", {
-            method: "POST",
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                "code": code
-            })
-        }).then(res => {
-            return res.json();
-        });
-        if (res.success) {
-            e.target.innerText = "Success!"
-        }
-        else {
-            e.target.innerText = "Failed!"
-        }
-    })
 })();
 
 

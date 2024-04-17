@@ -15,18 +15,22 @@ document.getElementById("PostList").addEventListener("click", async (e) => {
             return response.json();
         });
         if (res.success) {
-            if (res.message == "Post liked") {
-                e.target.src = "/img/heartfill.png";
+            console.log(e.target.getAttribute("fill"))
+            if (e.target.getAttribute("fill") == "#000000") {
+                e.target.setAttribute("fill", "#ffffff");
+                e.target.children[2].children[0].firstElementChild.setAttribute("fill", "#ff0000");
             }
             else {
-                e.target.src = "/img/heartvac.png";
+                e.target.setAttribute("fill", "#000000");
+                e.target.children[2].children[0].firstElementChild.setAttribute("fill", "#808184");
             }
         }
         else {
             e.target.innerText = res.message;
         }
     }
-});
+    e.stopPropagation();
+}, true);
 
 document.getElementById("Tag").addEventListener("keydown", (e) => {
     if (e.key === " " || e.key === "Enter") {
