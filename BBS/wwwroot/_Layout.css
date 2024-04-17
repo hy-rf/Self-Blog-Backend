@@ -185,7 +185,6 @@ img#userLink:not(:hover) {
 #navRight>*:not(:hover) {
     color: black;
     transition: 0.5s;
-    margin: 0.5rem;
 }
 
 #navRight>*:hover {
@@ -661,8 +660,8 @@ label[for="updateAvatarBtn"]:hover {
         position: absolute;
         width: 2.5rem !important;
         height: 2.5rem !important;
-        left: -5rem !important;
-        top: -0.5rem !important;
+        left: -3rem !important;
+        top: 0rem !important;
     }
 
     .ChatWindow {
