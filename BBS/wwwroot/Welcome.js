@@ -8,8 +8,6 @@ document.getElementById("loginBtn").addEventListener("click", () => {
             <input id="Pwd" name="Pwd" type="password" />
             <p></p>
             <button id="submitLoginBtn" type="submit">login</button>
-            <button>demo</button>
-            <button>demo2</button>
         </div>`;
 });
 document.getElementById("signupBtn").addEventListener("click", () => {

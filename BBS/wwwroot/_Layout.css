@@ -91,7 +91,8 @@ header {
     font-size: 0.8rem;
     margin: 0.3rem;
 }
-#navRight>li{
+
+#navRight>li {
     margin: 0 !important;
 }
 
@@ -291,7 +292,7 @@ img#userLink:not(:hover) {
     gap: 0.5rem;
 }
 
-#togglePanel>div>input{
+#togglePanel>div>input {
     width: 100%;
 }
 
@@ -369,6 +370,7 @@ p.timeIndicator {
     backdrop-filter: blur(3px);
     -webkit-backdrop-filter: blur(3px);
 }
+
 .PostUnit>* {
     margin: 0.5rem;
 }
@@ -377,6 +379,16 @@ p.timeIndicator {
     position: absolute;
     right: 0;
     z-index: 1;
+}
+
+.LikeBtn:hover {
+    fill: #ff0088 !important;
+    transition: 0.3s;
+}
+
+.LikeBtn:not(:hover) {
+    fill: #ffffff !important;
+    transition: 0.3s;
 }
 
 #PostContent {
@@ -394,6 +406,7 @@ p.timeIndicator {
     backdrop-filter: blur(3px);
     -webkit-backdrop-filter: blur(3px);
 }
+
 .ReplyUnit>* {
     margin: 0.5rem;
 }
@@ -457,10 +470,12 @@ p.timeIndicator {
 #Avatar {
     grid-area: B;
 }
-#Avatars>img{
+
+#Avatars>img {
     border-radius: 99rem;
 }
-#friends>img{
+
+#friends>img {
     border-radius: 99rem;
 }
 
@@ -600,7 +615,9 @@ label[for="updateAvatarBtn"]:hover {
     width: 5ch;
 }
 
-
+#postListBtn:hover g>g>path{
+    fill: #ffffff;
+}
 
 @media (max-width:800px) {
     #User {
@@ -616,9 +633,11 @@ label[for="updateAvatarBtn"]:hover {
         border-bottom: 0;
         margin-bottom: 0;
     }
-    i{
+
+    i {
         zoom: 1.5;
     }
+
     main {
         margin: 0 1rem 3rem 0;
     }
@@ -637,7 +656,8 @@ label[for="updateAvatarBtn"]:hover {
         transition: 0.5s;
         cursor: pointer;
     }
-    img#userLink{
+
+    img#userLink {
         position: absolute;
         width: 2.5rem !important;
         height: 2.5rem !important;
@@ -653,16 +673,19 @@ label[for="updateAvatarBtn"]:hover {
         top: -27.5rem;
     }
 
-    #welcomeWrapper{
+    #welcomeWrapper {
         margin: 1rem;
     }
-    #togglePanel{
+
+    #togglePanel {
         margin: 1rem 20% auto 20%;
     }
-    #togglePanel>div>input{
+
+    #togglePanel>div>input {
         width: 100%;
     }
-    #togglePanel>div>button{
+
+    #togglePanel>div>button {
         left: 0;
         width: 100%;
     }
@@ -670,10 +693,12 @@ label[for="updateAvatarBtn"]:hover {
     .timeIndicator>span {
         font-size: 0.55rem;
     }
-    #navRight{
+
+    #navRight {
         margin-top: 0.1rem;
     }
-    #navLeft{
+
+    #navLeft {
         margin-top: 0.1rem;
     }
 }
