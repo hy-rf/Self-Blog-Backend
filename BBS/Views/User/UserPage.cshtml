@@ -13,7 +13,7 @@
         }
         <div id="Id"><span>Id:</span><span>@Model.Id</span></div>
         <span>Name:</span><span id="name">@Model.Name</span>
-        <p>Created:@Model.Created</p>
+        <p>Created:@Model.Created.ToLocalTime()</p>
         <p>Posts:@Model.Posts!.Count()</p>
         <p>Replies:@Model.Replies!.Count()</p>
     </div>
