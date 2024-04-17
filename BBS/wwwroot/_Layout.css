@@ -301,17 +301,11 @@ img#userLink:not(:hover) {
 
 #togglePanel>div>button {
     position: relative;
-    width: min-content;
+    width: max-content;
     left: 50%;
     border-radius: 5px;
     border: 1px solid grey;
 }
-
-#submitSignupBtn{
-    width: 5rem !important;
-}
-
-
 
 #pwdSecurityIndicator {
     display: flex;
@@ -626,7 +620,7 @@ label[for="updateAvatarBtn"]:hover {
         zoom: 1.5;
     }
     main {
-        margin: 0 1rem 1.5rem 0;
+        margin: 0 1rem 3rem 0;
     }
 
     footer {
@@ -666,6 +660,10 @@ label[for="updateAvatarBtn"]:hover {
         margin: 1rem 20% auto 20%;
     }
     #togglePanel>div>input{
+        width: 100%;
+    }
+    #togglePanel>div>button{
+        left: 0;
         width: 100%;
     }
 
