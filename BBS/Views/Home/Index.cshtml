@@ -1,4 +1,9 @@
-﻿<h3>Home</h3>
+﻿@using System.Security.Claims
 
-
-<p>with ci cd setup</p>
+<h3>Home</h3>
+@if (User.Identity.IsAuthenticated){
+    <p>Welcome! @User.FindFirst(ClaimTypes.Name)?.Value!</p>
+}
+else{
+    <p>Welcome! traveller</p>
+}

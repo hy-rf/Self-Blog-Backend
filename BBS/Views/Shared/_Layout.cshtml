@@ -119,20 +119,8 @@
     @*<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>*@
     <script src="https://cdn.jsdelivr.net/npm/quill@2.0.0-rc.4/dist/quill.js"></script>
     <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
-    @switch (ViewContext.HttpContext.Request.Path.Value?.Split("/")[1])
+    @* @switch (ViewContext.HttpContext.Request.Path.Value?.Split("/")[1])
     {
-        case "":
-            <script src="~/Home.js" defer></script>
-            break;
-        case "Welcome":
-            <script src="~/Welcome.js" defer></script>
-            break;
-        case "UserCenter":
-            <script src="~/UserCenter.js" defer></script>
-            break;
-        case "User":
-            <script src="~/UserPage.js" defer></script>
-            break;
         case "Post":
             <script src="~/PostCommon.js" defer></script>
             if (ViewContext.HttpContext.Request.Path.Value?.Split("/")[2] == "Detail")
@@ -144,7 +132,7 @@
                 <script src="~/Post.js" defer></script>
             }
             break;
-    }
+    } *@
 </body>
 
 </html>
