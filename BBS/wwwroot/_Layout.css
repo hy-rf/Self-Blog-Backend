@@ -11,7 +11,7 @@
 :root {
     --header-height: 1.35rem;
     --main-height: 90%;
-    --footer-height: 5%;
+    --footer-height: 1.35rem;
     --home-page-width: 95%;
     overflow-y: auto;
     overflow-x: hidden;
@@ -91,6 +91,7 @@ script {
 footer {
     position: absolute;
     width: 100%;
+    height: var(--footer-height);
     bottom: 0;
     border: 1px solid grey;
     text-align-last: center;
@@ -192,6 +193,10 @@ img#userLink:not(:hover) {
     border-radius: 99rem;
     transition: 0.5s;
 }
+svg{
+    width: 16px;
+    height: 16px;
+}
 /*----------------------------------------------------------------------------------------------------*/
 
 
@@ -230,7 +235,7 @@ img#userLink:not(:hover) {
 .ChatWindow {
     position: fixed;
     right: 0;
-    bottom: 0;
+    bottom: var(--footer-height);
     overflow-y: auto;
     overflow-x: hidden;
     height: 20rem;
@@ -701,5 +706,9 @@ label[for="updateAvatarBtn"]:hover {
 
     #navLeft {
         margin-top: 0.1rem;
+    }
+    svg{
+        width: 32px;
+        height: 32px;
     }
 }
