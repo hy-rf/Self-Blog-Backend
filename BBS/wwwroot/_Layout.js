@@ -103,6 +103,9 @@ var chatWindow = new Proxy({
                 await document.getElementsByTagName("main")[0].appendChild(chatRoomWindow);
             }
             chatRoomWindow.innerHTML = `
+            <div id="topLinks">
+                <p>Chatrooms</p>
+            </div>
             <div id="chatroomList">
                 <ul>
                 </ul>
@@ -140,8 +143,10 @@ var chatWindow = new Proxy({
         // When there is active chat room do this
         if (target.activeChatRoom) {
             chatRoomWindow.innerHTML = `
-            <button id="backtoChatRoomListBtn">Back</button>
-            <button id="chatRoomMemberListBtn">Members</button>
+            <div id="topLinks">
+                <button id="backtoChatRoomListBtn">Back</button>
+                <button id="chatRoomMemberListBtn">Members</button>
+            </div>
             <div id="chatContent">
                 <ul>
                 </ul>
