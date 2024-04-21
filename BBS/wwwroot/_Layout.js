@@ -44,18 +44,23 @@ chatRoomWindow.className = "ChatWindow";
 
 
 document.getElementsByTagName("main")[0].addEventListener("click", handleChatRoom);
-document.getElementById("navRight").addEventListener("click", handleRightNavBarActions, true);
+document.querySelector("header").addEventListener("click", handleHeaderLinkActions, true);
+
+// handle mouse in chat window scroll behavior
 
 document.getElementsByTagName("main")[0].addEventListener("mouseover", (e) => {
     if (e.target.classList.contains("ChatWindow")) {
         disableScroll();
     }
 });
+// handle mouse out of chat window scroll behavior
 document.getElementsByTagName("main")[0].addEventListener("mouseleave", (e) => {
     if (e.target.classList.contains("ChatWindow")) {
         enableScroll();
     }
 }, true);
+
+// handle routes in chatroom
 document.getElementsByTagName("main")[0].addEventListener("click", async (e) => {
     if (e.target.tagName == "LI" && !chatWindow.activeChatRoom) {
         chatWindow["activeChatRoom"] = e.target.id.split("_")[1];
@@ -103,6 +108,9 @@ var chatWindow = new Proxy({
                 await document.getElementsByTagName("main")[0].appendChild(chatRoomWindow);
             }
             chatRoomWindow.innerHTML = `
+            <div id="topLinks">
+                <p>Chatrooms</p>
+            </div>
             <div id="chatroomList">
                 <ul>
                 </ul>
@@ -140,8 +148,10 @@ var chatWindow = new Proxy({
         // When there is active chat room do this
         if (target.activeChatRoom) {
             chatRoomWindow.innerHTML = `
-            <button id="backtoChatRoomListBtn">Back</button>
-            <button id="chatRoomMemberListBtn">Members</button>
+            <div id="topLinks">
+                <button id="backtoChatRoomListBtn">Back</button>
+                <button id="chatRoomMemberListBtn">Members</button>
+            </div>
             <div id="chatContent">
                 <ul>
                 </ul>
@@ -387,7 +397,7 @@ async function handleChatRoom(e) {
     }
 }
 
-async function handleRightNavBarActions(e) {
+async function handleHeaderLinkActions(e) {
     if (e.target.id === "chat") {
         chatWindow["isVisible"] = !chatWindow.isVisible;
         e.preventDefault();
@@ -540,21 +550,20 @@ if (document.location.href.split("/")[3] === "UserCenter") {
             document.querySelector("form>button").removeAttribute("disabled");
         });
     })();
-}
-async function UploadFile(FormEle) {
-    var resultElement = FormEle.elements.namedItem("result");
-    const formData = new FormData(FormEle);
-
-    try {
-        const response = await fetch(FormEle.action, {
-            method: 'POST',
-            body: formData
-        });
-        location.reload();
-    } catch (error) {
-        console.error('Error:', error);
+    async function UploadFile(FormEle) {
+        const formData = new FormData(FormEle);
+        try {
+            const response = await fetch(FormEle.action, {
+                method: 'POST',
+                body: formData
+            });
+            location.reload();
+        } catch (error) {
+            console.error('Error:', error);
+        }
     }
 }
+
 
 if (document.location.href.split("/")[3] === "User") {
     document.getElementById("Detail").addEventListener("click", (e) => {
@@ -746,21 +755,22 @@ if (document.location.href.split("/")[3] === "Welcome") {
             }
         }
     });
+    function disableInput() {
+        document.querySelectorAll("#togglePanel>div>input")[0].disabled = true;
+        document.querySelectorAll("#togglePanel>div>input")[1].disabled = true;
+        document.querySelector("#togglePanel>div>button").disabled = true;
+        document.getElementById("loginBtn").disabled = true;
+        document.getElementById("signupBtn").disabled = true;
+    }
+    function enableInput() {
+        document.querySelectorAll("#togglePanel>div>input")[0].disabled = false;
+        document.querySelectorAll("#togglePanel>div>input")[1].disabled = false;
+        document.querySelector("#togglePanel>div>button").disabled = false;
+        document.getElementById("loginBtn").disabled = false;
+        document.getElementById("signupBtn").disabled = false;
+    }
 }
-function disableInput() {
-    document.querySelectorAll("#togglePanel>div>input")[0].disabled = true;
-    document.querySelectorAll("#togglePanel>div>input")[1].disabled = true;
-    document.querySelector("#togglePanel>div>button").disabled = true;
-    document.getElementById("loginBtn").disabled = true;
-    document.getElementById("signupBtn").disabled = true;
-}
-function enableInput() {
-    document.querySelectorAll("#togglePanel>div>input")[0].disabled = false;
-    document.querySelectorAll("#togglePanel>div>input")[1].disabled = false;
-    document.querySelector("#togglePanel>div>button").disabled = false;
-    document.getElementById("loginBtn").disabled = false;
-    document.getElementById("signupBtn").disabled = false;
-}
+
 
 
 if (document.location.href.split("/")[3] === "Post") {
