@@ -4,7 +4,6 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-size: 1.1rem;
     font-family: monospace;
     position: relative;
 }
@@ -25,12 +24,7 @@
 }
 
 
-/*Temperary*/
-#userlink {
-    display: none;
-}
 
-/*Temperary*/
 
 body {
     position: absolute;
@@ -102,102 +96,26 @@ footer {
 
 /*----------------------------------------------------------------------------------------------------*/
 
-#navLeft {
-    position: absolute;
-    left: 1rem;
+/*Temperary*/
+#userlink {
+    display: none;
 }
 
-#navLeft>*:not(:hover) {
-    color: black;
-    transition: 0.5s;
-    margin: 0.5rem;
+/*Temperary*/
+
+
+#userLink {
+    border-radius: 99rem;
+    width: var(--header-height);
+    height: var(--header-height);
 }
 
-#navLeft>*:hover {
-    color: lightgray;
-    transition: 0.5s;
-    margin: 0.5rem;
-}
-
-#navRight {
-    position: absolute;
-    right: 1rem;
-    border-radius: 5px;
-}
-
-#navRight>* {
-    margin: 0;
-}
-
-/* #navRight>*:not(:hover) {
-    transition: 0.5s;
-    fill: white;
-}
-
-#navRight>*:hover {
-    transition: 0.5s;
-    fill: black;
-} */
-#navRight>img+div {
-    /* display: block; */
-    position: absolute;
-    top: 2.5rem;
-    right: 5rem;
-    border-radius: 1rem;
-    border: 1px solid grey;
-    opacity: 1;
-    transition: 0.5s;
-    /* z-index: 1; */
-}
 
 .userInfoShow {
     opacity: 1;
     transition: 0.5s;
 }
 
-#navRight>img+div>* {
-    font-size: 0.8rem;
-    margin: 0.3rem;
-}
-
-#navRight>li {
-    margin: 0 !important;
-}
-
-
-img#userLink {
-    position: absolute;
-    left: -2rem;
-    top: -0.3rem;
-    width: 1rem;
-    height: 1rem;
-    border-radius: 99rem;
-}
-
-img#userLink+div {
-    position: absolute;
-}
-
-img#userLink:hover {
-    position: absolute;
-    left: -4rem;
-    top: -0.3rem;
-    width: 3rem;
-    height: 3rem;
-    border-radius: 99rem;
-    transition: 0.5s;
-    cursor: pointer;
-}
-
-img#userLink:not(:hover) {
-    position: absolute;
-    left: -2rem;
-    top: -0.3rem;
-    width: 1rem;
-    height: 1rem;
-    border-radius: 99rem;
-    transition: 0.5s;
-}
 
 svg {
     width: 16px;
@@ -636,10 +554,6 @@ label[for="updateAvatarBtn"]:hover {
     width: 5ch;
 }
 
-#postListBtn:hover g>g>path {
-    fill: #ffffff;
-}
-
 /*----------------------------------------------------------------------------------------------------*/
 @media (max-width:800px) {
 
@@ -665,28 +579,34 @@ label[for="updateAvatarBtn"]:hover {
         display: none;
     }
 
-    #User {
-        grid-template-areas: "A" "B" "C" "D" "E" "F";
+    /*----------------------------------------------------------------------------------------------------*/
+    header:nth-child(1) {
+        left: 0.5rem;
     }
 
-    img#userLink:hover {
+    #userLink {
         position: absolute;
-        left: -4rem;
-        top: -2.5rem;
-        width: 3rem;
-        height: 3rem;
         border-radius: 99rem;
-        transition: 0.5s;
-        cursor: pointer;
+        width: 2rem;
+        height: 2rem;
+        margin: calc(var(--header-height) - 1rem) calc(50% - 1rem) calc(var(--header-height) - 1rem) calc(50% - 1rem);
+    }
+    header>svg#chat{
+        position: absolute;
+        right: 64px;
+    }
+    header>svg#notification{
+        position: absolute;
+        right: 32px;
+    }
+    header>svg#logoutBtn{
+        position: absolute;
+        right: 0;
     }
 
-    img#userLink {
-        position: absolute;
-        width: 2.5rem !important;
-        height: 2.5rem !important;
-        left: -3rem !important;
-        top: 0rem !important;
-    }
+
+
+    /*----------------------------------------------------------------------------------------------------*/
 
     .ChatWindow {
         bottom: calc(var(--header-height) * 2);
@@ -696,6 +616,7 @@ label[for="updateAvatarBtn"]:hover {
         top: -27.5rem;
     }
 
+    /*----------------------------------------------------------------------------------------------------*/
     #welcomeWrapper {
         margin: 1rem;
     }
@@ -713,16 +634,14 @@ label[for="updateAvatarBtn"]:hover {
         width: 100%;
     }
 
+    /*----------------------------------------------------------------------------------------------------*/
     .timeIndicator>span {
         font-size: 0.55rem;
     }
 
-    #navRight {
-        /* margin-top: 0.1rem; */
-    }
-
-    #navLeft {
-        margin-top: 0.1rem;
+    /*----------------------------------------------------------------------------------------------------*/
+    #User {
+        grid-template-areas: "A" "B" "C" "D" "E" "F";
     }
 
     svg {
