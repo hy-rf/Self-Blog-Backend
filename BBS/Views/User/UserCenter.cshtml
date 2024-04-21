@@ -10,7 +10,7 @@
         <h3 id="Title">Basic</h3>
         <p id="Id">Id:@Model.Id</p>
         <span>Name:</span><span id="name">@Model.Name</span>
-        <p>Created:@Model.Created.ToLocalTime()</p>
+        <p>Created:@Model.Created</p>
         <p>Posts:@foreach (var item in Model.Posts!) { i++; }@i</p>
         <p>Replies:@foreach (var item in Model.Replies!) { j++; }@j</p>
         <a href="/FriendRequests">Friend Requests</a>
