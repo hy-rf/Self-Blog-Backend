@@ -113,7 +113,7 @@ namespace BBS.Controllers
             }
             return PartialView(userService.GetUserBasic(Id));
         }
-        // API DONE
+         
         [HttpPost]
         [Route("api/User/Login")]
         public JsonResult LoginApi([FromBody] JsonElement LoginInfo)
@@ -158,7 +158,7 @@ namespace BBS.Controllers
                 Message = "Login Failed, No Input."
             });
         }
-        // API DONE
+         
         [HttpPost]
         [Route("api/User/CheckDuplicatedName")]
         public JsonResult CheckDuplicatedName([FromBody] JsonElement Name)
@@ -178,7 +178,7 @@ namespace BBS.Controllers
                 Message = "Name is not available"
             });
         }
-        // API DONE
+         
         [HttpPost]
         [Route("api/User/Signup")]
         public JsonResult SignupApi([FromBody] JsonElement SingupInfo)

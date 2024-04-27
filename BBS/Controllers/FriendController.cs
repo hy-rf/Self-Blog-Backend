@@ -1,6 +1,7 @@
 ﻿using BBS.Common;
 using BBS.IService;
 using BBS.Models;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using System.Security.Claims;
@@ -10,6 +11,7 @@ namespace BBS.Controllers
 {
     public class FriendController(IFriendService friendService, INotificationService notificationService, IHubContext<BBS.Hubs.Notification> notification) : Controller
     {
+        
         [HttpPost]
         [Route("Friend/{Id}")]
         public async Task<JsonResult> SendFriendRequest(int Id)
@@ -76,7 +78,6 @@ namespace BBS.Controllers
                 SendUserId = Id
             });
         }
-        // API DONE
         [HttpGet]
         [Route("FriendList/{Id}")]
         public JsonResult GetFriendList(int Id)
