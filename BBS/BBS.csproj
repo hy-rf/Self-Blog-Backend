@@ -28,11 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\UserPage.js" />
-    <None Include="wwwroot\Welcome.js" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="GoogleAuthenticator" Version="3.2.0" />
     <PackageReference Include="MailKit" Version="4.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.3" />

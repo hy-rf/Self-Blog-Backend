@@ -113,10 +113,10 @@ namespace BBS.Controllers
             }
             return PartialView(userService.GetUserBasic(Id));
         }
-        // API DONE
+         
         [HttpPost]
         [Route("api/User/Login")]
-        public JsonResult LoginApi([FromBody] JsonElement LoginInfo)
+        public JsonResult Login([FromBody] JsonElement LoginInfo)
         {
             string Name = LoginInfo.GetProperty("Name").ToString();
             string Pwd = LoginInfo.GetProperty("Pwd").ToString();
@@ -158,7 +158,7 @@ namespace BBS.Controllers
                 Message = "Login Failed, No Input."
             });
         }
-        // API DONE
+         
         [HttpPost]
         [Route("api/User/CheckDuplicatedName")]
         public JsonResult CheckDuplicatedName([FromBody] JsonElement Name)
@@ -178,10 +178,10 @@ namespace BBS.Controllers
                 Message = "Name is not available"
             });
         }
-        // API DONE
+         
         [HttpPost]
         [Route("api/User/Signup")]
-        public JsonResult SignupApi([FromBody] JsonElement SingupInfo)
+        public JsonResult Signup([FromBody] JsonElement SingupInfo)
         {
             string Name = SingupInfo.GetProperty("Name").ToString();
             string Pwd = SingupInfo.GetProperty("Pwd").ToString();
@@ -205,7 +205,7 @@ namespace BBS.Controllers
         }
         [HttpDelete]
         [Route("Logout")]
-        public JsonResult LogoutApi()
+        public JsonResult Logout()
         {
             if (userService.Logoff(Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value!)).IsCompleted)
             {
