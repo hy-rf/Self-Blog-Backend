@@ -568,7 +568,7 @@ if (document.location.href.split("/")[3] === "UserCenter") {
 if (document.location.href.split("/")[3] === "User") {
     document.getElementById("Detail").addEventListener("click", (e) => {
         if (e.target.id == "sendFriendRequest") {
-            fetch(`/Friend/${document.getElementById("Id").innerText}`, {
+            fetch(`/Friend/${document.getElementById("Id").innerText.split(':')[1]}`, {
                 method: "POST"
             }).then(response => {
                 return response.json();
