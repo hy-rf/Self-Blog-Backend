@@ -452,7 +452,7 @@ if (document.location.href.split("/")[3] === "FriendRequests") {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    Id: parseInt(e.target.parentNode.firstElementChild.children[1].innerText)
+                    Id: parseInt(e.target.parentNode.id)
                 })
             }).then(response => {
                 e.target.innerText = "success"
