@@ -11,7 +11,7 @@ namespace BBS.IRepository
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        Task<bool> CreateAsync(T entity);
+        Task CreateAsync(T entity);
         /// <summary>
         /// Get entity by id
         /// </summary>

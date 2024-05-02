@@ -8,7 +8,8 @@ namespace BBS.Repository
     {
         public async Task<Tag> GetTagByNameAsync(string name)
         {
-            return await Task.FromResult(context.Tag.Single(t => t.Name == name));
+            var result = context.Tag.Single(t => t.Name == name);
+            return await Task.FromResult(result);
         }
     }
 }

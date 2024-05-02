@@ -21,19 +21,21 @@ namespace BBS.Services
                 Created = DateTime.Now,
                 Modified = DateTime.Now
             };
-            Tag.Replace(" ", "").Split("#").ToList().ForEach(async tag =>
+            postRepository.CreateAsync(newPost);
+            Tag.Replace(" ", "").Split("#").ToList().ForEach(tag =>
             {
                 if (tag != "")
                 {
                     if (!tagRepository.IsExist(t => t.Name == tag).Result)
                     {
-                        await tagRepository.CreateAsync(new Tag { Name = tag });
+                        tagRepository.CreateAsync(new Tag { Name = tag });
                     }
-                    var posttag = new PostTag { TagId = tagRepository.GetTagByNameAsync(tag).Result.Id, PostId = postRepository.GetAllAsync().Result.Count + 1 };
-                    await postTagRepository.CreateAsync(posttag);
+                    int newposttagid = tagRepository.GetTagByNameAsync(tag).Result.Id;
+                    int countpost = postRepository.GetAllAsync().Result.Count + 1;
+                    var posttag = new PostTag { TagId = newposttagid, PostId = countpost };
+                    postTagRepository.CreateAsync(posttag);
                 }
             });
-            _ = postRepository.CreateAsync(newPost);
             return true;
         }
         #region
