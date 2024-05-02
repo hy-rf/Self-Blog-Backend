@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BBS.Services
 {
-    public class TagService(AppDbContext ctx) : ITagService
+    public class TagService(ForumContext ctx) : ITagService
     {
         public List<PostTag> PostTags(int TagId)
         {

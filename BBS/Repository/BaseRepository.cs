@@ -11,9 +11,9 @@ namespace BBS.Repository
 
     public class BaseRepository<T> : IBaseRepository<T> where T : class, new()
     {
-        private readonly AppDbContext _context;
+        private readonly ForumContext _context;
 
-        public BaseRepository(AppDbContext context)
+        public BaseRepository(ForumContext context)
         {
             _context = context;
         }

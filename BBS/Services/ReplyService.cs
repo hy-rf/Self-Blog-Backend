@@ -4,7 +4,7 @@ using BBS.Models;
 
 namespace BBS.Services
 {
-    public class ReplyService(AppDbContext ctx) : IReplyService
+    public class ReplyService(ForumContext ctx) : IReplyService
     {
         public bool Reply(string Content, int UserId, int PostId)
         {

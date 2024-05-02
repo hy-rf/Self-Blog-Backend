@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BBS.Services
 {
-    public class UserService(AppDbContext ctx) : IUserService
+    public class UserService(ForumContext ctx) : IUserService
     {
         public bool Signup(string Name, string Pwd)
         {
