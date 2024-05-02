@@ -18,10 +18,10 @@ namespace BBS.Repository
             _context = context;
         }
 
-        public async Task<bool> CreateAsync(T entity)
+        public async Task CreateAsync(T entity)
         {
             await _context.Set<T>().AddAsync(entity);
-            return await _context.SaveChangesAsync() > 0;
+            await _context.SaveChangesAsync();
         }
 
         public async Task<T> GetAsync(int id)
@@ -62,7 +62,7 @@ namespace BBS.Repository
         }
         public async Task<bool> IsExist(Expression<Func<T, bool>> whereLambda)
         {
-            return _context.Set<T>().Any(whereLambda);
+            return  _context.Set<T>().Any(whereLambda);
         }
     }
 }
