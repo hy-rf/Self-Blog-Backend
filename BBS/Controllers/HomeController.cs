@@ -1,15 +1,18 @@
 ﻿using BBS.Common;
 using BBS.IService;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace BBS.Controllers
 {
-    public class HomeController(IUserService userService) : Controller
+    public class HomeController(IUserService userService, ILogger<HomeController> logger) : Controller
     {
         [HttpGet]
         [Route("/")]
         public IActionResult Index()
         {
+            string msg = User.Identity.IsAuthenticated ? User.FindFirst(ClaimTypes.Name)!.Value : "Anonymous";
+            logger.LogError($"{DateTime.Now} : {this.GetType()} : {msg} Enters");
             return View();
         }
         [HttpGet]
