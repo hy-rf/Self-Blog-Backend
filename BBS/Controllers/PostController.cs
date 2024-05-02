@@ -29,7 +29,7 @@ namespace BBS.Controllers
                 return Json(JsonBody.CreateResponse(false, "Title, Content cannot be empty"));
             }
             ViewBag.Id = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value);
-            if (postService.CreatePost(json.GetProperty("Title").ToString(), json.GetProperty("Content").ToString(), json.GetProperty("Tag").ToString(), ViewBag.Id, out int Id).IsCompleted)
+            if (postService.CreatePost(json.GetProperty("Title").ToString(), json.GetProperty("Content").ToString(), json.GetProperty("Tag").ToString(), ViewBag.Id).IsCompleted)
             {
                 // Send notification to all friends
                 IAsyncEnumerable<Friend> Friend = friendService.Friends(ViewBag.Id);
@@ -40,7 +40,7 @@ namespace BBS.Controllers
                         UserId = item.FriendUser.Id,
                         Type = "Post",
                         Message = $"{ViewBag.Id}",
-                        Url = $"/Post/Detail/{Id}",
+                        Url = $"/Post/Detail/{postService.CountPost()}",
                         IsRead = false
                     };
                     await notificationService.AddNotification(newNotification);
@@ -87,7 +87,7 @@ namespace BBS.Controllers
                 return Json(JsonBody.CreateResponse(false, "Unauthorized Access"));
             }
 
-            if (postService.EditPost(PostId, Title, Content, json.GetProperty("Tag").ToString()))
+            if (postService.EditPost(PostId, Title, Content, json.GetProperty("Tag").ToString()).Result)
             {
                 return Json(JsonBody.CreateResponse(true, "Edit Post Success"));
             }

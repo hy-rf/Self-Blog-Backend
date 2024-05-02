@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BBS.Repository
 {
-    public class PostRepository(AppDbContext context) : BaseRepository<Post>(context), IPostRepository
+    public class PostRepository(ForumContext context) : BaseRepository<Post>(context), IPostRepository
     {
         public Task<int> CountPost()
         {

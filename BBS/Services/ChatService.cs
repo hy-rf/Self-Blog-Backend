@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BBS.Services
 {
-    public class ChatService(AppDbContext ctx) : IChatService
+    public class ChatService(ForumContext ctx) : IChatService
     {
         public bool isInChatRoom(ChatRoomMember chatRoomMember)
         {

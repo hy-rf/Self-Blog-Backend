@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BBS.Services
 {
-    public class LikeService(AppDbContext ctx) : ILikeService
+    public class LikeService(ForumContext ctx) : ILikeService
     {
         public void AddLikePost(LikedPost likedPost)
         {

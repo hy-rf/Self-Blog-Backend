@@ -7,6 +7,7 @@ using BBS.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -51,17 +52,19 @@ builder.Services.AddAuthentication(opt =>
 
 
 
-builder.Services.AddDbContextPool<AppDbContext>(options =>
+//builder.Services.AddDbContextPool<AppDbContext>(options =>
+//{
+//    options.UseSqlite(builder.Configuration.GetConnectionString("LocalDB"));
+//});
+builder.Services.AddDbContext<ForumContext>(options =>
 {
-    options.UseSqlite(builder.Configuration.GetConnectionString("LocalDB"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("AzureDB"));
 });
-
 
 builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddScoped<ITagRepository, TagRepository>();
 builder.Services.AddScoped<IPostTagRepository, PostTagRepository>();
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
-
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddScoped<IReplyService, ReplyService>();
@@ -73,7 +76,7 @@ builder.Services.AddScoped<INotificationService, NotificationService>();
 
 
 
-builder.Services.AddSingleton<IUserIdProvider, MyUserIdProvider>();
+builder.Services.AddTransient<IUserIdProvider, MyUserIdProvider>();
 
 var app = builder.Build();
 

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BBS.Services
 {
-    public class FriendService(AppDbContext ctx) : IFriendService
+    public class FriendService(ForumContext ctx) : IFriendService
     {
         public void AddFriend(Friend friend, Friend friendOpposite)
         {

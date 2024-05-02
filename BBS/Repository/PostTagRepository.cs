@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BBS.Repository
 {
-    public class PostTagRepository(AppDbContext context) : BaseRepository<PostTag>(context), IPostTagRepository
+    public class PostTagRepository(ForumContext context) : BaseRepository<PostTag>(context), IPostTagRepository
     {
-        public Task<List<PostTag>> GetPostTagsByPostId(int PostId)
+        public async Task<List<PostTag>> GetPostTagsByPostId(int PostId)
         {
-            return Task.FromResult(context.PostTag.Where(t => t.PostId == PostId).Include(t => t.Tag).ToList());
+            return await Task.FromResult(context.PostTag.Where(t => t.PostId == PostId).Include(t => t.Tag).ToList());
         }
     }
 
