@@ -12,7 +12,7 @@ namespace BBS.Controllers
         public IActionResult Index()
         {
             string msg = User.Identity.IsAuthenticated ? User.FindFirst(ClaimTypes.Name)!.Value : "Anonymous";
-            logger.LogError($"{DateTime.Now} : {this.GetType()} : {msg} Enters");
+            logger.LogError($"{DateTime.Now} : {this.GetType()} : {HttpContext.Connection.RemoteIpAddress} : {msg} Enters");
             return View();
         }
         [HttpGet]

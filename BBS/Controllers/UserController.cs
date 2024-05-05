@@ -3,6 +3,7 @@ using BBS.IService;
 using Google.Authenticator;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -11,11 +12,12 @@ using System.Text.Json;
 
 namespace BBS.Controllers
 {
-    public class UserController(IUserService userService, IConfiguration configuration, IFriendService friendService) : Controller
+    public class UserController(IUserService userService, IConfiguration configuration, IFriendService friendService, ILogger<UserController> logger) : Controller
     {
         [Route("Welcome")]
         public IActionResult Index()
         {
+            logger.LogError($"{DateTime.Now} : {this.GetType()} : {HttpContext.Connection.RemoteIpAddress} : Use Welcome");
             if (User.Identity!.IsAuthenticated)
             {
 
@@ -113,7 +115,7 @@ namespace BBS.Controllers
             }
             return PartialView(userService.GetUserBasic(Id));
         }
-         
+
         [HttpPost]
         [Route("api/User/Login")]
         public JsonResult Login([FromBody] JsonElement LoginInfo)
@@ -158,7 +160,7 @@ namespace BBS.Controllers
                 Message = "Login Failed, No Input."
             });
         }
-         
+
         [HttpPost]
         [Route("api/User/CheckDuplicatedName")]
         public JsonResult CheckDuplicatedName([FromBody] JsonElement Name)
@@ -178,7 +180,7 @@ namespace BBS.Controllers
                 Message = "Name is not available"
             });
         }
-         
+
         [HttpPost]
         [Route("api/User/Signup")]
         public JsonResult Signup([FromBody] JsonElement SingupInfo)

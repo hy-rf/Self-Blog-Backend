@@ -580,9 +580,6 @@ label[for="updateAvatarBtn"]:hover {
     }
 
     /*----------------------------------------------------------------------------------------------------*/
-    header:nth-child(1) {
-        left: 0.5rem;
-    }
 
     #userLink {
         position: absolute;
