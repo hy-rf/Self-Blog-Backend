@@ -141,10 +141,16 @@ namespace BBS.Controllers
                         SigningCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256)
                     };
                     var tokenString = tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor));
-                    HttpContext.Response.Cookies.Append("Token", tokenString);
+                    HttpContext.Response.Cookies.Append("Token", tokenString, new CookieOptions
+                    {
+                        Secure = true,
+                        HttpOnly = true,
+                        SameSite = SameSiteMode.None
+                    });
                     return Json(new JsonBody
                     {
                         Success = true,
+                        Payload = tokenString,
                         Message = "Login Success!"
                     });
                 }
