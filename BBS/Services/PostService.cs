@@ -31,8 +31,7 @@ namespace BBS.Services
                         tagRepository.CreateAsync(new Tag { Name = tag });
                     }
                     int newposttagid = tagRepository.GetTagByNameAsync(tag).Result.Id;
-                    int countpost = postRepository.GetAllAsync().Result.Count + 1;
-                    var posttag = new PostTag { TagId = newposttagid, PostId = countpost };
+                    var posttag = new PostTag { TagId = newposttagid, PostId = newPost.Id };
                     postTagRepository.CreateAsync(posttag);
                 }
             });
