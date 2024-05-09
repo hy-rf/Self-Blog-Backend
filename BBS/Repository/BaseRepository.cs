@@ -62,7 +62,7 @@ namespace BBS.Repository
         }
         public async Task<bool> IsExist(Expression<Func<T, bool>> whereLambda)
         {
-            return  _context.Set<T>().Any(whereLambda);
+            return _context.Set<T>().Any(whereLambda);
         }
     }
 }

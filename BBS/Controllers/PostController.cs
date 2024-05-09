@@ -19,7 +19,7 @@ namespace BBS.Controllers
             var model = postService.GetPostsByPage(page, 10);
             return View(model);
         }
-         
+
         [HttpPost]
         [Route("Post/CreatePost")]
         public async Task<JsonResult> CreatePost([FromBody] JsonElement json)
@@ -63,7 +63,7 @@ namespace BBS.Controllers
             var ret = postService.GetPost(Id).Result.Content;
             return Json(JsonBody.CreateResponse(true, ret, "success"));
         }
-         
+
         [HttpPost]
         [Route("Post/EditPost")]
         public JsonResult EditPost([FromBody] JsonElement json)

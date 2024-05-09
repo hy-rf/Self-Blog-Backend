@@ -8,7 +8,7 @@ namespace BBS.Controllers
 {
     public class LikeController(ILikeService likeService) : Controller
     {
-         
+
         [HttpPost]
         [Route("/Like/Post")]
         public JsonResult LikePost([FromBody] LikedPost likedPost)
