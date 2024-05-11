@@ -57,7 +57,7 @@ namespace BBS.Controllers
             return View("Post", ret);
         }
         [HttpGet]
-        [Route("api/Post/{Id}")]
+        [Route("/Post/Content/{Id}")]
         public JsonResult GetPostContentAPI(int Id)
         {
             var ret = postService.GetPost(Id).Result.Content;
@@ -94,7 +94,7 @@ namespace BBS.Controllers
             return Json(JsonBody.CreateResponse(false, "Internal Server Error"));
         }
         [HttpPost]
-        [Route("api/Post")]
+        [Route("/Post")]
         public JsonResult GetPost()
         {
             return Json(JsonBody.CreateResponse(true, "success"));

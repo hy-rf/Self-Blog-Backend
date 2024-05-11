@@ -87,7 +87,7 @@ namespace BBS.Controllers
         }
 
         [HttpGet]
-        [Route("api/User/Avatar/{Id?}")]
+        [Route("/User/Avatar/{Id?}")]
         public JsonResult UserAvatar(int Id)
         {
             if (Id == 0)
@@ -105,7 +105,7 @@ namespace BBS.Controllers
 
         }
         [HttpGet]
-        [Route("api/User/{Id?}")]
+        [Route("/User/{Id?}")]
         public PartialViewResult UserInfo(int Id)
         {
             if (Id == 0)
@@ -116,7 +116,7 @@ namespace BBS.Controllers
         }
 
         [HttpPost]
-        [Route("api/User/Login")]
+        [Route("/User/Login")]
         public JsonResult Login([FromBody] JsonElement LoginInfo)
         {
             string Name = LoginInfo.GetProperty("Name").ToString();
@@ -167,7 +167,7 @@ namespace BBS.Controllers
         }
 
         [HttpPost]
-        [Route("api/User/CheckDuplicatedName")]
+        [Route("/User/CheckDuplicatedName")]
         public JsonResult CheckDuplicatedName([FromBody] JsonElement Name)
         {
             string name = Name.GetProperty("Name").ToString();
@@ -187,7 +187,7 @@ namespace BBS.Controllers
         }
 
         [HttpPost]
-        [Route("api/User/Signup")]
+        [Route("/User/Signup")]
         public JsonResult Signup([FromBody] JsonElement SingupInfo)
         {
             string Name = SingupInfo.GetProperty("Name").ToString();
@@ -221,30 +221,30 @@ namespace BBS.Controllers
             }
             return Json(JsonBody.CreateResponse(false, "Logout failed!"));
         }
-        [HttpPost]
-        [Route("api/2fv")]
-        public JsonResult TwoFactor()
-        {
-            string user = User.FindFirst(ClaimTypes.Name)!.Value;
-            TwoFactorAuthenticator twoFactorAuthenticator = new TwoFactorAuthenticator();
-            var TwoFactorSecretCode = "TwoFactorSecretCode";
-            var accountSecretKey = $"{TwoFactorSecretCode}-{user}";
-            var setupCode = twoFactorAuthenticator.GenerateSetupCode("BBS", user, Encoding.ASCII.GetBytes(accountSecretKey));
-            var qrCodeUrl = setupCode.QrCodeSetupImageUrl;
-            var manualCode = setupCode.ManualEntryKey;
-            return Json(JsonBody.CreateResponse(true, new { qrCodeUrl, manualCode }, "Two Factor Authentication Setup Success"));
-        }
-        [HttpPost]
-        [Route("apt/2fv/vali")]
-        public JsonResult Validate([FromBody] JsonElement code)
-        {
-            var Authenticator = new TwoFactorAuthenticator();
-            var valid = Authenticator.ValidateTwoFactorPIN($"TwoFactorSecretCode-{User.FindFirst(ClaimTypes.Name)!.Value}", code.GetString("code"));
-            if (valid)
-            {
-                return Json(JsonBody.CreateResponse(true, "Two Factor Authentication Success"));
-            }
-            return Json(JsonBody.CreateResponse(false, "Two Factor Authentication Failed"));
-        }
+        //[HttpPost]
+        //[Route("api/2fv")]
+        //public JsonResult TwoFactor()
+        //{
+        //    string user = User.FindFirst(ClaimTypes.Name)!.Value;
+        //    TwoFactorAuthenticator twoFactorAuthenticator = new TwoFactorAuthenticator();
+        //    var TwoFactorSecretCode = "TwoFactorSecretCode";
+        //    var accountSecretKey = $"{TwoFactorSecretCode}-{user}";
+        //    var setupCode = twoFactorAuthenticator.GenerateSetupCode("BBS", user, Encoding.ASCII.GetBytes(accountSecretKey));
+        //    var qrCodeUrl = setupCode.QrCodeSetupImageUrl;
+        //    var manualCode = setupCode.ManualEntryKey;
+        //    return Json(JsonBody.CreateResponse(true, new { qrCodeUrl, manualCode }, "Two Factor Authentication Setup Success"));
+        //}
+        //[HttpPost]
+        //[Route("apt/2fv/vali")]
+        //public JsonResult Validate([FromBody] JsonElement code)
+        //{
+        //    var Authenticator = new TwoFactorAuthenticator();
+        //    var valid = Authenticator.ValidateTwoFactorPIN($"TwoFactorSecretCode-{User.FindFirst(ClaimTypes.Name)!.Value}", code.GetString("code"));
+        //    if (valid)
+        //    {
+        //        return Json(JsonBody.CreateResponse(true, "Two Factor Authentication Success"));
+        //    }
+        //    return Json(JsonBody.CreateResponse(false, "Two Factor Authentication Failed"));
+        //}
     }
 }

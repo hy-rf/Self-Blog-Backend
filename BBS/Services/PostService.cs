@@ -28,7 +28,8 @@ namespace BBS.Services
                 {
                     if (!tagRepository.IsExist(t => t.Name == tag).Result)
                     {
-                        tagRepository.CreateAsync(new Tag { Name = tag });
+                        Tag newtag = new Tag { Name = tag };
+                        tagRepository.CreateAsync(newtag);
                     }
                     int newposttagid = tagRepository.GetTagByNameAsync(tag).Result.Id;
                     var posttag = new PostTag { TagId = newposttagid, PostId = newPost.Id };

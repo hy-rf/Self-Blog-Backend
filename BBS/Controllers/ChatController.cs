@@ -10,7 +10,7 @@ namespace BBS.Controllers
     public class ChatController(IChatService chatService) : Controller
     {
         [HttpPost]
-        [Route("api/ChatRoom")]
+        [Route("ChatRoom")]
         public ActionResult CreateChatRoom([FromBody] ChatRoom chatRoom)
         {
             chatService.CreateChatRoom(chatRoom);
@@ -26,7 +26,7 @@ namespace BBS.Controllers
             });
         }
         [HttpPost]
-        [Route("api/GetJoinedChatRoom")]
+        [Route("GetJoinedChatRoom")]
         public JsonResult GetJoinedChatRoom()
         {
             try
@@ -50,7 +50,7 @@ namespace BBS.Controllers
             }
         }
         [HttpPost]
-        [Route("api/GetChatRoomMessages")]
+        [Route("GetChatRoomMessages")]
         public JsonResult GetChatRoomMessages([FromBody] JsonElement json)
         {
             try
@@ -74,7 +74,7 @@ namespace BBS.Controllers
             }
         }
         [HttpGet]
-        [Route("api/ChatRoomMember/{ChatRoomId}")]
+        [Route("ChatRoomMember/{ChatRoomId}")]
         public JsonResult GetChatRoomMember(int ChatRoomId)
         {
             try
@@ -97,7 +97,7 @@ namespace BBS.Controllers
             }
         }
         [HttpPost]
-        [Route("api/ChatRoomMember")]
+        [Route("ChatRoomMember")]
         public JsonResult AddChatRoomMember([FromBody] JsonElement newMember)
         {
             try
@@ -124,7 +124,7 @@ namespace BBS.Controllers
             }
         }
         [HttpDelete]
-        [Route("api/ChatRoomMember")]
+        [Route("ChatRoomMember")]
         public JsonResult DeleteChatRoomMember([FromBody] JsonElement memberToKick)
         {
             try
