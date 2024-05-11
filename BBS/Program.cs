@@ -33,7 +33,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: "frontend",
                       policy =>
                       {
-                          policy.WithOrigins("https://hy-rf.github.io").AllowAnyHeader().AllowAnyMethod().AllowCredentials();
+                          policy.WithOrigins("https://hy-rf.github.io", "http://localhost:5173").AllowAnyHeader().AllowAnyMethod().AllowCredentials();
                       });
 });
 
