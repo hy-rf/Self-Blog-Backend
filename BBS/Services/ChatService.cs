@@ -53,7 +53,9 @@ namespace BBS.Services
                 Created = crm.Created.ToLocalTime(),
                 User = new User
                 {
-                    Name = crm.User.Name
+                    Id = crm.User.Id,
+                    Name = crm.User.Name,
+                    Avatar = crm.User.Avatar,
                 }
 
             }).ToList();

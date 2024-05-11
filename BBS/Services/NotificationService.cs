@@ -8,7 +8,7 @@ namespace BBS.Services
     {
         public async Task AddNotification(Notification notification)
         {
-             await notificationRepository.CreateAsync(notification);
+            await notificationRepository.CreateAsync(notification);
         }
 
         public async Task<List<Notification>> GetAllNotifications(int UserId)
