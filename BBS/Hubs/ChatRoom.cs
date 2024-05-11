@@ -21,7 +21,7 @@ namespace BBS.Hubs
             }
 
         }
-        public async Task SendMessage(string RoomId, string UserId, string Name, string Message)
+        public async Task SendMessage(string RoomId, string Message)
         {
             System.Diagnostics.Debug.WriteLine(Context.User!.FindFirst(ClaimTypes.Sid)?.Value);
             if (string.IsNullOrEmpty(Message))
@@ -36,8 +36,7 @@ namespace BBS.Hubs
                 Created = Time,
                 ChatRoomId = Convert.ToInt32(RoomId),
             });
-
-            await Clients.Group(RoomId).SendAsync("ReceiveMessage", RoomId, UserId, Name, Message, Time.ToLocalTime());
+            await Clients.Group(RoomId).SendAsync("ReceiveMessage", RoomId, Convert.ToInt32(Context.User!.FindFirst(ClaimTypes.Sid)?.Value), Context.User!.FindFirst(ClaimTypes.Name)?.Value, Message, Time.ToLocalTime());
         }
     }
 }
