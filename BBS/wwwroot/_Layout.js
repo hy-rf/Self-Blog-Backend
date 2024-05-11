@@ -28,7 +28,7 @@ fetch("/Notifications").then(res => {
     }
 });
 // load avatar
-fetch("/api/User/Avatar").then(res => {
+fetch("/User/Avatar").then(res => {
     return res.json();
 }).then(ret => {
     if (ret.success) {
@@ -117,7 +117,7 @@ var chatWindow = new Proxy({
             </div>
             <div id="chatInput">
             </div>`;
-            var res = await fetch("/api/GetJoinedChatRoom", {
+            var res = await fetch("/GetJoinedChatRoom", {
                 method: "POST",
                 headers: {
                     "Accept": "application/json",
@@ -158,7 +158,7 @@ var chatWindow = new Proxy({
             </div>
             <div id="chatInput">
             </div>`;
-            var res = await fetch("/api/GetChatRoomMessages", {
+            var res = await fetch("/GetChatRoomMessages", {
                 method: "POST",
                 headers: {
                     "Accept": "application/json",
@@ -194,7 +194,7 @@ var chatWindow = new Proxy({
             document.getElementById("chatInput").innerHTML = `
                                 <input type="text" id="userId">
                                 <button id="addMemberBtn">Add</button>`;
-            var res = await fetch(`/api/ChatRoomMember/${chatWindow.activeChatRoom}`, {
+            var res = await fetch(`/ChatRoomMember/${chatWindow.activeChatRoom}`, {
                 method: "GET",
                 headers: {
                     "Accept": "application/json",
@@ -313,7 +313,7 @@ function enableScroll() {
 
 async function handleChatRoom(e) {
     if (e.target.id == "addMemberBtn") {
-        var res = await fetch("/api/ChatRoomMember", {
+        var res = await fetch("/ChatRoomMember", {
             method: "POST",
             headers: {
                 "Accept": "application/json",
@@ -327,7 +327,7 @@ async function handleChatRoom(e) {
             return res.json();
         });
         if (res.success) {
-            var res = await fetch(`/api/ChatRoomMember/${chatWindow.activeChatRoom}`, {
+            var res = await fetch(`/ChatRoomMember/${chatWindow.activeChatRoom}`, {
                 method: "GET",
                 headers: {
                     "Accept": "application/json",
@@ -352,7 +352,7 @@ async function handleChatRoom(e) {
         }
     }
     if (e.target.id == "addChatRoom") {
-        var res = await fetch("/api/ChatRoom", {
+        var res = await fetch("/ChatRoom", {
             method: "POST",
             headers: {
                 "Accept": "application/json",
@@ -366,7 +366,7 @@ async function handleChatRoom(e) {
         });
         // if add chatroom success refresh joined chatroom
         if (res.success) {
-            var res = await fetch("/api/GetJoinedChatRoom", {
+            var res = await fetch("/GetJoinedChatRoom", {
                 method: "POST",
                 headers: {
                     "Accept": "application/json",
@@ -627,7 +627,7 @@ if (document.location.href.split("/")[3] === "Welcome") {
                     }
                 }
             }, 100);
-            var res = await fetch("/api/User/Login", {
+            var res = await fetch("/User/Login", {
                 method: "POST",
                 headers: {
                     "Accept": "application/json",
@@ -669,7 +669,7 @@ if (document.location.href.split("/")[3] === "Welcome") {
                     }
                 }
             }, 100);
-            var res = await fetch("/api/User/Signup", {
+            var res = await fetch("/User/Signup", {
                 method: "POST",
                 headers: {
                     "Accept": "application/json",
@@ -693,7 +693,7 @@ if (document.location.href.split("/")[3] === "Welcome") {
                         e.target.previousElementSibling.innerText = res.message + " Redirecting";
                     }
                 }, 100);
-                await fetch("/api/User/Login", {
+                await fetch("/User/Login", {
                     method: "POST",
                     headers: {
                         "Accept": "application/json",
@@ -716,7 +716,7 @@ if (document.location.href.split("/")[3] === "Welcome") {
     document.getElementById("togglePanel").addEventListener("keyup", async (e) => {
         if (e.target.id == "Name" && e.target.parentNode.querySelector("button").id == "submitSignupBtn") {
             var name = e.target.value;
-            var nameAvailable = await fetch("/api/User/CheckDuplicatedName", {
+            var nameAvailable = await fetch("/User/CheckDuplicatedName", {
                 method: "POST",
                 headers: {
                     "Accept": "application/json",
@@ -838,7 +838,7 @@ if (document.location.href.split("/")[3] === "Post") {
         });
 
         // Get Post Content then set it to quill editors
-        fetch(`/api/Post/${document.location.href.split("/")[5]}`).then(res => {
+        fetch(`/Post/Content/${document.location.href.split("/")[5]}`).then(res => {
             return res.json();
         }).then(ret => {
             if (ret.success) {
