@@ -1,5 +1,6 @@
 ﻿using BBS.IService;
 using BBS.Models;
+using BBS.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using System.Security.Claims;
@@ -23,7 +24,6 @@ namespace BBS.Hubs
         }
         public async Task SendMessage(string RoomId, string Message)
         {
-            System.Diagnostics.Debug.WriteLine(Context.User!.FindFirst(ClaimTypes.Sid)?.Value);
             if (string.IsNullOrEmpty(Message))
             {
                 return;
@@ -37,7 +37,17 @@ namespace BBS.Hubs
                 ChatRoomId = Convert.ToInt32(RoomId),
             };
             chatService.CreateChatMessage(chatRoomMessage);
-            await Clients.Group(RoomId).SendAsync("ReceiveMessage", chatRoomMessage.Id, RoomId, Convert.ToInt32(Context.User!.FindFirst(ClaimTypes.Sid)?.Value), Context.User!.FindFirst(ClaimTypes.Name)?.Value, Message, Time.ToLocalTime());
+            ChatMessageViewModel newMsg = new ChatMessageViewModel
+            {
+                Id = chatRoomMessage.Id,
+                ChatRoomId = Convert.ToInt32(RoomId),
+                UserId = chatRoomMessage.UserId,
+                Message = Message,
+                Created = Time,
+                UserName = Context.User!.FindFirst(ClaimTypes.Name)?.Value,
+                UserAvatar = ""
+            };
+            await Clients.Group(RoomId).SendAsync("ReceiveMessage", newMsg);
         }
     }
 }

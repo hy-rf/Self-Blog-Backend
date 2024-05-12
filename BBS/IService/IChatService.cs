@@ -1,4 +1,5 @@
 ﻿using BBS.Models;
+using BBS.ViewModels;
 
 namespace BBS.IService
 {
@@ -11,7 +12,7 @@ namespace BBS.IService
         public void CreateChatMessage(ChatRoomMessage message);
         public void KickMember(ChatRoomMember chatRoomMember);
         public List<ChatRoomMessage> GetChatMessages(int ChatRoomId);
-        public List<ChatRoomMessage> GetChatMessagesSimple(int ChatRoomId);
+        public List<ChatMessageViewModel> GetChatMessagesSimple(int ChatRoomId);
         public List<ChatRoomMember> GetChatRoomMembers(int ChatRoomId);
     }
 }
