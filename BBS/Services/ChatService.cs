@@ -1,6 +1,7 @@
 ﻿using BBS.Data;
 using BBS.IService;
 using BBS.Models;
+using BBS.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace BBS.Services
@@ -43,21 +44,17 @@ namespace BBS.Services
             var messages = ctx.ChatRoomMessage.Where(crm => crm.ChatRoomId == ChatRoomId).Include(crm => crm.User).Include(crm => crm.ChatRoom).ThenInclude(cr => cr.ChatRoomMembers).ThenInclude(crm => crm.User).ToList();
             return messages;
         }
-        public List<ChatRoomMessage> GetChatMessagesSimple(int ChatRoomId)
+        public List<ChatMessageViewModel> GetChatMessagesSimple(int ChatRoomId)
         {
-            var messages = ctx.ChatRoomMessage.Where(crm => crm.ChatRoomId == ChatRoomId).Include(crm => crm.User).Select(crm => new ChatRoomMessage
+            var messages = ctx.ChatRoomMessage.Where(crm => crm.ChatRoomId == ChatRoomId).Include(crm => crm.User).Select(crm => new ChatMessageViewModel
             {
                 Id = crm.Id,
                 ChatRoomId = crm.ChatRoomId,
                 UserId = crm.UserId,
                 Message = crm.Message,
                 Created = crm.Created.ToLocalTime(),
-                User = new User
-                {
-                    Id = crm.User.Id,
-                    Name = crm.User.Name,
-                    Avatar = crm.User.Avatar,
-                }
+                UserName = crm.User.Name,
+                UserAvatar = crm.User.Avatar,
 
             }).ToList();
             return messages;
