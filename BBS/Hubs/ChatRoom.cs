@@ -29,14 +29,15 @@ namespace BBS.Hubs
                 return;
             }
             DateTime Time = DateTime.Now;
-            chatService.CreateChatMessage(new ChatRoomMessage
+            ChatRoomMessage chatRoomMessage = new ChatRoomMessage
             {
                 UserId = Convert.ToInt32(Context.User!.FindFirst(ClaimTypes.Sid)?.Value),
                 Message = Message,
                 Created = Time,
                 ChatRoomId = Convert.ToInt32(RoomId),
-            });
-            await Clients.Group(RoomId).SendAsync("ReceiveMessage", RoomId, Convert.ToInt32(Context.User!.FindFirst(ClaimTypes.Sid)?.Value), Context.User!.FindFirst(ClaimTypes.Name)?.Value, Message, Time.ToLocalTime());
+            };
+            chatService.CreateChatMessage(chatRoomMessage);
+            await Clients.Group(RoomId).SendAsync("ReceiveMessage", chatRoomMessage.Id, RoomId, Convert.ToInt32(Context.User!.FindFirst(ClaimTypes.Sid)?.Value), Context.User!.FindFirst(ClaimTypes.Name)?.Value, Message, Time.ToLocalTime());
         }
     }
 }

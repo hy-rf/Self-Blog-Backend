@@ -47,6 +47,7 @@ namespace BBS.Services
         {
             var messages = ctx.ChatRoomMessage.Where(crm => crm.ChatRoomId == ChatRoomId).Include(crm => crm.User).Select(crm => new ChatRoomMessage
             {
+                Id = crm.Id,
                 ChatRoomId = crm.ChatRoomId,
                 UserId = crm.UserId,
                 Message = crm.Message,
