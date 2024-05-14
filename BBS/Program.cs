@@ -72,7 +72,7 @@ builder.Services.AddAuthentication(opt =>
 //});
 builder.Services.AddDbContext<ForumContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("AzureDB"));
+    options.UseSqlServer(builder.Environment.IsDevelopment()?builder.Configuration.GetConnectionString("AzureDB"):Environment.GetEnvironmentVariable("AzureDB"));
 });
 
 builder.Services.AddScoped<IPostRepository, PostRepository>();
