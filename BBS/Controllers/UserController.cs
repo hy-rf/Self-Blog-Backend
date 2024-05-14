@@ -1,5 +1,6 @@
 ﻿using BBS.Common;
 using BBS.IService;
+using BBS.ViewModels;
 using Google.Authenticator;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -45,7 +46,9 @@ namespace BBS.Controllers
             {
                 return Json(JsonBody.CreateResponse(false, "Unauthorized"));
             }
-            return Json(JsonBody.CreateResponse(true, User.FindFirst(ClaimTypes.Name)?.Value));
+            int Id = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value);
+            UserProfileViewModel userProfile = userService.GetUserProfile(Id);
+            return Json(JsonBody.CreateResponse(true, userProfile, User.FindFirst(ClaimTypes.Name)?.Value));
         }
         [Route("User/{Id}")]
         public IActionResult UserPage(int Id)

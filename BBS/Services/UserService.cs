@@ -1,6 +1,7 @@
 ﻿using BBS.Data;
 using BBS.IService;
 using BBS.Models;
+using BBS.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace BBS.Services
@@ -95,6 +96,21 @@ namespace BBS.Services
         public User GetUserBasic(int Id)
         {
             return ctx.User.Single(u => u.Id == Id);
+        }
+
+        public UserProfileViewModel GetUserProfile(int Id)
+        {
+            var User = ctx.User.Include(u => u.Posts).Include(u => u.Replies).Select(u => new UserProfileViewModel
+            {
+                Id = u.Id,
+                Name = u.Name,
+                Created = u.Created,
+                LastLogin = u.LastLogin,
+                Avatar = u.Avatar,
+                Posts = u.Posts.ToList(),
+                Replies = u.Replies.ToList(),
+            }).Single(u => u.Id == Id);
+            return User;
         }
     }
 }
