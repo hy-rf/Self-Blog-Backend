@@ -2,6 +2,7 @@
 using BBS.IService;
 using Google.Authenticator;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -36,6 +37,16 @@ namespace BBS.Controllers
             var model = userService.GetUser(ViewBag.Id);
             return View(model);
         }
+        [Authorize]
+        [HttpGet("User")]
+        public JsonResult GetSelf()
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return Json(JsonBody.CreateResponse(false, "Unauthorized"));
+            }
+            return Json(JsonBody.CreateResponse(true, User.FindFirst(ClaimTypes.Name)?.Value));
+        }
         [Route("User/{Id}")]
         public IActionResult UserPage(int Id)
         {
@@ -45,10 +56,6 @@ namespace BBS.Controllers
             var model = userService.GetUser(Id);
             return View("UserPage", model);
         }
-
-
-
-        // DONE API
         [HttpPost]
         [Route("User/EditAvatar")]
         public ActionResult EditAvatar(IFormFile Avatar)
@@ -70,7 +77,6 @@ namespace BBS.Controllers
             }
             return RedirectToAction("UserCenter");
         }
-        // DONE API
         [HttpPost]
         [Route("User/EditName")]
         public void EditName([FromBody] JsonElement json)

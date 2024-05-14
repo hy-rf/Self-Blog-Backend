@@ -58,7 +58,7 @@ builder.Services.AddAuthentication(opt =>
         {
             OnMessageReceived = ctx =>
             {
-                ctx.Token = ctx.Request.Cookies["Token"];
+                ctx.Token = ctx.Request.Headers.Authorization;
                 return Task.CompletedTask;
             }
         };
