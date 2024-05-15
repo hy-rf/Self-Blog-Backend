@@ -363,4 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 
 # Ignore config file
-*appsettings*.json
+/BBS/appsettings.json
