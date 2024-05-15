@@ -135,7 +135,15 @@ namespace BBS.Controllers
                 if (userService.Login(Name, Pwd, out int Id).Result)
                 {
                     var tokenHandler = new JwtSecurityTokenHandler();
-                    var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetValue<string>("JWT")));
+                    SymmetricSecurityKey secretKey;
+                    try
+                    {
+                        secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("JWT")));
+                    }
+                    catch
+                    {
+                        secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetValue<string>("JWT")));
+                    }
                     var tokenDescriptor = new SecurityTokenDescriptor
                     {
                         Subject = new ClaimsIdentity(new[]
