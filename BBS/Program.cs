@@ -58,7 +58,13 @@ builder.Services.AddAuthentication(opt =>
         {
             OnMessageReceived = ctx =>
             {
-                ctx.Token = ctx.Request.Headers.Authorization;
+                string path = ctx.HttpContext.Request.Path;
+                if (path!= "/chat"){
+                    ctx.Token = ctx.Request.Headers.Authorization;
+                }
+                else{
+                    ctx.Token = ctx.Request.Query["access_token"];
+                }
                 return Task.CompletedTask;
             }
         };
