@@ -1,7 +1,9 @@
 ﻿using BBS.Common;
 using BBS.IService;
+using BBS.ViewModels;
 using Google.Authenticator;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -36,6 +38,18 @@ namespace BBS.Controllers
             var model = userService.GetUser(ViewBag.Id);
             return View(model);
         }
+        [Authorize]
+        [HttpGet("User")]
+        public JsonResult GetSelf()
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return Json(JsonBody.CreateResponse(false, "Unauthorized"));
+            }
+            int Id = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value);
+            UserProfileViewModel userProfile = userService.GetUserProfile(Id);
+            return Json(JsonBody.CreateResponse(true, userProfile, User.FindFirst(ClaimTypes.Name)?.Value));
+        }
         [Route("User/{Id}")]
         public IActionResult UserPage(int Id)
         {
@@ -45,10 +59,6 @@ namespace BBS.Controllers
             var model = userService.GetUser(Id);
             return View("UserPage", model);
         }
-
-
-
-        // DONE API
         [HttpPost]
         [Route("User/EditAvatar")]
         public ActionResult EditAvatar(IFormFile Avatar)
@@ -70,7 +80,6 @@ namespace BBS.Controllers
             }
             return RedirectToAction("UserCenter");
         }
-        // DONE API
         [HttpPost]
         [Route("User/EditName")]
         public void EditName([FromBody] JsonElement json)
@@ -133,19 +142,10 @@ namespace BBS.Controllers
                         {
                                 new Claim(ClaimTypes.Sid, Convert.ToString(Id)),
                                 new Claim(ClaimTypes.Name, Name),
-                                new Claim(ClaimTypes.Role, "User"),
-                        // Add other claims as needed
                        }),
-                        Expires = DateTime.Now.AddHours(5),
                         SigningCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256)
                     };
                     var tokenString = tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor));
-                    //HttpContext.Response.Cookies.Append("Token", tokenString, new CookieOptions
-                    //{
-                    //    Secure = true,
-                    //    HttpOnly = true,
-                    //    SameSite = SameSiteMode.None
-                    //});
                     return Json(new JsonBody
                     {
                         Success = true,

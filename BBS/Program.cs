@@ -58,7 +58,13 @@ builder.Services.AddAuthentication(opt =>
         {
             OnMessageReceived = ctx =>
             {
-                ctx.Token = ctx.Request.Cookies["Token"];
+                string path = ctx.HttpContext.Request.Path;
+                if (path!= "/chat"){
+                    ctx.Token = ctx.Request.Headers.Authorization;
+                }
+                else{
+                    ctx.Token = ctx.Request.Query["access_token"];
+                }
                 return Task.CompletedTask;
             }
         };
@@ -72,7 +78,7 @@ builder.Services.AddAuthentication(opt =>
 //});
 builder.Services.AddDbContext<ForumContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("AzureDB"));
+    options.UseSqlServer(builder.Environment.IsDevelopment()?builder.Configuration.GetConnectionString("AzureDB"):Environment.GetEnvironmentVariable("AzureDB"));
 });
 
 builder.Services.AddScoped<IPostRepository, PostRepository>();

@@ -1,4 +1,5 @@
 ﻿using BBS.Models;
+using BBS.ViewModels;
 
 namespace BBS.IService
 {
@@ -12,5 +13,6 @@ namespace BBS.IService
         public bool EditAvatar(int Id, string Avatar);
         public bool EditName(int Id, string Name);
         public Task<bool> Logoff(int Id);
+        public UserProfileViewModel GetUserProfile(int Id);
     }
 }
