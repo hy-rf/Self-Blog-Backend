@@ -52,7 +52,7 @@ builder.Services.AddAuthentication(opt =>
             ValidateIssuer = false,
             ValidateAudience = false,
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetValue<string>("JWT")!))
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Environment.IsDevelopment()?builder.Configuration.GetValue<string>("JWT")!: Environment.GetEnvironmentVariable("JWT")))
         };
         options.Events = new JwtBearerEvents
         {
