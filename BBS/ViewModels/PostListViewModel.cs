@@ -12,6 +12,6 @@ namespace BBS.ViewModels
         public int UserId { get; set; }
         public string UserName { get; set; }
         public List<Tag> Tags { get; set; }
-        public List<User> UsersWhoLike { get; set; }
+        public List<UserProfileViewModel> UsersWhoLike { get; set; }
     }
 }
