@@ -12,7 +12,7 @@ namespace BBS.Models
         public DateTime Modified { get; set; }
         public List<Reply>? Replies { get; set; }
         [ForeignKey("PostId")]
-        public List<PostTag>? PostTags { get; set; }
+        public IEnumerable<PostTag>? PostTags { get; set; }
         [ForeignKey("UserId")]
         public User? User { get; set; }
         public List<LikedPost>? Likes { get; set; }

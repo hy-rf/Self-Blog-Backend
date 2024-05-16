@@ -1,15 +1,18 @@
 ﻿using BBS.Common;
+using BBS.Data;
 using BBS.IService;
 using BBS.Models;
+using BBS.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using System.Text.Json;
 
 namespace BBS.Controllers
 {
 
-    public class PostController(IPostService postService, IFriendService friendService, INotificationService notificationService, IHubContext<Hubs.Notification> notification) : Controller
+    public class PostController(IPostService postService, IFriendService friendService, INotificationService notificationService, IHubContext<Hubs.Notification> notification, ForumContext ctx) : Controller
     {
         [Route("Post/{page}")]
         public IActionResult Index(int page)
@@ -93,11 +96,29 @@ namespace BBS.Controllers
             }
             return Json(JsonBody.CreateResponse(false, "Internal Server Error"));
         }
-        [HttpPost]
-        [Route("/Post")]
-        public JsonResult GetPost()
+        [HttpGet]
+        [Route("/post")]
+        public JsonResult GetPosts()
         {
-            return Json(JsonBody.CreateResponse(true, "success"));
+            List<PostListViewModel> result = ctx.Post.Include(p => p.User).Include(p => p.PostTags).ThenInclude(pt => pt.Tag).Include(p => p.Likes).ThenInclude(l => l.User).Select(p => new PostListViewModel
+            {
+                Id = p.Id,
+                Title = p.Title,
+                ContentPreview = p.Content,
+                Created = p.Created,
+                Modified = p.Modified,
+                UserId = p.User.Id,
+                UserName = p.User.Name,
+                Tags = p.PostTags.Select(pt => pt.Tag).ToList(),
+                UsersWhoLike = p.Likes.Select(l => new UserBriefViewModel
+                {
+                    Id = l.User.Id,
+                    Name = l.User.Name,
+                    Created = l.User.Created,
+                    Avatar = l.User.Avatar
+                }).ToList()
+            }).ToList();
+            return Json(JsonBody.CreateResponse(true, result, "success"));
         }
     }
 }
