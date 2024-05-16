@@ -110,12 +110,12 @@ namespace BBS.Controllers
                 UserId = p.User.Id,
                 UserName = p.User.Name,
                 Tags = p.PostTags.Select(pt => pt.Tag).ToList(),
-                UsersWhoLike = p.Likes.Select(l => new UserProfileViewModel
+                UsersWhoLike = p.Likes.Select(l => new UserBriefViewModel
                 {
                     Id = l.User.Id,
                     Name = l.User.Name,
                     Created = l.User.Created,
-                    LastLogin = l.User.LastLogin
+                    Avatar = l.User.Avatar
                 }).ToList()
             }).ToList();
             return Json(JsonBody.CreateResponse(true, result, "success"));
