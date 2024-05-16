@@ -11,7 +11,8 @@ namespace BBS.ViewModels
         public DateTime Updated { get; set; }
         public int UserId { get; set; }
         public string UserName { get; set; }
-        public IEnumerable<Tag> Tags { get; set; }
+        public List<Tag> Tags { get; set; }
+        public List<UserBriefViewModel> UsersWhoLike { get; set; }
         public int Likes { get; set; }
         public int Replies { get; set; }
     }
