@@ -96,8 +96,16 @@ namespace BBS.Controllers
             }
             return Json(JsonBody.CreateResponse(false, "Internal Server Error"));
         }
-        [HttpGet]
-        [Route("/post")]
+
+
+
+
+
+
+
+
+
+        [HttpGet("/post")]
         public JsonResult GetPosts()
         {
             List<PostListViewModel> result = ctx.Post.Include(p => p.User).Include(p => p.PostTags).ThenInclude(pt => pt.Tag).Include(p => p.Likes).ThenInclude(l => l.User).Select(p => new PostListViewModel
@@ -118,6 +126,31 @@ namespace BBS.Controllers
                     Avatar = l.User.Avatar
                 }).ToList()
             }).ToList();
+            return Json(JsonBody.CreateResponse(true, result, "success"));
+        }
+        [HttpGet("/post/detail")]
+        public JsonResult GetPostDetail(int id)
+        {
+            PostDetailViewModel result = ctx.Post.Include(p => p.User).Include(p => p.PostTags).ThenInclude(pt => pt.Tag).Include(p => p.Likes).ThenInclude(l => l.User).Include(p => p.Replies).ThenInclude(r => r.User).Select(p => new PostDetailViewModel
+            {
+                Id = id,
+                Title = p.Title,
+                Content = p.Content,
+                Created = p.Created,
+                Updated = p.Modified,
+                UserId = p.UserId,
+                UserName = p.User.Name,
+                Tags = p.PostTags.Select(pt => pt.Tag).ToList(),
+                UsersWhoLike = p.Likes.Select(l => new UserBriefViewModel
+                {
+                    Id = l.User.Id,
+                    Name = l.User.Name,
+                    Created = l.User.Created,
+                    Avatar = l.User.Avatar
+                }).ToList(),
+                Likes = p.Likes.Count(),
+                Replies = p.Replies.Count(),
+            }).Single(p => p.Id == id);
             return Json(JsonBody.CreateResponse(true, result, "success"));
         }
     }
