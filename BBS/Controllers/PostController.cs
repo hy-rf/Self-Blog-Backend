@@ -118,7 +118,7 @@ namespace BBS.Controllers
                 UserId = p.User.Id,
                 UserName = p.User.Name,
                 Tags = p.PostTags.Select(pt => pt.Tag).ToList(),
-                UsersWhoLike = p.Likes.Select(l => new UserBriefViewModel
+                LikeUsers = p.Likes.Select(l => new UserBriefViewModel
                 {
                     Id = l.User.Id,
                     Name = l.User.Name,
@@ -141,17 +141,27 @@ namespace BBS.Controllers
                 UserId = p.UserId,
                 UserName = p.User.Name,
                 Tags = p.PostTags.Select(pt => pt.Tag).ToList(),
-                UsersWhoLike = p.Likes.Select(l => new UserBriefViewModel
+                LikeUsers = p.Likes.Select(l => new UserBriefViewModel
                 {
                     Id = l.User.Id,
                     Name = l.User.Name,
                     Created = l.User.Created,
                     Avatar = l.User.Avatar
                 }).ToList(),
-                Likes = p.Likes.Count(),
-                Replies = p.Replies.Count(),
+                NumberOfLikes = p.Likes.Count(),
+                NumberOfReplies = p.Replies.Count(),
             }).Single(p => p.Id == id);
             return Json(JsonBody.CreateResponse(true, result, "success"));
+        }
+        [HttpPost("/post")]
+        public JsonResult CreatePost(CreatePostViewModel createPostViewModel)
+        {
+            throw new NotImplementedException();
+        }
+        [HttpPut("/post")]
+        public JsonResult UpdatePost(EditPostViewModel editPostViewModel)
+        {
+            throw new NotImplementedException();
         }
     }
 }
