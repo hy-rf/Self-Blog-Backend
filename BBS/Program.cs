@@ -33,7 +33,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: "frontend",
                       policy =>
                       {
-                          policy.WithOrigins("https://hy-rf.github.io", "http://localhost:5173").AllowAnyHeader().AllowAnyMethod().AllowCredentials();
+                          policy.WithOrigins("https://victorious-cliff-0fe836900.5.azurestaticapps.net", "https://hy-rf.github.io", "http://localhost:5173").AllowAnyHeader().AllowAnyMethod().AllowCredentials();
                       });
 });
 
@@ -52,17 +52,19 @@ builder.Services.AddAuthentication(opt =>
             ValidateIssuer = false,
             ValidateAudience = false,
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Environment.IsDevelopment()?builder.Configuration.GetValue<string>("JWT")!: Environment.GetEnvironmentVariable("JWT")))
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Environment.IsDevelopment() ? builder.Configuration.GetValue<string>("JWT")! : Environment.GetEnvironmentVariable("JWT")))
         };
         options.Events = new JwtBearerEvents
         {
             OnMessageReceived = ctx =>
             {
                 string path = ctx.HttpContext.Request.Path;
-                if (path!= "/chat"){
+                if (path != "/chat")
+                {
                     ctx.Token = ctx.Request.Headers.Authorization;
                 }
-                else{
+                else
+                {
                     ctx.Token = ctx.Request.Query["access_token"];
                 }
                 return Task.CompletedTask;
@@ -78,7 +80,7 @@ builder.Services.AddAuthentication(opt =>
 //});
 builder.Services.AddDbContext<ForumContext>(options =>
 {
-    options.UseSqlServer(builder.Environment.IsDevelopment()?builder.Configuration.GetConnectionString("AzureDB"):Environment.GetEnvironmentVariable("AzureDB"));
+    options.UseSqlServer(builder.Environment.IsDevelopment() ? builder.Configuration.GetConnectionString("AzureDB") : Environment.GetEnvironmentVariable("AzureDB"));
 });
 
 builder.Services.AddScoped<IPostRepository, PostRepository>();
