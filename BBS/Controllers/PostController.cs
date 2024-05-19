@@ -1,4 +1,5 @@
-﻿using BBS.Common;
+﻿using AutoMapper;
+using BBS.Common;
 using BBS.Data;
 using BBS.IService;
 using BBS.Models;
@@ -108,24 +109,15 @@ namespace BBS.Controllers
         [HttpGet("/post")]
         public JsonResult GetPosts()
         {
-            List<PostListViewModel> result = ctx.Post.Include(p => p.User).Include(p => p.PostTags).ThenInclude(pt => pt.Tag).Include(p => p.Likes).ThenInclude(l => l.User).Select(p => new PostListViewModel
+            var config = new MapperConfiguration(cfg =>
             {
-                Id = p.Id,
-                Title = p.Title,
-                ContentPreview = p.Content,
-                Created = p.Created,
-                Modified = p.Modified,
-                UserId = p.User.Id,
-                UserName = p.User.Name,
-                Tags = p.PostTags.Select(pt => pt.Tag).ToList(),
-                LikeUsers = p.Likes.Select(l => new UserBriefViewModel
-                {
-                    Id = l.User.Id,
-                    Name = l.User.Name,
-                    Created = l.User.Created,
-                    Avatar = l.User.Avatar
-                }).ToList()
-            }).ToList();
+                cfg.CreateMap<Post, PostListViewModel>()
+                .ForMember(p => p.Tags, opt => opt.MapFrom(src=>src.PostTags.Select(pt=>pt.Tag)))
+                .ForMember(p => p.LikeUsers, opt => opt.MapFrom(src=>src.Likes.Select(l=>l.User)));
+                cfg.CreateMap<User, UserBriefViewModel>();
+                cfg.CreateMap<Tag, Tag>();
+            });
+            var result = config.CreateMapper().Map<List<PostListViewModel>>(ctx.Post.Include(p => p.User).Include(p => p.PostTags).ThenInclude(pt => pt.Tag).Include(p => p.Likes).ThenInclude(l => l.User).ToList());
             return Json(JsonBody.CreateResponse(true, result, "success"));
         }
         [HttpGet("/post/detail")]
