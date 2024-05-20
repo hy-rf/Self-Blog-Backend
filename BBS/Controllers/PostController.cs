@@ -148,10 +148,14 @@ namespace BBS.Controllers
         [HttpPost("/post")]
         public JsonResult CreatePost([FromBody] CreatePostViewModel createPostViewModel)
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return Json(JsonBody.CreateResponse(false, "Unauthorized"));
+            }
             int userId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value);
             Post newPost = new Post
             {
-                UserId = 1,
+                UserId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value),
                 Title = createPostViewModel.Title,
                 Content = createPostViewModel.Content,
                 Created = DateTime.Now,
