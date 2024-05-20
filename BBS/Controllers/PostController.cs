@@ -112,8 +112,8 @@ namespace BBS.Controllers
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<Post, PostListViewModel>()
-                .ForMember(p => p.Tags, opt => opt.MapFrom(src=>src.PostTags.Select(pt=>pt.Tag)))
-                .ForMember(p => p.LikeUsers, opt => opt.MapFrom(src=>src.Likes.Select(l=>l.User)));
+                .ForMember(p => p.Tags, opt => opt.MapFrom(src => src.PostTags.Select(pt => pt.Tag)))
+                .ForMember(p => p.LikeUsers, opt => opt.MapFrom(src => src.Likes.Select(l => l.User)));
                 cfg.CreateMap<User, UserBriefViewModel>();
                 cfg.CreateMap<Tag, Tag>();
             });
@@ -146,9 +146,47 @@ namespace BBS.Controllers
             return Json(JsonBody.CreateResponse(true, result, "success"));
         }
         [HttpPost("/post")]
-        public JsonResult CreatePost(CreatePostViewModel createPostViewModel)
+        public JsonResult CreatePost([FromBody] CreatePostViewModel createPostViewModel)
         {
-            throw new NotImplementedException();
+            int userId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value);
+            Post newPost = new Post
+            {
+                UserId = 1,
+                Title = createPostViewModel.Title,
+                Content = createPostViewModel.Content,
+                Created = DateTime.Now,
+                Modified = DateTime.Now,
+            };
+            ctx.Post.Add(newPost);
+            ctx.SaveChanges();
+            createPostViewModel.NewTags.ForEach(newTag =>
+            {
+                if (!ctx.Tag.Any(t => t.Name == newTag.Name))
+                {
+                    Tag currentlyNoneExistNewTag = new Tag { Name = newTag.Name };
+                    ctx.Tag.Add(currentlyNoneExistNewTag);
+                    ctx.SaveChanges();
+                    PostTag newPostTag = new PostTag
+                    {
+                        PostId = newPost.Id,
+                        TagId = currentlyNoneExistNewTag.Id,
+                    };
+                    ctx.PostTag.Add(newPostTag);
+                    ctx.SaveChanges();
+                }
+                else
+                {
+                    int newPostTagId = ctx.Tag.First(t => t.Name == newTag.Name).Id;
+                    PostTag newPostTag = new PostTag
+                    {
+                        PostId = newPost.Id,
+                        TagId = newPostTagId
+                    };
+                    ctx.PostTag.Add(newPostTag);
+                    ctx.SaveChanges();
+                }
+            });
+            return Json(JsonBody.CreateResponse(true, "Create post success!"));
         }
         [HttpPut("/post")]
         public JsonResult UpdatePost(EditPostViewModel editPostViewModel)
