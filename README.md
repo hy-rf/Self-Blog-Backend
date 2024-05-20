@@ -53,3 +53,34 @@ return:
 ```
 
 </details>
+
+<details>
+ <summary><code>POST</code> <code><b>/</b></code> <code>/post</code></summary>
+data:
+
+```
+{
+    "Title":<title>,
+    "Content":<content>,
+    "NewTags":[
+        {
+            "Name":<a tag name>
+        },
+        {
+            "Name":<another tag name>
+        },
+        ...
+    ]
+}
+```
+
+return:
+
+```
+{
+    "success": <is add post success>,
+    "message": <reasons>,
+}
+```
+
+</details>
