@@ -123,7 +123,7 @@ namespace BBS.Controllers
         [HttpGet("/post/detail")]
         public JsonResult GetPostDetail(int id)
         {
-            PostDetailViewModel result = ctx.Post.Include(p => p.User).Include(p => p.PostTags).ThenInclude(pt => pt.Tag).Include(p => p.Likes).ThenInclude(l => l.User).Include(p => p.Replies).ThenInclude(r => r.User).Select(p => new PostDetailViewModel
+            PostDetailViewModel result = ctx.Post.Where(p => p.Id == id).Include(p => p.User).Include(p => p.PostTags).ThenInclude(pt => pt.Tag).Include(p => p.Likes).ThenInclude(l => l.User).Include(p => p.Replies).ThenInclude(r => r.User).Select(p => new PostDetailViewModel
             {
                 Id = id,
                 Title = p.Title,
@@ -142,7 +142,7 @@ namespace BBS.Controllers
                 }).ToList(),
                 NumberOfLikes = p.Likes.Count(),
                 NumberOfReplies = p.Replies.Count(),
-            }).First(p => p.Id == id);
+            }).First();
             return Json(JsonBody.CreateResponse(true, result, "success"));
         }
         [HttpPost("/post")]
