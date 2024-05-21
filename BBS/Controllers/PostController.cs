@@ -142,7 +142,7 @@ namespace BBS.Controllers
                 }).ToList(),
                 NumberOfLikes = p.Likes.Count(),
                 NumberOfReplies = p.Replies.Count(),
-            }).Single(p => p.Id == id);
+            }).First(p => p.Id == id);
             return Json(JsonBody.CreateResponse(true, result, "success"));
         }
         [HttpPost("/post")]
